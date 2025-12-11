@@ -550,7 +550,7 @@ function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
     return Tagged('BLINDSIGHT', source) 
        |  (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
        |  (HasStatus('TRUESIGHT', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5)) 
-       | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5)) 
+       | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source) | HasStatus('TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5)) 
        | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness',source) | HasStatus('SG_Deafened',source)))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
 end
 
