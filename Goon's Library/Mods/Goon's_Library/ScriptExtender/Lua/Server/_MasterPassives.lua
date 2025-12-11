@@ -7,8 +7,8 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(level, 
         "Goon_Finesse_Throwing_Master_Passive",
         "Goon_DamageReroll_Throwing_Master_Passive",
         "Goon_Advantage_Throwing_Master_Passive",
-        "Goon_IgnoreResistance_Throwing_Master_Passive"
-        -- "Goon_Remove_Shillelagh_Passive"
+        "Goon_IgnoreResistance_Throwing_Master_Passive",
+        "Goon_Remove_Shillelagh_Passive" -- Rename and make a global implementation
     }
 
     local function ApplyMasterPassives(entityID)
@@ -17,19 +17,20 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(level, 
             assigned[entityID] = {}
         end
         for _, passive in ipairs(MasterPassives) do
-            local hasPassive = (Osi.HasPassive(entityID, passive) == 1)
-            if not hasPassive then
-                Osi.AddPassive(entityID, passive)
-                print(string.format("[Goon's Library] Added passive %s to %s", passive, entityID))
+            if not assigned[entityID][passive] then
+                local hasPassive = (Osi.HasPassive(entityID, passive) == 1)
+                if not hasPassive then
+                    Osi.AddPassive(entityID, passive)
+                    print(string.format("[Goon's Library] Added passive %s to %s", passive, entityID)) -- Comment out once done testing
+                end
+                assigned[entityID][passive] = true
             end
-            assigned[entityID][passive] = true
         end
     end
 
     -- All party members
     for _, row in ipairs(Osi.DB_PartyMembers:Get(nil) or {}) do
-        local charID = row[1]
-        ApplyMasterPassives(charID)
+        ApplyMasterPassives(row[1])
     end
 
     -- All ServerCharacters (NPCs)
