@@ -8,9 +8,7 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(level, 
         "Goon_DamageReroll_Throwing_Master_Passive",
         "Goon_Advantage_Throwing_Master_Passive",
         "Goon_IgnoreResistance_Throwing_Master_Passive",
-        "Goon_Disenchant_Master_Passive",
-        "Skibidi_SIMGA",
-        "Goon_Remove_Shillelagh_Passive" -- Rename and make a global implementation
+        "Goon_Disenchant_Master_Passive"
     }
 
     -- lookup table for cleanup
@@ -26,7 +24,7 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(level, 
             if not MasterLookup[savedPassive] then
                 if Osi.HasPassive(entityID, savedPassive) == 1 then
                     Osi.RemovePassive(entityID, savedPassive)
-                    print(string.format("[Goon's Library] Removed outdated passive %s from %s", savedPassive, entityID))
+                    -- print(string.format("[Goon's Library] Removed outdated passive %s from %s", savedPassive, entityID))
                 end
                 assigned[entityID][savedPassive] = nil
             end
@@ -37,12 +35,12 @@ Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(level, 
             -- Check if the passive actually exists in BG3
             local stat = Ext.Stats.Get(passive, nil, false)
             if stat == nil then
-                print(string.format("[Goon's Library] WARNING: Passive does not exist: %s", passive))
+                -- print(string.format("[Goon's Library] WARNING: Passive does not exist: %s", passive))
             else
                 if not assigned[entityID][passive] then
                     if Osi.HasPassive(entityID, passive) == 0 then
                         Osi.AddPassive(entityID, passive)
-                        print(string.format("[Goon's Library] Added new passive %s to %s", passive, entityID))
+                        -- print(string.format("[Goon's Library] Added new passive %s to %s", passive, entityID))
                     end
                     assigned[entityID][passive] = true
                 end
