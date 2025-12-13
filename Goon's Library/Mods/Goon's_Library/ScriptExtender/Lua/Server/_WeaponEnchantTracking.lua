@@ -38,7 +38,7 @@ local function RegexSearchSpellStrings(spell, possibleSpellStrings, affixes)
     end
   end
 
-  -- print("[Helper] Result for", spell, "= false")
+  -- print("[Goon's Library][Helper] Result for", spell, "= false")
   return false
 end
 
@@ -51,7 +51,7 @@ local function ApplyStatusToParty(status, source)
     for _, row in ipairs(partyMembers) do
         local member = row[1]
         if Osi.IsPartyMember(member, 1) == 1 then
-            Osi.ApplyStatus(member, status, 1, 1, source)
+            Osi.ApplyStatus(member, status, 0, 1, source)
         end
     end
 end
@@ -59,7 +59,7 @@ end
 -- ==================================== Spells ====================================
 
 local function TrackSpellcasts(spell)
-  -- print("[Goon's Library][Check] Lesser Restoration:", spell)
+  -- print("[Goon's Library][Check] Weapon enchant spell cast:", spell)
   local spellStrings = {
     "Shout_Shillelagh"
   }
@@ -70,12 +70,12 @@ end
 
 EventCoordinator:RegisterEventProcessor("UsingSpellOnTarget", function(caster, target, spell, spellType, spellElement, storyActionID)
   -- print("[Goon's Library][Event] UsingSpellOnTarget -> caster:", caster, "target:", target, "spell:", spell)
-  local partyMembers = Osi.DB_PartyMembers:Get(nil)
-
-  if TrackSpellcasts(spell) then
-    -- print("[Goon's Library]  -> Applying disenchant technical to trigger passive spell unlock")
-    ApplyStatusToParty(,"GOON_DISENCHANT_TECHNICAL")
-  else
-    -- print("[Goon's Library]  -> No matching spell check for:", spell)
+  if TrackSpellcasts(spell)
+      and Osi.HasPassive(caster, "Goon_Disenchant_Master_Passive") == 1
+    then
+      -- print("[Goon's Library]  -> Applying disenchant technical to trigger passive spell unlock")
+      ApplyStatusToParty("GOON_DISENCHANT_TECHNICAL", caster)
+    else
+      -- print("[Goon's Library]  -> No matching spell check for:", spell)
   end
 end)
