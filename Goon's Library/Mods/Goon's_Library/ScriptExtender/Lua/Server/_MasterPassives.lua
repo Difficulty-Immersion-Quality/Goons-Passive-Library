@@ -22,7 +22,7 @@ local function ApplyMasterPassives(entityID)
         if not MasterLookup[savedPassive] then
             if Osi.HasPassive(entityID, savedPassive) == 1 then
                 Osi.RemovePassive(entityID, savedPassive)
-                    -- print(string.format("[Goon's Library] Removed outdated passive %s from %s", savedPassive, entityID))
+                -- print(string.format("[Goon's Library] Removed outdated passive %s from %s", savedPassive, entityID))
             end
             assigned[entityID][savedPassive] = nil
         end
