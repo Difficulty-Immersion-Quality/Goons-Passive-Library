@@ -13,14 +13,14 @@ local DefaultAffixes = {
 }
 
 local function RegexSearchSpellStrings(spell, possibleSpellStrings, affixes)
-  -- print("[Goon's Library] Checking spell:", spell)
+  -- print("[Goon's Library][Weapon enchants] Checking spell:", spell)
 
   for _, spellString in pairs(possibleSpellStrings) do
-    -- print("[Goon's Library]  Comparing against base:", spellString)
+    -- print("[Goon's Library][Weapon enchants]  Comparing against base:", spellString)
 
     -- 1) exact match
     if spell == spellString then
-      -- print("[Goon's Library]  -> Direct match found:", spellString)
+      -- print("[Goon's Library][Weapon enchants]  -> Direct match found:", spellString)
       return true
     end
 
@@ -30,15 +30,15 @@ local function RegexSearchSpellStrings(spell, possibleSpellStrings, affixes)
     -- 2) affix-based pattern matches (aff.Pre and aff.Suf are Lua patterns)
     for _, aff in ipairs(affixes) do
       local pattern = aff.Pre .. escBase .. aff.Suf
-      -- print("[Goon's Library]    Trying affix pattern:", pattern)
+      -- print("[Goon's Library][Weapon enchants]    Trying affix pattern:", pattern)
       if string.match(spell, pattern) then
-        -- print("[Goon's Library]    -> Affix match found:", spell, "with pattern:", pattern)
+        -- print("[Goon's Library][Weapon enchants]    -> Affix match found:", spell, "with pattern:", pattern)
         return true
       end
     end
   end
 
-  -- print("[Goon's Library][Helper] Result for", spell, "= false")
+  -- print("[Goon's Library][Weapon enchants][Helper] Result for", spell, "= false")
   return false
 end
 
@@ -59,7 +59,7 @@ end
 -- ==================================== Spells ====================================
 
 local function TrackSpellcasts(spell)
-  -- print("[Goon's Library][Check] Weapon enchant spell cast:", spell)
+  -- print("[Goon's Library][Weapon enchants][Check] Tracked spell cast:", spell)
   local spellStrings = {
     "Shout_Shillelagh"
   }
@@ -69,13 +69,14 @@ end
 -- ==================================== Listeners ====================================
 
 EventCoordinator:RegisterEventProcessor("UsingSpellOnTarget", function(caster, target, spell, spellType, spellElement, storyActionID)
-  -- print("[Goon's Library][Event] UsingSpellOnTarget -> caster:", caster, "target:", target, "spell:", spell)
+  -- print("[Goon's Library][Weapon enchants][Event] UsingSpellOnTarget -> caster:", caster, "target:", target, "spell:", spell)
   if TrackSpellcasts(spell)
       and Osi.HasPassive(caster, "Goon_Disenchant_Master_Passive") == 1
+      and Osi.IsPartyMember(caster, 1) == 1
     then
-      -- print("[Goon's Library]  -> Applying disenchant technical to trigger passive spell unlock")
+      -- print("[Goon's Library][Weapon enchants]  -> Applying disenchant technical to all party members, triggering enchantment removal spell unlock")
       ApplyStatusToParty("GOON_DISENCHANT_TECHNICAL", caster)
     else
-      -- print("[Goon's Library]  -> No matching spell check for:", spell)
+      -- print("[Goon's Library][Weapon enchants]  -> Spell doesn't match or caster isn't eligible:", spell)
   end
 end)
