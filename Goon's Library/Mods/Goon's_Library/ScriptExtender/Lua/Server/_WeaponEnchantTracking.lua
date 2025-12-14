@@ -43,15 +43,23 @@ local function RegexSearchSpellStrings(spell, possibleSpellStrings, affixes)
 end
 
 -- ==================================== Party iteration helper ====================================
+-- TODO: This doesn't iterate properly, instead just applying it X (amount of party members) times to the caster
 
 local function ApplyStatusToParty(status, source)
     local partyMembers = Osi.DB_PartyMembers:Get(nil)
     if not partyMembers then return end
 
+    local seen = {}
     for _, row in ipairs(partyMembers) do
         local member = row[1]
-        if Osi.IsPartyMember(member, 1) == 1 then
-            Osi.ApplyStatus(member, status, 0, 1, source)
+        if member and not seen[member] and Osi.IsPartyMember(member, 1) == 1 then
+            seen[member] = true
+
+            -- Wait for a short delay to avoid race conditions
+            Ext.Timer.WaitFor(100, function()
+                Osi.ApplyStatus(member, status, 0, 1, source)
+                -- print("[Goon's Library] Applied", status, "to", member)
+            end)
         end
     end
 end
@@ -68,7 +76,7 @@ end
 
 -- ==================================== Listeners ====================================
 
-EventCoordinator:RegisterEventProcessor("UsingSpellOnTarget", function(caster, target, spell, spellType, spellElement, storyActionID)
+Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target, spell, spellType, spellElement, storyActionID)
   -- print("[Goon's Library][Weapon enchants][Event] UsingSpellOnTarget -> caster:", caster, "target:", target, "spell:", spell)
   if TrackSpellcasts(spell)
       and Osi.HasPassive(caster, "Goon_Disenchant_Master_Passive") == 1
