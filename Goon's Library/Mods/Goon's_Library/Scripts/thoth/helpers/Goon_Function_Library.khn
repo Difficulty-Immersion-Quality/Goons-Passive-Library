@@ -306,6 +306,8 @@ end
 
 -- ==================================== Trying something different
 -- TODO: Need to be able to just get them in the most generic way possible, not checking for attack weapon.
+-- GetActiveWeapon
+-- GetItemInEquipmentSlot
 
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
