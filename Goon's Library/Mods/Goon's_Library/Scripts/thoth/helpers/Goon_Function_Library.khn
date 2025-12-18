@@ -1,16 +1,5 @@
 -- ==================================== VANILLA OVERWRITES ====================================
 
--- Add more technicals from entries using this function to negate niche, yet redundant saving throws from occuring
-function WallOfFireCheck(ability, dc, result)
-    result = result or false
-    hasStatus =  HasAnyStatus({'WALLOFFIRE_DAMAGE_RECEIVED', 'WALLOFFIRE_DAMAGE_RECEIVED_5', 'WALLOFFIRE_DAMAGE_RECEIVED_6', 'WALLOFFIRE_DAMAGE_RECEIVED_7', 'WALLOFFIRE_DAMAGE_RECEIVED_8', 'WALLOFFIRE_DAMAGE_RECEIVED_9','MYSTIC_WALLOFREPULSION_EFFECT_RECEIVED',}, {}, {}, entity)
-    if not hasStatus.Result then
-        st = ~SavingThrow(ability, dc)
-        return ConditionResult(st.Result,{},{},st.Chance)
-    end
-    return ConditionResult(result)
-end
-
 -- TODO: Test attacking bodies and shit. If that's triggering it, try 'not dead', maybe the function will fire before they are considered dead.
 -- Added what appears to be a common solution for making the function more predictably fire
 function IsKillingBlow()
