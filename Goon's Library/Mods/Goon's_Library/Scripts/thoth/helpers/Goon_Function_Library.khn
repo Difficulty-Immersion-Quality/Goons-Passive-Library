@@ -284,7 +284,11 @@ end
 -- ==================================== Cahoot's revision
 
 function Goon_AttackingWithSpellcastingModifierWeapon()
-    return HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) | HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON',GetAttackWeapon(context.Source)) | HasStatus('MAG_MELEE_CASTER_BOON_SORROW',GetAttackWeapon(context.Source)) | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER',GetAttackWeapon(context.Source))
+    return HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) 
+         | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON_SORROW',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER',GetAttackWeapon(context.Source))
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -296,8 +300,12 @@ function Goon_AttackingWithWisdomModifierWeapon()
 end
 
 function Goon_AttackingWithCharismaModifierWeapon()
-    return HasStatus('HEXBLADE_BIND',GetAttackWeapon(context.Source)) | HasStatus('PACT_BLADE',GetAttackWeapon(context.Source))
+    return HasStatus('HEXBLADE_BIND',GetAttackWeapon(context.Source)) 
+         | HasStatus('PACT_BLADE',GetAttackWeapon(context.Source))
 end
+
+-- ==================================== Trying something different
+-- TODO: Need to be able to just get them in the most generic way possible, not checking for attack weapon.
 
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
