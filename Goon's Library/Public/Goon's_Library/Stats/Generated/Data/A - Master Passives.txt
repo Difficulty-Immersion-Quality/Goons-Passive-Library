@@ -1,0 +1,54 @@
+// ==================================== Disenchant ====================================
+// TODO: WIP
+
+// Replacement for "Goon_Remove_Shillelagh_Passive"
+new entry "Goon_Disenchant_Master_Passive"
+type "PassiveData"
+// Disenchant
+data "DisplayName" "hbce532dfg7777g4c2fgad5bgdf242f94bfe0;1"
+// Dispel your equipped weapon's current enchantments.
+data "Description" "h2756e900g55e0g4351gbd30gbcfea01c07ea;1"
+data "Properties" "IsHidden"
+data "BoostContext" "OnEquip;OnCreate;OnStatusApplied;OnTurn"
+
+data "BoostConditions" "((context.HasContextFlag(StatsFunctorContext.OnEquip) or context.HasContextFlag(StatsFunctorContext.OnCreate)) and (Goon_WeaponHasDispellableEnchantment(),GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)) or (Goon_WeaponHasDispellableEnchantment(),GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)) or HasStatus('SHILLELAGH_DRYAD',GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)) or (Goon_WeaponHasDispellableEnchantment(),GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand))))"
+
+data "Boosts" "IF(HasStatus('SHILLELAGH',GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)) or HasStatus('SHILLELAGH',GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)) or HasStatus('SHILLELAGH_DRYAD',GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)) or HasStatus('SHILLELAGH_DRYAD',GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand))):UnlockSpell(Goon_Shout_Disenchant_Weapon)"
+
+// Replacement for "Goon_Shout_Remove_Shillelagh"
+new entry "Goon_Shout_Disenchant_Weapon"
+type "SpellData"
+data "SpellType" "Shout"
+data "SpellProperties" "AI_IGNORE:ApplyEquipmentStatus(MeleeMainHand,GOON_DISENCHANT_TECHNICAL,100,0);AI_IGNORE:ApplyEquipmentStatus(MeleeOffHand,GOON_DISENCHANT_TECHNICAL,100,0);AI_IGNORE:ApplyEquipmentStatus(RangedMainHand,GOON_DISENCHANT_TECHNICAL,100,0);AI_IGNORE:ApplyEquipmentStatus(RangedOffHand,GOON_DISENCHANT_TECHNICAL,100,0)"
+data "Icon" "Spell_Abjuration_RemoveCurse"
+// Disenchant
+data "DisplayName" "hbce532dfg7777g4c2fgad5bgdf242f94bfe0;1"
+// Dispel your equipped weapon's current enchantments.
+data "Description" "h2756e900g55e0g4351gbd30gbcfea01c07ea;1"
+data "CastSound" "Spell_Cast_Buff_Shillelagh_L0"
+data "TargetSound" "Spell_Impact_Buff_Shillelagh_L0"
+data "SpellAnimation" "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b,,;,,;35b644cf-5c13-4407-9dc1-23bf4309216e,,;823e3ddf-c670-41ef-b7b4-9f4a4e38300b,,;7bb52cd4-0b1c-4926-9165-fa92b75876a3,,;,,;0b07883a-08b8-43b6-ac18-84dc9e84ff50,,;,,;,,"
+data "SpellFlags" "Temporary"
+data "PrepareEffect" "e8109f4b-2439-4424-9bc8-743270220f47"
+data "CastEffect" "53c9d361-0fc1-4d72-a70b-bc2611d538f0"
+data "RequirementConditions" "Player(context.Source)"
+
+// Replacement for "GOON_SHILLELAGH_REMOVAL_TECHNICAL"
+new entry "GOON_DISENCHANT_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackType" "Ignore"
+data "StackId" "GOON_DISENCHANT_TECHNICAL"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog"
+
+// new entry "MAG_IRONVINE_SHIELD_EQUIP_TECHNICAL"
+// type "StatusData"
+// data "StatusType" "BOOST"
+// // %%% EMPTY
+// data "DisplayName" "h215ff7b0g143fg49c3g954bge36c9da012f9;2"
+// data "StackId" "MAG_IRONVINE_SHIELD_EQUIP_TECHNICAL"
+// data "TickType" "StartTurn"
+// data "TickFunctors" "IF(HasStatus( 'SHILLELAGH', GetActiveWeapon(context.Target, true))):ApplyEquipmentStatus(MeleeOffHand, MAG_IRONVINE_SHIELD_TECHNICAL, 100, 1)"
+// data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+// data "OnApplyFunctors" "IF(HasStatus( 'SHILLELAGH', GetActiveWeapon(context.Target, true))):ApplyEquipmentStatus(MeleeOffHand, MAG_IRONVINE_SHIELD_TECHNICAL, 100, 1)"
+// data "OnRemoveFunctors" "RemoveStatus(GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand), MAG_IRONVINE_SHIELD_TECHNICAL)"

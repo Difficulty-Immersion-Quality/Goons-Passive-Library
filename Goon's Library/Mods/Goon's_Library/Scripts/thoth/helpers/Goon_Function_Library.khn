@@ -1,16 +1,5 @@
 -- ==================================== VANILLA OVERWRITES ====================================
 
--- Add more technicals from entries using this function to negate niche, yet redundant saving throws from occuring
-function WallOfFireCheck(ability, dc, result)
-    result = result or false
-    hasStatus =  HasAnyStatus({'WALLOFFIRE_DAMAGE_RECEIVED', 'WALLOFFIRE_DAMAGE_RECEIVED_5', 'WALLOFFIRE_DAMAGE_RECEIVED_6', 'WALLOFFIRE_DAMAGE_RECEIVED_7', 'WALLOFFIRE_DAMAGE_RECEIVED_8', 'WALLOFFIRE_DAMAGE_RECEIVED_9','MYSTIC_WALLOFREPULSION_EFFECT_RECEIVED',}, {}, {}, entity)
-    if not hasStatus.Result then
-        st = ~SavingThrow(ability, dc)
-        return ConditionResult(st.Result,{},{},st.Chance)
-    end
-    return ConditionResult(result)
-end
-
 -- TODO: Test attacking bodies and shit. If that's triggering it, try 'not dead', maybe the function will fire before they are considered dead.
 -- Added what appears to be a common solution for making the function more predictably fire
 function IsKillingBlow()
@@ -295,7 +284,11 @@ end
 -- ==================================== Cahoot's revision
 
 function Goon_AttackingWithSpellcastingModifierWeapon()
-    return HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) | HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON',GetAttackWeapon(context.Source)) | HasStatus('MAG_MELEE_CASTER_BOON_SORROW',GetAttackWeapon(context.Source)) | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER',GetAttackWeapon(context.Source))
+    return HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) 
+         | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON_SORROW',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER',GetAttackWeapon(context.Source))
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -307,8 +300,14 @@ function Goon_AttackingWithWisdomModifierWeapon()
 end
 
 function Goon_AttackingWithCharismaModifierWeapon()
-    return HasStatus('HEXBLADE_BIND',GetAttackWeapon(context.Source)) | HasStatus('PACT_BLADE',GetAttackWeapon(context.Source))
+    return HasStatus('HEXBLADE_BIND',GetAttackWeapon(context.Source)) 
+         | HasStatus('PACT_BLADE',GetAttackWeapon(context.Source))
 end
+
+-- ==================================== Trying something different
+-- TODO: Need to be able to just get them in the most generic way possible, not checking for attack weapon.
+-- GetActiveWeapon
+-- GetItemInEquipmentSlot
 
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
@@ -550,7 +549,7 @@ function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
     return Tagged('BLINDSIGHT', source) 
        |  (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
        |  (HasStatus('TRUESIGHT', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5)) 
-       | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5)) 
+       | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source) | HasStatus('TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5)) 
        | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness',source) | HasStatus('SG_Deafened',source)))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
 end
 

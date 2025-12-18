@@ -1,0 +1,90 @@
+-- ==================================== Regex helper ====================================
+
+-- Escape Lua pattern magic characters so spell base is treated literally
+local function escape_lua_pattern(s)
+  return s:gsub("([%^%$%(%)%%%.%[%]%*%+%-%?])", "%%%1")
+end
+
+-- Default affix patterns (adjust/add as needed)
+local DefaultAffixes = {
+  { Pre = "^",    Suf = "_.*$" },   -- base followed by "_" + anything
+  { Pre = "^.-_", Suf = "$"    },   -- anything_ before base (ending at base)
+  { Pre = "^.-_", Suf = "_.*$" },   -- anything_ before base and _anything after
+}
+
+local function RegexSearchSpellStrings(spell, possibleSpellStrings, affixes)
+  -- print("[Goon's Library][Weapon enchants] Checking spell:", spell)
+
+  for _, spellString in pairs(possibleSpellStrings) do
+    -- print("[Goon's Library][Weapon enchants]  Comparing against base:", spellString)
+
+    -- 1) exact match
+    if spell == spellString then
+      -- print("[Goon's Library][Weapon enchants]  -> Direct match found:", spellString)
+      return true
+    end
+
+    -- prepare literal-safe base for pattern assembly
+    local escBase = escape_lua_pattern(spellString)
+
+    -- 2) affix-based pattern matches (aff.Pre and aff.Suf are Lua patterns)
+    for _, aff in ipairs(affixes) do
+      local pattern = aff.Pre .. escBase .. aff.Suf
+      -- print("[Goon's Library][Weapon enchants]    Trying affix pattern:", pattern)
+      if string.match(spell, pattern) then
+        -- print("[Goon's Library][Weapon enchants]    -> Affix match found:", spell, "with pattern:", pattern)
+        return true
+      end
+    end
+  end
+
+  -- print("[Goon's Library][Weapon enchants][Helper] Result for", spell, "= false")
+  return false
+end
+
+-- ==================================== Party iteration helper ====================================
+-- TODO: This doesn't iterate properly, instead just applying it X (amount of party members) times to the caster
+
+local function ApplyStatusToParty(status, source)
+    local partyMembers = Osi.DB_PartyMembers:Get(nil)
+    if not partyMembers then return end
+
+    local seen = {}
+    for _, row in ipairs(partyMembers) do
+        local member = row[1]
+        if member and not seen[member] and Osi.IsPartyMember(member, 1) == 1 then
+            seen[member] = true
+
+            -- Wait for a short delay to avoid race conditions
+            Ext.Timer.WaitFor(100, function()
+                Osi.ApplyStatus(member, status, 0, 1, source)
+                -- print("[Goon's Library] Applied", status, "to", member)
+            end)
+        end
+    end
+end
+
+-- ==================================== Spells ====================================
+
+local function TrackSpellcasts(spell)
+  -- print("[Goon's Library][Weapon enchants][Check] Tracked spell cast:", spell)
+  local spellStrings = {
+    "Shout_Shillelagh"
+  }
+  return RegexSearchSpellStrings(spell, spellStrings, DefaultAffixes)
+end
+
+-- ==================================== Listeners ====================================
+
+Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target, spell, spellType, spellElement, storyActionID)
+  -- print("[Goon's Library][Weapon enchants][Event] UsingSpellOnTarget -> caster:", caster, "target:", target, "spell:", spell)
+  if TrackSpellcasts(spell)
+      and Osi.HasPassive(caster, "Goon_Disenchant_Master_Passive") == 1
+      and Osi.IsPartyMember(caster, 1) == 1
+    then
+      -- print("[Goon's Library][Weapon enchants]  -> Applying disenchant technical to all party members, triggering enchantment removal spell unlock")
+      ApplyStatusToParty("GOON_DISENCHANT_TECHNICAL", caster)
+    else
+      -- print("[Goon's Library][Weapon enchants]  -> Spell doesn't match or caster isn't eligible:", spell)
+  end
+end)
