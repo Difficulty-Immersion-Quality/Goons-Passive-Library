@@ -32,7 +32,7 @@ type "SpellData"
 data "SpellType" "Shout"
 using "Target_Sanctuary"
 data "UseCosts" "GoonDefensiveResource:1"
-data "RequirementConditions" "not HasActionResource(ActionPoint) and not HasStatus('EXTRA_ATTACK') and not HasStatus('EXTRA_ATTACK_2')"
+data "RequirementConditions" "not HasActionResource('ActionPoint', 1, 0, false) and not HasStatus('EXTRA_ATTACK') and not HasStatus('EXTRA_ATTACK_2') and not HasStatus('EXTRA_ATTACK_3')"
 
 new entry "Goon_Defensive_Sanctuary_1"
 type "PassiveData"

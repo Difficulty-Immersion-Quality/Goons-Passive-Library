@@ -44,7 +44,6 @@ data "TickFunctors" "ApplyStatus(SANCTUARY,100,10);ApplyStatus(GOON_SANCTUARY_AU
 data "RemoveConditions" "not HasPassive('Goon_Sanctuary_Auto_Cast_End_Turn')"
 data "RemoveEvents" "OnStatusApplied;OnTurn"
 
-
 new entry "GOON_SANCTUARY_AUTO_CAST_COOLDOWN"
 type "StatusData"
 data "StatusType" "BOOST"
