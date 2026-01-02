@@ -16,3 +16,9 @@ data "Description" "h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b;1"
 data "DescriptionParams" "1"
 data "Icon" "PassiveFeature_ShieldMaster_Block"
 data "Boosts" "IF(IsCritical()):DamageReduction(All, Half)"
+
+// TODO: Make sure there's no weird moments where this triggers, e.g. self damage/reflected damage when landing a critical hit on an enemy.
+
+// function IsCritical()
+//     return ConditionResult(context.HitDescription.IsCriticalHit)
+// end
