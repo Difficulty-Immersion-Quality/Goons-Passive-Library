@@ -295,6 +295,12 @@ function Goon_Crossbow_Check(entity)
     WieldingWeapon('Loading', false, true, entity)
 end
 
+function Goon_HasLightArmor(entity)
+    entity = entity or context.Target
+    local armor = GetActiveArmor(entity)
+    return IsOfProficiencyGroup("LightArmor", armor)
+end
+
 -- ==================================== Weapon enchant checks ====================================
 -- TODO: Shillelagh needs an additional status for the spellcasting mod functionality - Refer to Goon's Spell Overhaul Level 2 Flameblade/Shadowblade
 -- These don't work for the intended purposes
