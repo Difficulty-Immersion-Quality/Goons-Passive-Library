@@ -1,0 +1,242 @@
+// ==================================== Fighting Styles ====================================
+
+// Archery
+new entry "Goon_FightingStyle_Archery_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Bow_Check(context.Source)):ApplyStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER,100,-1)"
+
+new entry "GOON_FIGHTINGSTYLE_ARCHERY_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "FightingStyle_Archery"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Defence
+new entry "Goon_FightingStyle_Defense_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(WearingArmor(context.Source)):ApplyStatus(GOON_FIGHTINGSTYLE_DEFENSE_APPLIER,100,-1)"
+
+new entry "GOON_FIGHTINGSTYLE_DEFENSE_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "FightingStyle_Defense"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Dueling
+new entry "Goon_FightingStyle_Dueling_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Dueling_Check(context.Source)):ApplyStatus(GOON_FIGHTINGSTYLE_DUELING_APPLIER,100,-1)"
+
+new entry "GOON_FIGHTINGSTYLE_DUELING_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "FightingStyle_Dueling"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Great Weapon Fighting
+new entry "Goon_FightingStyle_GreatWeaponFighting_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_GreatWeapon_Check(context.Source)):ApplyStatus(GOON_FIGHTINGSTYLE_GREATWEAPONFIGHTING_APPLIER,100,-1)"
+
+new entry "GOON_FIGHTINGSTYLE_GREATWEAPONFIGHTING_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "FightingStyle_GreatWeaponFighting"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Protection
+new entry "Goon_FightingStyle_Protection_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(HasShieldEquipped(context.Source)):ApplyStatus(GOON_FIGHTINGSTYLE_PROTECTION_APPLIER,100,-1)"
+
+new entry "GOON_FIGHTINGSTYLE_PROTECTION_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+// data "StackId" "GOON_FIGHTINGSTYLE_PROTECTION_APPLIER"
+data "Passives" "FightingStyle_Protection"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Two-Weapon Fighting
+new entry "Goon_FightingStyle_TwoWeaponFighting_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_DualWielding_Check(context.Source)):ApplyStatus(GOON_FIGHTINGSTYLE_TWOWEAPONFIGHTING_APPLIER,100,-1)"
+
+new entry "GOON_FIGHTINGSTYLE_TWOWEAPONFIGHTING_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "FightingStyle_TwoWeaponFighting"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// ==================================== Feats ====================================
+
+// Crossbow Expert
+// Vanilla version
+new entry "Goon_Feat_CrossbowExpert_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Crossbow_Check(context.Source)):ApplyStatus(GOON_FEAT_CROSSBOWEXPERT_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_CROSSBOWEXPERT_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "CrossbowExpert_PointBlank;CrossbowExpert_Wounding"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Feats Overhaul version
+new entry "Goon_Feat_CrossbowExpert_Passive_CHT"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Bow_Check(context.Source)):ApplyStatus(GOON_FEAT_CROSSBOWEXPERT_APPLIER_CHT,100,-1)"
+
+new entry "GOON_FEAT_CROSSBOWEXPERT_APPLIER_CHT"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "CrossbowExpert_PointBlank;CrossbowExpert_Wounding;CrossbowExpert_Proficiency"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Defensive Duellist
+new entry "Goon_Feat_DefensiveDuelist_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Dueling_Check(context.Source)):ApplyStatus(GOON_FEAT_DEFENSIVEDUELIST_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_DEFENSIVEDUELIST_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "DefensiveDuelist;DefensiveDuelist_Precision"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Dual Wielder
+// Vanilla version
+new entry "Goon_Feat_DualWielder_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_DualWielding_Check(context.Source)):ApplyStatus(GOON_FEAT_DUALWIELDER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_DUALWIELDER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "DualWielder_PassiveBonuses;DualWielder_BonusAC"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Feats Overhaul version
+new entry "Goon_Feat_DualWielder_Passive_CHT"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_DualWielding_Check(context.Source)):ApplyStatus(GOON_FEAT_DUALWIELDER_APPLIER_CHT,100,-1)"
+
+new entry "GOON_FEAT_DUALWIELDER_APPLIER_CHT"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "DualWielder_PassiveBonuses;DualWielder_BonusAC;FightingStyle_TwoWeaponFighting"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Great Weapon Master
+new entry "Goon_Feat_GreatWeaponMaster_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_GreatWeapon_Check(context.Source)):ApplyStatus(GOON_FEAT_GREATWEAPONMASTER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_GREATWEAPONMASTER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "GreatWeaponMaster_BonusAttack;GreatWeaponMaster_BonusDamage"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Polearm Master
+new entry "Goon_Feat_PolearmMaster_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Polearm_Check(context.Source) or Goon_IsPolearm(GetActiveWeapon(context.Source, false))):ApplyStatus(GOON_FEAT_POLEARMMASTER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_POLEARMMASTER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "PolearmMaster_AttackOfOpportunity;PolearmMaster_BonusAttack"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Sharpshooter
+new entry "Goon_Feat_Sharpshooter_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(Goon_Bow_Check(context.Source)):ApplyStatus(GOON_FEAT_SHARPSHOOTER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_SHARPSHOOTER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "Sharpshooter_AllIn;Sharpshooter_Bonuses"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Shield Master
+// Vanilla version
+new entry "Goon_Feat_ShieldMaster_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(HasShieldEquipped(context.Source)):ApplyStatus(GOON_FEAT_SHIELDMASTER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_SHIELDMASTER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "ShieldMaster_PassiveBonuses;ShieldMaster_Block;ShieldMaster_Shove"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Feats Overhaul version
+new entry "Goon_Feat_ShieldMaster_Passive_CHT"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(HasShieldEquipped(context.Source)):ApplyStatus(GOON_FEAT_SHIELDMASTER_APPLIER_CHT,100,-1)"
+
+new entry "GOON_FEAT_SHIELDMASTER_APPLIER_CHT"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "ShieldMaster_PassiveBonuses;ShieldMaster_Block;ShieldMaster_Blow"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Medium Armour Master
+new entry "Goon_Feat_MediumArmorMaster_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(HasMediumArmor(context.Source)):ApplyStatus(GOON_FEAT_MEDIUMARMORMASTER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_MEDIUMARMORMASTER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "MediumArmorMaster"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+
+// Heavy Armour Master
+new entry "Goon_Feat_HeavyArmorMaster_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "StatsFunctors" "IF(HasHeavyArmor(context.Source)):ApplyStatus(GOON_FEAT_HEAVYARMOURMASTER_APPLIER,100,-1)"
+
+new entry "GOON_FEAT_HEAVYARMOURMASTER_APPLIER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Passives" "HeavyArmorMaster"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
+

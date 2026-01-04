@@ -257,6 +257,44 @@ function Goon_IsBanishSpell()
          | SpellId('Projectile_ArcaneShot_BanishingArrow')
 end
 
+-- ==================================== Weapon/armour equipped checks ====================================
+
+function Goon_Dueling_Check(entity)
+    entity = entity or context.Target
+    local hasNonVersatileWeapon = WieldingWeapon('Melee', false, true, entity) & ~WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Twohanded', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity)
+    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & WieldingWeapon('Melee', false, true, entity) & HasShieldEquipped(entity)
+    return hasNonVersatileWeapon | hasVersatileWeapon
+end
+
+-- This is exact same as the vanilla DualWielder() khn function but putting this here for completeness
+function Goon_DualWielding_Check(entity)
+    entity = entity or context.Target
+    return WieldingWeapon('Melee', false, true, entity) & WieldingWeapon('Melee', true, true, entity)
+end
+
+function Goon_GreatWeapon_Check(entity)
+    entity = entity or context.Target
+    local hasTwohandedWeapon = WieldingWeapon('Twohanded', false, true, entity) & WieldingWeapon('Melee', false, true, entity)
+    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity) & ~HasShieldEquipped(entity)
+    return hasTwohandedWeapon | hasVersatileWeapon
+end
+
+-- Use in conjunction with Goon_IsPolearm() check (which only checks the active weapon) to reasonably cover all polearm-wielding possibilities for NPCs at least
+function Goon_Polearm_Check(entity)
+    entity = entity or context.Target
+    return WieldingWeapon('Reach', false, true, entity)
+end
+
+function Goon_Bow_Check(entity)
+    entity = entity or context.Target
+    return WieldingWeapon('Ammunition', false, true, entity)
+end
+
+function Goon_Crossbow_Check(entity)
+    entity = entity or context.Target
+    WieldingWeapon('Loading', false, true, entity)
+end
+
 -- ==================================== Weapon enchant checks ====================================
 -- TODO: Shillelagh needs an additional status for the spellcasting mod functionality - Refer to Goon's Spell Overhaul Level 2 Flameblade/Shadowblade
 -- These don't work for the intended purposes
