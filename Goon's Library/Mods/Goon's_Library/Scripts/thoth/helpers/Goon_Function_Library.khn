@@ -88,6 +88,7 @@ function Goon_IsKarlachCooking()
 end
 
 -- ==================================== Fetch character levels ====================================
+-- TODO: Goon_ change all occurances
 
 function GoonCharacterLevelEqualTo(value, entity)
     entity = entity or context.Source
@@ -97,6 +98,11 @@ end
 function GoonCharacterLevelEqualToOrGreaterThan(value, entity)
     entity = entity or context.Source
     return ConditionResult(entity.Level >= value)
+end
+
+function Goon_CharacterLevelEqualToOrGreaterThan_5(entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Level >= 5)
 end
 
 -- ==================================== Check current duration of status ====================================
@@ -248,13 +254,30 @@ end
 -- ==================================== Do the dawg be Banishing
 
 function Goon_IsBanishSpell()
-    return SpellID('Target_Banishment') 
+    return SpellId('Target_Banishment') 
          | IsSpellChildOrVariantFromContext('Target_Banishment') 
          | SpellId('Target_Smite_Banishing') 
          | IsSpellChildOrVariantFromContext('Target_Smite_Banishing') 
          | SpellId('Projectile_Smite_Banishing') 
          | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing') 
          | SpellId('Projectile_ArcaneShot_BanishingArrow')
+end
+
+-- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
+-- Handles cantrips (or whatever other conditional stuff) that don't deal damage until level 5 and need exclusion from shit
+-- Disallows spells with a DamageType but no DealDamage functors from triggering things improperly
+-- TODO: Track down all cantrips that only directly deal damage after level 5
+-- TODO: Expand for handling of edge cases
+-- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis)
+
+function Goon_IsSpellDealingFunctorDamage()
+    return HasFunctor(StatsFunctorType.DealDamage) & (Goon_CharacterLevelEqualToOrGreaterThan_5() | 
+           ~(SpellId('Target_BoomingBlade')
+           | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
+           | SpellId('Target_BoomingBlade_ClassSpell')
+           | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
+           | SpellId('Target_BoomingBlade_5e')
+           | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')))
 end
 
 -- ==================================== Weapon/armour equipped checks ====================================
