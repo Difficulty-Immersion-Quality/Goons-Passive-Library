@@ -269,6 +269,7 @@ end
 -- TODO: Track down all cantrips that only directly deal damage after level 5
 -- TODO: Expand for handling of edge cases
 -- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis)
+-- TODO: Replace every instance of "HasFunctor(StatsFunctorType.DealDamage)" with this function, and include it wherever "SpellDamageTypeIs" is called (barring exceptions)
 
 function Goon_IsSpellDealingFunctorDamage()
     return HasFunctor(StatsFunctorType.DealDamage) & (Goon_CharacterLevelEqualToOrGreaterThan_5() | 
