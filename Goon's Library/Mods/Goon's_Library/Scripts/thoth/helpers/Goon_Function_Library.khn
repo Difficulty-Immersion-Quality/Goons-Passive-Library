@@ -88,6 +88,7 @@ function Goon_IsKarlachCooking()
 end
 
 -- ==================================== Fetch character levels ====================================
+-- TODO: Goon_ change all occurances
 
 function GoonCharacterLevelEqualTo(value, entity)
     entity = entity or context.Source
@@ -97,6 +98,11 @@ end
 function GoonCharacterLevelEqualToOrGreaterThan(value, entity)
     entity = entity or context.Source
     return ConditionResult(entity.Level >= value)
+end
+
+function Goon_CharacterLevelEqualToOrGreaterThan_5(entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Level >= 5)
 end
 
 -- ==================================== Check current duration of status ====================================
@@ -248,13 +254,31 @@ end
 -- ==================================== Do the dawg be Banishing
 
 function Goon_IsBanishSpell()
-    return SpellID('Target_Banishment') 
+    return SpellId('Target_Banishment') 
          | IsSpellChildOrVariantFromContext('Target_Banishment') 
          | SpellId('Target_Smite_Banishing') 
          | IsSpellChildOrVariantFromContext('Target_Smite_Banishing') 
          | SpellId('Projectile_Smite_Banishing') 
          | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing') 
          | SpellId('Projectile_ArcaneShot_BanishingArrow')
+end
+
+-- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
+-- Handles cantrips (or whatever other conditional stuff) that don't deal damage until level 5 and need exclusion from shit
+-- Disallows spells with a DamageType but no DealDamage functors from triggering things improperly
+-- TODO: Track down all cantrips that only directly deal damage after level 5
+-- TODO: Expand for handling of edge cases
+-- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis)
+-- TODO: Replace every instance of "HasFunctor(StatsFunctorType.DealDamage)" with this function, and include it wherever "SpellDamageTypeIs" is called (barring exceptions)
+
+function Goon_IsSpellDealingFunctorDamage()
+    return HasFunctor(StatsFunctorType.DealDamage) & (Goon_CharacterLevelEqualToOrGreaterThan_5() | 
+           ~(SpellId('Target_BoomingBlade')
+           | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
+           | SpellId('Target_BoomingBlade_ClassSpell')
+           | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
+           | SpellId('Target_BoomingBlade_5e')
+           | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')))
 end
 
 -- ==================================== Weapon/armour equipped checks ====================================
@@ -302,8 +326,7 @@ function Goon_HasLightArmor(entity)
 end
 
 -- ==================================== Weapon enchant checks ====================================
--- TODO: Shillelagh needs an additional status for the spellcasting mod functionality - Refer to Goon's Spell Overhaul Level 2 Flameblade/Shadowblade
--- These don't work for the intended purposes
+-- TODO: These don't work for the intended purposes, HasAnyStatus is likely the problem when trying to call these? Or just the context they were being called in...
 
 function Goon_IsSpellcastingModifierWeapon()
     return HasAnyStatus({'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9'}, {}, {})
@@ -322,10 +345,10 @@ function Goon_IsCharismaModifierWeapon()
 end
 
 -- ==================================== Weapon enchant checks - Cahoot's revision
+-- Works unlike the above blocks
 
 function Goon_AttackingWithSpellcastingModifierWeapon()
-    return HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) 
-         | HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) 
+    return HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) 
          | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON',GetAttackWeapon(context.Source)) 
          | HasStatus('MAG_MELEE_CASTER_BOON_SORROW',GetAttackWeapon(context.Source)) 
          | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER',GetAttackWeapon(context.Source)) 
@@ -346,6 +369,7 @@ function Goon_AttackingWithSpellcastingModifierWeapon()
          | HasStatus('GOON_FLAME_BLADE_7',GetAttackWeapon(context.Source))
          | HasStatus('GOON_FLAME_BLADE_8',GetAttackWeapon(context.Source))
          | HasStatus('GOON_FLAME_BLADE_9',GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHILLELAGH',GetAttackWeapon(context.Source)) 
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -354,6 +378,7 @@ end
 
 function Goon_AttackingWithWisdomModifierWeapon()
     return HasStatus('FourEle_Attuned',GetAttackWeapon(context.Source))
+         | (HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) & ~HasStatus('GOON_SHILLELAGH',GetAttackWeapon(context.Source)))
 end
 
 function Goon_AttackingWithCharismaModifierWeapon()
@@ -367,6 +392,24 @@ end
 -- GetItemInEquipmentSlot
 -- MartialArts_DextrousUnarmedAttacks in DIQ Misc Patches needs this shit bad.
 -- Might need additional custom statuses for my Shadow Blade/Flame Blade edits.
+
+-- ==================================== Weapon enchant checks - Bound weapons only
+-- TODO: Add support for any custom statuses that fit the bill
+-- TODO: Replace all instances where all 3 of these are called with the functions
+
+function Goon_IsBoundWeaponStatus()
+    return (StatusId('WEAPON_BOND') | StatusId('PACT_BLADE') | StatusId('HEXBLADE_BIND'))
+end
+
+function Goon_HasBoundWeaponStatus()
+    return (HasStatus('WEAPON_BOND') | HasStatus('PACT_BLADE') | HasStatus('HEXBLADE_BIND'))
+end
+
+function Goon_AttackingWithBoundWeapon()
+    return HasStatus('WEAPON_BOND',GetAttackWeapon(context.Source)) 
+         | HasStatus('PACT_BLADE',GetAttackWeapon(context.Source))
+         | HasStatus('HEXBLADE_BIND',GetAttackWeapon(context.Source))
+end
 
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
