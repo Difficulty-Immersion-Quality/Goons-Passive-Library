@@ -392,6 +392,24 @@ end
 -- MartialArts_DextrousUnarmedAttacks in DIQ Misc Patches needs this shit bad.
 -- Might need additional custom statuses for my Shadow Blade/Flame Blade edits.
 
+-- ==================================== Weapon enchant checks - Bound weapons only
+-- TODO: Add support for any custom statuses that fit the bill
+-- TODO: Replace all instances where all 3 of these are called with the functions
+
+function Goon_IsBoundWeaponStatus()
+    return (StatusId('WEAPON_BOND') | StatusId('PACT_BLADE') | StatusId('HEXBLADE_BIND'))
+end
+
+function Goon_HasBoundWeaponStatus()
+    return (HasStatus('WEAPON_BOND') | HasStatus('PACT_BLADE') | HasStatus('HEXBLADE_BIND'))
+end
+
+function Goon_AttackingWithBoundWeapon()
+    return HasStatus('WEAPON_BOND',GetAttackWeapon(context.Source)) 
+         | HasStatus('PACT_BLADE',GetAttackWeapon(context.Source))
+         | HasStatus('HEXBLADE_BIND',GetAttackWeapon(context.Source))
+end
+
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
