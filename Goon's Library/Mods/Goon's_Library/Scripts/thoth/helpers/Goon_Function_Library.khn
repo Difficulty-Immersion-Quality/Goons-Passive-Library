@@ -348,7 +348,8 @@ end
 -- Works unlike the above blocks
 
 function Goon_AttackingWithSpellcastingModifierWeapon()
-    return HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) 
+    return HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) 
+         | HasStatus('MAG_MELEE_CASTER_BOON',GetAttackWeapon(context.Source)) 
          | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON',GetAttackWeapon(context.Source)) 
          | HasStatus('MAG_MELEE_CASTER_BOON_SORROW',GetAttackWeapon(context.Source)) 
          | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER',GetAttackWeapon(context.Source)) 
@@ -369,7 +370,6 @@ function Goon_AttackingWithSpellcastingModifierWeapon()
          | HasStatus('GOON_FLAME_BLADE_7',GetAttackWeapon(context.Source))
          | HasStatus('GOON_FLAME_BLADE_8',GetAttackWeapon(context.Source))
          | HasStatus('GOON_FLAME_BLADE_9',GetAttackWeapon(context.Source))
-         | HasStatus('GOON_SHILLELAGH',GetAttackWeapon(context.Source)) 
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -378,7 +378,6 @@ end
 
 function Goon_AttackingWithWisdomModifierWeapon()
     return HasStatus('FourEle_Attuned',GetAttackWeapon(context.Source))
-         | (HasStatus('SHILLELAGH',GetAttackWeapon(context.Source)) & ~HasStatus('GOON_SHILLELAGH',GetAttackWeapon(context.Source)))
 end
 
 function Goon_AttackingWithCharismaModifierWeapon()
