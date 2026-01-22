@@ -2,9 +2,9 @@
 
 -- TODO: Test attacking bodies and shit. If that's triggering it, try 'not dead', maybe the function will fire before they are considered dead.
 -- Added what appears to be a common solution for making the function more predictably fire
-function IsKillingBlow()
-    return HasDamageEffectFlag(DamageFlags.KillingBlow) | HasHPLessThan(1)
-end
+-- function IsKillingBlow()
+--     return HasDamageEffectFlag(DamageFlags.KillingBlow) | HasHPLessThan(1)
+-- end
 
 -- ==================================== Attack types ====================================
 -- TODO: Ye
