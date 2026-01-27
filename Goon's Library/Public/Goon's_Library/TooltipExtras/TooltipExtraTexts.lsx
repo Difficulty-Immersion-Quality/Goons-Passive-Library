@@ -4,6 +4,12 @@
     <region id="TooltipExtraTexts">
         <node id="root">
             <children>
+                <!-- Panache: Disadvantage ends if non-caster harms target  -->
+				<node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; &lt;LSTag Type="Status" Tooltip="PANACHE"&gt;Panache: Disadvantage&lt;/LSTag&gt; ends early if an entity other than the caster harms the target. -->
+					<attribute id="Text" type="TranslatedString" handle="h1673c403gdebcg4de1gac37gb494d151c6fb" version="1" />
+					<attribute id="UUID" type="guid" value="25454c14-1083-4f60-b229-c30e3c5886b7" />
+				</node>
                 <!-- Arcane Shot tooltips -->
                 <node id="TooltipExtraTexts">
                     <!-- Your &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; increases the &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt; of Arcane Shots. -->

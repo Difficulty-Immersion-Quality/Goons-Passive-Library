@@ -407,6 +407,7 @@
 	<!-- "46edbd50-74b9-4e37-9f05-28505b94cf8f" --> <content contentuid="h5e337669g3e9ag448fgb5b6g4bb4b67e4152" version="1">Your &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; increases the &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt; of Arcane Shots.</content>
 	<!-- "87a38a64-94d2-4aa5-8627-4abb43fea3ae" --> <content contentuid="he8581dfbga41bg466ag8368gc0310456f8fc" version="1">Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt; or &lt;LSTag Tooltip="SpellSlot"&gt;Spell Slot&lt;/LSTag&gt;.</content>
 	<!-- "8b0c9dc7-cfb4-43ff-9514-9acc807fc663" --> <content contentuid="he169c217g2ad1g4d5ag82dfg1d7a1acc9444" version="1">Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
+	<!-- "25454c14-1083-4f60-b229-c30e3c5886b7" --> <content contentuid="h1673c403gdebcg4de1gac37gb494d151c6fb" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; &lt;LSTag Type="Status" Tooltip="PANACHE"&gt;Panache: Disadvantage&lt;/LSTag&gt; ends early if an entity other than the caster harms the target.</content>
 
 	<!-- Extra descriptions for meta information -->
 	<!-- d193dbf2-c16f-4416-934a-98037bf6a98e --> <content contentuid="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is cumulative, &lt;b&gt;not&lt;/b&gt; multiplicative.</content>
