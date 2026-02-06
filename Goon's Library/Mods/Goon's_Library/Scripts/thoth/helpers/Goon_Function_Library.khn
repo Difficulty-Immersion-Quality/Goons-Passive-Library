@@ -29,7 +29,7 @@ function Goon_HasSilencedCondition()
 end
 
 function Goon_HasDeafenedCondition()
-    return HasAnyStatus({'DEAFENED'}, {}, {})
+    return HasAnyStatus({'DEAFENED','DEAF','DEAFNESS','GOON_DEAFENED','GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS','GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS'}, {}, {})
 end
 
 function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
