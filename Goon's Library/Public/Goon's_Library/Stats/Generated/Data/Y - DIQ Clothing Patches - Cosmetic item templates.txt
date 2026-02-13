@@ -1,0 +1,128 @@
+// ==================================== Container ====================================
+// using "Goon_Container_Cosmetic_Template"
+
+new entry "Goon_Container_Cosmetic_Template"
+type "Object"
+using "_Container"
+data "Vitality" "1"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// ==================================== Dye ====================================
+// using "Goon_OBJ_Dye_Cosmetic_Template"
+
+new entry "Goon_OBJ_Dye_Cosmetic_Template"
+type "Object"
+using "_Dyes"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+data "Priority" "1"
+
+// ==================================== Armour ====================================
+// using "Goon_ARM_Body_Cosmetic_Template"
+// using "Goon_ARM_Head_Cosmetic_Template"
+// using "Goon_ARM_Hand_Cosmetic_Template"
+// using "Goon_ARM_Foot_Cosmetic_Template"
+// using "Goon_ARM_Back_Cosmetic_Template"
+// using "Goon_ARM_Neck_Cosmetic_Template"
+// using "Goon_ARM_Finger_Cosmetic_Template"
+// using "Goon_ARM_Underwear_Cosmetic_Template"
+// using "Goon_ARM_CampBody_Cosmetic_Template"
+// using "Goon_ARM_CampFoot_Cosmetic_Template"
+
+// Chest
+new entry "Goon_ARM_Body_Cosmetic_Template"
+type "Armor"
+using "_Body"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+data "ArmorClass" "10"
+data "Armor Class Ability" "Dexterity"
+
+// Head
+new entry "Goon_ARM_Head_Cosmetic_Template"
+type "Armor"
+using "_Head"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Hand
+new entry "Goon_ARM_Hand_Cosmetic_Template"
+type "Armor"
+using "_Hand"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Foot
+new entry "Goon_ARM_Foot_Cosmetic_Template"
+type "Armor"
+using "_Foot"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Back
+new entry "Goon_ARM_Back_Cosmetic_Template"
+type "Armor"
+using "_Back"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Neck
+new entry "Goon_ARM_Neck_Cosmetic_Template"
+type "Armor"
+using "_Amulet"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Finger
+new entry "Goon_ARM_Finger_Cosmetic_Template"
+type "Armor"
+using "_Ring"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Underwear
+new entry "Goon_ARM_Underwear_Cosmetic_Template"
+type "Armor"
+using "_Underwear"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Camp body
+new entry "Goon_ARM_CampBody_Cosmetic_Template"
+type "Armor"
+using "ARM_Camp_Body"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// Camp foot
+new entry "Goon_ARM_CampFoot_Cosmetic_Template"
+type "Armor"
+using "ARM_Camp_Shoes"
+data "UseCosts" "ActionPoint:0"
+data "Weight" "0.01"
+data "ValueOverride" "1"
+data "Rarity" "Common"
+
+// ==================================== Weapons ====================================
