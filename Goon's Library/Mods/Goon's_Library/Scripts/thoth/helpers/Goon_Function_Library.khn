@@ -105,6 +105,31 @@ function Goon_CharacterLevelEqualToOrGreaterThan_5(entity)
     return ConditionResult(entity.Level >= 5)
 end
 
+function Goon_CharacterLevelGreaterThan(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Level > value)
+end
+
+function Goon_CharacterLevelLessThan(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Level < value)
+end
+
+function Goon_CharacterLevelGreaterThanOrEqual(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Level >= value)
+end
+
+function Goon_CharacterLevelLessThanOrEqual(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.Level <= value)
+end
+
+function Goon_IsCharacterLevelEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_CharacterLevelGreaterThanOrEqual(value, entity) & Goon_CharacterLevelLessThanOrEqual(value2, entity)
+end
+
 -- ==================================== Check current duration of status ====================================
 
 function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
@@ -199,10 +224,13 @@ end
 
 function Goon_IsBardicInspirationSpell()
     return SpellId('Target_BardicInspiration') 
+         | SpellId('Target_BardicInspiration_2') 
          | SpellId('Target_BardicInspiration_Combat') 
+         | SpellId('Target_BardicInspiration_Combat_2') 
          | SpellId('Target_MantleOfInspiration') 
          | SpellId('Target_MantleOfInspiration_2') 
-         | SpellId('Target_MantleOfInspiration_3')
+         | SpellId('Target_MantleOfInspiration_3') 
+         | SpellId('Shout_BardicInspiration_PeerlessSkill')
 end
 
 -- ==================================== Sorcerer stuff
@@ -245,6 +273,10 @@ end
 
 function Goon_HasDashStatus()
     return HasAnyStatus({'DASH','DASH_STACKED','DASH_STACKED_2','GOON_DASH_STACKED_3','GOON_DASH_STACKED_4','GOON_DASH_STACKED_5','GOON_DASH_STACKED_6','GOON_DASH_STACKED_7','GOON_DASH_STACKED_8','GOON_DASH_STACKED_9'}, {}, {})
+end
+
+function Goon_IsDashSpellCategory()
+    return SpellCategoryIs(SpellCategory.Dash)
 end
 
 function Goon_IsJumpSpellCategory()
@@ -323,6 +355,14 @@ function Goon_HasLightArmor(entity)
     entity = entity or context.Target
     local armor = GetActiveArmor(entity)
     return IsOfProficiencyGroup("LightArmor", armor)
+end
+
+-- Alternative light armor check matching how it's checked in vanilla
+function Goon_HasLightArmorAlt(entity)
+    entity = entity or context.Target
+    local armor = GetActiveArmor(entity)
+    local hasLightArmor = armor.ArmorType == ArmorType.Padded or armor.ArmorType == ArmorType.Leather or armor.ArmorType == ArmorType.StuddedLeather
+    return ConditionResult(hasLightArmor)
 end
 
 -- ==================================== Weapon enchant checks ====================================
@@ -683,6 +723,624 @@ function Goon_IsInvisibleSeen(entity)
         |  HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN',entity) 
         |  HasStatus('GOON_SHADOW_WALKER_SEEN',entity)
         |  HasStatus('GOON_EMPTY_BODY_SEEN',entity)
+end
+
+-- ==================================== Max Strength Conditions ====================================
+-- Hit Point checks
+function Goon_HasMaxHP(entity)
+    entity = entity or context.Target
+    return ConditionResult(entity.HPPercentage == 100)
+end
+
+function Goon_IsBloodied(entity)
+    entity = entity or context.Target
+    result = HasHPPercentageEqualOrLessThan(50, entity)
+    return ConditionResult(result.Result, {ConditionError("CE_Status_GOON_BLOODIED_False")}, {})
+end 
+
+-- Spellcaster resource checks
+function Goon_HasPactMagic()
+    return HasActionResource('WarlockSpellSlot',1,1,false,false,context.Source) 
+    | HasActionResource('WarlockSpellSlot',1,2,false,false,context.Source) 
+    | HasActionResource('WarlockSpellSlot',1,3,false,false,context.Source) 
+    | HasActionResource('WarlockSpellSlot',1,4,false,false,context.Source) 
+    | HasActionResource('WarlockSpellSlot',1,5,false,false,context.Source)
+end
+
+function Goon_HasSpellSlots()
+    return HasActionResource('SpellSlot',1,1,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,2,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,3,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,4,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,5,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,6,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,7,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,8,false,false,context.Source) 
+    | HasActionResource('SpellSlot',1,9,false,false,context.Source)
+end
+
+-- Character tag checks
+function Goon_IsHumanoid(entity)
+    entity = entity or context.Target
+    return Tagged('HUMANOID',entity)
+end
+
+function Goon_IsFey(entity)
+    entity = entity or context.Target
+    return Tagged('FEY',entity)
+end
+
+function Goon_IsBeast(entity)
+    entity = entity or context.Target
+    return Tagged('BEAST',entity)
+end
+
+function Goon_IsGoblinoid(entity)
+    entity = entity or context.Target
+    return Tagged('GOBLIN',entity) | Tagged('HOBGOBLIN',entity) | Tagged('BUGBEAR',entity)
+end
+
+function Goon_IsAberration(entity)
+    entity = entity or context.Target
+    return Tagged('ABERRATION',entity)
+end
+
+function Goon_IsCelestial(entity)
+    entity = entity or context.Target
+    return Tagged('CELESTIAL',entity)
+end
+
+function Goon_IsFiend(entity)
+    entity = entity or context.Target
+    return Tagged('FIEND',entity)
+end
+
+function Goon_IsUndead(entity)
+    entity = entity or context.Target
+    return Tagged('UNDEAD',entity)
+end
+
+function Goon_IsConstruct(entity)
+    entity = entity or context.Target
+    return Tagged('CONSTRUCT',entity)
+end
+
+function Goon_IsPlant(entity)
+    entity = entity or context.Target
+    return Tagged('PLANT',entity)
+end
+
+function Goon_IsMonstrosity(entity)
+    entity = entity or context.Target
+    return Tagged('MONSTROSITY',entity)
+end
+
+function Goon_IsDemon(entity)
+    entity = entity or context.Target
+    return Tagged('DEMON',entity)
+end
+
+function Goon_IsDevil(entity)
+    entity = entity or context.Target
+    return Tagged('DEVIL',entity)
+end
+
+function Goon_IsShortRace(entity)
+    entity = entity or context.Target
+    return Tagged('SHORT',entity)
+end
+
+function Goon_IsFemale(entity)
+    entity = entity or context.Target
+    return Tagged('FEMALE',entity)
+end
+
+function Goon_IsMale(entity)
+    entity = entity or context.Target
+    return Tagged('MALE',entity)
+end
+
+function Goon_IsFemaleStrong(entity)
+    entity = entity or context.Target
+    return Tagged('FEMALE',entity) & Tagged('BODYTYPE_STRONG',entity)
+end
+
+function Goon_IsMaleStrong(entity)
+    entity = entity or context.Target
+    return Tagged('MALE',entity) & Tagged('BODYTYPE_STRONG',entity)
+end
+
+-- Character size checks
+function Goon_IsSize(size, entity)
+    entity = entity or context.Target
+    return ConditionResult(entity.Size ~= Size.None and entity.Size.value == size.value)
+end
+
+function Goon_IsSizeGreaterThan(size, entity)
+    entity = entity or context.Target
+    return ConditionResult(entity.Size ~= Size.None and entity.Size.value > size.value)
+end
+
+function Goon_IsSizeLessThan(size, entity)
+    entity = entity or context.Target
+    return ConditionResult(entity.Size ~= Size.None and entity.Size.value < size.value)
+end
+
+function Goon_IsSizeGreaterThanOrEqual(size, entity)
+    entity = entity or context.Target
+    return ConditionResult(entity.Size ~= Size.None and entity.Size.value >= size.value)
+end
+
+function Goon_IsSizeLessThanOrEqual(size, entity)
+    entity = entity or context.Target
+    return ConditionResult(entity.Size ~= Size.None and entity.Size.value <= size.value)
+end
+
+-- Class level checks
+function Goon_ClassLevelEquals(level, class, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.GetClassLevel(class) == level)
+end
+
+function Goon_ClassLevelGreaterThan(level, class, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.GetClassLevel(class) > level)
+end
+
+function Goon_ClassLevelLessThan(level, class, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.GetClassLevel(class) < level)
+end
+
+function Goon_ClassLevelGreaterThanOrEqual(level, class, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.GetClassLevel(class) >= level)
+end
+
+function Goon_ClassLevelLessThanOrEqual(level, class, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.GetClassLevel(class) <= level)
+end
+
+function Goon_IsClassLevelEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_ClassLevelGreaterThanOrEqual(value, entity) & Goon_ClassLevelLessThanOrEqual(value2, entity)
+end
+
+-- Proficiency bonus checks
+function Goon_ProficiencyEquals(value)
+    entity = entity or context.Source
+    return ConditionResult(entity.ProficiencyBonus == value)
+end
+
+function Goon_ProficiencyBonusGreaterThan(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.ProficiencyBonus > value)
+end
+
+function Goon_ProficiencyBonusLessThan(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.ProficiencyBonus < value)
+end
+
+function Goon_ProficiencyBonusGreaterThanOrEqual(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.ProficiencyBonus >= value)
+end
+
+function Goon_ProficiencyBonusLessThanOrEqual(value, entity)
+    entity = entity or context.Source
+    return ConditionResult(entity.ProficiencyBonus <= value)
+end
+
+function Goon_IsProficiencyBonusEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_ProficiencyBonusGreaterThanOrEqual(value, entity) & Goon_ProficiencyBonusLessThanOrEqual(value2, entity)
+end
+
+-- Ability score checks
+-- Strength
+function Goon_StrengthEquals(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Strength == value)
+end
+
+function Goon_StrengthGreatherThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Strength > value)
+end
+
+function Goon_StrengthLessThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Strength < value)
+end
+
+function Goon_StrengthGreatherThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Strength >= value)
+end
+
+function Goon_StrengthLessThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Strength <= value)
+end
+
+function Goon_IsStrengthEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_StrengthGreatherThanOrEqual(value, entity) & Goon_StrengthLessThanOrEqual(value2, entity)
+end
+
+-- Dexterity
+function Goon_DexterityEquals(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Dexterity == value)
+end
+
+function Goon_DexterityGreatherThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Dexterity > value)
+end
+
+function Goon_DexterityLessThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Dexterity < value)
+end
+
+function Goon_DexterityGreatherThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Dexterity >= value)
+end
+
+function Goon_DexterityLessThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Dexterity <= value)
+end
+
+function Goon_IsDexterityEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_DexterityGreatherThanOrEqual(value, entity) & Goon_DexterityLessThanOrEqual(value2, entity)
+end
+
+-- Constitution
+function Goon_ConstitutionEquals(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Constitution == value)
+end
+
+function Goon_ConstitutionGreatherThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Constitution > value)
+end
+
+function Goon_ConstitutionLessThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Constitution < value)
+end
+
+function Goon_ConstitutionGreatherThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Constitution >= value)
+end
+
+function Goon_ConstitutionLessThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Constitution <= value)
+end
+
+function Goon_IsConstitutionEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_ConstitutionGreatherThanOrEqual(value, entity) & Goon_ConstitutionLessThanOrEqual(value2, entity)
+end
+
+-- Intelligence
+function Goon_IntelligenceEquals(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Intelligence == value)
+end
+
+function Goon_IntelligenceGreatherThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Intelligence > value)
+end
+
+function Goon_IntelligenceLessThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Intelligence < value)
+end
+
+function Goon_IntelligenceGreatherThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Intelligence >= value)
+end
+
+function Goon_IntelligenceLessThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Intelligence <= value)
+end
+
+function Goon_IsIntelligenceEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_IntelligenceGreatherThanOrEqual(value, entity) & Goon_IntelligenceLessThanOrEqual(value2, entity)
+end
+
+-- Wisdom
+function Goon_WisdomEquals(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Wisdom == value)
+end
+
+function Goon_WisdomGreatherThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Wisdom > value)
+end
+
+function Goon_WisdomLessThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Wisdom < value)
+end
+
+function Goon_WisdomGreatherThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Wisdom >= value)
+end
+
+function Goon_WisdomLessThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Wisdom <= value)
+end
+
+function Goon_IsWisdomEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_WisdomGreatherThanOrEqual(value, entity) & Goon_WisdomLessThanOrEqual(value2, entity)
+end
+
+-- Charisma
+function Goon_CharismaEquals(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Charisma == value)
+end
+
+function Goon_CharismaGreatherThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Charisma > value)
+end
+
+function Goon_CharismaLessThan(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Charisma < value)
+end
+
+function Goon_CharismaGreatherThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Charisma >= value)
+end
+
+function Goon_CharismaLessThanOrEqual(value, entity)
+    local entity = entity or context.Source
+    return ConditionResult(entity.Charisma <= value)
+end
+
+function Goon_IsCharismaEqualOrBetween(value, value2, entity)
+    local entity = entity or context.Source
+    return Goon_CharismaGreatherThanOrEqual(value, entity) & Goon_CharismaLessThanOrEqual(value2, entity)
+end
+
+-- Ability modifier checks
+-- Strength modifier
+function Goon_StrengthModEquals(value)
+    return ConditionResult(GetModifier(context.Source.Strength) == value)
+end
+
+function Goon_StrengthModGreaterThan(value)
+    return ConditionResult(GetModifier(context.Source.Strength) > value)
+end
+
+function Goon_StrengthModLessThan(value)
+    return ConditionResult(GetModifier(context.Source.Strength) < value)
+end
+
+function Goon_StrengthModGreaterThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Strength) >= value)
+end
+
+function Goon_StrengthModLessThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Strength) <= value)
+end
+
+-- Dexterity modifier
+function Goon_DexterityModEquals(value)
+    return ConditionResult(GetModifier(context.Source.Dexterity) == value)
+end
+
+function Goon_DexterityModGreaterThan(value)
+    return ConditionResult(GetModifier(context.Source.Dexterity) > value)
+end
+
+function Goon_DexterityModLessThan(value)
+    return ConditionResult(GetModifier(context.Source.Dexterity) < value)
+end
+
+function Goon_DexterityModGreaterThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Dexterity) >= value)
+end
+
+function Goon_DexterityModLessThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Dexterity) <= value)
+end
+
+-- Constitution modifier
+function Goon_ConstitutionModEquals(value)
+    return ConditionResult(GetModifier(context.Source.Constitution) == value)
+end
+
+function Goon_ConstitutionModGreaterThan(value)
+    return ConditionResult(GetModifier(context.Source.Constitution) > value)
+end
+
+function Goon_ConstitutionModLessThan(value)
+    return ConditionResult(GetModifier(context.Source.Constitution) < value)
+end
+
+function Goon_ConstitutionModGreaterThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Constitution) >= value)
+end
+
+function Goon_ConstitutionModLessThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Constitution) <= value)
+end
+
+-- Intelligence modifier
+function Goon_IntelligenceModEquals(value)
+    return ConditionResult(GetModifier(context.Source.Intelligence) == value)
+end
+
+function Goon_IntelligenceModGreaterThan(value)
+    return ConditionResult(GetModifier(context.Source.Intelligence) > value)
+end
+
+function Goon_IntelligenceModLessThan(value)
+    return ConditionResult(GetModifier(context.Source.Intelligence) < value)
+end
+
+function Goon_IntelligenceModGreaterThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Intelligence) >= value)
+end
+
+function Goon_IntelligenceModLessThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Intelligence) <= value)
+end
+
+-- Wisdom modifier
+function Goon_WisdomModEquals(value)
+    return ConditionResult(GetModifier(context.Source.Wisdom) == value)
+end
+
+function Goon_WisdomModGreaterThan(value)
+    return ConditionResult(GetModifier(context.Source.Wisdom) > value)
+end
+
+function Goon_WisdomModLessThan(value)
+    return ConditionResult(GetModifier(context.Source.Wisdom) < value)
+end
+
+function Goon_WisdomModGreaterThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Wisdom) >= value)
+end
+
+function Goon_WisdomModLessThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Wisdom) <= value)
+end
+
+-- Charisma modifier
+function Goon_CharismaModEquals(value)
+    return ConditionResult(GetModifier(context.Source.Charisma) == value)
+end
+
+function Goon_CharismaModGreaterThan(value)
+    return ConditionResult(GetModifier(context.Source.Charisma) > value)
+end
+
+function Goon_CharismaModLessThan(value)
+    return ConditionResult(GetModifier(context.Source.Charisma) < value)
+end
+
+function Goon_CharismaModGreaterThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Charisma) >= value)
+end
+
+function Goon_CharismaModLessThanOrEqual(value)
+    return ConditionResult(GetModifier(context.Source.Charisma) <= value)
+end
+
+-- Check for ability used in attack roll
+function Goon_AttackAbility(ability)
+    return IsAttack() & ConditionResult(context.HitDescription.AttackAbility == ability)
+end
+
+-- Check for magical weapon properties on attacking weapon
+function Goon_AttackWeaponIsMagical(entity)
+    entity = context.Source or entity
+    return HasWeaponProperty(WeaponProperties.Magical, GetAttackWeapon(entity))
+end
+
+-- Disguise Self check
+function Goon_IsDisguiseSelfSpell()
+    return SpellId('Shout_DisguiseSelf') 
+    | SpellId('Shout_DisguiseSelf_Tiefling_Male') | SpellId('Shout_DisguiseSelf_Tiefling_Female') 
+    | SpellId('Shout_DisguiseSelf_Drow_Male') | SpellId('Shout_DisguiseSelf_Drow_Female') 
+    | SpellId('Shout_DisguiseSelf_Human_Male') | SpellId('Shout_DisguiseSelf_Human_Female') 
+    | SpellId('Shout_DisguiseSelf_Githyanki_Male') | SpellId('Shout_DisguiseSelf_Githyanki_Female') 
+    | SpellId('Shout_DisguiseSelf_Dwarf_Male') | SpellId('Shout_DisguiseSelf_Dwarf_Female') 
+    | SpellId('Shout_DisguiseSelf_Elf_Male') | SpellId('Shout_DisguiseSelf_Elf_Female') 
+    | SpellId('Shout_DisguiseSelf_HalfElf_Male') | SpellId('Shout_DisguiseSelf_HalfElf_Female') 
+    | SpellId('Shout_DisguiseSelf_Halfling_Male') | SpellId('Shout_DisguiseSelf_Halfling_Female') 
+    | SpellId('Shout_DisguiseSelf_Dragonborn_Male') | SpellId('Shout_DisguiseSelf_Dragonborn_Female') 
+    | SpellId('Shout_DisguiseSelf_HalfOrc_Male') | SpellId('Shout_DisguiseSelf_HalfOrc_Female') 
+    | SpellId('Shout_DisguiseSelf_Gnome_Male') | SpellId('Shout_DisguiseSelf_Gnome_Female') 
+    | SpellId('Shout_DisguiseSelf_Human_Strong_Male') | SpellId('Shout_DisguiseSelf_Human_Strong_Female') 
+    | SpellId('Shout_DisguiseSelf_Drow_Strong_Male') | SpellId('Shout_DisguiseSelf_Drow_Strong_Female') 
+    | SpellId('Shout_DisguiseSelf_Elf_Strong_Male') | SpellId('Shout_DisguiseSelf_Elf_Strong_Female') 
+    | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Male') | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Female') 
+    | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Male') | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Female')
+end
+
+-- Surface checks
+function Goon_IsInWaterSurface(entity)
+    local entity = entity or context.Target
+    return InSurface('SurfaceBlood', entity)
+    | InSurface('SurfaceBloodElectrified', entity)
+    | InSurface('SurfaceBloodFrozen', entity)
+    | InSurface('SurfaceWater', entity)
+    | InSurface('SurfaceWaterElectrified', entity)
+    | InSurface('SurfaceWaterFrozen', entity)
+    | InSurface('SurfaceDeepWater', entity)
+    | InSurface('SurfaceDeepWaterRunning', entity)
+    | InSurface('Sewer', entity)
+end
+
+function Goon_IsInFreezableSurface(entity)
+    local entity = entity or context.Target
+    return InSurface('SurfaceWater', entity)
+    | InSurface('SurfaceWaterElectrified', entity)
+    | InSurface('SurfaceBlood', entity)
+    | InSurface('SurfaceAlcohol', entity)
+    | InSurface('SurfaceAcid', entity)
+end
+
+-- ==================================== String Lookups - JuuM ====================================
+-- Conditions created by JuuM that do string lookups that can be used for better upcast checking
+
+-- JM_HasStringInSpellId('Spell1','Spell2')
+-- Original name: function JM_HasStringInSpellId(...)
+function Goon_HasStringInSpellId(...)
+    local strings = {...}
+    local spellId = context.SpellModificationDescription.SpellId
+    if spellId ~= "" then
+        for _,v in ipairs(strings) do
+            if string.find(spellId,v) then
+                return ConditionResult(true)
+            end
+        end
+    end
+    return ConditionResult(false)
+end
+
+-- JM_SpellOrUpcastOf('Spell1','Spell2')
+-- Original name: function JM_SpellOrUpcastOf(...)
+function Goon_SpellOrUpcastOf(...)
+    local spells = {...}
+    local spellLevel = context.HitDescription.SpellLevel
+    local spellPowerLevel = context.HitDescription.SpellPowerLevel
+    for _,v in ipairs(spells) do
+        local spell = v
+        if spellPowerLevel ~= spellLevel then
+            spell = spell .. string.format("_%i",spellPowerLevel)
+        end
+        if SpellId(spell).Result then
+            return ConditionResult(true)
+        end
+    end
+    return ConditionResult(false)
 end
 
 -- ==================================== Junk ====================================

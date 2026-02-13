@@ -25,6 +25,13 @@
                     <attribute id="Identifier" type="FixedString" value="Goon_HasAttackedOrCast"/>
                     <attribute id="UUID" type="guid" value="ccc7ac34-90e5-4450-886f-faf81f95f26b"/>
                 </node>
+                <node id="ConditionErrors">
+                    <!-- Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1"/>
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
+                    <attribute id="Identifier" type="FixedString" value="CE_Status_GOON_BLOODIED_False"/>
+                    <attribute id="UUID" type="guid" value="a40f5f73-dab6-494e-a1af-ec9ce4efa092"/>
+                </node>
             </children>
         </node>
     </region>
