@@ -139,7 +139,7 @@ function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
 end
 
 -- ==================================== Spell batching ====================================
--- TODO: Hunt down everything relevant.
+-- TODO: Can we even specify interrupts in KHN? I don't think this works like that...
 
 -- ==================================== Sneak Attacks
 
@@ -158,6 +158,10 @@ function Goon_IsSneakAttackSpell()
          | SpellId('Target_SneakAttack_Ruffian')
          | SpellId('Projectile_SneakAttack_Ruffian')
          | SpellId('Target_LLRuffian_SneakAttack_Unarmed')
+         | SpellId('Target_LHB_Justicar_ConsecratedStrike') 
+         | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike') 
+         | SpellId('Projectile_LHB_Justicar_ConsecratedStrike') 
+         | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike') 
 end
 
 function Goon_IsSneakAttackInterrupt()
@@ -168,6 +172,10 @@ function Goon_IsSneakAttackInterrupt()
          | SpellId('Interrupt_SneakAttack_Rakish_Critical')
          | SpellId('Interrupt_SneakAttack_Ruffian') 
          | SpellId('Interrupt_SneakAttack_Ruffian_Critical')
+         | SpellId('Interrupt_LHB_Justicar_ConsecratedStrike') 
+         | IsSpellChildOrVariantFromContext('Interrupt_LHB_Justicar_ConsecratedStrike') 
+         | SpellId('Interrupt_LHB_Justicar_ConsecratedStrike_Critical') 
+         | IsSpellChildOrVariantFromContext('Interrupt_LHB_Justicar_ConsecratedStrike_Critical') 
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
