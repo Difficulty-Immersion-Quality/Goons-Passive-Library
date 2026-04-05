@@ -36,14 +36,14 @@ function Goon_AttackOfOpportunityConditions()
          & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target)) & (~HasStatus('PANACHE', context.Source) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
 end
 
--- Regular: 
--- Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target)
+-- // Regular: 
+-- // Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target)
 
--- War Caster: 
--- Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target) and Self(context.Observer, context.Source) and not HasSpellCastBlocked(context.Observer)
+-- // War Caster: 
+-- // Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target) and Self(context.Observer, context.Source) and not HasSpellCastBlocked(context.Observer)
 
--- Polarm Master: 
--- Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
+-- // Polarm Master: 
+-- // Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
 
 -- ==================================== STATUS GROUPINGS ====================================
 
@@ -127,12 +127,12 @@ end
 -- ==================================== Fetch character levels ====================================
 -- TODO: Goon_ change all occurances
 
-function GoonCharacterLevelEqualTo(value, entity)
+function Goon_CharacterLevelEqualTo(value, entity)
     entity = entity or context.Source
     return ConditionResult(entity.Level == value)
 end
 
-function GoonCharacterLevelEqualToOrGreaterThan(value, entity)
+function Goon_CharacterLevelEqualToOrGreaterThan(value, entity)
     entity = entity or context.Source
     return ConditionResult(entity.Level >= value)
 end
