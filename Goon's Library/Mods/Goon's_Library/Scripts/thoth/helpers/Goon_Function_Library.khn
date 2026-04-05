@@ -14,6 +14,29 @@ function Goon_IsMeleeOffhandAttack()
 	return ConditionResult(result)
 end
 
+-- ==================================== Interrupt conditions ====================================
+
+function Goon_BasicHarmfulInterruptConditions()
+    return (Player(context.Observer) | ~HasStatus('SG_Invisible', context.Observer))
+         & IsAbleToReact(context.Observer)
+         & (~HasStatus('SG_Invisible', context.Target) | Goon_CanSeeInvisible())
+end
+
+function Goon_AttackOfOpportunityConditions()
+    return Goon_BasicHarmfulInterruptConditions()
+         & ~Self(context.Observer, context.Target)
+         & Enemy()
+         & (Player(context.Source) | ~HasStatus('SANCTUARY', context.Source))
+         & ~WieldingWeapon('Ammunition', false, false, context.Source)
+         & ~HasAnyStatus({'SG_Incapacitated', 'SG_Unconscious', 'MOBILE_NO_AOO'}, {}, {}, context.Source)
+         & ~HasAnyStatus({'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'MOBILE_NO_AOO_SOURCE', 'SNEAKING', 'SG_Ignore_AOO'}, {}, {}, context.Target)
+         & (~Player(context.Source) & Tagged('AI_IGNORED_TARGET'))
+         & ~Goon_HasFlamingSphereAuraCondition()
+         & ~AnyEntityIsItem()
+         & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target)
+         & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target)) & (~HasStatus('PANACHE', context.Source) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
+end
+
 -- ==================================== STATUS GROUPINGS ====================================
 
 -- ==================================== Bleeding
@@ -32,6 +55,8 @@ function Goon_HasDeafenedCondition()
     return HasAnyStatus({'DEAFENED','DEAF','DEAFNESS','GOON_DEAFENED','GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS','GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS'}, {}, {})
 end
 
+-- TODO: "not" instead of ~? Allowed in if statement?
+-- IsDeaf not an included function
 function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
     local advantage = advantage or false
     local disadvantage = disadvantage or false
@@ -85,6 +110,10 @@ end
 
 function Goon_IsKarlachCooking()
     return Tagged('REALLY_KARLACH') & ~Tagged('KARLACH_CAN_TOUCH')
+end
+
+function Goon_HasFlamingSphereAuraCondition()
+    return HasAnyStatus({'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9'}, {}, {})
 end
 
 -- ==================================== Fetch character levels ====================================
