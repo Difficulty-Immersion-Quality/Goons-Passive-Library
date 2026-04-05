@@ -635,7 +635,7 @@ end
 
 function Goon_IsMyrmidonDruidPolymorph(entity)
     entity = entity or context.Source
-    return HasStatus('SG_Polymorph', entity) & (Tagged('MYRMIDON_AIR', entity) | Tagged('MYRMIDON_EARTH', entity) | Tagged('MYRMIDON_FIRE', entity) | Tagged('MYRMIDON_WATER', entity)) 
+    return Tagged('MYRMIDON_AIR', entity) | Tagged('MYRMIDON_EARTH', entity) | Tagged('MYRMIDON_FIRE', entity) | Tagged('MYRMIDON_WATER', entity)
 end
 
 function Goon_IsHumanoidDruidPolymorph(entity)
