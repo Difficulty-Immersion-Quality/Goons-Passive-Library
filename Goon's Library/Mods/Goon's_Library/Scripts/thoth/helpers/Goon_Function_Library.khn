@@ -24,7 +24,6 @@ end
 
 function Goon_AttackOfOpportunityConditions()
     return Goon_BasicHarmfulInterruptConditions()
-         & ~Self(context.Observer, context.Target)
          & Enemy()
          & (Player(context.Source) | ~HasStatus('SANCTUARY', context.Source))
          & ~WieldingWeapon('Ammunition', false, false, context.Source)
@@ -36,6 +35,15 @@ function Goon_AttackOfOpportunityConditions()
          & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target)
          & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target)) & (~HasStatus('PANACHE', context.Source) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
 end
+
+-- Regular: 
+-- Goon_AttackOfOpportunityConditions() not Self(context.Observer, context.Target)
+
+-- War Caster: 
+-- Goon_AttackOfOpportunityConditions() and Self(context.Observer, context.Source) and not HasSpellCastBlocked(context.Observer)
+
+-- Polarm Master: 
+-- Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
 
 -- ==================================== STATUS GROUPINGS ====================================
 
