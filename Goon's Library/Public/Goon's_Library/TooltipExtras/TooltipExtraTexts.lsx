@@ -10,6 +10,11 @@
 					<attribute id="Text" type="TranslatedString" handle="h5d5792d8g0017g4d4fg843ege21c7fc31282" version="1" />
 					<attribute id="UUID" type="guid" value="d58d5fff-c41b-46a7-afde-9bfd4852eb0a" />
 				</node>
+				<node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; for each target. -->
+					<attribute id="Text" type="TranslatedString" handle="h06680d3agce4eg46d5ga213g95800e8ba4fc" version="1" />
+					<attribute id="UUID" type="guid" value="2e9bcfe0-6444-477c-a767-40e967ca7b55" />
+				</node>
                 <!-- Panache: Disadvantage ends if non-caster harms target  -->
 				<node id="TooltipExtraTexts">
                     <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; &lt;LSTag Type="Status" Tooltip="PANACHE"&gt;Panache: Disadvantage&lt;/LSTag&gt; ends early if an entity other than the caster harms the target. -->

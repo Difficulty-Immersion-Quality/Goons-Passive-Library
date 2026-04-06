@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
 	<content contentuid="hcbd0a4a3g5b20g46f8g9c35g5733c101d779" version="1">Magic Allergy</content>
-	<content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Tooltip=&lt;GOON_MAGICALLERGY_AURA"&lt;Magic Allergy&lt;/LSTag&gt;.</content>
+	<content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
 	<content contentuid="h50d7d89dg8e08g4fbag9efbgdcd0baaaef51" version="1">Unstable</content>
 	<content contentuid="h63f6f5c7g7d96g4383g98f3g30609492a1e4" version="1">The creature is reacting to nearby magic and has become unstable. At the start of its next turn, it will trigger a random effect.</content>
 	<content contentuid="he3ff7e25gd139g4d13g9cb9gb21f0850697e" version="1">Magic Allergy</content>
@@ -409,6 +409,7 @@
 	<!-- "8b0c9dc7-cfb4-43ff-9514-9acc807fc663" --> <content contentuid="he169c217g2ad1g4d5ag82dfg1d7a1acc9444" version="1">Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
 	<!-- "25454c14-1083-4f60-b229-c30e3c5886b7" --> <content contentuid="h1673c403gdebcg4de1gac37gb494d151c6fb" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; &lt;LSTag Type="Status" Tooltip="PANACHE"&gt;Panache: Disadvantage&lt;/LSTag&gt; ends early if an entity other than the caster harms the target.</content>
 	<!-- "d58d5fff-c41b-46a7-afde-9bfd4852eb0a" --> <content contentuid="h5d5792d8g0017g4d4fg843ege21c7fc31282" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt;.</content>
+	<!-- "2e9bcfe0-6444-477c-a767-40e967ca7b55" --> <content contentuid="h06680d3agce4eg46d5ga213g95800e8ba4fc" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; for each target.</content>
 
 	<!-- Extra descriptions for meta information -->
 	<!-- d193dbf2-c16f-4416-934a-98037bf6a98e --> <content contentuid="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is cumulative, &lt;b&gt;not&lt;/b&gt; multiplicative.</content>
