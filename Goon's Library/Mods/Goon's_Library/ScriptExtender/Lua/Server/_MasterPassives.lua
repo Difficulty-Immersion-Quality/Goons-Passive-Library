@@ -10,6 +10,7 @@ local function ApplyMasterPassives(entityID)
         "Goon_DamageReroll_Throwing_Master_Passive",
         "Goon_Advantage_Throwing_Master_Passive",
         "Goon_IgnoreResistance_Throwing_Master_Passive",
+        "Goon_OncePerAction_Cooldown_Master_Passive",
         "Goon_Remove_Shillelagh_Passive"
         -- "Goon_Disenchant_Master_Passive"
         -- TODO: Replace Shillelagh stuff with universal implementation

@@ -52,3 +52,30 @@ data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableComb
 // data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;IgnoreResting;ApplyToDead"
 // data "OnApplyFunctors" "IF(HasStatus( 'SHILLELAGH', GetActiveWeapon(context.Target, true))):ApplyEquipmentStatus(MeleeOffHand, MAG_IRONVINE_SHIELD_TECHNICAL, 100, 1)"
 // data "OnRemoveFunctors" "RemoveStatus(GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand), MAG_IRONVINE_SHIELD_TECHNICAL)"
+
+// ==================================== Once per action cooldown stuff ====================================
+// &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; for each target.
+// data "TooltipPermanentWarnings" "2e9bcfe0-6444-477c-a767-40e967ca7b55"
+
+new entry "Goon_OncePerAction_Cooldown_Master_Passive"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCast"
+data "Conditions" ""
+data "StatsFunctors" "ApplyStatus(SELF, GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL, 100, 0)"
+
+new entry "GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL"
+data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead;IgnoreResting"
+
+// Reference as a condition "not HasStatus('GOON_ONCEPERACTION_COOLDOWN')" and remove cooldowns from "Properties" in passives.
+new entry "GOON_ONCEPERACTION_COOLDOWN"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "GOON_ONCEPERACTION_COOLDOWN"
+data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead;IgnoreResting;TickingWithSource"
+data "TickType" "EndTurn"
+data "RemoveConditions" "HasStatus('GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL', context.Source)"
+data "RemoveEvents" "OnSourceStatusApplied"
