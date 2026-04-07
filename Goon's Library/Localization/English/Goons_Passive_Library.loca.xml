@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== E - MagicAllergy.txt ==================================== -->
 
 	<!-- "" --> <content contentuid="hcbd0a4a3g5b20g46f8g9c35g5733c101d779" version="1">Magic Allergy</content>
 	<!-- "" --> <content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
@@ -13,14 +13,14 @@
 	<!-- "" --> <content contentuid="hb3a26f07g52dfg4d55g9620gfa00fdd39a99" version="1">Magic Allergy</content>
 	<!-- "" --> <content contentuid="hf677acbfgb2e1g401agb55dg5accaf8f69d5" version="1">An omnipotent force has given this creature a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== A - Critical Hit Passives.txt ==================================== -->
 	
 	<!-- "Goon_Critical_Hit_Immunity" --> <content contentuid="he547088cg3538g477dg8019gd30052e44f34" version="1">Critical Hit Immunity</content>
 	<!-- "Goon_Critical_Hit_Immunity" --> <content contentuid="h7da4d760g695eg4090g965fg1039b73cf76e" version="1">&lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 	<!-- "Goon_Critical_Hit_Resistance" --> <content contentuid="h4e558d13g9001g4543g8e18g661852a597ec" version="1">Critical Hit Resistance</content>
 	<!-- "Goon_Critical_Hit_Resistance" --> <content contentuid="h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b" version="1">&lt;LSTag Tooltip="Resistant"&gt;Resistant&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== D - Fall damage.txt ==================================== -->
 
 	<!-- "" --> <content contentuid="h6822e288ga459g4837gac9cg29836b5858fb" version="1">Fall Damage Vulnerability</content>
 	<!-- "" --> <content contentuid="h24211675g665eg43f4ga3cfg327548af17b1" version="1">An omnipotent force has doubled the fall damage this creature receives.</content>
@@ -29,7 +29,7 @@
 	<!-- "" --> <content contentuid="hc8b5d5fcg7767g4f14gbeb4g11a2b8597936" version="1">Fall Damage Immunity</content>
 	<!-- "" --> <content contentuid="hd1bf669eg5186g468fga5c5g627632e63b4a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== D - Weight, size and scale.txt ==================================== -->
 
 	<!-- "" --> <content contentuid="hbc9fdc9dg1effg4d5fgb285g307e57b67e94" version="1">Increased Weight, Size &amp; Scale 1</content>
 	<!-- "" --> <content contentuid="hcdc9345bgbbfbg47dfgb578g58fd40d85cd5" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] category.</content>
@@ -77,7 +77,7 @@
 	<!-- "" --> <content contentuid="h85cfd39eg5f6fg4b29gadecgeaebd966a19c" version="1">Reduced Scale 5</content>
 	<!-- "" --> <content contentuid="h560b483ag3987g4fcega3b2g58ab8eee0522" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== D - Movement.txt ==================================== -->
 	
 	<!-- "" --> <content contentuid="h800133d0g0528g46dcg963dg12576934c550" version="1">Impeded Movement 1</content>
 	<!-- "" --> <content contentuid="h101f92deg74f3g4146g838ega86aec6062aa" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
@@ -207,17 +207,16 @@
 	<!-- "Goon_Thunder_Ignore_Resistance" --> <content contentuid="ha64f98f1g10bcg4d2eg9743g1fed769865c8" version="1">Ignore Thunder Resistance</content>
 	<!-- "Goon_Thunder_Ignore_Immune" --> <content contentuid="hb9c2c393gb253g456cgb88cgc997fa4e3fd9" version="1">Ignore Thunder Immunity</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== D - Damage bonuses.txt ==================================== -->
 
-	<!-- "" --> <content contentuid="h45bdc878g3c3bg45c7g88bfg04af046e6c23" version="1">An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
-	<!-- "" --> <content contentuid="hc4c65557ge9bag4a3bg9aa8gcada0f972dbd" version="1">An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
-	<!-- "" --> <content contentuid="h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f" version="1">An omnipotent force allows this creature's spells to deal an additional [1].</content>
+	<!-- "Goon_Damage_X_X_Attacks" --> <content contentuid="h3025cc0egeb05g4ae3gb20fg46161d9f527b" version="1">Attack Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_Attacks" --> <content contentuid="h45bdc878g3c3bg45c7g88bfg04af046e6c23" version="1">An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- "Goon_Damage_X_X_SpellAttacks" --> <content contentuid="hc21050e9g5d73g4dbbgab10gc907411bc1d1" version="1">Spell Attack Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_SpellAttacks" --> <content contentuid="hc4c65557ge9bag4a3bg9aa8gcada0f972dbd" version="1">An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
 
-	<!-- "" --> <content contentuid="h3025cc0egeb05g4ae3gb20fg46161d9f527b" version="1">Attack Damage Bonus</content>
-	<!-- "" --> <content contentuid="hc21050e9g5d73g4dbbgab10gc907411bc1d1" version="1">Spell Attack Damage Bonus</content>
-	<!-- "" --> <content contentuid="hb075868dg6954g48b7gb23cg3a2c93d39a66" version="1">Spells Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="hb075868dg6954g48b7gb23cg3a2c93d39a66" version="1">Spells Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f" version="1">An omnipotent force allows this creature's spells to deal an additional [1].</content>
 
 	<!-- ==================================== XXXXX ==================================== -->
 
