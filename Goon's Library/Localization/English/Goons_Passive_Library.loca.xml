@@ -22,12 +22,14 @@
 
 	<!-- ==================================== D - Fall damage.txt ==================================== -->
 
-	<!-- "" --> <content contentuid="h6822e288ga459g4837gac9cg29836b5858fb" version="1">Fall Damage Vulnerability</content>
-	<!-- "" --> <content contentuid="h24211675g665eg43f4ga3cfg327548af17b1" version="1">An omnipotent force has doubled the fall damage this creature receives.</content>
-	<!-- "" --> <content contentuid="h7aa3001bgeeceg4610g83d1g868e961d212f" version="1">Fall Damage Resistance</content>
-	<!-- "" --> <content contentuid="hea8f3b54gd0cbg46a8ga748gdf97c08b108b" version="1">An omnipotent force has halved the fall damage this creature receives.</content>
-	<!-- "" --> <content contentuid="hc8b5d5fcg7767g4f14gbeb4g11a2b8597936" version="1">Fall Damage Immunity</content>
-	<!-- "" --> <content contentuid="hd1bf669eg5186g468fga5c5g627632e63b4a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.</content>
+	<!-- "Goon_Fall_Damage_Vulnerability" --> <content contentuid="h6822e288ga459g4837gac9cg29836b5858fb" version="1">Fall Damage Vulnerability</content>
+	<!-- "Goon_Fall_Damage_Vulnerability" --> <content contentuid="h24211675g665eg43f4ga3cfg327548af17b1" version="1">An omnipotent force has doubled the fall damage this creature receives.</content>
+
+	<!-- "Goon_Fall_Damage_Resistance" --> <content contentuid="h7aa3001bgeeceg4610g83d1g868e961d212f" version="1">Fall Damage Resistance</content>
+	<!-- "Goon_Fall_Damage_Resistance" --> <content contentuid="hea8f3b54gd0cbg46a8ga748gdf97c08b108b" version="1">An omnipotent force has halved the fall damage this creature receives.</content>
+
+	<!-- "Goon_Fall_Damage_Immunity" --> <content contentuid="hc8b5d5fcg7767g4f14gbeb4g11a2b8597936" version="1">Fall Damage Immunity</content>
+	<!-- "Goon_Fall_Damage_Immunity" --> <content contentuid="hd1bf669eg5186g468fga5c5g627632e63b4a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.</content>
 
 	<!-- ==================================== D - Weight, size and scale.txt ==================================== -->
 
@@ -218,34 +220,40 @@
 	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="hb075868dg6954g48b7gb23cg3a2c93d39a66" version="1">Spells Damage Bonus</content>
 	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f" version="1">An omnipotent force allows this creature's spells to deal an additional [1].</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== D - Stat boosts.txt ==================================== -->
 
-	<!-- "" --> <content contentuid="h5b4280056a754abe83ad50c05af217cfg861" version="1">Impervious Defence</content>
-	<!-- "" --> <content contentuid="hfef70fe222774b49b7eb7812b9c04e27cage" version="1">All incoming damage is reduced by [1], equal to your &lt;LSTag Tooltip="ProficiencyBonus"&gt;Proficiency Bonus&lt;/LSTag&gt;.</content>
-	<!-- "" --> <content contentuid="h09255dfdg6a3eg46d6g9cb2gfe90e9219972" version="1">All incoming damage is reduced by [1].</content>
-	<!-- "" --> <content contentuid="h193c4559g56e5g419aga8d3g78eee841b45f" version="1">Armour Class Increase</content>
-	<!-- "" --> <content contentuid="h3cc24883gfe3ag4c35gbc13gf87334eb5a4e" version="1">Armour Class Decrease</content>
-	<!-- "" --> <content contentuid="h93157a8fg6f18g4545g88a1g18e16621b367" version="1">Improved Accuracy</content>
-	<!-- "" --> <content contentuid="h9171a2e1g4beag44e8gb069gcbf8150c0c44" version="1">You gain a +[1] bonus to &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.</content>
+	<!-- "Goon_DamageReduction" --> <content contentuid="h5b4280056a754abe83ad50c05af217cfg861" version="1">Impervious Defence</content>
+	<!-- "Goon_DamageReduction" --> <content contentuid="hfef70fe222774b49b7eb7812b9c04e27cage" version="1">All incoming damage is reduced by [1], equal to your &lt;LSTag Tooltip="ProficiencyBonus"&gt;Proficiency Bonus&lt;/LSTag&gt;.</content>
+	<!-- "Goon_DamageReduction_1" --> <content contentuid="h09255dfdg6a3eg46d6g9cb2gfe90e9219972" version="1">All incoming damage is reduced by [1].</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- "Goon_AC_Buff_1" --> <content contentuid="h193c4559g56e5g419aga8d3g78eee841b45f" version="1">Armour Class Increase</content>
+	<!-- "Goon_AC_Debuff_1" --> <content contentuid="h3cc24883gfe3ag4c35gbc13gf87334eb5a4e" version="1">Armour Class Decrease</content>
 
-	<!-- "" --> <content contentuid="hd701ed72gc3e9g4162g957fg513c16f91234" version="1">Potions of Healing</content>
-	<!-- "" --> <content contentuid="h49522c5cg0c15g45a8gb648g2cab00a813a3" version="1">An omnipotent force has gifted this creature x[1] Potion of Healing.</content>
-	<!-- "" --> <content contentuid="h5f6f84ddgab0eg462aga71cg74fa0cee209d" version="1">Potions of Greater Healing</content>
-	<!-- "" --> <content contentuid="hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32" version="1">An omnipotent force has gifted this creature x[1] Potion of Greater Healing.</content>
-	<!-- "" --> <content contentuid="h6d4610aeg4ff8g4687g9439ga8217a3c2c4b" version="1">Potions of Superior Healing</content>
-	<!-- "" --> <content contentuid="hbd2ffcffg7d23g4942g8575g61252df9f720" version="1">An omnipotent force has gifted this creature x[1] Potion of Superior Healing.</content>
-	<!-- "" --> <content contentuid="h5fa64594g2ab8g4566gaf61gd57160515a1e" version="1">Potions of Supreme Healing</content>
-	<!-- "" --> <content contentuid="ha44ab676gf43eg493ag9b38g27b45ecfba2e" version="1">An omnipotent force has gifted this creature x[1] Potion of Supreme Healing.</content>
-	<!-- "" --> <content contentuid="h4379027bga5afg4a91g9f63gdf2721a953eb" version="1">Dream Mist</content>
-	<!-- "" --> <content contentuid="h25f6ae9dg10c3g4502gaa76ge35fbedb87d6" version="1">An omnipotent force has gifted this creature x[1] Dream Mist.</content>
+	<!-- "Goon_AttackRoll_1" --> <content contentuid="h93157a8fg6f18g4545g88a1g18e16621b367" version="1">Improved Accuracy</content>
+	<!-- "Goon_AttackRoll_1" --> <content contentuid="h9171a2e1g4beag44e8gb069gcbf8150c0c44" version="1">You gain a +[1] bonus to &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+	<!-- ==================================== C - Potion summoning.txt ==================================== -->
 
-	<!-- "" --> <content contentuid="h441396f0g2826g49efgbe51gcbcbabde0f12" version="1">Automatic Sanctuary</content>
-	<!-- "" --> <content contentuid="hd7db620dg26c9g4a4fgb530ge7b997be5ba5" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the start of combat.</content>
-	<!-- "" --> <content contentuid="hcdf47849g0d0bg418dg82b5g7b5063a8e5a8" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.</content>
+	<!-- "Goon_Summon_Potion_Healing_x1" --> <content contentuid="hd701ed72gc3e9g4162g957fg513c16f91234" version="1">Potions of Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_x1" --> <content contentuid="h49522c5cg0c15g45a8gb648g2cab00a813a3" version="1">An omnipotent force has gifted this creature x[1] Potion of Healing.</content>
+
+	<!-- "Goon_Summon_Potion_Healing_Greater_x1" --> <content contentuid="h5f6f84ddgab0eg462aga71cg74fa0cee209d" version="1">Potions of Greater Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_Greater_x1" --> <content contentuid="hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32" version="1">An omnipotent force has gifted this creature x[1] Potion of Greater Healing.</content>
+
+	<!-- "Goon_Summon_Potion_Healing_Superior_x1" --> <content contentuid="h6d4610aeg4ff8g4687g9439ga8217a3c2c4b" version="1">Potions of Superior Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_Superior_x1" --> <content contentuid="hbd2ffcffg7d23g4942g8575g61252df9f720" version="1">An omnipotent force has gifted this creature x[1] Potion of Superior Healing.</content>
+
+	<!-- "Goon_Summon_Potion_Healing_Supreme_x1" --> <content contentuid="h5fa64594g2ab8g4566gaf61gd57160515a1e" version="1">Potions of Supreme Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_Supreme_x1" --> <content contentuid="ha44ab676gf43eg493ag9b38g27b45ecfba2e" version="1">An omnipotent force has gifted this creature x[1] Potion of Supreme Healing.</content>
+
+	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h4379027bga5afg4a91g9f63gdf2721a953eb" version="1">Dream Mist</content>
+	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h25f6ae9dg10c3g4502gaa76ge35fbedb87d6" version="1">An omnipotent force has gifted this creature x[1] Dream Mist.</content>
+
+	<!-- ==================================== Z - Retired entries.txt ==================================== -->
+
+	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat", "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="h441396f0g2826g49efgbe51gcbcbabde0f12" version="1">Automatic Sanctuary</content>
+	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat" --> <content contentuid="hd7db620dg26c9g4a4fgb530ge7b997be5ba5" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the start of combat.</content>
+	<!-- "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="hcdf47849g0d0bg418dg82b5g7b5063a8e5a8" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.</content>
 
 	<!-- ==================================== XXXXX ==================================== -->
 

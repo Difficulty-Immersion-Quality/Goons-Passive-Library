@@ -57,11 +57,16 @@ data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableComb
 // &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; for each target.
 // data "TooltipPermanentWarnings" "2e9bcfe0-6444-477c-a767-40e967ca7b55"
 
+// TODO: Need a means of handling application/removal when a 3rd party (not the original source caster) is involved.
+// I guess I just look to store targets in vars, or maybe when a different entity casts I apply the CASTER_TECHNICAL to the previous caster as well to force refresh.
+// But it needs to be contextual based on distance, can't have some dickhead NPC casting across the map and having that recorded, ruining my functionality.
+// Don't want to use an aura, and only need to trigger the source status application for removal... so trigger it on all entities within 30m or something? That's a lot of applications though, wouldn't wan to cause any sort of performance issues (even though I'm pretty sure it'd be fine)
+// Yeah maybe apply an additional status for 1 round and blink an aura in on cast with the passive
+
 new entry "Goon_OncePerAction_Cooldown_Master_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCast"
-data "Conditions" ""
 data "StatsFunctors" "ApplyStatus(SELF, GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL, 100, 0)"
 
 new entry "GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL"
@@ -69,6 +74,7 @@ type "StatusData"
 data "StatusType" "BOOST"
 data "StackId" "GOON_ONCEPERACTION_COOLDOWN_CASTER_TECHNICAL"
 data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead;IgnoreResting"
+// data "OnApplyFunctors" ""
 
 // Reference as a condition "not HasStatus('GOON_ONCEPERACTION_COOLDOWN')" and remove cooldowns from "Properties" in passives.
 new entry "GOON_ONCEPERACTION_COOLDOWN"

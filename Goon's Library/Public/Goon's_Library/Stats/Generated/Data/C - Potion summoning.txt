@@ -1,4 +1,5 @@
 // ==================================== Stuff ====================================
+// TODO: Revisit the "StatsFunctorContext", gotta try and stop any duplication and player looting.
 
 //new entry "KNOCKED_OUT_SUMMON_DISMISS"
 //type "StatusData"
@@ -36,308 +37,252 @@ data "OnRemoveFunctors" "Unsummon()"
 
 // ==================================== Healing Potions ====================================
 
-// Potion of Healing
+// ==================================== Healing Potions - Potion of Healing
 
 new entry "Goon_Summon_Potion_Healing_x1"
 type "PassiveData"
-data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234"
-data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3"
+// Potions of Healing
+data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234;1"
+// An omnipotent force has gifted this creature x[1] Potion of Healing.
+data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A"
 data "Properties" "Highlighted"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
 data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X1_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,1,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X1_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X1_TECHNICAL,100,-1)"
 
+new entry "Goon_Summon_Potion_Healing_x2"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_x1"
+data "DescriptionParams" "2"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X2_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X2_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_x3"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_x1"
+data "DescriptionParams" "3"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X3_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X3_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_x4"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_x1"
+data "DescriptionParams" "4"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X4_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X4_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_x5"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_x1"
+data "DescriptionParams" "5"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X5_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X5_TECHNICAL,100,-1)"
+
 new entry "GOON_SUMMON_POTION_HEALING_X1_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_x2"
-type "PassiveData"
-data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234"
-data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3"
-data "DescriptionParams" "2"
-data "Icon" "Item_CONS_Potion_Healing_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X2_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X2_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_X2_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_x3"
-type "PassiveData"
-data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234"
-data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3"
-data "DescriptionParams" "3"
-data "Icon" "Item_CONS_Potion_Healing_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X3_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X3_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_X3_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_x4"
-type "PassiveData"
-data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234"
-data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3"
-data "DescriptionParams" "4"
-data "Icon" "Item_CONS_Potion_Healing_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X4_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X4_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_X4_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_x5"
-type "PassiveData"
-data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234"
-data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3"
-data "DescriptionParams" "5"
-data "Icon" "Item_CONS_Potion_Healing_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X5_TECHNICAL')):SummonInInventory(d47006e9-8a51-453d-b200-9e0d42e9bbab,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_X5_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_X5_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-// Potion of Greater Healing
+// ==================================== Healing Potions - Potion of Greater Healing
 
 new entry "Goon_Summon_Potion_Healing_Greater_x1"
 type "PassiveData"
-data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d"
-data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32"
+// Potions of Greater Healing
+data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d;1"
+// An omnipotent force has gifted this creature x[1] Potion of Greater Healing.
+data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A_Greater"
 data "Properties" "Highlighted"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
 data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X1_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,1,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X1_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X1_TECHNICAL,100,-1)"
 
+new entry "Goon_Summon_Potion_Healing_Greater_x2"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Greater_x1"
+data "DescriptionParams" "2"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Greater_x3"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Greater_x1"
+data "DescriptionParams" "3"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Greater_x4"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Greater_x1"
+data "DescriptionParams" "4"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Greater_x5"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Greater_x1"
+data "DescriptionParams" "5"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL,100,-1)"
+
 new entry "GOON_SUMMON_POTION_HEALING_GREATER_X1_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_Greater_x2"
-type "PassiveData"
-data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d"
-data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32"
-data "DescriptionParams" "2"
-data "Icon" "Item_CONS_Potion_Healing_A_Greater"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_GREATER_X2_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_Greater_x3"
-type "PassiveData"
-data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d"
-data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32"
-data "DescriptionParams" "3"
-data "Icon" "Item_CONS_Potion_Healing_A_Greater"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_GREATER_X3_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_Greater_x4"
-type "PassiveData"
-data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d"
-data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32"
-data "DescriptionParams" "4"
-data "Icon" "Item_CONS_Potion_Healing_A_Greater"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_GREATER_X4_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_Greater_x5"
-type "PassiveData"
-data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d"
-data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32"
-data "DescriptionParams" "5"
-data "Icon" "Item_CONS_Potion_Healing_A_Greater"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL')):SummonInInventory(e3b95c96-dc26-40fe-bfc0-baa05e1abd20,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_GREATER_X5_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-// Potion of Superior Healing
+// ==================================== Healing Potions - Potion of Superior Healing
 
 new entry "Goon_Summon_Potion_Healing_Superior_x1"
 type "PassiveData"
-data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b"
-data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720"
+// Potions of Superior Healing
+data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b;1"
+// An omnipotent force has gifted this creature x[1] Potion of Superior Healing.
+data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A_Superior"
 data "Properties" "Highlighted"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
 data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X1_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,1,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X1_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X1_TECHNICAL,100,-1)"
 
+new entry "Goon_Summon_Potion_Healing_Superior_x2"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Superior_x1"
+data "DescriptionParams" "2"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Superior_x3"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Superior_x1"
+data "DescriptionParams" "3"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Superior_x4"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Superior_x1"
+data "DescriptionParams" "4"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Superior_x5"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Superior_x1"
+data "DescriptionParams" "5"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL,100,-1)"
+
 new entry "GOON_SUMMON_POTION_HEALING_SUPERIOR_X1_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_Superior_x2"
-type "PassiveData"
-data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b"
-data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720"
-data "DescriptionParams" "2"
-data "Icon" "Item_CONS_Potion_Healing_A_Superior"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_SUPERIOR_X2_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_Superior_x3"
-type "PassiveData"
-data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b"
-data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720"
-data "DescriptionParams" "3"
-data "Icon" "Item_CONS_Potion_Healing_A_Superior"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_SUPERIOR_X3_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_Superior_x4"
-type "PassiveData"
-data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b"
-data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720"
-data "DescriptionParams" "4"
-data "Icon" "Item_CONS_Potion_Healing_A_Superior"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_SUPERIOR_X4_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_Superior_x5"
-type "PassiveData"
-data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b"
-data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720"
-data "DescriptionParams" "5"
-data "Icon" "Item_CONS_Potion_Healing_A_Superior"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL')):SummonInInventory(df4f3495-abaf-4732-b82f-55bcccd561db,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_SUPERIOR_X5_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-// Potion of Supreme Healing
+// ==================================== Healing Potions - Potion of Supreme Healing
 
 new entry "Goon_Summon_Potion_Healing_Supreme_x1"
 type "PassiveData"
-data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e"
-data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e"
+// Potions of Supreme Healing
+data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e;1"
+// An omnipotent force has gifted this creature x[1] Potion of Supreme Healing.
+data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A_Supreme"
 data "Properties" "Highlighted"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
 data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X1_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,1,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X1_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X1_TECHNICAL,100,-1)"
 
+new entry "Goon_Summon_Potion_Healing_Supreme_x2"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Supreme_x1"
+data "DescriptionParams" "2"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Supreme_x3"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Supreme_x1"
+data "DescriptionParams" "3"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Supreme_x4"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Supreme_x1"
+data "DescriptionParams" "4"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Potion_Healing_Supreme_x5"
+type "PassiveData"
+using "Goon_Summon_Potion_Healing_Supreme_x1"
+data "DescriptionParams" "5"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL,100,-1)"
+
 new entry "GOON_SUMMON_POTION_HEALING_SUPREME_X1_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_Supreme_x2"
-type "PassiveData"
-data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e"
-data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e"
-data "DescriptionParams" "2"
-data "Icon" "Item_CONS_Potion_Healing_A_Supreme"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_SUPREME_X2_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_Supreme_x3"
-type "PassiveData"
-data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e"
-data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e"
-data "DescriptionParams" "3"
-data "Icon" "Item_CONS_Potion_Healing_A_Supreme"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_SUPREME_X3_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Potion_Healing_Supreme_x4"
-type "PassiveData"
-data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e"
-data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e"
-data "DescriptionParams" "4"
-data "Icon" "Item_CONS_Potion_Healing_A_Supreme"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_HEALING_SUPREME_X4_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Potion_Healing_Supreme_x5"
-type "PassiveData"
-data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e"
-data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e"
-data "DescriptionParams" "5"
-data "Icon" "Item_CONS_Potion_Healing_A_Supreme"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):SummonInInventory(7d78f227-e8d4-486d-8121-25cf0bee751d,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL"
 type "StatusData"
@@ -346,79 +291,67 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 
 // ==================================== Utility Potions ====================================
 
+// 
+
 // ==================================== Drugs ====================================
 
-// Dream Mist
+// ==================================== Drugs - Dream Mist
 
 new entry "Goon_Summon_Drugs_Dream_Mist_x1"
 type "PassiveData"
-data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb"
-data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6"
+// Dream Mist
+data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb;1"
+// An omnipotent force has gifted this creature x[1] Dream Mist.
+data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Drug_Dreammist_A"
 data "Properties" "Highlighted"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
 data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X1_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,1,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X1_TECHNICAL,100,-1)"
 
+new entry "Goon_Summon_Drugs_Dream_Mist_x2"
+type "PassiveData"
+using "Goon_Summon_Drugs_Dream_Mist_x1"
+data "DescriptionParams" "2"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X2_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X2_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Drugs_Dream_Mist_x3"
+type "PassiveData"
+using "Goon_Summon_Drugs_Dream_Mist_x1"
+data "DescriptionParams" "3"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X3_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X3_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Drugs_Dream_Mist_x4"
+type "PassiveData"
+using "Goon_Summon_Drugs_Dream_Mist_x1"
+data "DescriptionParams" "4"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X4_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X4_TECHNICAL,100,-1)"
+
+new entry "Goon_Summon_Drugs_Dream_Mist_x5"
+type "PassiveData"
+using "Goon_Summon_Drugs_Dream_Mist_x1"
+data "DescriptionParams" "5"
+data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X5_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X5_TECHNICAL,100,-1)"
+
 new entry "GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X1_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Drugs_Dream_Mist_x2"
-type "PassiveData"
-data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb"
-data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6"
-data "DescriptionParams" "2"
-data "Icon" "Item_CONS_Drug_Dreammist_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X2_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,2,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X2_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X2_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Drugs_Dream_Mist_x3"
-type "PassiveData"
-data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb"
-data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6"
-data "DescriptionParams" "3"
-data "Icon" "Item_CONS_Drug_Dreammist_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X3_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,3,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X3_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X3_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
 
-new entry "Goon_Summon_Drugs_Dream_Mist_x4"
-type "PassiveData"
-data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb"
-data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6"
-data "DescriptionParams" "4"
-data "Icon" "Item_CONS_Drug_Dreammist_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X4_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,4,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X4_TECHNICAL,100,-1)"
-
 new entry "GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X4_TECHNICAL"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-
-new entry "Goon_Summon_Drugs_Dream_Mist_x5"
-type "PassiveData"
-data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb"
-data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6"
-data "DescriptionParams" "5"
-data "Icon" "Item_CONS_Drug_Dreammist_A"
-data "Properties" "Highlighted"
-data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnTurn"
-data "StatsFunctors" "IF(not HasStatus('GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X5_TECHNICAL')):SummonInInventory(71e89ceb-08d3-40f4-9f59-a768342a7357,-1,5,false,false,false,,,GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS);IF(not HasStatus('GOON_SUMMON_POTION_HEALING_SUPREME_X5_TECHNICAL')):ApplyStatus(GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X5_TECHNICAL,100,-1)"
 
 new entry "GOON_SUMMON_POTION_DRUGS_DREAM_MIST_X5_TECHNICAL"
 type "StatusData"
