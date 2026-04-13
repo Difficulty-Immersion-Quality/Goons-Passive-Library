@@ -29,11 +29,11 @@ function Goon_AttackOfOpportunityConditions()
          & ~WieldingWeapon('Ammunition', false, false, context.Source)
          & ~HasAnyStatus({'SG_Incapacitated', 'SG_Unconscious', 'MOBILE_NO_AOO'}, {}, {}, context.Source)
          & ~HasAnyStatus({'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'MOBILE_NO_AOO_SOURCE', 'SNEAKING', 'SG_Ignore_AOO'}, {}, {}, context.Target)
-         & (~Player(context.Source) & Tagged('AI_IGNORED_TARGET'))
+         & ~(~Player(context.Source) & Tagged('AI_IGNORED_TARGET'))
          & ~Goon_HasFlamingSphereAuraCondition()
          & ~AnyEntityIsItem()
          & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target)
-         & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target)) & (~HasStatus('PANACHE', context.Source) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
+         & ~((HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target)) & (~HasStatus('PANACHE', context.Source) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target))))
 end
 
 -- // Regular: 
