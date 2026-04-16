@@ -1,330 +1,300 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
-	<content contentuid="hcbd0a4a3g5b20g46f8g9c35g5733c101d779" version="1">Magic Allergy</content>
-	<content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Tooltip=&lt;GOON_MAGICALLERGY_AURA"&lt;Magic Allergy&lt;/LSTag&gt;.</content>
-	<content contentuid="h50d7d89dg8e08g4fbag9efbgdcd0baaaef51" version="1">Unstable</content>
-	<content contentuid="h63f6f5c7g7d96g4383g98f3g30609492a1e4" version="1">The creature is reacting to nearby magic and has become unstable. At the start of its next turn, it will trigger a random effect.</content>
-	<content contentuid="he3ff7e25gd139g4d13g9cb9gb21f0850697e" version="1">Magic Allergy</content>
-	<content contentuid="h0bd9ac32g0b3fg4e30gb4ceg1c7377f29761" version="1">Allergic to magic. If a spell or &lt;LSTag Tooltip="Cantrip"&gt;cantrip&lt;/LSTag&gt; is cast close to the creature, it might react to the magic and trigger a random effect.</content>
-	<content contentuid="hfba73be3g0036g42f3g986fgde2bd5e15afc" version="1">Magic Allergy Range</content>
-	<content contentuid="h1606d37ag2c99g4925g9c56gde699a8a6b9f" version="1">Close to a creature with a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
-	<content contentuid="hb3a26f07g52dfg4d55g9620gfa00fdd39a99" version="1">Magic Allergy</content>
-	<content contentuid="hf677acbfgb2e1g401agb55dg5accaf8f69d5" version="1">An omnipotent force has given this creature a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
+	<!-- ==================================== E - MagicAllergy.txt ==================================== -->
+
+	<!-- "" --> <content contentuid="hcbd0a4a3g5b20g46f8g9c35g5733c101d779" version="1">Magic Allergy</content>
+	<!-- "" --> <content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
+	<!-- "" --> <content contentuid="h50d7d89dg8e08g4fbag9efbgdcd0baaaef51" version="1">Unstable</content>
+	<!-- "" --> <content contentuid="h63f6f5c7g7d96g4383g98f3g30609492a1e4" version="1">The creature is reacting to nearby magic and has become unstable. At the start of its next turn, it will trigger a random effect.</content>
+	<!-- "" --> <content contentuid="he3ff7e25gd139g4d13g9cb9gb21f0850697e" version="1">Magic Allergy</content>
+	<!-- "" --> <content contentuid="h0bd9ac32g0b3fg4e30gb4ceg1c7377f29761" version="1">Allergic to magic. If a spell or &lt;LSTag Tooltip="Cantrip"&gt;cantrip&lt;/LSTag&gt; is cast close to the creature, it might react to the magic and trigger a random effect.</content>
+	<!-- "" --> <content contentuid="hfba73be3g0036g42f3g986fgde2bd5e15afc" version="1">Magic Allergy Range</content>
+	<!-- "" --> <content contentuid="h1606d37ag2c99g4925g9c56gde699a8a6b9f" version="1">Close to a creature with a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
+	<!-- "" --> <content contentuid="hb3a26f07g52dfg4d55g9620gfa00fdd39a99" version="1">Magic Allergy</content>
+	<!-- "" --> <content contentuid="hf677acbfgb2e1g401agb55dg5accaf8f69d5" version="1">An omnipotent force has given this creature a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
+
+	<!-- ==================================== A - Critical Hit Passives.txt ==================================== -->
 	
 	<!-- "Goon_Critical_Hit_Immunity" --> <content contentuid="he547088cg3538g477dg8019gd30052e44f34" version="1">Critical Hit Immunity</content>
 	<!-- "Goon_Critical_Hit_Immunity" --> <content contentuid="h7da4d760g695eg4090g965fg1039b73cf76e" version="1">&lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 	<!-- "Goon_Critical_Hit_Resistance" --> <content contentuid="h4e558d13g9001g4543g8e18g661852a597ec" version="1">Critical Hit Resistance</content>
 	<!-- "Goon_Critical_Hit_Resistance" --> <content contentuid="h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b" version="1">&lt;LSTag Tooltip="Resistant"&gt;Resistant&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 
-	<content contentuid="h6822e288ga459g4837gac9cg29836b5858fb" version="1">Fall Damage Vulnerability</content>
-	<content contentuid="h24211675g665eg43f4ga3cfg327548af17b1" version="1">An omnipotent force has doubled the fall damage this creature receives.</content>
-	<content contentuid="h7aa3001bgeeceg4610g83d1g868e961d212f" version="1">Fall Damage Resistance</content>
-	<content contentuid="hea8f3b54gd0cbg46a8ga748gdf97c08b108b" version="1">An omnipotent force has halved the fall damage this creature receives.</content>
-	<content contentuid="hc8b5d5fcg7767g4f14gbeb4g11a2b8597936" version="1">Fall Damage Immunity</content>
-	<content contentuid="hd1bf669eg5186g468fga5c5g627632e63b4a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.</content>
+	<!-- ==================================== D - Fall damage.txt ==================================== -->
 
-	<content contentuid="hbc9fdc9dg1effg4d5fgb285g307e57b67e94" version="1">Increased Weight, Size &amp; Scale 1</content>
-	<content contentuid="hcdc9345bgbbfbg47dfgb578g58fd40d85cd5" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] category.</content>
-	<content contentuid="h6a37e659g2df3g42ebgb1f1g5df87b16c0a1" version="1">Increased Weight, Size &amp; Scale 2</content>
-	<content contentuid="hd75cc8e6g3fd3g499cga174g50d88c819911" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
-	<content contentuid="h1b102535gd57ag4708g8bc5g29fb0504e179" version="1">Increased Weight, Size &amp; Scale 3</content>
-	<content contentuid="h54d326d9g7aa3g446agbd8ag1f254ba471a3" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
-	<content contentuid="hf4ab4ab9gc29dg443fga8ddg9c2de10c1bff" version="1">Increased Weight, Size &amp;and Scale 4</content>
-	<content contentuid="hf54322aege2d0g40f4ga5f0g674d02fc2981" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
-	<content contentuid="hf71c49efg8b8ag4dbfgb3f6g0fa8435ef3fc" version="1">Increased Weight, Size &amp; Scale 5</content>
-	<content contentuid="h52c01af2g27c5g4d5dgae4fg742fa5e3e732" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "Goon_Fall_Damage_Vulnerability" --> <content contentuid="h6822e288ga459g4837gac9cg29836b5858fb" version="1">Fall Damage Vulnerability</content>
+	<!-- "Goon_Fall_Damage_Vulnerability" --> <content contentuid="h24211675g665eg43f4ga3cfg327548af17b1" version="1">An omnipotent force has doubled the fall damage this creature receives.</content>
 
-	<content contentuid="h88a9c586gd6b5g4dfbg9fefgd1b818e965a2" version="1">Reduced Weight, Size &amp; Scale 1</content>
-	<content contentuid="h1a85e400g57fbg4071gb9d0g5f4c3ae5abe9" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] category.</content>
-	<content contentuid="hd5418017g6e93g4101gaf7eg9a256297533c" version="1">Reduced Weight, Size &amp; Scale 2</content>
-	<content contentuid="hae7d29dbg4873g42dcgb782gf112c089911b" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
-	<content contentuid="h4ec333b1g720ag44d8gb436g4859c5444592" version="1">Reduced Weight, Size &amp; Scale 3</content>
-	<content contentuid="h6d06b168ged66g4363g9c73g5055e3059485" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
-	<content contentuid="ha2883a95gd7c1g4576g8ff1g60f79f50d651" version="1">Reduced Weight, Size &amp; Scale 4</content>
-	<content contentuid="hbe4c3a49g7039g4a97gb6bbg4ad51d947b74" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
-	<content contentuid="hbb5badabg2417g415egbf83g3188eabb4225" version="1">Reduced Weight, Size &amp; Scale 5</content>
-	<content contentuid="h8544f9a8gcdb0g47b9g9836gfccf6d992c6d" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "Goon_Fall_Damage_Resistance" --> <content contentuid="h7aa3001bgeeceg4610g83d1g868e961d212f" version="1">Fall Damage Resistance</content>
+	<!-- "Goon_Fall_Damage_Resistance" --> <content contentuid="hea8f3b54gd0cbg46a8ga748gdf97c08b108b" version="1">An omnipotent force has halved the fall damage this creature receives.</content>
 
-	<content contentuid="h49a62859gb8a6g4043gbfd3g9e66b63c74bb" version="1">Increased Scale 1</content>
-	<content contentuid="h3da27175gd58ag4323gbf14g1039cff9122d" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h7a413cefgc2e8g49b8gb026ge229b840d190" version="1">Increased Scale 2</content>
-	<content contentuid="hc4e4c386g7f97g4237g9029g7ecd414121f7" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h73d821e0g9e04g402dg8d2cgd7b790d9e45d" version="1">Increased Scale 3</content>
-	<content contentuid="h3a75bd70gbc12g4242g875bg37d7bb7c4dd3" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h8f68acf0ge95fg416agbb17g02a9a4fdb2e9" version="1">Increased Scale 4</content>
-	<content contentuid="h93304cc4gc477g40f6g90b1gd0f17a82e92c" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h46c109cdg55bbg4006gbc1fga96862c72b92" version="1">Increased Scale 5</content>
-	<content contentuid="hf7433d5eg8686g49efg90ddgc98bf0168569" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h499416a4g62e2g4ecdg9deeg774d2ee4be53" version="1">Increased Scale 6</content>
-	<content contentuid="h0aa775abga7a5g4edagab68gd071d15c20c2" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "Goon_Fall_Damage_Immunity" --> <content contentuid="hc8b5d5fcg7767g4f14gbeb4g11a2b8597936" version="1">Fall Damage Immunity</content>
+	<!-- "Goon_Fall_Damage_Immunity" --> <content contentuid="hd1bf669eg5186g468fga5c5g627632e63b4a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.</content>
 
-	<content contentuid="h0d588eccga9a0g4046gb751gae939532b3cc" version="1">Reduced Scale 1</content>
-	<content contentuid="h1db9806egc138g4545ga076g74173b8cece1" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="hcea009f7gd41fg480dg96dbgc40eba9acd48" version="1">Reduced Scale 2</content>
-	<content contentuid="h9c09512ega2cag4b6eg8dffg97ef47c0f806" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h76eb3f29g61bbg4fd9gba7eg56bd0f142c7e" version="1">Reduced Scale 3</content>
-	<content contentuid="hd4fe15c9g29f4g4810g9189g53eca1768c11" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h9f87bf58g4fdag4f30gb824g9e6b8fffe245" version="1">Reduced Scale 4</content>
-	<content contentuid="h8d2be846g3e80g4895g9a15g876761fe014b" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
-	<content contentuid="h85cfd39eg5f6fg4b29gadecgeaebd966a19c" version="1">Reduced Scale 5</content>
-	<content contentuid="h560b483ag3987g4fcega3b2g58ab8eee0522" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- ==================================== D - Weight, size and scale.txt ==================================== -->
+
+	<!-- "" --> <content contentuid="hbc9fdc9dg1effg4d5fgb285g307e57b67e94" version="1">Increased Weight, Size &amp; Scale 1</content>
+	<!-- "" --> <content contentuid="hcdc9345bgbbfbg47dfgb578g58fd40d85cd5" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] category.</content>
+	<!-- "" --> <content contentuid="h6a37e659g2df3g42ebgb1f1g5df87b16c0a1" version="1">Increased Weight, Size &amp; Scale 2</content>
+	<!-- "" --> <content contentuid="hd75cc8e6g3fd3g499cga174g50d88c819911" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "" --> <content contentuid="h1b102535gd57ag4708g8bc5g29fb0504e179" version="1">Increased Weight, Size &amp; Scale 3</content>
+	<!-- "" --> <content contentuid="h54d326d9g7aa3g446agbd8ag1f254ba471a3" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "" --> <content contentuid="hf4ab4ab9gc29dg443fga8ddg9c2de10c1bff" version="1">Increased Weight, Size &amp;and Scale 4</content>
+	<!-- "" --> <content contentuid="hf54322aege2d0g40f4ga5f0g674d02fc2981" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "" --> <content contentuid="hf71c49efg8b8ag4dbfgb3f6g0fa8435ef3fc" version="1">Increased Weight, Size &amp; Scale 5</content>
+	<!-- "" --> <content contentuid="h52c01af2g27c5g4d5dgae4fg742fa5e3e732" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+
+	<!-- "" --> <content contentuid="h88a9c586gd6b5g4dfbg9fefgd1b818e965a2" version="1">Reduced Weight, Size &amp; Scale 1</content>
+	<!-- "" --> <content contentuid="h1a85e400g57fbg4071gb9d0g5f4c3ae5abe9" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] category.</content>
+	<!-- "" --> <content contentuid="hd5418017g6e93g4101gaf7eg9a256297533c" version="1">Reduced Weight, Size &amp; Scale 2</content>
+	<!-- "" --> <content contentuid="hae7d29dbg4873g42dcgb782gf112c089911b" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "" --> <content contentuid="h4ec333b1g720ag44d8gb436g4859c5444592" version="1">Reduced Weight, Size &amp; Scale 3</content>
+	<!-- "" --> <content contentuid="h6d06b168ged66g4363g9c73g5055e3059485" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "" --> <content contentuid="ha2883a95gd7c1g4576g8ff1g60f79f50d651" version="1">Reduced Weight, Size &amp; Scale 4</content>
+	<!-- "" --> <content contentuid="hbe4c3a49g7039g4a97gb6bbg4ad51d947b74" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+	<!-- "" --> <content contentuid="hbb5badabg2417g415egbf83g3188eabb4225" version="1">Reduced Weight, Size &amp; Scale 5</content>
+	<!-- "" --> <content contentuid="h8544f9a8gcdb0g47b9g9836gfccf6d992c6d" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] categories.</content>
+
+	<!-- "" --> <content contentuid="h49a62859gb8a6g4043gbfd3g9e66b63c74bb" version="1">Increased Scale 1</content>
+	<!-- "" --> <content contentuid="h3da27175gd58ag4323gbf14g1039cff9122d" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h7a413cefgc2e8g49b8gb026ge229b840d190" version="1">Increased Scale 2</content>
+	<!-- "" --> <content contentuid="hc4e4c386g7f97g4237g9029g7ecd414121f7" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h73d821e0g9e04g402dg8d2cgd7b790d9e45d" version="1">Increased Scale 3</content>
+	<!-- "" --> <content contentuid="h3a75bd70gbc12g4242g875bg37d7bb7c4dd3" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h8f68acf0ge95fg416agbb17g02a9a4fdb2e9" version="1">Increased Scale 4</content>
+	<!-- "" --> <content contentuid="h93304cc4gc477g40f6g90b1gd0f17a82e92c" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h46c109cdg55bbg4006gbc1fga96862c72b92" version="1">Increased Scale 5</content>
+	<!-- "" --> <content contentuid="hf7433d5eg8686g49efg90ddgc98bf0168569" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h499416a4g62e2g4ecdg9deeg774d2ee4be53" version="1">Increased Scale 6</content>
+	<!-- "" --> <content contentuid="h0aa775abga7a5g4edagab68gd071d15c20c2" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+
+	<!-- "" --> <content contentuid="h0d588eccga9a0g4046gb751gae939532b3cc" version="1">Reduced Scale 1</content>
+	<!-- "" --> <content contentuid="h1db9806egc138g4545ga076g74173b8cece1" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="hcea009f7gd41fg480dg96dbgc40eba9acd48" version="1">Reduced Scale 2</content>
+	<!-- "" --> <content contentuid="h9c09512ega2cag4b6eg8dffg97ef47c0f806" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h76eb3f29g61bbg4fd9gba7eg56bd0f142c7e" version="1">Reduced Scale 3</content>
+	<!-- "" --> <content contentuid="hd4fe15c9g29f4g4810g9189g53eca1768c11" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h9f87bf58g4fdag4f30gb824g9e6b8fffe245" version="1">Reduced Scale 4</content>
+	<!-- "" --> <content contentuid="h8d2be846g3e80g4895g9a15g876761fe014b" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+	<!-- "" --> <content contentuid="h85cfd39eg5f6fg4b29gadecgeaebd966a19c" version="1">Reduced Scale 5</content>
+	<!-- "" --> <content contentuid="h560b483ag3987g4fcega3b2g58ab8eee0522" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
+
+	<!-- ==================================== D - Movement.txt ==================================== -->
 	
-	<content contentuid="h800133d0g0528g46dcg963dg12576934c550" version="1">Impeded Movement 1</content>
-	<content contentuid="h101f92deg74f3g4146g838ega86aec6062aa" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hfdefea63g7d0eg4913g9d62g526421dc9bb9" version="1">Impeded Movement 2</content>
-	<content contentuid="h56cbf457g8fb7g418bga6d3g4ac44ce72e93" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hca37b9beg20a5g4c9cga7deg03f8c15d5099" version="1">Impeded Movement 3</content>
-	<content contentuid="ha857d6b9g75a1g45bbg82c4g6e6e326e10e1" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hc5078131ge052g4a46g911dg03712ddb35f0" version="1">Impeded Movement 4</content>
-	<content contentuid="h616f0ea5g37c6g4800ga3f7g0e086ca182bc" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h3b391e1dgf64ag4160ga210ge90c60bd0586" version="1">Impeded Movement 5</content>
-	<content contentuid="hcc25bdb1g10c9g4e72g8ed8g55e103e0a115" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hc7b8790fg36ffg490fg8ffdg1f63684ef922" version="1">Impeded Movement 6</content>
-	<content contentuid="h6ef38760g3873g476agbd38g1eca9c3de2d9" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h5dd32783gf96cg4abdgb0bbg845bb1e01419" version="1">Impeded Movement 7</content>
-	<content contentuid="h8827396egaf59g4622g8cadgb1cef1fc4089" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hc98e5478g21bag4d42gb700gb17edb986556" version="1">Impeded Movement 8</content>
-	<content contentuid="h8b6187b6g5884g4b0fg88b4gb75b8c42d6af" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h67303323g06ffg433agbbb6gd130812d3c83" version="1">Impeded Movement 9</content>
-	<content contentuid="h4de3a620g5293g48f3ga5d0g11df48720027" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h4ac728cbg9615g49d5gb8f0g672f58035ff1" version="1">Impeded Movement 1,000,000</content>
-	<content contentuid="h108b0b2fg0e09g4473g8ef0g1c6493e67c0e" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h800133d0g0528g46dcg963dg12576934c550" version="1">Impeded Movement 1</content>
+	<!-- "" --> <content contentuid="h101f92deg74f3g4146g838ega86aec6062aa" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hfdefea63g7d0eg4913g9d62g526421dc9bb9" version="1">Impeded Movement 2</content>
+	<!-- "" --> <content contentuid="h56cbf457g8fb7g418bga6d3g4ac44ce72e93" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hca37b9beg20a5g4c9cga7deg03f8c15d5099" version="1">Impeded Movement 3</content>
+	<!-- "" --> <content contentuid="ha857d6b9g75a1g45bbg82c4g6e6e326e10e1" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hc5078131ge052g4a46g911dg03712ddb35f0" version="1">Impeded Movement 4</content>
+	<!-- "" --> <content contentuid="h616f0ea5g37c6g4800ga3f7g0e086ca182bc" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h3b391e1dgf64ag4160ga210ge90c60bd0586" version="1">Impeded Movement 5</content>
+	<!-- "" --> <content contentuid="hcc25bdb1g10c9g4e72g8ed8g55e103e0a115" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hc7b8790fg36ffg490fg8ffdg1f63684ef922" version="1">Impeded Movement 6</content>
+	<!-- "" --> <content contentuid="h6ef38760g3873g476agbd38g1eca9c3de2d9" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h5dd32783gf96cg4abdgb0bbg845bb1e01419" version="1">Impeded Movement 7</content>
+	<!-- "" --> <content contentuid="h8827396egaf59g4622g8cadgb1cef1fc4089" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hc98e5478g21bag4d42gb700gb17edb986556" version="1">Impeded Movement 8</content>
+	<!-- "" --> <content contentuid="h8b6187b6g5884g4b0fg88b4gb75b8c42d6af" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h67303323g06ffg433agbbb6gd130812d3c83" version="1">Impeded Movement 9</content>
+	<!-- "" --> <content contentuid="h4de3a620g5293g48f3ga5d0g11df48720027" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h4ac728cbg9615g49d5gb8f0g672f58035ff1" version="1">Impeded Movement 1,000,000</content>
+	<!-- "" --> <content contentuid="h108b0b2fg0e09g4473g8ef0g1c6493e67c0e" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
 
-	<content contentuid="h7564f16eg05a7g49f2g8c6bgb0db9c9a336c" version="1">Increased Movement 1</content>
-	<content contentuid="h706f6f0fg7a49g4d15gaefcg6f006c917783" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hb41c7d68gc47ag4e95gbf15g8ca610ac5e86" version="1">Increased Movement 2</content>
-	<content contentuid="h0446f284g6562g413fgb161g13108e6b65d6" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h6df1923egd542g473ega7c5gd90570768402" version="1">Increased Movement 3</content>
-	<content contentuid="h42d51c62ga3d8g4acfg8c78ge8f4eaa11787" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h92815278gc5b0g4f1ega9f9g7be89f533a48" version="1">Increased Movement 4</content>
-	<content contentuid="hb0499a42g28bfg4439g8a66g3fd83569783e" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h13dbe4beg9472g48f7g9483g8205de2ec52b" version="1">Increased Movement 5</content>
-	<content contentuid="hd19999a4gf7abg49d4gb025g0f08ca4db6ec" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="hab9c6a49ga84fg4ee6gb5e0g56ee4f159e5c" version="1">Increased Movement 6</content>
-	<content contentuid="h42cf75b2g6aacg4581gb7fdg0e543dc897b2" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h34f8c15dge1c9g42e3g9e69g1f67c9c68588" version="1">Increased Movement 7</content>
-	<content contentuid="h6bbf16f5ga647g4958g887egdeffb3e701e7" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h169a89fdgd66dg4efcgb3b5g83fdb36fe18d" version="1">Increased Movement 8</content>
-	<content contentuid="h17597c2dg24d5g41a0ga15agfdfc407c0ebd" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="h74150ccfg1989g4064g83eega46e15f7fb7f" version="1">Increased Movement 9</content>
-	<content contentuid="h2bca71bag6decg48a3gb41agb56b570ebe70" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
-	<content contentuid="he77c0e21gb5e5g4ce6gb1ddga2c02bebd391" version="1">Increased Movement 1,000,000</content>
-	<content contentuid="h462ef6ceg81afg47ffg90dcg1fd33a70d46b" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h7564f16eg05a7g49f2g8c6bgb0db9c9a336c" version="1">Increased Movement 1</content>
+	<!-- "" --> <content contentuid="h706f6f0fg7a49g4d15gaefcg6f006c917783" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hb41c7d68gc47ag4e95gbf15g8ca610ac5e86" version="1">Increased Movement 2</content>
+	<!-- "" --> <content contentuid="h0446f284g6562g413fgb161g13108e6b65d6" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h6df1923egd542g473ega7c5gd90570768402" version="1">Increased Movement 3</content>
+	<!-- "" --> <content contentuid="h42d51c62ga3d8g4acfg8c78ge8f4eaa11787" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h92815278gc5b0g4f1ega9f9g7be89f533a48" version="1">Increased Movement 4</content>
+	<!-- "" --> <content contentuid="hb0499a42g28bfg4439g8a66g3fd83569783e" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h13dbe4beg9472g48f7g9483g8205de2ec52b" version="1">Increased Movement 5</content>
+	<!-- "" --> <content contentuid="hd19999a4gf7abg49d4gb025g0f08ca4db6ec" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="hab9c6a49ga84fg4ee6gb5e0g56ee4f159e5c" version="1">Increased Movement 6</content>
+	<!-- "" --> <content contentuid="h42cf75b2g6aacg4581gb7fdg0e543dc897b2" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h34f8c15dge1c9g42e3g9e69g1f67c9c68588" version="1">Increased Movement 7</content>
+	<!-- "" --> <content contentuid="h6bbf16f5ga647g4958g887egdeffb3e701e7" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h169a89fdgd66dg4efcgb3b5g83fdb36fe18d" version="1">Increased Movement 8</content>
+	<!-- "" --> <content contentuid="h17597c2dg24d5g41a0ga15agfdfc407c0ebd" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="h74150ccfg1989g4064g83eega46e15f7fb7f" version="1">Increased Movement 9</content>
+	<!-- "" --> <content contentuid="h2bca71bag6decg48a3gb41agb56b570ebe70" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
+	<!-- "" --> <content contentuid="he77c0e21gb5e5g4ce6gb1ddga2c02bebd391" version="1">Increased Movement 1,000,000</content>
+	<!-- "" --> <content contentuid="h462ef6ceg81afg47ffg90dcg1fd33a70d46b" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
 
-	<content contentuid="he2bee4e2geda6g4611g9a13gcfbdc4f70f4e" version="1">Acid Vulnerability</content>
-	<content contentuid="h740ba49eg60c0g447bgb752g95811a55d60c" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Acid damage.</content>
-	<content contentuid="h4eee642aga288g4bf0gbae1ge2aad87d739d" version="1">Acid Resistance</content>
-	<content contentuid="hb12d20b1g8633g4489gab88g5e246913000f" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Acid damage.</content>
-	<content contentuid="ha858cdfcgdd4bg4308gbe6eg261d5b379261" version="1">Acid Immunity</content>
-	<content contentuid="h18c10822g33e8g4f96g9448g9ab90cffb65f" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Acid damage.</content>
-	<content contentuid="h846f6ed6g2467g4cdbga724ge641872ff1b5" version="1">Ignore Acid Resistance</content>
-	<content contentuid="hcb590bf8gd271g4e33g8941g50e394d2fd32" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Acid damage.</content>
-	<content contentuid="hc068cd33gc90fg4a6dga9f8g4f610d56b451" version="1">Ignore Acid Immunity</content>
-	<content contentuid="hdbcdded3gc690g4961gbdb3g40d059e085c0" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Acid damage.</content>
+	<!-- ==================================== D - Resistances, Vulnerability and Immunity.txt ==================================== -->
 
-	<content contentuid="h5c59dee1g9848g4295g87b0g00b9263c997b" version="1">Bludgeoning Vulnerability</content>
-	<content contentuid="h24238893ge17eg4974g901fg1c5695d4f2cd" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Bludgeoning damage.</content>
-	<content contentuid="h04330ff9g4df5g4c96g8610g4e65710a8283" version="1">Bludgeoning Resistance</content>
-	<content contentuid="hee907a26g89c1g41dfg8ff6g66703c5a8579" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Bludgeoning damage.</content>
-	<content contentuid="h674c6ad5gc8eeg43c8ga42bged361cc66a4e" version="1">Bludgeoning Immunity</content>
-	<content contentuid="hb281f3e9g7659g4b04g88fbgea3055722d24" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Bludgeoning damage.</content>
-	<content contentuid="h030e0585ge454g4e41g99c9g02fd9591c6fb" version="1">Ignore Bludgeoning Resistance</content>
-	<content contentuid="h4c687cfegf0f6g41bag8ae6g67bbf90722e1" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Bludgeoning damage.</content>
-	<content contentuid="hc5ec9567g7146g4206gb03ag27abeab59103" version="1">Ignore Bludgeoning Immunity</content>
-	<content contentuid="hefcaae6eg1834g4e3agbb87g892a376c7b4a" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Bludgeoning damage.</content>
+	<!-- "Goon_X_Vulnerable" --> <content contentuid="h740ba49eg60c0g447bgb752g95811a55d60c" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to[1].</content>
+	<!-- "Goon_X_Resistant" --> <content contentuid="hb12d20b1g8633g4489gab88g5e246913000f" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to[1].</content>
+	<!-- "Goon_X_Immune" --> <content contentuid="h18c10822g33e8g4f96g9448g9ab90cffb65f" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to[1].</content>
+	<!-- "Goon_X_Ignore_Resistance" --> <content contentuid="hcb590bf8gd271g4e33g8941g50e394d2fd32" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to[1].</content>
+	<!-- "Goon_X_Ignore_Immune" --> <content contentuid="hdbcdded3gc690g4961gbdb3g40d059e085c0" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to[1].</content>
 
-	<content contentuid="h607fb0acg3183g400dgb608g2f6495b24bec" version="1">Cold Vulnerability</content>
-	<content contentuid="hfb7fac96g4468g4b49gbbefg184e95cbc707" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Cold damage.</content>
-	<content contentuid="h1ec8b4ffg101cg43e6gb941g7dc0178c97e7" version="1">Cold Resistance</content>
-	<content contentuid="ha3a7cd63gbb99g4813gba66g9e3cbaaa74e8" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Cold damage.</content>
-	<content contentuid="hc39c9909gf382g404fgbc23g6882a1c77e9b" version="1">Cold Immunity</content>
-	<content contentuid="h2ff9994dgb7adg4b9aga3dagbd6ac0a50e75" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Cold damage.</content>
-	<content contentuid="hc46a6761g9866g4034g863cg664cd4a03fc0" version="1">Ignore Cold Resistance</content>
-	<content contentuid="h8c9ab0ecg2134g493egbfe6g449d76576576" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Cold damage.</content>
-	<content contentuid="hed000cefgd591g42e7g988dg6f51a284f992" version="1">Ignore Cold Immunity</content>
-	<content contentuid="h551c1bb5g7f7fg4587g815cg379b76bc1224" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Cold damage.</content>
+	<!-- "Goon_Acid_Vulnerable" --> <content contentuid="he2bee4e2geda6g4611g9a13gcfbdc4f70f4e" version="1">Acid Vulnerability</content>
+	<!-- "Goon_Acid_Resistant" --> <content contentuid="h4eee642aga288g4bf0gbae1ge2aad87d739d" version="1">Acid Resistance</content>
+	<!-- "Goon_Acid_Immune" --> <content contentuid="ha858cdfcgdd4bg4308gbe6eg261d5b379261" version="1">Acid Immunity</content>
+	<!-- "Goon_Acid_Ignore_Resistance" --> <content contentuid="h846f6ed6g2467g4cdbga724ge641872ff1b5" version="1">Ignore Acid Resistance</content>
+	<!-- "Goon_Acid_Ignore_Immune" --> <content contentuid="hc068cd33gc90fg4a6dga9f8g4f610d56b451" version="1">Ignore Acid Immunity</content>
 
-	<content contentuid="hda52767ag572cg4a83g846cge57ed8f99c17" version="1">Fire Vulnerability</content>
-	<content contentuid="h02ead78ag895cg4204ga555g68ea4ef875fc" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Fire damage.</content>
-	<content contentuid="h704d4718gf6f4g45c2gb827gf557a0d7a5b6" version="1">Fire Resistance</content>
-	<content contentuid="hc11a3688g1b39g4db4g9d00g02aca51426dc" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Fire damage.</content>
-	<content contentuid="h16761e93gdb06g4328g85a0g7fb390c59a00" version="1">Fire Immunity</content>
-	<content contentuid="h10c64c1ag8cc6g49cbg98c0g8d94766f405f" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Fire damage.</content>
-	<content contentuid="hcf4f69b8g7aa3g4872g9249g7ed482c74401" version="1">Ignore Fire Resistance</content>
-	<content contentuid="h32897683gd9b8g4f1cg9d6cg033d4f8978f9" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Fire damage.</content>
-	<content contentuid="h4bcc9de0g972fg4c89g9871gc7a2c100a87f" version="1">Ignore Fire Immunity</content>
-	<content contentuid="hea7e8245g4aeeg47deg8df2ga40aec06f364" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Fire damage.</content>
+	<!-- "Goon_Bludgeoning_Vulnerable" --> <content contentuid="h5c59dee1g9848g4295g87b0g00b9263c997b" version="1">Bludgeoning Vulnerability</content>
+	<!-- "Goon_Bludgeoning_Resistant" --> <content contentuid="h04330ff9g4df5g4c96g8610g4e65710a8283" version="1">Bludgeoning Resistance</content>
+	<!-- "Goon_Bludgeoning_Immune" --> <content contentuid="h674c6ad5gc8eeg43c8ga42bged361cc66a4e" version="1">Bludgeoning Immunity</content>
+	<!-- "Goon_Bludgeoning_Ignore_Resistance" --> <content contentuid="h030e0585ge454g4e41g99c9g02fd9591c6fb" version="1">Ignore Bludgeoning Resistance</content>
+	<!-- "Goon_Bludgeoning_Ignore_Immune" --> <content contentuid="hc5ec9567g7146g4206gb03ag27abeab59103" version="1">Ignore Bludgeoning Immunity</content>
 
-	<content contentuid="h74bbbf37ga6cag4df7g9c5eg8f2dcd8389a7" version="1">Force Vulnerability</content>
-	<content contentuid="h050fe946gcdfeg463ag8806g247148af68b3" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Force damage.</content>
-	<content contentuid="hd4a225d2g0c9fg41d7ga2fdg4252f55293fd" version="1">Force Resistance</content>
-	<content contentuid="hf7939702g1916g4107gaeafg623f746c9ae2" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Force damage.</content>
-	<content contentuid="h4195dfffg61aeg4dafg8ce2g073cbac302ad" version="1">Force Immunity</content>
-	<content contentuid="h1e44f40fg62acg422fg95cfgab36afea9e4d" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Force damage.</content>
-	<content contentuid="h865152d2gacd6g4043g9cf3g5bfb504d12e9" version="1">Ignore Force Resistance</content>
-	<content contentuid="h00766f3dg4d8ag433dg98e1gad07981ea04f" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Force damage.</content>
-	<content contentuid="ha2c14953gf142g429eg8475g79543d5d7b52" version="1">Ignore Force Immunity</content>
-	<content contentuid="h0fceed61g439ag4c49g9208gc2fd912bea25" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Force damage.</content>
+	<!-- "Goon_Cold_Vulnerable" --> <content contentuid="h607fb0acg3183g400dgb608g2f6495b24bec" version="1">Cold Vulnerability</content>
+	<!-- "Goon_Cold_Resistant" --> <content contentuid="h1ec8b4ffg101cg43e6gb941g7dc0178c97e7" version="1">Cold Resistance</content>
+	<!-- "Goon_Cold_Immune" --> <content contentuid="hc39c9909gf382g404fgbc23g6882a1c77e9b" version="1">Cold Immunity</content>
+	<!-- "Goon_Cold_Ignore_Resistance" --> <content contentuid="hc46a6761g9866g4034g863cg664cd4a03fc0" version="1">Ignore Cold Resistance</content>
+	<!-- "Goon_Cold_Ignore_Immune" --> <content contentuid="hed000cefgd591g42e7g988dg6f51a284f992" version="1">Ignore Cold Immunity</content>
 
-	<content contentuid="hb8f758f3g5dd7g4843ga482g440796645ddc" version="1">Lightning Vulnerability</content>
-	<content contentuid="hf3bf85f5g6df5g4432g9fc6g1ec20ce5cdfb" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Lightning damage.</content>
-	<content contentuid="ha2a5746dgdacag472bga2e8g933576256a8b" version="1">Lightning Resistance</content>
-	<content contentuid="hd81f8ca9g4d46g4477ga906g20d6902fd051" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Lightning damage.</content>
-	<content contentuid="hee9e5287g0aabg4267g9429g135ff2433fc3" version="1">Lightning Immunity</content>
-	<content contentuid="h7b7a3372gb320g4660g92f2gc9faa32bd44c" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Lightning damage.</content>
-	<content contentuid="h11a9acdcga165g4bfdga3acgbf22c72d5542" version="1">Ignore Lightning Resistance</content>
-	<content contentuid="h00766f3dg4d8ag433dg98e1gad07981ea04f" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Lightning damage.</content>
-	<content contentuid="h11a9acdcga165g4bfdga3acgbf22c72d5542" version="1">Ignore Lightning Immunity</content>
-	<content contentuid="hcaa9e405g3a7bg425cgb426g571f6cb0588d" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Lightning damage.</content>
+	<!-- "Goon_Fire_Vulnerable" --> <content contentuid="hda52767ag572cg4a83g846cge57ed8f99c17" version="1">Fire Vulnerability</content>
+	<!-- "Goon_Fire_Resistant" --> <content contentuid="h704d4718gf6f4g45c2gb827gf557a0d7a5b6" version="1">Fire Resistance</content>
+	<!-- "Goon_Fire_Immune" --> <content contentuid="h16761e93gdb06g4328g85a0g7fb390c59a00" version="1">Fire Immunity</content>
+	<!-- "Goon_Fire_Ignore_Resistance" --> <content contentuid="hcf4f69b8g7aa3g4872g9249g7ed482c74401" version="1">Ignore Fire Resistance</content>
+	<!-- "Goon_Fire_Ignore_Immune" --> <content contentuid="h4bcc9de0g972fg4c89g9871gc7a2c100a87f" version="1">Ignore Fire Immunity</content>
 
-	<content contentuid="hba16677age413g4872g98e2ge33d08dc4c37" version="1">Necrotic Vulnerability</content>
-	<content contentuid="habd68809gec05g4a90ga199g90f8e201d421" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Necrotic damage.</content>
-	<content contentuid="h289633cegf41fg4baag8232gac357be0c3ab" version="1">Necrotic Resistance</content>
-	<content contentuid="h38beb9fcg09b6g4e54g88fbg4020a4dcbdfa" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Necrotic damage.</content>
-	<content contentuid="h75e0b427g202fg453ega7bage7c90806514b" version="1">Necrotic Immunity</content>
-	<content contentuid="ha5867d53g8a25g4ea8gbc85gf710726e745a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Necrotic damage.</content>
-	<content contentuid="hb4764dd7g54a5g4af7gaae7gb9a7f6c67b75" version="1">Ignore Necrotic Resistance</content>
-	<content contentuid="h66acf886g9e9cg43afgbd37g6b14d2174b4c" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Necrotic damage.</content>
-	<content contentuid="h8b0c3685g41d4g4c71gb931g0907da517cab" version="1">Ignore Necrotic Immunity</content>
-	<content contentuid="h0b6254ffg5d9bg4a7ag9dfdg97a596f4591a" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Necrotic damage.</content>
+	<!-- "Goon_Fire_Vulnerable" --> <content contentuid="h74bbbf37ga6cag4df7g9c5eg8f2dcd8389a7" version="1">Force Vulnerability</content>
+	<!-- "Goon_Fire_Resistant" --> <content contentuid="hd4a225d2g0c9fg41d7ga2fdg4252f55293fd" version="1">Force Resistance</content>
+	<!-- "Goon_Fire_Immune" --> <content contentuid="h4195dfffg61aeg4dafg8ce2g073cbac302ad" version="1">Force Immunity</content>
+	<!-- "Goon_Fire_Ignore_Resistance" --> <content contentuid="h865152d2gacd6g4043g9cf3g5bfb504d12e9" version="1">Ignore Force Resistance</content>
+	<!-- "Goon_Fire_Ignore_Immune" --> <content contentuid="ha2c14953gf142g429eg8475g79543d5d7b52" version="1">Ignore Force Immunity</content>
 
-	<content contentuid="h39af6b9agaf25g4391gb13fga445e39aa22e" version="1">Poison Vulnerability</content>
-	<content contentuid="h3462d114gf28fg497dga972gf1aa9b2b9b31" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Poison damage.</content>
-	<content contentuid="h3462d114gf28fg497dga972gf1aa9b2b9b31" version="1">Poison Resistance</content>
-	<content contentuid="h7eb6b563g4eeeg4a92g90fbgbebe62b729b6" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Poison damage.</content>
-	<content contentuid="hd26d77f2g5b43g4c94gb2e7g5d2265503c96" version="1">Poison Immunity</content>
-	<content contentuid="hc027845dg6ca2g40f6ga180g7fa2d6bcbc3d" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Poison damage.</content>
-	<content contentuid="h4f5ee60agd449g4c1egb6c1ge39f63badcac" version="1">Ignore Poison Resistance</content>
-	<content contentuid="h56093bd7g95d7g4401g862fg383ba140af1d" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Poison damage.</content>
-	<content contentuid="h2a5c91b8gcf5eg4b5fg955eg40aa9564a140" version="1">Ignore Poison Immunity</content>
-	<content contentuid="h590ef6d2g3f51g4241g86fagb6534f0b8a6d" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Poison damage.</content>
+	<!-- "Goon_Force_Vulnerable" --> <content contentuid="hb8f758f3g5dd7g4843ga482g440796645ddc" version="1">Lightning Vulnerability</content>
+	<!-- "Goon_Force_Resistant" --> <content contentuid="ha2a5746dgdacag472bga2e8g933576256a8b" version="1">Lightning Resistance</content>
+	<!-- "Goon_Force_Immune" --> <content contentuid="hee9e5287g0aabg4267g9429g135ff2433fc3" version="1">Lightning Immunity</content>
+	<!-- "Goon_Force_Ignore_Resistance" --> <content contentuid="h11a9acdcga165g4bfdga3acgbf22c72d5542" version="1">Ignore Lightning Resistance</content>
+	<!-- "Goon_Force_Ignore_Immune" --> <content contentuid="h5539b83ag2455g4552gb1dag429357ef2cc5" version="1">Ignore Lightning Immunity</content>
 
-	<content contentuid="hac696a0cg14ffg4663g81f3gf9e8acdda36a" version="1">Piercing Vulnerability</content>
-	<content contentuid="hd08ea428gc427g4370g807ag9b6b4e1d1c9a" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Piercing damage.</content>
-	<content contentuid="h8113eb28g44c7g4f20g8ee0gd466822d88c8" version="1">Piercing Resistance</content>
-	<content contentuid="h849e1b0eg7867g4034ga6ddgc73f7e7b3d73" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Piercing damage.</content>
-	<content contentuid="hebdba19bg85a4g4f28g9db9gd7df158e3b6f" version="1">Piercing Immunity</content>
-	<content contentuid="h611519b9g23d4g4655gbfb8g2fa269d3ae49" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Piercing damage.</content>
-	<content contentuid="hc08ca13cg0d00g4fb6ga7d1g8a17fca426cb" version="1">Ignore Piercing Resistance</content>
-	<content contentuid="hf6ebca35g1ebbg4d42gba62g7c3f3e675350" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Piercing damage.</content>
-	<content contentuid="h3bed5cc3ga59bg4541gad51gd68d3a185cc6" version="1">Ignore Piercing Immunity</content>
-	<content contentuid="h4375b91agec6fg402dg8682gec42270d570e" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Piercing damage.</content>
+	<!-- "Goon_Lightning_Vulnerable" --> <content contentuid="hba16677age413g4872g98e2ge33d08dc4c37" version="1">Necrotic Vulnerability</content>
+	<!-- "Goon_Lightning_Resistant" --> <content contentuid="h289633cegf41fg4baag8232gac357be0c3ab" version="1">Necrotic Resistance</content>
+	<!-- "Goon_Lightning_Immune" --> <content contentuid="h75e0b427g202fg453ega7bage7c90806514b" version="1">Necrotic Immunity</content>
+	<!-- "Goon_Lightning_Ignore_Resistance" --> <content contentuid="hb4764dd7g54a5g4af7gaae7gb9a7f6c67b75" version="1">Ignore Necrotic Resistance</content>
+	<!-- "Goon_Lightning_Ignore_Immune" --> <content contentuid="h8b0c3685g41d4g4c71gb931g0907da517cab" version="1">Ignore Necrotic Immunity</content>
 
-	<content contentuid="h1e87fbddg1c2dg43a3gbd19g2fa8e157ed7b" version="1">Psychic Vulnerability</content>
-	<content contentuid="h750a198bgc870g42efg94f0gc01f1da26d61" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Psychic damage.</content>
-	<content contentuid="h4bed0c33g9a52g4627g9b6bgbccd57156964" version="1">Psychic Resistance</content>
-	<content contentuid="h0384cabag8aa0g4396g8c33g023ee7b594e5" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Psychic damage.</content>
-	<content contentuid="h6ab2c60bgcbe6g4569g83cbg94cd588e6b1c" version="1">Psychic Immunity</content>
-	<content contentuid="h2621b7e9g1704g4488g9c49g0bf8710453d8" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Psychic damage.</content>
-	<content contentuid="h7c26ce0egfca9g48f1gb55fga57918b431f5" version="1">Ignore Psychic Resistance</content>
-	<content contentuid="hceeea100g1ed1g4d47gbb95g8a030409d11b" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Psychic damage.</content>
-	<content contentuid="hb20fa430g8d3ag4065g9c15g2642d031225e" version="1">Ignore Psychic Immunity</content>
-	<content contentuid="h748fa10aga56bg450dga488g54a84d72dce9" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Psychic damage.</content>
+	<!-- "Goon_Poison_Vulnerable" --> <content contentuid="h39af6b9agaf25g4391gb13fga445e39aa22e" version="1">Poison Vulnerability</content>
+	<!-- "Goon_Poison_Resistant" --> <content contentuid="h26df3728gba35g4d90g9208g66ef49326b24" version="1">Poison Resistance</content>
+	<!-- "Goon_Poison_Immune" --> <content contentuid="hd26d77f2g5b43g4c94gb2e7g5d2265503c96" version="1">Poison Immunity</content>
+	<!-- "Goon_Poison_Ignore_Resistance" --> <content contentuid="h4f5ee60agd449g4c1egb6c1ge39f63badcac" version="1">Ignore Poison Resistance</content>
+	<!-- "Goon_Poison_Ignore_Immune" --> <content contentuid="h2a5c91b8gcf5eg4b5fg955eg40aa9564a140" version="1">Ignore Poison Immunity</content>
 
-	<content contentuid="h0ecd62begc744g4a64g87aege7f77819f3e6" version="1">Radiant Vulnerability</content>
-	<content contentuid="h91e68e8bg8663g49d9gb412g93f0d69eaf08" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Radiant damage.</content>
-	<content contentuid="hd5341bf3g725ag4a78gae71g7b9ba6681079" version="1">Radiant Resistance</content>
-	<content contentuid="hcd510a6ag634fg4b4bgb6d0g46724d7bbe10" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Radiant damage.</content>
-	<content contentuid="hf5377258g095dg4f02g9a0bgf7f1d7063235" version="1">Radiant Immunity</content>
-	<content contentuid="hddc73b6fg36f2g4df0gbb12ge69a97e865bd" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Radiant damage.</content>
-	<content contentuid="h57dc7f17gbddeg4bd7ga25ag63212d8cc775" version="1">Ignore Radiant Resistance</content>
-	<content contentuid="h6f0eedcegaef5g4e8agbd67g58469fb21076" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Radiant damage.</content>
-	<content contentuid="he6757e2bg608eg4648ga86cgb608e96d86d3" version="1">Ignore Radiant Immunity</content>
-	<content contentuid="h9004813dgfe7cg4f33g9c48g53f7e1da3219" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Radiant damage.</content>
+	<!-- "Goon_Piercing_Vulnerable" --> <content contentuid="hac696a0cg14ffg4663g81f3gf9e8acdda36a" version="1">Piercing Vulnerability</content>
+	<!-- "Goon_Piercing_Resistant" --> <content contentuid="h8113eb28g44c7g4f20g8ee0gd466822d88c8" version="1">Piercing Resistance</content>
+	<!-- "Goon_Piercing_Immune" --> <content contentuid="hebdba19bg85a4g4f28g9db9gd7df158e3b6f" version="1">Piercing Immunity</content>
+	<!-- "Goon_Piercing_Ignore_Resistance" --> <content contentuid="hc08ca13cg0d00g4fb6ga7d1g8a17fca426cb" version="1">Ignore Piercing Resistance</content>
+	<!-- "Goon_Piercing_Ignore_Immune" --> <content contentuid="h3bed5cc3ga59bg4541gad51gd68d3a185cc6" version="1">Ignore Piercing Immunity</content>
 
-	<content contentuid="hf032f9dbgf3beg49d7g8f1dgc4394976f026" version="1">Slashing Vulnerability</content>
-	<content contentuid="h621040f3g445ag4de4ga8eeg977b0ba24729" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Slashing damage.</content>
-	<content contentuid="h517dbe09gf3e9g4ceeg963eg0901f22f5366" version="1">Slashing Resistance</content>
-	<content contentuid="hc6a055b8g4638g43e3g9794g728490e2b379" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Slashing damage.</content>
-	<content contentuid="h69e73545g5ff8g46f3g8faagf8dd85896f7e" version="1">Slashing Immunity</content>
-	<content contentuid="h32387f3dg9abbg4b1eg9f6dgcbd51ba0cfa1" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Slashing damage.</content>
-	<content contentuid="ha93df3f3gd6acg407agafc5g2627c1ca060e" version="1">Ignore Slashing Resistance</content>
-	<content contentuid="h8d17f208g0b3fg44e6gb76dgfd2b0af8591d" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Slashing damage.</content>
-	<content contentuid="h288ea61fg6812g41e1g860ag108a8c2b70af" version="1">Ignore Slashing Immunity</content>
-	<content contentuid="h4300749agfb45g427fga7dcgd609846ea014" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Slashing damage.</content>
+	<!-- "Goon_Psychic_Vulnerable" --> <content contentuid="h1e87fbddg1c2dg43a3gbd19g2fa8e157ed7b" version="1">Psychic Vulnerability</content>
+	<!-- "Goon_Psychic_Resistant" --> <content contentuid="h4bed0c33g9a52g4627g9b6bgbccd57156964" version="1">Psychic Resistance</content>
+	<!-- "Goon_Psychic_Immune" --> <content contentuid="h6ab2c60bgcbe6g4569g83cbg94cd588e6b1c" version="1">Psychic Immunity</content>
+	<!-- "Goon_Psychic_Ignore_Resistance" --> <content contentuid="h7c26ce0egfca9g48f1gb55fga57918b431f5" version="1">Ignore Psychic Resistance</content>
+	<!-- "Goon_Psychic_Ignore_Immune" --> <content contentuid="hb20fa430g8d3ag4065g9c15g2642d031225e" version="1">Ignore Psychic Immunity</content>
 
-	<content contentuid="hc5e6557cge051g488cg835bg753444f592d2" version="1">Thunder Vulnerability</content>
-	<content contentuid="he7127fc5g663bg40f9gb734g8a2bc5768194" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to Thunder damage.</content>
-	<content contentuid="h9545740age2b7g4446g9e31gd24ed7f7f15b" version="1">Thunder Resistance</content>
-	<content contentuid="hc757d602g9490g4cffg99f7g39e60d0c4a43" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Thunder damage.</content>
-	<content contentuid="h36cc3246gd25cg4e29gb273g09b16a0496ee" version="1">Thunder Immunity</content>
-	<content contentuid="hddc73b6fg36f2g4df0gbb12ge69a97e865bd" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Thunder damage.</content>
-	<content contentuid="ha64f98f1g10bcg4d2eg9743g1fed769865c8" version="1">Ignore Thunder Resistance</content>
-	<content contentuid="h425a3dbagec42g4a3cg9810ga1598a60de97" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to Thunder damage.</content>
-	<content contentuid="h425a3dbagec42g4a3cg9810ga1598a60de97" version="1">Ignore Thunder Immunity</content>
-	<content contentuid="h483ea15fg172bg4af9g85d7g4754a65d01c7" version="1">An omnipotent force allows this creature to ignore their target's &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to Thunder damage.</content>
+	<!-- "Goon_Radiant_Vulnerable" --> <content contentuid="h0ecd62begc744g4a64g87aege7f77819f3e6" version="1">Radiant Vulnerability</content>
+	<!-- "Goon_Radiant_Resistant" --> <content contentuid="hd5341bf3g725ag4a78gae71g7b9ba6681079" version="1">Radiant Resistance</content>
+	<!-- "Goon_Radiant_Immune" --> <content contentuid="hf5377258g095dg4f02g9a0bgf7f1d7063235" version="1">Radiant Immunity</content>
+	<!-- "Goon_Radiant_Ignore_Resistance" --> <content contentuid="h57dc7f17gbddeg4bd7ga25ag63212d8cc775" version="1">Ignore Radiant Resistance</content>
+	<!-- "Goon_Radiant_Ignore_Immune" --> <content contentuid="he6757e2bg608eg4648ga86cgb608e96d86d3" version="1">Ignore Radiant Immunity</content>
 
-	<content contentuid="h45bdc878g3c3bg45c7g88bfg04af046e6c23" version="1">An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
-	<content contentuid="hc4c65557ge9bag4a3bg9aa8gcada0f972dbd" version="1">An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
-	<content contentuid="h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f" version="1">An omnipotent force allows this creature's spells to deal an additional [1].</content>
+	<!-- "Goon_Slashing_Vulnerable" --> <content contentuid="hf032f9dbgf3beg49d7g8f1dgc4394976f026" version="1">Slashing Vulnerability</content>
+	<!-- "Goon_Slashing_Resistant" --> <content contentuid="h517dbe09gf3e9g4ceeg963eg0901f22f5366" version="1">Slashing Resistance</content>
+	<!-- "Goon_Slashing_Immune" --> <content contentuid="h69e73545g5ff8g46f3g8faagf8dd85896f7e" version="1">Slashing Immunity</content>
+	<!-- "Goon_Slashing_Ignore_Resistance" --> <content contentuid="ha93df3f3gd6acg407agafc5g2627c1ca060e" version="1">Ignore Slashing Resistance</content>
+	<!-- "Goon_Slashing_Ignore_Immune" --> <content contentuid="h288ea61fg6812g41e1g860ag108a8c2b70af" version="1">Ignore Slashing Immunity</content>
 
-	<content contentuid="h3025cc0egeb05g4ae3gb20fg46161d9f527b" version="1">Attack Damage Bonus</content>
-	<content contentuid="hc21050e9g5d73g4dbbgab10gc907411bc1d1" version="1">Spell Attack Damage Bonus</content>
-	<content contentuid="hb075868dg6954g48b7gb23cg3a2c93d39a66" version="1">Spells Damage Bonus</content>
+	<!-- "Goon_Thunder_Vulnerable" --> <content contentuid="hc5e6557cge051g488cg835bg753444f592d2" version="1">Thunder Vulnerability</content>
+	<!-- "Goon_Thunder_Resistant" --> <content contentuid="h9545740age2b7g4446g9e31gd24ed7f7f15b" version="1">Thunder Resistance</content>
+	<!-- "Goon_Thunder_Immune" --> <content contentuid="h36cc3246gd25cg4e29gb273g09b16a0496ee" version="1">Thunder Immunity</content>
+	<!-- "Goon_Thunder_Ignore_Resistance" --> <content contentuid="ha64f98f1g10bcg4d2eg9743g1fed769865c8" version="1">Ignore Thunder Resistance</content>
+	<!-- "Goon_Thunder_Ignore_Immune" --> <content contentuid="hb9c2c393gb253g456cgb88cgc997fa4e3fd9" version="1">Ignore Thunder Immunity</content>
 
-	<content contentuid="h5b4280056a754abe83ad50c05af217cfg861" version="1">Impervious Defence</content>
-	<content contentuid="hfef70fe222774b49b7eb7812b9c04e27cage" version="1">All incoming damage is reduced by [1], equal to your &lt;LSTag Tooltip="ProficiencyBonus"&gt;Proficiency Bonus&lt;/LSTag&gt;.</content>
-	<content contentuid="h09255dfdg6a3eg46d6g9cb2gfe90e9219972" version="1">All incoming damage is reduced by [1].</content>
-	<content contentuid="h193c4559g56e5g419aga8d3g78eee841b45f" version="1">Armour Class Increase</content>
-	<content contentuid="h3cc24883gfe3ag4c35gbc13gf87334eb5a4e" version="1">Armour Class Decrease</content>
-	<content contentuid="h93157a8fg6f18g4545g88a1g18e16621b367" version="1">Improved Accuracy</content>
-	<content contentuid="h9171a2e1g4beag44e8gb069gcbf8150c0c44" version="1">You gain a +[1] bonus to &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.</content>
+	<!-- ==================================== D - Damage bonuses.txt ==================================== -->
 
-	<content contentuid="hd701ed72gc3e9g4162g957fg513c16f91234" version="1">Potions of Healing</content>
-	<content contentuid="h49522c5cg0c15g45a8gb648g2cab00a813a3" version="1">An omnipotent force has gifted this creature x[1] Potion of Healing.</content>
-	<content contentuid="h5f6f84ddgab0eg462aga71cg74fa0cee209d" version="1">Potions of Greater Healing</content>
-	<content contentuid="hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32" version="1">An omnipotent force has gifted this creature x[1] Potion of Greater Healing.</content>
-	<content contentuid="h6d4610aeg4ff8g4687g9439ga8217a3c2c4b" version="1">Potions of Superior Healing</content>
-	<content contentuid="hbd2ffcffg7d23g4942g8575g61252df9f720" version="1">An omnipotent force has gifted this creature x[1] Potion of Superior Healing.</content>
-	<content contentuid="h5fa64594g2ab8g4566gaf61gd57160515a1e" version="1">Potions of Supreme Healing</content>
-	<content contentuid="ha44ab676gf43eg493ag9b38g27b45ecfba2e" version="1">An omnipotent force has gifted this creature x[1] Potion of Supreme Healing.</content>
-	<content contentuid="h4379027bga5afg4a91g9f63gdf2721a953eb" version="1">Dream Mist</content>
-	<content contentuid="h25f6ae9dg10c3g4502gaa76ge35fbedb87d6" version="1">An omnipotent force has gifted this creature x[1] Dream Mist.</content>
+	<!-- "Goon_Damage_X_X_Attacks" --> <content contentuid="h3025cc0egeb05g4ae3gb20fg46161d9f527b" version="1">Attack Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_Attacks" --> <content contentuid="h45bdc878g3c3bg45c7g88bfg04af046e6c23" version="1">An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
 
-	<content contentuid="h441396f0g2826g49efgbe51gcbcbabde0f12" version="1">Automatic Sanctuary</content>
-	<content contentuid="hd7db620dg26c9g4a4fgb530ge7b997be5ba5" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the start of combat.</content>
-	<content contentuid="hcdf47849g0d0bg418dg82b5g7b5063a8e5a8" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.</content>
+	<!-- "Goon_Damage_X_X_SpellAttacks" --> <content contentuid="hc21050e9g5d73g4dbbgab10gc907411bc1d1" version="1">Spell Attack Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_SpellAttacks" --> <content contentuid="hc4c65557ge9bag4a3bg9aa8gcada0f972dbd" version="1">An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
 
-	<content contentuid="hab61f9ffg8d8eg433eg9c35gc4ec76ddb823" version="1">Spooder Invisibility Point</content>
-	<content contentuid="hb023f549g9e93g4be0gb917g8e2287c9be1c" version="1">The Spider Queen Matriarch certainly got the gyatt.</content>
+	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="hb075868dg6954g48b7gb23cg3a2c93d39a66" version="1">Spells Damage Bonus</content>
+	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f" version="1">An omnipotent force allows this creature's spells to deal an additional [1].</content>
 
-	<content contentuid="hbf3fe4abg837bg4fdega4b7geae392d58088" version="1">Improved Invisibility Resource</content>
-	<content contentuid="hd5c3a80fga55eg46f4gab29gae6414389e4e" version="1">Improved Invisibility Resource description</content>
+	<!-- ==================================== D - Stat boosts.txt ==================================== -->
 
-	<content contentuid="h9c55a246g3ec2g4801ga638gb1218ae4bdf1" version="1">Defensive Resource</content>
-	<content contentuid="h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b" version="1">A shared resource pool for defensive abilities.</content>
-	<content contentuid="h0bb2e2a5g96f9g4837ga6dag327a624dc220" version="1">An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for defensive abilities.</content>
-	<content contentuid="h884b69b7g6d88g4e67g8960gc43a28215432" version="1">Defensive Cooldown</content>
-	<content contentuid="hbdcb5ddcg267ag4bdcg849eg05d910b5b326" version="1">This creature has used a defensive ability and must wait to do so again.</content>
+	<!-- "Goon_DamageReduction" --> <content contentuid="h5b4280056a754abe83ad50c05af217cfg861" version="1">Impervious Defence</content>
+	<!-- "Goon_DamageReduction" --> <content contentuid="hfef70fe222774b49b7eb7812b9c04e27cage" version="1">All incoming damage is reduced by [1], equal to your &lt;LSTag Tooltip="ProficiencyBonus"&gt;Proficiency Bonus&lt;/LSTag&gt;.</content>
+	<!-- "Goon_DamageReduction_1" --> <content contentuid="h09255dfdg6a3eg46d6g9cb2gfe90e9219972" version="1">All incoming damage is reduced by [1].</content>
 
-	<content contentuid="hd6c95b32g15cbg4504g8dcagad787be50b71" version="1">Offensive Resource</content>
-	<content contentuid="h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2" version="1">A shared resource pool for offensive abilities.</content>
-	<content contentuid="h17f52459gaa47g4ed4ga76ega934de9ef495" version="1">An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for offensive abilities.</content>
-	<content contentuid="h3d91d484g4518g4ab2gb9dbgc9521eecfb59" version="1">Offensive Cooldown</content>
-	<content contentuid="hb7623d93ga17ag4ae6ga580g21da55b23118" version="1">This creature has used an offensive ability and must wait to do so again.</content>
+	<!-- "Goon_AC_Buff_1" --> <content contentuid="h193c4559g56e5g419aga8d3g78eee841b45f" version="1">Armour Class Increase</content>
+	<!-- "Goon_AC_Debuff_1" --> <content contentuid="h3cc24883gfe3ag4c35gbc13gf87334eb5a4e" version="1">Armour Class Decrease</content>
 
-	<content contentuid="hc6e8707eg803fg4bb7g844dg0a1ea832d0da" version="1">Utility Resource</content>
-	<content contentuid="hbffada51gf11fg4a10g90acg0b6ccd231a61" version="1">A shared resource pool for utility abilities.</content>
-	<content contentuid="h4243c4d9g08c3g4ee7g8cc7ga55004ef61c8" version="1">An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for utility abilities.</content>
-	<content contentuid="he55c0e0agf730g4695gaff8g4045ec0e7b4a" version="1">Utility Cooldown</content>
-	<content contentuid="hb9e29f08gd0b4g479fg8cf7g7ac3b5936083" version="1">This creature has used a utility ability and must wait to do so again.</content>
+	<!-- "Goon_AttackRoll_1" --> <content contentuid="h93157a8fg6f18g4545g88a1g18e16621b367" version="1">Improved Accuracy</content>
+	<!-- "Goon_AttackRoll_1" --> <content contentuid="h9171a2e1g4beag44e8gb069gcbf8150c0c44" version="1">You gain a +[1] bonus to &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.</content>
 
-	<content contentuid="h66a15410gabfcg45acg9b7bgbeab059e8ae1" version="1">Weave Devouring Aura</content>
-	<content contentuid="h9d620501g1951g4ceegab51gee0020322cbe" version="1">This creature devoures the magical energy of the weave from all other entities around them.</content>
-	<content contentuid="h02124374g23f7g48b1gb73dgce128b2b83ff" version="1">Devoured Magic</content>
-	<content contentuid="h2900144dg8afdg48d6ga41fgfeac4c706774" version="1">A presence is draining the entity of its magical energy, preventing it from casting spells.</content>
+	<!-- ==================================== C - Potion summoning.txt ==================================== -->
+
+	<!-- "Goon_Summon_Potion_Healing_x1" --> <content contentuid="hd701ed72gc3e9g4162g957fg513c16f91234" version="1">Potions of Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_x1" --> <content contentuid="h49522c5cg0c15g45a8gb648g2cab00a813a3" version="1">An omnipotent force has gifted this creature x[1] Potion of Healing.</content>
+
+	<!-- "Goon_Summon_Potion_Healing_Greater_x1" --> <content contentuid="h5f6f84ddgab0eg462aga71cg74fa0cee209d" version="1">Potions of Greater Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_Greater_x1" --> <content contentuid="hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32" version="1">An omnipotent force has gifted this creature x[1] Potion of Greater Healing.</content>
+
+	<!-- "Goon_Summon_Potion_Healing_Superior_x1" --> <content contentuid="h6d4610aeg4ff8g4687g9439ga8217a3c2c4b" version="1">Potions of Superior Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_Superior_x1" --> <content contentuid="hbd2ffcffg7d23g4942g8575g61252df9f720" version="1">An omnipotent force has gifted this creature x[1] Potion of Superior Healing.</content>
+
+	<!-- "Goon_Summon_Potion_Healing_Supreme_x1" --> <content contentuid="h5fa64594g2ab8g4566gaf61gd57160515a1e" version="1">Potions of Supreme Healing</content>
+	<!-- "Goon_Summon_Potion_Healing_Supreme_x1" --> <content contentuid="ha44ab676gf43eg493ag9b38g27b45ecfba2e" version="1">An omnipotent force has gifted this creature x[1] Potion of Supreme Healing.</content>
+
+	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h4379027bga5afg4a91g9f63gdf2721a953eb" version="1">Dream Mist</content>
+	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h25f6ae9dg10c3g4502gaa76ge35fbedb87d6" version="1">An omnipotent force has gifted this creature x[1] Dream Mist.</content>
+
+	<!-- ==================================== Z - Retired entries.txt ==================================== -->
+
+	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat", "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="h441396f0g2826g49efgbe51gcbcbabde0f12" version="1">Automatic Sanctuary</content>
+	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat" --> <content contentuid="hd7db620dg26c9g4a4fgb530ge7b997be5ba5" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the start of combat.</content>
+	<!-- "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="hcdf47849g0d0bg418dg82b5g7b5063a8e5a8" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.</content>
+
+	<!-- ==================================== XXXXX ==================================== -->
+
+	<!-- "" --> <content contentuid="hab61f9ffg8d8eg433eg9c35gc4ec76ddb823" version="1">Spooder Invisibility Point</content>
+	<!-- "" --> <content contentuid="hb023f549g9e93g4be0gb917g8e2287c9be1c" version="1">The Spider Queen Matriarch certainly got the gyatt.</content>
+
+	<!-- "" --> <content contentuid="hbf3fe4abg837bg4fdega4b7geae392d58088" version="1">Improved Invisibility Resource</content>
+	<!-- "" --> <content contentuid="hd5c3a80fga55eg46f4gab29gae6414389e4e" version="1">Improved Invisibility Resource description</content>
+
+	<!-- "" --> <content contentuid="h9c55a246g3ec2g4801ga638gb1218ae4bdf1" version="1">Defensive Resource</content>
+	<!-- "" --> <content contentuid="h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b" version="1">A shared resource pool for defensive abilities.</content>
+	<!-- "" --> <content contentuid="h0bb2e2a5g96f9g4837ga6dag327a624dc220" version="1">An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for defensive abilities.</content>
+	<!-- "" --> <content contentuid="h884b69b7g6d88g4e67g8960gc43a28215432" version="1">Defensive Cooldown</content>
+	<!-- "" --> <content contentuid="hbdcb5ddcg267ag4bdcg849eg05d910b5b326" version="1">This creature has used a defensive ability and must wait to do so again.</content>
+
+	<!-- "" --> <content contentuid="hd6c95b32g15cbg4504g8dcagad787be50b71" version="1">Offensive Resource</content>
+	<!-- "" --> <content contentuid="h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2" version="1">A shared resource pool for offensive abilities.</content>
+	<!-- "" --> <content contentuid="h17f52459gaa47g4ed4ga76ega934de9ef495" version="1">An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for offensive abilities.</content>
+	<!-- "" --> <content contentuid="h3d91d484g4518g4ab2gb9dbgc9521eecfb59" version="1">Offensive Cooldown</content>
+	<!-- "" --> <content contentuid="hb7623d93ga17ag4ae6ga580g21da55b23118" version="1">This creature has used an offensive ability and must wait to do so again.</content>
+
+	<!-- "" --> <content contentuid="hc6e8707eg803fg4bb7g844dg0a1ea832d0da" version="1">Utility Resource</content>
+	<!-- "" --> <content contentuid="hbffada51gf11fg4a10g90acg0b6ccd231a61" version="1">A shared resource pool for utility abilities.</content>
+	<!-- "" --> <content contentuid="h4243c4d9g08c3g4ee7g8cc7ga55004ef61c8" version="1">An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for utility abilities.</content>
+	<!-- "" --> <content contentuid="he55c0e0agf730g4695gaff8g4045ec0e7b4a" version="1">Utility Cooldown</content>
+	<!-- "" --> <content contentuid="hb9e29f08gd0b4g479fg8cf7g7ac3b5936083" version="1">This creature has used a utility ability and must wait to do so again.</content>
+
+	<!-- "" --> <content contentuid="h66a15410gabfcg45acg9b7bgbeab059e8ae1" version="1">Weave Devouring Aura</content>
+	<!-- "" --> <content contentuid="h9d620501g1951g4ceegab51gee0020322cbe" version="1">This creature devoures the magical energy of the weave from all other entities around them.</content>
+	<!-- "" --> <content contentuid="h02124374g23f7g48b1gb73dgce128b2b83ff" version="1">Devoured Magic</content>
+	<!-- "" --> <content contentuid="h2900144dg8afdg48d6ga41fgfeac4c706774" version="1">A presence is draining the entity of its magical energy, preventing it from casting spells.</content>
+
+	<!-- ==================================== XXXXX ==================================== -->
 
 	<!-- "NPC_CbD" --> <content contentuid="h8bec4a12g45a3g424ag9fe0g7bd2637635f8" version="1">Favoured by the Divine</content>
 	<!-- "NPC_CbD" --> <content contentuid="h602b3e3dgd4f9g448fgb73bg6113c025e719" version="1">The creature's targets are cursed by transgressed and irritable gods. When it falls unconscious, it immediately dies. Moreover, when it dies, a terrible envoy of the offended deity is conjured from the entity's corpse.</content>
 	<!-- "DeGreaser_Rolans_Stolen_Spellbook" --> <content contentuid="h51d96a5bg2f20g4b73g89f0g7c73e947d78e" version="1">Rolan's Stolen Spellbook</content>
 	<!-- "DeGreaser_Rolans_Stolen_Spellbook" --> <content contentuid="hb376ba8bg8842g4230ga9cdgf4e549b40767" version="1">According to Lorroakan, these are nothing but "Meaningless cantrips and playthings." Yet you can tell someone has studied it closely, tried to copy the formula, and failed.</content>
-	
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
 
-	<!-- Status immunity passives -->
+	<!-- ==================================== Status immunity passives ==================================== -->
+
 	<!-- "Goon_Immunity_Approaching" --> <content contentuid="h4f424c66g025dg405bg81d2ga431facf24a2" version="1">Immunity: Approach</content>
 	<!-- "Goon_Immunity_Approaching" --> <content contentuid="hc84e7b31ga283g438ag969egfd0ffb60f8ab" version="1">This creature cannot be forced to &lt;LSTag Type="Status" Tooltip="COMMAND_APPROACH"&gt;Approach&lt;/LSTag&gt;.</content>
 	<!-- "Goon_Immunity_Bleeding" --> <content contentuid="h46cf5d82gdf62g4440g8fd1g27259ef5407c" version="1">Immunity: Bleeding</content>
@@ -392,24 +362,17 @@
 	<!-- "Goon_Immunity_Unconscious" --> <content contentuid="h85774a25ga19bg4c45g9d8egd4ee2dce4a66" version="1">Immunity: Unconscious</content>
 	<!-- "Goon_Immunity_Unconscious" --> <content contentuid="hfd4ca1c7gfd74g4600gb892gd9bac02e7305" version="1">This creature cannot become Unconscious.</content>
 
-	<!-- Pseudo Status Groups -->
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
+	<!-- ==================================== Tooltippermanentwarning ==================================== -->
 
-	<!-- Tooltippermanentwarning -->
 	<!-- "46edbd50-74b9-4e37-9f05-28505b94cf8f" --> <content contentuid="h5e337669g3e9ag448fgb5b6g4bb4b67e4152" version="1">Your &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; increases the &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt; of Arcane Shots.</content>
 	<!-- "87a38a64-94d2-4aa5-8627-4abb43fea3ae" --> <content contentuid="he8581dfbga41bg466ag8368gc0310456f8fc" version="1">Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt; or &lt;LSTag Tooltip="SpellSlot"&gt;Spell Slot&lt;/LSTag&gt;.</content>
 	<!-- "8b0c9dc7-cfb4-43ff-9514-9acc807fc663" --> <content contentuid="he169c217g2ad1g4d5ag82dfg1d7a1acc9444" version="1">Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
 	<!-- "25454c14-1083-4f60-b229-c30e3c5886b7" --> <content contentuid="h1673c403gdebcg4de1gac37gb494d151c6fb" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; &lt;LSTag Type="Status" Tooltip="PANACHE"&gt;Panache: Disadvantage&lt;/LSTag&gt; ends early if an entity other than the caster harms the target.</content>
+	<!-- "d58d5fff-c41b-46a7-afde-9bfd4852eb0a" --> <content contentuid="h5d5792d8g0017g4d4fg843ege21c7fc31282" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt;.</content>
+	<!-- "2e9bcfe0-6444-477c-a767-40e967ca7b55" --> <content contentuid="h06680d3agce4eg46d5ga213g95800e8ba4fc" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; for each target.</content>
 
-	<!-- Extra descriptions for meta information -->
+	<!-- ==================================== Extra descriptions for meta information ==================================== -->
+
 	<!-- d193dbf2-c16f-4416-934a-98037bf6a98e --> <content contentuid="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is cumulative, &lt;b&gt;not&lt;/b&gt; multiplicative.</content>
 	<!-- "f63b2f2d-b29b-40b8-86ea-9978c782c32e" --> <content contentuid="h32c61940gcc68g4656gaba7g520594efd435" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can trigger &lt;b&gt;once&lt;/b&gt; per &lt;LSTag Tooltip="AttackRoll"&gt;Attack&lt;/LSTag&gt;.</content>
 	<!-- "28186bf3-e19b-43a9-8395-7dc31a6a211d" --> <content contentuid="h2aa95070gb790g4f45g825bg9aff35a5f7d1" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is &lt;b&gt;also&lt;/b&gt; active while Polymorphed, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
@@ -417,14 +380,26 @@
 	<!-- "0960bfe9-875f-4b41-8bfc-c8c707e93e1b" --> <content contentuid="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect is &lt;b&gt;only&lt;/b&gt; active in &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 	<!-- "af675b0e-50b9-4451-b006-29bded4a4280" --> <content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; This effect is &lt;b&gt;not&lt;/b&gt; active in &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 
-	<!-- Error descriptions -->
+	<!-- ==================================== Error descriptions ==================================== -->
+
 	<!-- "Goon_IsNotDippableSurfaceOrEntity" --> <content contentuid="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1">Must be a Dippable surface or entity.</content>
 	<!-- "Goon_HasBrokenOath" --> <content contentuid="h47d9ad6ag86bbg472bg9933g4d43eedade6b" version="1">Must uphold an oath.</content>
 	<!-- "Goon_HasAttackedOrCast" --> <content contentuid="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1">Can only be used after attacking or casting a spell.</content>
+	<!-- "CE_Status_GOON_BLOODIED_False" --> <content contentuid="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1">Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;.</content>
 
-	<!-- Upcast descriptions -->
+	<!-- ==================================== Upcast descriptions ==================================== -->
+
 	<!-- "2064b895-e4aa-4c67-b443-94b6a36a7afc" --> <content contentuid="h84c65138g3cd3g4f6cgbbd8g0ae2bc52cfd7" version="1">Deals an additional [1] or [2] per level.</content>
 
-	<!-- Tags -->
+	<!-- ==================================== Tags ==================================== -->
+
 	<!-- b5b9303d-a3cb-435b-b8d6-a5560cd48815 --> <content contentuid="h28e1e7bag2addg4ff5gb28aga12442569030" version="1">Returning Weapon</content>
+
+	<!-- ==================================== Templates ==================================== -->
+
+	<!-- "" --> <content contentuid="" version="1"></content>
+	<!-- "" --> <content contentuid="" version="1"></content>
+	<!-- "" --> <content contentuid="" version="1"></content>
+	<!-- "" --> <content contentuid="" version="1"></content>
+
 </contentList>
