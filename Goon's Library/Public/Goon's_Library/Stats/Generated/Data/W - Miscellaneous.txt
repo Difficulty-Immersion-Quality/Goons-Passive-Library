@@ -1,0 +1,5 @@
+new entry "Goon_WildShape_AutoDismiss"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCombatEnded"
+data "StatsFunctors" "RemoveStatus(SG_Polymorph_BeastShape);RemoveStatus(WILDSHAPE_STARRY_ARCHER_PLAYER);RemoveStatus(WILDSHAPE_STARRY_CHALICE_PLAYER);RemoveStatus(WILDSHAPE_STARRY_DRAGON_PLAYER)"
