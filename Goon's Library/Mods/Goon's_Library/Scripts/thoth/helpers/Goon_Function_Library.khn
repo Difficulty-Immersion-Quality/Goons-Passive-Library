@@ -14,6 +14,31 @@ function Goon_IsMeleeOffhandAttack()
 	return ConditionResult(result)
 end
 
+-- ==================================== Spell Target conditions ====================================
+-- WIP functions for trying to condense "TargetConditions" as much as possible. 
+-- TODO: Many more will be made, hard to get a grasp on it before just seeing what would be proper useful to consolidate.
+-- TODO: These will probably get moved to their own file, with checks for individual spells groups by level and listed alphabetically.
+
+function Goon_TargetConditions_HarmfulProjectile()
+    return Goon_IsPlayerInControl() & ~Self() |
+           Goon_IsAIInControl() & ~Self() & (Enemy() | Item() | Goon_IsSurface())
+end
+
+function Goon_TargetConditions_BeneficialProjectile()
+    return Goon_IsPlayerInControl() & ~Self() |
+           Goon_IsAIInControl() & (Character() and Ally())
+end
+
+function Goon_TargetConditions_HarmfulTarget()
+    return Goon_IsPlayerInControl() & ~Self() & (Item() or Character() or Dead()) |
+           Goon_IsAIInControl() & (Character() and Enemy())
+end
+
+function Goon_TargetConditions_BeneficialTarget()
+    return Goon_IsPlayerInControl() & (Item() or Character() or Dead()) |
+           Goon_IsAIInControl() & (Character() and Ally())
+end
+
 -- ==================================== Interrupt conditions ====================================
 
 function Goon_BasicHarmfulInterruptConditions()
@@ -44,6 +69,25 @@ end
 
 -- // Polarm Master: 
 -- // Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
+
+-- ==================================== Player vs NPC checks + in control vs not in control ====================================
+-- TODO: Check for edge cases where an AI controlled character might be a "Player", or find a better means of checking this stuff.
+
+function Goon_IsPlayerInControl()
+    return Player(context.Source) & ~Goon_IsEntityDominated() & ~Goon_IsEntityMad()
+end
+
+function Goon_IsAIInControl()
+    return (Player(context.Source) & Goon_IsEntityDominated() | ~Player(context.Source)) & ~Goon_IsEntityMad()
+end
+
+function Goon_IsEntityMad()
+    return HasAnyStatus({'SG_Mad'}, {}, {})
+end
+
+function Goon_IsEntityDominated()
+    return HasAnyStatus({'SG_Dominated', 'SG_Possessed'}, {}, {})
+end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
 
