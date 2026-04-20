@@ -45,7 +45,13 @@ end
 -- // Polarm Master: 
 -- // Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
 
--- ==================================== STATUS GROUPINGS ====================================
+-- ==================================== STATUS GROUPINGS ETC. ====================================
+
+-- ==================================== Metal
+
+function Goon_IsMetal()
+    return IsMetalItem() or HasMetalWeaponInAnyHand() or HasMetalArmor() or IsMetalCharacter()
+end
 
 -- ==================================== Bleeding
 
@@ -78,7 +84,87 @@ function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
     end
 end
 
--- ==================================== DIPPPPPPPPPPPPP
+-- ==================================== Surfaces
+-- TODO: Break into groups and call them all in the main function.
+
+function Goon_IsSurface()
+    result = Surface('SurfaceNone')
+           | Surface('SurfaceWater') 
+           | Surface('SurfaceWaterElectrified') 
+           | Surface('SurfaceWaterFrozen') 
+           | Surface('SurfaceBlood') 
+           | Surface('SurfaceBloodElectrified') 
+           | Surface('SurfaceBloodFrozen') 
+           | Surface('SurfacePoison') 
+           | Surface('SurfaceOil') 
+           | Surface('SurfaceLava') 
+           | Surface('SurfaceGrease') 
+           | Surface('SurfaceWyvernPoison') 
+           | Surface('SurfaceWeb') 
+           | Surface('SurfaceDeepwater') 
+           | Surface('SurfaceVines') 
+           | Surface('SurfaceFire') 
+           | Surface('SurfaceAcid') 
+           | Surface('SurfaceTrialFire') 
+           | Surface('SurfaceBlackpowder') 
+           | Surface('SurfaceAlienoil') 
+           | Surface('SurfaceMud') 
+           | Surface('SurfaceAlcohol') 
+           | Surface('SurfaceInvisibleWeb') 
+           | Surface('SurfaceBloodSilver') 
+           | Surface('SurfaceChasm') 
+           | Surface('SurfaceHellfire') 
+           | Surface('SurfaceCausticBrine') 
+           | Surface('SurfaceBloodExploding') 
+           | Surface('SurfaceAsh') 
+           | Surface('SurfaceSpikeGrowth') 
+           | Surface('SurfaceHolyFire') 
+           | Surface('SurfaceBlackTentacles') 
+           | Surface('SurfaceOvergrowth') 
+           | Surface('SurfacePurpleWormPoison') 
+           | Surface('SurfaceSerpentVenom') 
+           | Surface('SurfaceInvisibleGithAcid') 
+           | Surface('SurfaceBladeBarrier') 
+           | Surface('SurfaceSewer') 
+           | Surface('SurfaceWaterCloud') 
+           | Surface('SurfaceWaterCloudElectrified') 
+           | Surface('SurfacePoisonCloud') 
+           | Surface('SurfaceExplosionCloud') 
+           | Surface('SurfaceShockwaveCloud') 
+           | Surface('SurfaceCloudkillCloud') 
+           | Surface('SurfaceMaliceCloud') 
+           | Surface('SurfaceBloodCloud') 
+           | Surface('SurfaceStinkingCloud') 
+           | Surface('SurfaceDarknessCloud') 
+           | Surface('SurfaceFogCloud') 
+           | Surface('SurfaceGithPheromoneGasCloud') 
+           | Surface('SurfaceSporeWhiteCloud') 
+           | Surface('SurfaceSporeGreenCloud') 
+           | Surface('SurfaceSporeBlackCloud') 
+           | Surface('SurfaceDrowPoisonCloud') 
+           | Surface('SurfaceIceCloud') 
+           | Surface('SurfacePotionHealingCloud') 
+           | Surface('SurfacePotionHealingGreaterCloud') 
+           | Surface('SurfacePotionHealingSuperiorCloud') 
+           | Surface('SurfacePotionHealingSupremeCloud') 
+           | Surface('SurfacePotionInvisibilityCloud') 
+           | Surface('SurfacePotionSpeedCloud') 
+           | Surface('SurfacePotionVitalityCloud') 
+           | Surface('SurfacePotionAntitoxinCloud') 
+           | Surface('SurfacePotionResistanceAcidCloud') 
+           | Surface('SurfacePotionResistanceColdCloud') 
+           | Surface('SurfacePotionResistanceFireCloud') 
+           | Surface('SurfacePotionResistanceForceCloud') 
+           | Surface('SurfacePotionResistanceLightningCloud') 
+           | Surface('SurfacePotionResistancePoisonCloud') 
+           | Surface('SurfaceSporePinkCloud') 
+           | Surface('SurfaceBlackPowderDetonationCloud') 
+           | Surface('SurfaceVoidCloud') 
+           | Surface('SurfaceCrawlerMucusCloud') 
+           | Surface('SurfaceCloudkill6Cloud') 
+           | Surface('SurfaceSentinel')
+    return ConditionResult(result.Result, {ConditionError("Goon_IsNotSurface")})
+end
 
 function Goon_IsDippableSurface()
     result = Surface('SurfaceFire') | Surface('SurfaceHellfire') | Surface('SurfacePoison') | Surface('SurfaceWater') | Surface('SurfaceSerpentVenom') | Surface('SurfaceWyvernPoison') | Surface('SurfacePurpleWormPoison')
