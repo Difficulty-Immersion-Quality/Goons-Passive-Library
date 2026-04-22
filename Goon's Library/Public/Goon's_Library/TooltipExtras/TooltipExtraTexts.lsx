@@ -27,6 +27,12 @@
                     <attribute id="Text" type="TranslatedString" handle="h5e337669g3e9ag448fgb5b6g4bb4b67e4152" version="1"/>
                     <attribute id="UUID" type="guid" value="46edbd50-74b9-4e37-9f05-28505b94cf8f"/>
                 </node>
+                <!-- Divine Strike TooltipOnMiss -->
+                <node id="TooltipExtraTexts">
+                    <!-- Does not consume a Divine Strike charge. -->
+                    <attribute id="Text" type="TranslatedString" handle="h516a0fc7g341bg4e06gbbc9ga710ddda3852" version="1"/>
+                    <attribute id="UUID" type="guid" value="7d03673f-17c0-4bf7-9858-c169d1391e8e"/>
+                </node>
                 <!-- Smite TooltipOnMiss - BA+Spell -->
                 <node id="TooltipExtraTexts">
                     <!-- Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt; or &lt;LSTag Tooltip="SpellSlot"&gt;Spell Slot&lt;/LSTag&gt;. -->
