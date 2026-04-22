@@ -470,6 +470,43 @@ function Goon_IsBanishSpell()
          | SpellId('Projectile_ArcaneShot_BanishingArrow')
 end
 
+-- ==================================== Spells that aren't spells
+
+function Goon_IsHealingActionGrantedBySpell()
+    return Goon_IsAuraOfVitality()
+end
+
+function Goon_IsAuraOfVitality()
+    return SpellId('Target_AuraOfVitality_Activate')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
+         | SpellId('Target_AuraOfVitality_Activate_4')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4')
+         | SpellId('Target_AuraOfVitality_Activate_5')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5')
+         | SpellId('Target_AuraOfVitality_Activate_6')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6')
+         | SpellId('Target_AuraOfVitality_Activate_7')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7')
+         | SpellId('Target_AuraOfVitality_Activate_8')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8')
+         | SpellId('Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9')
+         | SpellId('Goon_Target_AuraOfVitality_Activate')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_4')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_5')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_6')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_7')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_8')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
+end
+
 -- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
 -- Handles cantrips (or whatever other conditional stuff) that don't deal damage until level 5 and need exclusion from shit
 -- Disallows spells with a DamageType but no DealDamage functors from triggering things improperly
