@@ -306,7 +306,6 @@ function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
 end
 
 -- ==================================== Spell batching ====================================
--- TODO: Can we even specify interrupts in KHN? I don't think this works like that...
 
 -- ==================================== Sneak Attacks
 
@@ -333,32 +332,46 @@ end
 
 function Goon_IsSneakAttackInterrupt()
 	return Goon_IsUACunningStrikeSneakAttack()
-         | SpellId('Interrupt_SneakAttack') 
-         | SpellId('Interrupt_SneakAttack_Critical')
-         | SpellId('Interrupt_SneakAttack_Rakish') 
-         | SpellId('Interrupt_SneakAttack_Rakish_Critical')
-         | SpellId('Interrupt_SneakAttack_Ruffian') 
-         | SpellId('Interrupt_SneakAttack_Ruffian_Critical')
-         | SpellId('Interrupt_LHB_Justicar_ConsecratedStrike') 
-         | IsSpellChildOrVariantFromContext('Interrupt_LHB_Justicar_ConsecratedStrike') 
-         | SpellId('Interrupt_LHB_Justicar_ConsecratedStrike_Critical') 
-         | IsSpellChildOrVariantFromContext('Interrupt_LHB_Justicar_ConsecratedStrike_Critical') 
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Rakish'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Rakish_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Ruffian'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Ruffian_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_2'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_3'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_4'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_5'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_6'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_7'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_8'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_9'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_2'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_3'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_4'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_5'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_6'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_7'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_8'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_9'))
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
-    return SpellId('Interrupt_DWE_SneakAttack')
-         | SpellId('Interrupt_DWE_CunningStrike_Less1') 
-         | SpellId('Interrupt_DWE_CunningStrike_Less2') 
-         | SpellId('Interrupt_DWE_CunningStrike_Less3') 
-         | SpellId('Interrupt_DWE_CunningStrike_Less6') 
-         | SpellId('Interrupt_DWE_CunningStrike_Disarm') 
-         | SpellId('Interrupt_DWE_CunningStrike_Poison')
-         | SpellId('Goon_Interrupt_DWE_CunningStrike_Poison')
-         | SpellId('Interrupt_DWE_CunningStrike_Trip') 
-         | SpellId('Interrupt_DWE_CunningStrike_Withdraw') 
-         | SpellId('Interrupt_DWE_CunningStrike_Daze') 
-         | SpellId('Interrupt_DWE_CunningStrike_KnockOut') 
-         | SpellId('Interrupt_DWE_CunningStrike_Obscure')
+    return ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_SneakAttack'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less1'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less2'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less3'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less6'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Disarm'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Poison'))
+         | ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_DWE_CunningStrike_Poison'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Trip'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Withdraw'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Daze'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_KnockOut')) 
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Obscure'))
 end
 
 -- ==================================== Flourishes
@@ -390,9 +403,9 @@ function Goon_IsFlourishTemporarySpell()
 end
 
 function Goon_IsFlourishInterrupt()
-    return SpellId('Goon_Interrupt_BladeFlourish_Defensive')
-         | SpellId('Goon_Interrupt_BladeFlourish_Mobile')
-         | SpellId('Goon_Interrupt_BladeFlourish_Slashing')
+    return ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_BladeFlourish_Defensive'))
+         | ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_BladeFlourish_Mobile'))
+         | ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_BladeFlourish_Slashing'))
 end
 
 -- ==================================== Bardic Inspiration
@@ -442,6 +455,7 @@ function Goon_IsDisengageSpell()
          | SpellId('SYR_Shout_Disengage_BonusAction_DruidQoL')
 end
 
+-- One says condition the other says status gonna kms no cap
 function Goon_HasDisengageCondition()
     return HasAnyStatus({'SG_Disengage', 'DISENGAGE', 'DRUNKEN_TECHNIQUE', 'CLICK_HEELS'}, {}, {})
 end
@@ -1559,7 +1573,7 @@ end
 
 -- TODO: Knife of the Undermountain King and probably others
 function Goon_IsShadowBlade()
-    return HasAnyStatus({'SHADOWBLADE_TECHNICAL', '', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL'}, {}, {})
+    return HasAnyStatus({'SHADOWBLADE_TECHNICAL', ' ', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL'}, {}, {})
 end
 
 -- TODO: Yeah this no work
