@@ -1,0 +1,14 @@
+// ==================================== Flind ====================================
+
+new entry "Goon_PLA_ConflictedFlind_Flail_Broken_Passive"
+type "PassiveData"
+// Yeenoghu's Gift
+data "DisplayName" "h984fea75gd691g4870g97e6g007d029d5385;1"
+// Hitting an enemy heals Flind for [1] - but she can go &lt;LSTag Type="Status" Tooltip="MADNESS"&gt;Mad&lt;/LSTag&gt; if she doesn't continue hitting an enemy each turn.
+data "Description" "hab54fb07ga384g4293gb73bg3e68489adf71;1"
+data "DescriptionParams" "RegainHitPoints(1d4)"
+data "Icon" "statIcons_YeenoghusHunger"
+data "Properties" "Highlighted"
+data "StatsFunctorContext" "OnAttack"
+data "Conditions" "IsAttack() and not IsMiss() and not Ally()"
+data "StatsFunctors" "ApplyStatus(SELF,PLA_FLINDITEM_BLESSING,100,1);IF(not HasStatus('PLA_FLINDITEM_HUNGER', context.Source)):ApplyStatus(SELF,PLA_FLINDITEM_HUNGER,100,6);RegainHitPoints(SELF,1d4)"
