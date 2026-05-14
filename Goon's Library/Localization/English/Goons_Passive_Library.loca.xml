@@ -382,6 +382,7 @@
 
 	<!-- ==================================== Error descriptions ==================================== -->
 
+	<!-- "Goon_IsNotSurface" --> <content contentuid="h0175bef3g57f5g4565gbfa9g9849b4d63549" version="1">Must be a surface.</content>
 	<!-- "Goon_IsNotDippableSurfaceOrEntity" --> <content contentuid="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1">Must be a Dippable surface or entity.</content>
 	<!-- "Goon_HasBrokenOath" --> <content contentuid="h47d9ad6ag86bbg472bg9933g4d43eedade6b" version="1">Must uphold an oath.</content>
 	<!-- "Goon_HasAttackedOrCast" --> <content contentuid="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1">Can only be used after attacking or casting a spell.</content>

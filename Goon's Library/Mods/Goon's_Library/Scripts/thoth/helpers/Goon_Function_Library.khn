@@ -14,6 +14,31 @@ function Goon_IsMeleeOffhandAttack()
 	return ConditionResult(result)
 end
 
+-- ==================================== Spell Target conditions ====================================
+-- WIP functions for trying to condense "TargetConditions" as much as possible. 
+-- TODO: Many more will be made, hard to get a grasp on it before just seeing what would be proper useful to consolidate.
+-- TODO: These will probably get moved to their own file, with checks for individual spells groups by level and listed alphabetically.
+
+function Goon_TargetConditions_HarmfulProjectile()
+    return Goon_IsPlayerInControl() & ~Self() |
+           Goon_IsAIInControl() & ~Self() & (Enemy() | Item() | Goon_IsSurface())
+end
+
+function Goon_TargetConditions_BeneficialProjectile()
+    return Goon_IsPlayerInControl() & ~Self() |
+           Goon_IsAIInControl() & (Character() and Ally())
+end
+
+function Goon_TargetConditions_HarmfulTarget()
+    return Goon_IsPlayerInControl() & ~Self() & (Item() or Character() or Dead()) |
+           Goon_IsAIInControl() & (Character() and Enemy())
+end
+
+function Goon_TargetConditions_BeneficialTarget()
+    return Goon_IsPlayerInControl() & (Item() or Character() or Dead()) |
+           Goon_IsAIInControl() & (Character() and Ally())
+end
+
 -- ==================================== Interrupt conditions ====================================
 
 function Goon_BasicHarmfulInterruptConditions()
@@ -45,7 +70,32 @@ end
 -- // Polarm Master: 
 -- // Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
 
--- ==================================== STATUS GROUPINGS ====================================
+-- ==================================== Player vs NPC checks + in control vs not in control ====================================
+-- TODO: Check for edge cases where an AI controlled character might be a "Player", or find a better means of checking this stuff.
+
+function Goon_IsPlayerInControl()
+    return Player(context.Source) & ~Goon_IsEntityDominated() & ~Goon_IsEntityMad()
+end
+
+function Goon_IsAIInControl()
+    return (Player(context.Source) & Goon_IsEntityDominated() | ~Player(context.Source)) & ~Goon_IsEntityMad()
+end
+
+function Goon_IsEntityMad()
+    return HasAnyStatus({'SG_Mad'}, {}, {})
+end
+
+function Goon_IsEntityDominated()
+    return HasAnyStatus({'SG_Dominated', 'SG_Possessed'}, {}, {})
+end
+
+-- ==================================== STATUS GROUPINGS ETC. ====================================
+
+-- ==================================== Metal
+
+function Goon_IsMetal()
+    return IsMetalItem() or HasMetalWeaponInAnyHand() or HasMetalArmor() or IsMetalCharacter()
+end
 
 -- ==================================== Bleeding
 
@@ -78,7 +128,87 @@ function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
     end
 end
 
--- ==================================== DIPPPPPPPPPPPPP
+-- ==================================== Surfaces
+-- TODO: Break into groups and call them all in the main function.
+
+function Goon_IsSurface()
+    result = Surface('SurfaceNone')
+           | Surface('SurfaceWater') 
+           | Surface('SurfaceWaterElectrified') 
+           | Surface('SurfaceWaterFrozen') 
+           | Surface('SurfaceBlood') 
+           | Surface('SurfaceBloodElectrified') 
+           | Surface('SurfaceBloodFrozen') 
+           | Surface('SurfacePoison') 
+           | Surface('SurfaceOil') 
+           | Surface('SurfaceLava') 
+           | Surface('SurfaceGrease') 
+           | Surface('SurfaceWyvernPoison') 
+           | Surface('SurfaceWeb') 
+           | Surface('SurfaceDeepwater') 
+           | Surface('SurfaceVines') 
+           | Surface('SurfaceFire') 
+           | Surface('SurfaceAcid') 
+           | Surface('SurfaceTrialFire') 
+           | Surface('SurfaceBlackpowder') 
+           | Surface('SurfaceAlienoil') 
+           | Surface('SurfaceMud') 
+           | Surface('SurfaceAlcohol') 
+           | Surface('SurfaceInvisibleWeb') 
+           | Surface('SurfaceBloodSilver') 
+           | Surface('SurfaceChasm') 
+           | Surface('SurfaceHellfire') 
+           | Surface('SurfaceCausticBrine') 
+           | Surface('SurfaceBloodExploding') 
+           | Surface('SurfaceAsh') 
+           | Surface('SurfaceSpikeGrowth') 
+           | Surface('SurfaceHolyFire') 
+           | Surface('SurfaceBlackTentacles') 
+           | Surface('SurfaceOvergrowth') 
+           | Surface('SurfacePurpleWormPoison') 
+           | Surface('SurfaceSerpentVenom') 
+           | Surface('SurfaceInvisibleGithAcid') 
+           | Surface('SurfaceBladeBarrier') 
+           | Surface('SurfaceSewer') 
+           | Surface('SurfaceWaterCloud') 
+           | Surface('SurfaceWaterCloudElectrified') 
+           | Surface('SurfacePoisonCloud') 
+           | Surface('SurfaceExplosionCloud') 
+           | Surface('SurfaceShockwaveCloud') 
+           | Surface('SurfaceCloudkillCloud') 
+           | Surface('SurfaceMaliceCloud') 
+           | Surface('SurfaceBloodCloud') 
+           | Surface('SurfaceStinkingCloud') 
+           | Surface('SurfaceDarknessCloud') 
+           | Surface('SurfaceFogCloud') 
+           | Surface('SurfaceGithPheromoneGasCloud') 
+           | Surface('SurfaceSporeWhiteCloud') 
+           | Surface('SurfaceSporeGreenCloud') 
+           | Surface('SurfaceSporeBlackCloud') 
+           | Surface('SurfaceDrowPoisonCloud') 
+           | Surface('SurfaceIceCloud') 
+           | Surface('SurfacePotionHealingCloud') 
+           | Surface('SurfacePotionHealingGreaterCloud') 
+           | Surface('SurfacePotionHealingSuperiorCloud') 
+           | Surface('SurfacePotionHealingSupremeCloud') 
+           | Surface('SurfacePotionInvisibilityCloud') 
+           | Surface('SurfacePotionSpeedCloud') 
+           | Surface('SurfacePotionVitalityCloud') 
+           | Surface('SurfacePotionAntitoxinCloud') 
+           | Surface('SurfacePotionResistanceAcidCloud') 
+           | Surface('SurfacePotionResistanceColdCloud') 
+           | Surface('SurfacePotionResistanceFireCloud') 
+           | Surface('SurfacePotionResistanceForceCloud') 
+           | Surface('SurfacePotionResistanceLightningCloud') 
+           | Surface('SurfacePotionResistancePoisonCloud') 
+           | Surface('SurfaceSporePinkCloud') 
+           | Surface('SurfaceBlackPowderDetonationCloud') 
+           | Surface('SurfaceVoidCloud') 
+           | Surface('SurfaceCrawlerMucusCloud') 
+           | Surface('SurfaceCloudkill6Cloud') 
+           | Surface('SurfaceSentinel')
+    return ConditionResult(result.Result, {ConditionError("Goon_IsNotSurface")})
+end
 
 function Goon_IsDippableSurface()
     result = Surface('SurfaceFire') | Surface('SurfaceHellfire') | Surface('SurfacePoison') | Surface('SurfaceWater') | Surface('SurfaceSerpentVenom') | Surface('SurfaceWyvernPoison') | Surface('SurfacePurpleWormPoison')
@@ -176,7 +306,6 @@ function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
 end
 
 -- ==================================== Spell batching ====================================
--- TODO: Can we even specify interrupts in KHN? I don't think this works like that...
 
 -- ==================================== Sneak Attacks
 
@@ -203,32 +332,46 @@ end
 
 function Goon_IsSneakAttackInterrupt()
 	return Goon_IsUACunningStrikeSneakAttack()
-         | SpellId('Interrupt_SneakAttack') 
-         | SpellId('Interrupt_SneakAttack_Critical')
-         | SpellId('Interrupt_SneakAttack_Rakish') 
-         | SpellId('Interrupt_SneakAttack_Rakish_Critical')
-         | SpellId('Interrupt_SneakAttack_Ruffian') 
-         | SpellId('Interrupt_SneakAttack_Ruffian_Critical')
-         | SpellId('Interrupt_LHB_Justicar_ConsecratedStrike') 
-         | IsSpellChildOrVariantFromContext('Interrupt_LHB_Justicar_ConsecratedStrike') 
-         | SpellId('Interrupt_LHB_Justicar_ConsecratedStrike_Critical') 
-         | IsSpellChildOrVariantFromContext('Interrupt_LHB_Justicar_ConsecratedStrike_Critical') 
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Rakish'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Rakish_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Ruffian'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_SneakAttack_Ruffian_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_2'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_3'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_4'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_5'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_6'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_7'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_8'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_9'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_2'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_3'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_4'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_5'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_6'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_7'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_8'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_LHB_Justicar_ConsecratedStrike_Critical_9'))
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
-    return SpellId('Interrupt_DWE_SneakAttack')
-         | SpellId('Interrupt_DWE_CunningStrike_Less1') 
-         | SpellId('Interrupt_DWE_CunningStrike_Less2') 
-         | SpellId('Interrupt_DWE_CunningStrike_Less3') 
-         | SpellId('Interrupt_DWE_CunningStrike_Less6') 
-         | SpellId('Interrupt_DWE_CunningStrike_Disarm') 
-         | SpellId('Interrupt_DWE_CunningStrike_Poison')
-         | SpellId('Goon_Interrupt_DWE_CunningStrike_Poison')
-         | SpellId('Interrupt_DWE_CunningStrike_Trip') 
-         | SpellId('Interrupt_DWE_CunningStrike_Withdraw') 
-         | SpellId('Interrupt_DWE_CunningStrike_Daze') 
-         | SpellId('Interrupt_DWE_CunningStrike_KnockOut') 
-         | SpellId('Interrupt_DWE_CunningStrike_Obscure')
+    return ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_SneakAttack'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less1'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less2'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less3'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Less6'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Disarm'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Poison'))
+         | ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_DWE_CunningStrike_Poison'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Trip'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Withdraw'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Daze'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_KnockOut')) 
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike_Obscure'))
 end
 
 -- ==================================== Flourishes
@@ -260,9 +403,9 @@ function Goon_IsFlourishTemporarySpell()
 end
 
 function Goon_IsFlourishInterrupt()
-    return SpellId('Goon_Interrupt_BladeFlourish_Defensive')
-         | SpellId('Goon_Interrupt_BladeFlourish_Mobile')
-         | SpellId('Goon_Interrupt_BladeFlourish_Slashing')
+    return ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_BladeFlourish_Defensive'))
+         | ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_BladeFlourish_Mobile'))
+         | ConditionResult(string.match(context.InterruptId, 'Goon_Interrupt_BladeFlourish_Slashing'))
 end
 
 -- ==================================== Bardic Inspiration
@@ -312,6 +455,7 @@ function Goon_IsDisengageSpell()
          | SpellId('SYR_Shout_Disengage_BonusAction_DruidQoL')
 end
 
+-- One says condition the other says status gonna kms no cap
 function Goon_HasDisengageCondition()
     return HasAnyStatus({'SG_Disengage', 'DISENGAGE', 'DRUNKEN_TECHNIQUE', 'CLICK_HEELS'}, {}, {})
 end
@@ -338,6 +482,43 @@ function Goon_IsBanishSpell()
          | SpellId('Projectile_Smite_Banishing') 
          | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing') 
          | SpellId('Projectile_ArcaneShot_BanishingArrow')
+end
+
+-- ==================================== Spells that aren't spells
+
+function Goon_IsHealingActionGrantedBySpell()
+    return Goon_IsAuraOfVitality()
+end
+
+function Goon_IsAuraOfVitality()
+    return SpellId('Target_AuraOfVitality_Activate')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
+         | SpellId('Target_AuraOfVitality_Activate_4')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4')
+         | SpellId('Target_AuraOfVitality_Activate_5')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5')
+         | SpellId('Target_AuraOfVitality_Activate_6')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6')
+         | SpellId('Target_AuraOfVitality_Activate_7')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7')
+         | SpellId('Target_AuraOfVitality_Activate_8')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8')
+         | SpellId('Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9')
+         | SpellId('Goon_Target_AuraOfVitality_Activate')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_4')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_5')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_6')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_7')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_8')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
 end
 
 -- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
@@ -1392,7 +1573,7 @@ end
 
 -- TODO: Knife of the Undermountain King and probably others
 function Goon_IsShadowBlade()
-    return HasAnyStatus({'SHADOWBLADE_TECHNICAL', '', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL'}, {}, {})
+    return HasAnyStatus({'SHADOWBLADE_TECHNICAL', ' ', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL'}, {}, {})
 end
 
 -- TODO: Yeah this no work

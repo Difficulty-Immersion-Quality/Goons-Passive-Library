@@ -5,6 +5,13 @@
         <node id="root">
             <children>
                 <node id="ConditionErrors">
+                    <!-- Must be a surface. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h0175bef3g57f5g4565gbfa9g9849b4d63549" version="1"/>
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
+                    <attribute id="Identifier" type="FixedString" value="Goon_IsNotSurface"/>
+                    <attribute id="UUID" type="guid" value="68c36536-279a-45ec-b77c-e950bb8b291c"/>
+                </node>
+                <node id="ConditionErrors">
                     <!-- Must be a Dippable surface or entity. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
