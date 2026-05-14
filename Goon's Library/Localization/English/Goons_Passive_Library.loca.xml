@@ -249,11 +249,6 @@
 	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h4379027bga5afg4a91g9f63gdf2721a953eb" version="1">Dream Mist</content>
 	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h25f6ae9dg10c3g4502gaa76ge35fbedb87d6" version="1">An omnipotent force has gifted this creature x[1] Dream Mist.</content>
 
-	<!-- ==================================== G - Custom NPC Passives and Abilities.txt ==================================== -->
-
-	<!-- "Goon_PLA_ConflictedFlind_Flail_Broken_Passive" --> <content contentuid="h984fea75gd691g4870g97e6g007d029d5385" version="1">Yeenoghu's Gift</content>
-	<!-- "Goon_PLA_ConflictedFlind_Flail_Broken_Passive" --> <content contentuid="hab54fb07ga384g4293gb73bg3e68489adf71" version="1">Hitting an enemy heals Flind for [1] - but she can go &lt;LSTag Type="Status" Tooltip="MADNESS"&gt;Mad&lt;/LSTag&gt; if she doesn't continue hitting an enemy each turn.</content>
-
 	<!-- ==================================== Z - Retired entries.txt ==================================== -->
 
 	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat", "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="h441396f0g2826g49efgbe51gcbcbabde0f12" version="1">Automatic Sanctuary</content>
