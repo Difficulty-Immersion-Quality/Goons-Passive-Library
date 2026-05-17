@@ -40,7 +40,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_DEFENSE_APPLIER)"
 
 // Dueling
 new entry "Goon_FightingStyle_Dueling_Passive"
@@ -61,7 +61,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_DUELING_APPLIER)"
 
 // Great Weapon Fighting
 new entry "Goon_FightingStyle_GreatWeaponFighting_Passive"
@@ -82,14 +82,14 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_GREATWEAPONFIGHTING_APPLIER)"
 
 // Protection
 new entry "Goon_FightingStyle_Protection_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnStatusApplied;OnMovedDistance"
-data "StatsFunctors" "IF(HasShieldEquipped(context.Source) and not HasStatus('GOON_FIGHTINGSTYLE_PROTECTION_APPLIER') and not HasPassive('FightingStyle_Protection')):ApplyStatus(GOON_FIGHTINGSTYLE_PROTECTION_APPLIER,100,-1)"
+data "StatsFunctors" "IF(HasShieldEquipped() and not HasStatus('GOON_FIGHTINGSTYLE_PROTECTION_APPLIER') and not HasPassive('FightingStyle_Protection')):ApplyStatus(GOON_FIGHTINGSTYLE_PROTECTION_APPLIER,100,-1)"
 
 new entry "GOON_FIGHTINGSTYLE_PROTECTION_APPLIER"
 type "StatusData"
@@ -103,7 +103,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_PROTECTION_APPLIER)"
 
 // Two-Weapon Fighting
 new entry "Goon_FightingStyle_TwoWeaponFighting_Passive"
@@ -124,7 +124,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_TWOWEAPONFIGHTING_APPLIER)"
 
 // ==================================== Feats ====================================
 
@@ -148,7 +148,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_CROSSBOWEXPERT_APPLIER)"
 
 // Feats Overhaul version
 new entry "Goon_Feat_CrossbowExpert_Passive_CHT"
@@ -169,7 +169,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_CROSSBOWEXPERT_APPLIER_CHT)"
 
 // Defensive Duellist
 new entry "Goon_Feat_DefensiveDuelist_Passive"
@@ -190,7 +190,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_DEFENSIVEDUELIST_APPLIER)"
 
 // Dual Wielder
 // Vanilla version
@@ -212,7 +212,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_DUALWIELDER_APPLIER)"
 
 // Feats Overhaul version
 new entry "Goon_Feat_DualWielder_Passive_CHT"
@@ -233,7 +233,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_DUALWIELDER_APPLIER_CHT)"
 
 // Great Weapon Master
 new entry "Goon_Feat_GreatWeaponMaster_Passive"
@@ -254,7 +254,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_GREATWEAPONMASTER_APPLIER)"
 
 // Polearm Master
 new entry "Goon_Feat_PolearmMaster_Passive"
@@ -275,7 +275,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_POLEARMMASTER_APPLIER)"
 
 // Sharpshooter
 new entry "Goon_Feat_Sharpshooter_Passive"
@@ -296,7 +296,7 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_SHARPSHOOTER_APPLIER)"
 
 // Shield Master
 // Vanilla version
@@ -304,7 +304,7 @@ new entry "Goon_Feat_ShieldMaster_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnStatusApplied;OnMovedDistance"
-data "StatsFunctors" "IF(HasShieldEquipped(context.Source) and not HasStatus('GOON_FEAT_SHIELDMASTER_APPLIER') and not HasPassive('ShieldMaster_PassiveBonuses')):ApplyStatus(GOON_FEAT_SHIELDMASTER_APPLIER,100,-1)"
+data "StatsFunctors" "IF(HasShieldEquipped() and not HasStatus('GOON_FEAT_SHIELDMASTER_APPLIER') and not HasPassive('ShieldMaster_PassiveBonuses')):ApplyStatus(GOON_FEAT_SHIELDMASTER_APPLIER,100,-1)"
 
 new entry "GOON_FEAT_SHIELDMASTER_APPLIER"
 type "StatusData"
@@ -318,14 +318,14 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_SHIELDMASTER_APPLIER)"
 
 // Feats Overhaul version
 new entry "Goon_Feat_ShieldMaster_Passive_CHT"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnStatusApplied;OnMovedDistance"
-data "StatsFunctors" "IF(HasShieldEquipped(context.Source) and not HasStatus('GOON_FEAT_SHIELDMASTER_APPLIER_CHT') and not HasPassive('ShieldMaster_PassiveBonuses')):ApplyStatus(GOON_FEAT_SHIELDMASTER_APPLIER_CHT,100,-1)"
+data "StatsFunctors" "IF(HasShieldEquipped() and not HasStatus('GOON_FEAT_SHIELDMASTER_APPLIER_CHT') and not HasPassive('ShieldMaster_PassiveBonuses')):ApplyStatus(GOON_FEAT_SHIELDMASTER_APPLIER_CHT,100,-1)"
 
 new entry "GOON_FEAT_SHIELDMASTER_APPLIER_CHT"
 type "StatusData"
@@ -339,14 +339,14 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_SHIELDMASTER_APPLIER_CHT,context.Target)"
 
 // Medium Armour Master
 new entry "Goon_Feat_MediumArmorMaster_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnStatusApplied;OnMovedDistance"
-data "StatsFunctors" "IF(HasMediumArmor(context.Source) and not HasStatus('GOON_FEAT_MEDIUMARMORMASTER_APPLIER') and not HasPassive('MediumArmorMaster')):ApplyStatus(GOON_FEAT_MEDIUMARMORMASTER_APPLIER,100,-1)"
+data "StatsFunctors" "IF(HasMediumArmor() and not HasStatus('GOON_FEAT_MEDIUMARMORMASTER_APPLIER') and not HasPassive('MediumArmorMaster')):ApplyStatus(GOON_FEAT_MEDIUMARMORMASTER_APPLIER,100,-1)"
 
 new entry "GOON_FEAT_MEDIUMARMORMASTER_APPLIER"
 type "StatusData"
@@ -360,14 +360,14 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_MEDIUMARMORMASTER_APPLIER)"
 
 // Heavy Armour Master
 new entry "Goon_Feat_HeavyArmorMaster_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnStatusApplied;OnMovedDistance"
-data "StatsFunctors" "IF(HasHeavyArmor(context.Source) and not HasStatus('GOON_FEAT_HEAVYARMOURMASTER_APPLIER') and not HasPassive('HeavyArmorMaster')):ApplyStatus(GOON_FEAT_HEAVYARMOURMASTER_APPLIER,100,-1)"
+data "StatsFunctors" "IF(HasHeavyArmor() and not HasStatus('GOON_FEAT_HEAVYARMOURMASTER_APPLIER') and not HasPassive('HeavyArmorMaster')):ApplyStatus(GOON_FEAT_HEAVYARMOURMASTER_APPLIER,100,-1)"
 
 new entry "GOON_FEAT_HEAVYARMOURMASTER_APPLIER"
 type "StatusData"
@@ -381,14 +381,14 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_HEAVYARMOURMASTER_APPLIER)"
 
 // Light Armour Master (Essential Feats by Syrchalis)
 new entry "Goon_Feat_LightArmorMaster_Passive"
 type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCreate;OnCombatStarted;OnStatusApplied;OnMovedDistance"
-data "StatsFunctors" "IF(Goon_HasLightArmor(context.Source) and not HasStatus('GOON_FEAT_LIGHTARMOURMASTER_APPLIER') and not HasPassive('SYR_Feat_LightArmorMaster_Passive')):ApplyStatus(GOON_FEAT_LIGHTARMOURMASTER_APPLIER,100,-1)"
+data "StatsFunctors" "IF(Goon_HasLightArmor() and not HasStatus('GOON_FEAT_LIGHTARMOURMASTER_APPLIER') and not HasPassive('SYR_Feat_LightArmorMaster_Passive')):ApplyStatus(GOON_FEAT_LIGHTARMOURMASTER_APPLIER,100,-1)"
 
 new entry "GOON_FEAT_LIGHTARMOURMASTER_APPLIER"
 type "StatusData"
@@ -402,4 +402,4 @@ type "PassiveData"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnStatusApply"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
-data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
+data "StatsFunctors" "RemoveStatus(GOON_FEAT_LIGHTARMOURMASTER_APPLIER)"
