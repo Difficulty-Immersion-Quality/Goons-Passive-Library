@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<save>
+	<version major="4" minor="0" revision="9" build="328" lslib_meta="v1,bswap_guids" />
+	<region id="Templates">
+		<node id="Templates">
+			<children>
+				<node id="GameObjects">
+					<attribute id="Description" type="TranslatedString" handle="h51d96a5bg2f20g4b73g89f0g7c73e947d78e" version="1" />
+					<attribute id="DisplayName" type="TranslatedString" handle="hb376ba8bg8842g4230ga9cdgf4e549b40767" version="1" />
+					<attribute id="Icon" type="FixedString" value="JWL_Item_DI_BookManySpells" />
+					<attribute id="MapKey" type="FixedString" value="6bc82164-8cd8-4fc4-8077-8b4c02bac113" />
+					<attribute id="Name" type="LSString" value="DeGreaser_Rolans_Stolen_Spellbook" />
+					<attribute id="ParentTemplateId" type="FixedString" value="991abd7a-1875-4357-ad6a-ae0f3de6bd50" />
+					<attribute id="Stats" type="FixedString" value="DeGreaser_Rolans_Stolen_Spellbook" />
+					<attribute id="Type" type="FixedString" value="item" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115188075855912" />
+					<children>
+						<node id="GameMaster" />
+					</children>
+				</node>
+				<!-- Goon_Human_Male_Cultist_Monk -->
+				<node id="GameObjects">
+					<attribute id="Archetype" type="FixedString" value="act3_LOW_StranglerLuke" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="921279c7-cbce-1474-abcc-806bc5587f85" />
+					<attribute id="Flag" type="int32" value="0" />
+					<attribute id="Icon" type="FixedString" value="921279c7-cbce-1474-abcc-806bc5587f85-_(Icon_Human_Male_Strong)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="IsEquipmentLootable" type="bool" value="True" />
+					<attribute id="LevelOverride" type="int32" value="8" />
+					<attribute id="MapKey" type="FixedString" value="b1b184a6-43fa-4743-9f3c-045ae17d679c" />
+					<attribute id="Name" type="LSString" value="Goon_Human_Male_Cultist_Monk" />
+					<attribute id="Stats" type="FixedString" value="LOW_Chasm_Strangler" />
+					<attribute id="ParentTemplateId" type="FixedString" value="ebd19426-c110-47f1-9137-9fb306b719cc" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209032" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="TradeTreasures">
+							<children>
+								<node id="TreasureItem">
+									<attribute id="Object" type="FixedString" value="LOW_CountingHouse_BhaalCultist" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_Humans_Male_Cultist_Wizard_Scimitar -->
+				<node id="GameObjects">
+					<attribute id="Archetype" type="FixedString" value="melee_magic_smart" />
+					<attribute id="BloodSurfaceType" type="FixedString" value="SurfaceNone" />
+					<attribute id="BloodType" type="FixedString" value="" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="a3bcb0db-cfa7-bb0a-cab4-3384c0cc4809" />
+					<attribute id="DisplayName" type="TranslatedString" handle="h477b4d21g6bedg4defga194g9cfd3874ed50" version="1" />
+					<attribute id="Equipment" type="FixedString" value="EQP_Rapier" />
+					<attribute id="Icon" type="FixedString" value="a3bcb0db-cfa7-bb0a-cab4-3384c0cc4809-EQP_Spear_(Icon_Human_Male)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="LevelOverride" type="int32" value="9" />
+					<attribute id="MapKey" type="FixedString" value="2cd4466d-621b-49b6-83d3-3f6343b25f3f" />
+					<attribute id="Name" type="LSString" value="Goon_Humans_Male_Cultist_Wizard_Scimitar" />
+					<attribute id="ParentTemplateId" type="FixedString" value="48d58355-4c5d-446b-a775-d231f712d003" />
+					<attribute id="Stats" type="FixedString" value="Goon_Cultist_Bhaal_Wizard_Scimitar" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209024" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="OnDeathActions" />
+						<node id="SkillList">
+							<children>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Target_LOW_BhaalCultist_CloudOfDaggers" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Target_LOW_BhaalCultist_BenignTransposition" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+						<node id="StatusList">
+							<children>
+								<node id="Status">
+									<attribute id="Object" type="FixedString" value="AURA_OF_MURDER" />
+								</node>
+								<node id="Status">
+									<attribute id="Object" type="FixedString" value="MAGE_ARMOR" />
+								</node>
+							</children>
+						</node>
+						<node id="TradeTreasures">
+							<children>
+								<node id="TreasureItem">
+									<attribute id="Object" type="FixedString" value="LOW_CountingHouse_BhaalCultist" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+			</children>
+		</node>
+	</region>
+</save>
