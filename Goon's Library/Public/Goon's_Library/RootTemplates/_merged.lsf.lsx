@@ -18,7 +18,7 @@
 						<node id="GameMaster" />
 					</children>
 				</node>
-				<!-- Goon_Human_Male_Cultist_Monk -->
+				<!-- Goon_Humans_Male_Cultist_Monk -->
 				<node id="GameObjects">
 					<attribute id="Archetype" type="FixedString" value="act3_LOW_StranglerLuke" />
 					<attribute id="CharacterVisualResourceID" type="FixedString" value="921279c7-cbce-1474-abcc-806bc5587f85" />
@@ -28,7 +28,7 @@
 					<attribute id="IsEquipmentLootable" type="bool" value="True" />
 					<attribute id="LevelOverride" type="int32" value="8" />
 					<attribute id="MapKey" type="FixedString" value="b1b184a6-43fa-4743-9f3c-045ae17d679c" />
-					<attribute id="Name" type="LSString" value="Goon_Human_Male_Cultist_Monk" />
+					<attribute id="Name" type="LSString" value="Goon_Humans_Male_Cultist_Monk" />
 					<attribute id="Stats" type="FixedString" value="LOW_Chasm_Strangler" />
 					<attribute id="ParentTemplateId" type="FixedString" value="ebd19426-c110-47f1-9137-9fb306b719cc" />
 					<attribute id="Type" type="FixedString" value="character" />
@@ -44,7 +44,7 @@
 						</node>
 					</children>
 				</node>
-				<!-- Goon_Humans_Male_Cultist_Wizard_Scimitar -->
+				<!-- Goon_Humans_Cultist_Bhaal_Wizard_Scimitar -->
 				<node id="GameObjects">
 					<attribute id="Archetype" type="FixedString" value="melee_magic_smart" />
 					<attribute id="BloodSurfaceType" type="FixedString" value="SurfaceNone" />
@@ -56,9 +56,9 @@
 					<attribute id="LevelName" type="FixedString" value="" />
 					<attribute id="LevelOverride" type="int32" value="9" />
 					<attribute id="MapKey" type="FixedString" value="2cd4466d-621b-49b6-83d3-3f6343b25f3f" />
-					<attribute id="Name" type="LSString" value="Goon_Humans_Male_Cultist_Wizard_Scimitar" />
+					<attribute id="Name" type="LSString" value="Goon_Humans_Cultist_Bhaal_Wizard_Scimitar" />
 					<attribute id="ParentTemplateId" type="FixedString" value="48d58355-4c5d-446b-a775-d231f712d003" />
-					<attribute id="Stats" type="FixedString" value="Goon_Cultist_Bhaal_Wizard_Scimitar" />
+					<attribute id="Stats" type="FixedString" value="Goon_Human_Cultist_Bhaal_Wizard_Bladesinger" />
 					<attribute id="Type" type="FixedString" value="character" />
 					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209024" />
 					<children>
@@ -136,6 +136,318 @@
 							<children>
 								<node id="TreasureItem">
 									<attribute id="Object" type="FixedString" value="LOW_CountingHouse_BhaalCultist" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_HalfOrcs_Male_Cultist_Bane_Paladin_Greatsword -->
+				<node id="GameObjects">
+					<attribute id="Archetype" type="FixedString" value="melee_magic" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="36ab11df-b9ec-5838-0412-25ca3b3a31f7" />
+					<attribute id="DisplayName" type="TranslatedString" handle="hb848b180g7578g46a2g8784g549d97136786" version="1" />
+					<attribute id="Equipment" type="FixedString" value="Goon_EQP_Greatsword2_Plate_HelmetLeather_HandCrossbow" />
+					<attribute id="EquipmentRace" type="guid" value="e39505f7-f576-4e70-a99e-8e29cd381a11" />
+					<attribute id="Icon" type="FixedString" value="36ab11df-b9ec-5838-0412-25ca3b3a31f7-EQP_Spear_B_Plate_HelmetLeather_HandCrossbow_(Icon_HalfOrcs_Male)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="LevelOverride" type="int32" value="11" />
+					<attribute id="MapKey" type="FixedString" value="7a51dbfc-2fd7-4df5-a9d8-ea4d9bd0a75c" />
+					<attribute id="Name" type="LSString" value="Goon_HalfOrcs_Male_Cultist_Bane_Paladin_Greatsword" />
+					<attribute id="ParentTemplateId" type="FixedString" value="0350f048-11f5-42fe-8399-228e419f4789" />
+					<attribute id="Stats" type="FixedString" value="Goon_HalfOrc_Cultist_Bane_Paladin" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209029" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="SkillList">
+							<children>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Target_VoiceOfCommand" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+						<node id="Tags">
+							<children>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="542b58f0-42ad-4157-a28e-27434e0e7b18" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="5f831985-6974-4106-91a7-44ae08341943" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="35e61bba-f575-4d24-a3d4-ac29ad9878f9" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_Dwarves_Male_Cultist_Bane_Cleric -->
+				<node id="GameObjects">
+					<attribute id="Archetype" type="FixedString" value="melee_magic_smart" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="28e03674-be55-9136-5fcf-4239929b669b" />
+					<attribute id="DisplayName" type="TranslatedString" handle="h02ec03aagc75ag4ccbg84f7g8f8baf8d35d4" version="1" />
+					<attribute id="Equipment" type="FixedString" value="EQP_Mace_C_Plate_HelmetMetal" />
+					<attribute id="Icon" type="FixedString" value="28e03674-be55-9136-5fcf-4239929b669b-EQP_Mace_C_Plate_HelmetMetal_(Icon_Dwarf_Male)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="LevelOverride" type="int32" value="12" />
+					<attribute id="MapKey" type="FixedString" value="9ec46fbc-71a6-441a-bf8b-5938145291e4" />
+					<attribute id="Name" type="LSString" value="Goon_Dwarves_Male_Cultist_Bane_Cleric" />
+					<attribute id="ParentTemplateId" type="FixedString" value="5e47508d-ff11-4ede-b115-afa735303413" />
+					<attribute id="Race" type="guid" value="0ab2874d-cfdc-405e-8a97-d37bfbb23c52" />
+					<attribute id="Stats" type="FixedString" value="Dwarf_Hill_Cultist_Bane_BlackGauntlet" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209026" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="SkillList">
+							<children>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Shout_AuraOf_Terror" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+						<node id="Tags">
+							<children>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="542b58f0-42ad-4157-a28e-27434e0e7b18" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="5f831985-6974-4106-91a7-44ae08341943" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="7132eb74-5836-42f4-ac50-bb26c0234fde" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="35e61bba-f575-4d24-a3d4-ac29ad9878f9" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_Humans_Male_Cultist_Bane_Rogue -->
+				<node id="GameObjects">
+					<attribute id="Flag" type="int32" value="0" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="cfa521f0-633a-32e5-4789-4bf9f1b34209" />
+					<attribute id="Equipment" type="FixedString" value="Goon_EQP_Dagger_HandCrossbow_Robe" />
+					<attribute id="Icon" type="FixedString" value="cfa521f0-633a-32e5-4789-4bf9f1b34209-EQP_Dagger_(Icon_Human_Male)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="MapKey" type="FixedString" value="c18e2fba-9f78-4a16-b063-0ef06180536f" />
+					<attribute id="Name" type="LSString" value="Goon_Humans_Male_Cultist_Bane_Rogue" />
+					<attribute id="ParentTemplateId" type="FixedString" value="acd7060a-43bd-4dc9-b050-9d9b2cf7b7df" />
+					<attribute id="LevelOverride" type="int32" value="11" />
+					<attribute id="Stats" type="FixedString" value="Goon_Human_Cultist_Bane_Rogue" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115205255725657" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="Tags">
+							<children>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="542b58f0-42ad-4157-a28e-27434e0e7b18" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="5f831985-6974-4106-91a7-44ae08341943" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="35e61bba-f575-4d24-a3d4-ac29ad9878f9" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_Humans_Male_Cultist_Bane_Warlock_Longsword -->
+				<node id="GameObjects">
+					<attribute id="Archetype" type="FixedString" value="melee_magic_smart" />
+					<attribute id="IsEquipmentLootable" type="bool" value="True" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="200c667e-54a9-46c0-934b-efa049bdbdef" />
+					<attribute id="DisplayName" type="TranslatedString" handle="h03263a61g7c39g4c8bgaed8g699a71bf5f64" version="2" />
+					<attribute id="Equipment" type="FixedString" value="EQP_Longsword_Leather_Shield" />
+					<attribute id="Icon" type="FixedString" value="ff9bd02c-7a12-3fd3-fa39-a6911a1ac942-EQP_Mace_B_Chainmail_Shield_HandCrossbow_(Icon_Human_Male)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="LevelOverride" type="int32" value="11" />
+					<attribute id="MapKey" type="FixedString" value="5f968650-453b-4b83-8481-068488ba22e2" />
+					<attribute id="Name" type="LSString" value="Goon_Humans_Male_Cultist_Bane_Warlock_Longsword" />
+					<attribute id="ParentTemplateId" type="FixedString" value="acd7060a-43bd-4dc9-b050-9d9b2cf7b7df" />
+					<attribute id="Stats" type="FixedString" value="Goon_Human_Cultist_Bane_Warlock_Hexblade" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209029" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="Tags">
+							<children>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="542b58f0-42ad-4157-a28e-27434e0e7b18" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="5f831985-6974-4106-91a7-44ae08341943" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="35e61bba-f575-4d24-a3d4-ac29ad9878f9" />
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_Humans_Female_Cultist_Bane_Sorcerer -->
+				<node id="GameObjects">
+					<attribute id="Archetype" type="FixedString" value="mage" />
+					<attribute id="IsEquipmentLootable" type="bool" value="True" />
+					<attribute id="CharacterVisualResourceID" type="FixedString" value="3828bffe-07b2-44fd-aa66-42d38c53e242" />
+					<attribute id="Equipment" type="FixedString" value="Goon_EQP_Staff_SorcererRobe" />
+					<attribute id="Icon" type="FixedString" value="ab4254ac-bd0d-7af0-f360-5d95a288cb95-_(Icon_Human_Female)" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="LevelOverride" type="int32" value="11" />
+					<attribute id="MapKey" type="FixedString" value="4e679c05-cd1d-475b-be5f-b1b6799e190f" />
+					<attribute id="Name" type="LSString" value="Goon_Humans_Female_Cultist_Bane_Sorcerer" />
+					<attribute id="ParentTemplateId" type="FixedString" value="19dc6cab-aa38-4f09-b9cf-546e1c0ecb8a" />
+					<attribute id="Stats" type="FixedString" value="Goon_Human_Cultist_Bane_Sorcerer" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209024" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="SkillList">
+							<children>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Projectile_RayOfFrost" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Target_Command_Container" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+								<node id="Skill">
+									<attribute id="AIFlags" type="uint16" value="0" />
+									<attribute id="FallbackStartRound" type="int32" value="-1" />
+									<attribute id="LearningStrategy" type="uint8" value="0" />
+									<attribute id="MinimumImpact" type="int32" value="0" />
+									<attribute id="OnlyCastOnSelf" type="bool" value="False" />
+									<attribute id="ScoreModifier" type="float" value="1" />
+									<attribute id="Skill" type="FixedString" value="Zone_Fear" />
+									<attribute id="SpellCastingAbility" type="uint8" value="0" />
+									<attribute id="StartRound" type="int32" value="0" />
+									<children>
+										<node id="SourceConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+										<node id="TargetConditions">
+											<attribute id="MaximumHealthPercentage" type="int32" value="100" />
+											<attribute id="MinimumHealthPercentage" type="int32" value="0" />
+											<children>
+												<node id="Tags" />
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+						<node id="Tags">
+							<children>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="542b58f0-42ad-4157-a28e-27434e0e7b18" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="5f831985-6974-4106-91a7-44ae08341943" />
+								</node>
+								<node id="Tag">
+									<attribute id="Object" type="guid" value="35e61bba-f575-4d24-a3d4-ac29ad9878f9" />
 								</node>
 							</children>
 						</node>

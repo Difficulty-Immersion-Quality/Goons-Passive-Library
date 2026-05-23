@@ -1,0 +1,26 @@
+new equipment "Goon_EQP_Greatsword2_Plate_HelmetLeather_HandCrossbow"
+add initialweaponset "Melee"
+add equipmentgroup
+add equipment entry "WPN_Greatsword_2"
+add equipmentgroup
+add equipment entry "ARM_Plate_Body"
+add equipmentgroup
+add equipment entry "ARM_Helmet_Leather"
+add equipmentgroup
+add equipment entry "WPN_HandCrossbow"
+
+new equipment "Goon_EQP_Dagger_HandCrossbow_Robe"
+add initialweaponset "Melee"
+add equipmentgroup
+add equipment entry "WPN_Dagger"
+add equipmentgroup
+add equipment entry "WPN_HandCrossbow"
+add equipmentgroup
+add equipment entry "ARM_Robe_Body"
+
+new equipment "Goon_EQP_Staff_SorcererRobe"
+add initialweaponset "Melee"
+add equipmentgroup
+add equipment entry "WPN_Quarterstaff"
+add equipmentgroup
+add equipment entry "ARM_Robe_Body_Sorcerer"
