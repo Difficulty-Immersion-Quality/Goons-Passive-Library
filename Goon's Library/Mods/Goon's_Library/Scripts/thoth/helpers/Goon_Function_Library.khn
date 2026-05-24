@@ -567,6 +567,61 @@ function Goon_IsSpellDealingFunctorDamage()
            | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')))
 end
 
+-- ==================================== SpellDamageTypeIs checks
+-- Not to be confused with vanilla IsDamageTypeAcid() etc. checks that check damage done.
+
+function Goon_IsSpellDamageTypeAcid()
+    return SpellDamageTypeIs(DamageType.Acid)
+end
+
+function Goon_IsSpellDamageTypeCold()
+    return SpellDamageTypeIs(DamageType.Cold)
+end
+
+function Goon_IsSpellDamageTypeFire()
+    return SpellDamageTypeIs(DamageType.Fire)
+end
+
+function Goon_IsSpellDamageTypeLightning()
+    return SpellDamageTypeIs(DamageType.Lightning)
+end
+
+function Goon_IsSpellDamageTypeThunder()
+    return SpellDamageTypeIs(DamageType.Thunder)
+end
+
+function Goon_IsSpellDamageTypeRadiant()
+    return SpellDamageTypeIs(DamageType.Radiant)
+end
+
+function Goon_IsSpellDamageTypePoison()
+    return SpellDamageTypeIs(DamageType.Poison)
+end
+
+function Goon_IsSpellDamageTypePsychic()
+    return SpellDamageTypeIs(DamageType.Psychic)
+end
+
+function Goon_IsSpellDamageTypeNecrotic()
+    return SpellDamageTypeIs(DamageType.Necrotic)
+end
+
+function Goon_IsSpellDamageTypeForce()
+    return SpellDamageTypeIs(DamageType.Force)
+end
+
+function Goon_IsSpellDamageTypeSlashing()
+    return SpellDamageTypeIs(DamageType.Slashing)
+end
+
+function Goon_IsSpellDamageTypePiercing()
+    return SpellDamageTypeIs(DamageType.Piercing)
+end
+
+function Goon_IsSpellDamageTypeBludgeoning()
+    return SpellDamageTypeIs(DamageType.Bludgeoning)
+end
+
 -- ==================================== Weapon/armour equipped checks ====================================
 
 function Goon_Dueling_Check(entity)
