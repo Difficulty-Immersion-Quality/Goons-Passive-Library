@@ -58,7 +58,7 @@ function Goon_AttackOfOpportunityConditions()
          & ~Goon_HasFlamingSphereAuraCondition()
          & ~AnyEntityIsItem()
          & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target)
-         & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target)) 
+         & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target))
          & ((~HasStatus('PANACHE', context.Source)) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
 end
 
@@ -296,6 +296,33 @@ end
 function Goon_IsCharacterLevelEqualOrBetween(value, value2, entity)
     local entity = entity or context.Source
     return Goon_CharacterLevelGreaterThanOrEqual(value, entity) & Goon_CharacterLevelLessThanOrEqual(value2, entity)
+end
+
+-- ==================================== Ability modifier not a negative value ====================================
+-- Functions to ensure ability modifiers aren't negative values when doing scaling bonuses
+
+function Goon_IsStrengthModifierPositive()
+    return GetModifier(context.Source.Strength) > 0
+end
+
+function Goon_IsDexterityModifierPositive()
+    return GetModifier(context.Source.Dexterity) > 0
+end
+
+function Goon_IsConstitutionModifierPositive()
+    return GetModifier(context.Source.Constitution) > 0
+end
+
+function Goon_IsIntelligenceModifierPositive()
+    return GetModifier(context.Source.Intelligence) > 0
+end
+
+function Goon_IsWisdomModifierPositive()
+    return GetModifier(context.Source.Wisdom) > 0
+end
+
+function Goon_IsCharismaModifierPositive()
+    return GetModifier(context.Source.Charisma) > 0
 end
 
 -- ==================================== Check current duration of status ====================================
