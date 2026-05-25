@@ -1,10 +1,10 @@
-    local BleedingCondition = {
+local BleedingCondition = {
     "BLEEDING",
     "BARBED_ARROW",
     "HEAVY_BLEEDING"
-    }
+}
 
-    local BurningCondition = {
+local BurningCondition = {
     "BURNING",
     "BURNING_AZER",
     "BURNING_HOLY",
@@ -35,25 +35,25 @@
     "ORI_KARLACH_INFERNAL_FURY",
     "SEARING_SMITE",
     "WILD_MAGIC_BURNING"
-    }
+}
 
-    local DeafenedCondition = {
+local DeafenedCondition = {
     "DEAFENED",
     "DEAF",
     "DEAFNESS",
     "GOON_DEAFENED",
     "GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS",
     "GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS"
-    }
+}
 
-    local SilencedCondition = {
+local SilencedCondition = {
     "SILENCED",
     "SHA_SILENTLIBRARY_LIBRARIANSILENCE_STATUS",
     "LOW_VoicelessPenitent_Silenced",
     "SILENCED_MOVEMENT",
     "GARROTE_SILENCED",
     "GOON_SILENCED_AURA"
-    }
+}
 
 
 local function HasAnyStatus(statusTable, charID)
@@ -65,79 +65,38 @@ local function HasAnyStatus(statusTable, charID)
     return false
 end
 
-local function HasBleedingCondition(charID)
-    return HasAnyStatus(BleedingCondition, charID)
-end
+-- replaces the four Has*Condition one-liner wrappers; each entry drives one SG status
+local PseudoGroups = {
+    { condition = BleedingCondition, sgStatus = "SG_Bleeding" },
+    { condition = BurningCondition,  sgStatus = "SG_Burning"  },
+    { condition = DeafenedCondition, sgStatus = "SG_Deafened" },
+    { condition = SilencedCondition, sgStatus = "SG_Silenced" },
+}
 
-local function HasBurningCondition(charID)
-    return HasAnyStatus(BurningCondition, charID)
-end
-
-local function HasDeafenedCondition(charID)
-    return HasAnyStatus(DeafenedCondition, charID)
-end
-
-local function HasSilencedCondition(charID)
-    return HasAnyStatus(SilencedCondition, charID)
+-- built once at load so StatusIsRelevant is O(1); was four sequential ipairs scans per status event
+local RelevantStatuses = {}
+for _, group in ipairs(PseudoGroups) do
+    for _, status in ipairs(group.condition) do
+        RelevantStatuses[status] = true
+    end
 end
 
 local function RunPseudoStatusGroups(charID)
-    -- Bleeding
-    if HasBleedingCondition(charID) then
-        if Osi.HasActiveStatus(charID, "SG_Bleeding") == 0 then
-            Osi.ApplyStatus(charID, "SG_Bleeding", -1, 1, charID)
-        end
-    else
-        if Osi.HasActiveStatus(charID, "SG_Bleeding") == 1 then
-            Osi.RemoveStatus(charID, "SG_Bleeding")
-        end
-    end
-    -- Burning
-    if HasBurningCondition(charID) then
-        if Osi.HasActiveStatus(charID, "SG_Burning") == 0 then
-            Osi.ApplyStatus(charID, "SG_Burning", -1, 1, charID)
-        end
-    else
-        if Osi.HasActiveStatus(charID, "SG_Burning") == 1 then
-            Osi.RemoveStatus(charID, "SG_Burning")
-        end
-    end
-    -- Deafened
-    if HasDeafenedCondition(charID) then
-        if Osi.HasActiveStatus(charID, "SG_Deafened") == 0 then
-            Osi.ApplyStatus(charID, "SG_Deafened", -1, 1, charID)
-        end
-    else
-        if Osi.HasActiveStatus(charID, "SG_Deafened") == 1 then
-            Osi.RemoveStatus(charID, "SG_Deafened")
-        end
-    end
-    -- Silenced
-    if HasSilencedCondition(charID) then
-        if Osi.HasActiveStatus(charID, "SG_Silenced") == 0 then
-            Osi.ApplyStatus(charID, "SG_Silenced", -1, 1, charID)
-        end
-    else
-        if Osi.HasActiveStatus(charID, "SG_Silenced") == 1 then
-            Osi.RemoveStatus(charID, "SG_Silenced")
+    for _, group in ipairs(PseudoGroups) do
+        if HasAnyStatus(group.condition, charID) then
+            if Osi.HasActiveStatus(charID, group.sgStatus) == 0 then
+                Osi.ApplyStatus(charID, group.sgStatus, -1, 1, charID)
+            end
+        else
+            if Osi.HasActiveStatus(charID, group.sgStatus) == 1 then
+                Osi.RemoveStatus(charID, group.sgStatus)
+            end
         end
     end
 end
 
 local function StatusIsRelevant(status)
-    for _, PseudoStatusGroupCondition in ipairs(BleedingCondition) do
-        if status == PseudoStatusGroupCondition then return true end
-    end
-    for _, PseudoStatusGroupCondition in ipairs(BurningCondition) do
-        if status == PseudoStatusGroupCondition then return true end
-    end
-    for _, PseudoStatusGroupCondition in ipairs(DeafenedCondition) do
-        if status == PseudoStatusGroupCondition then return true end
-    end
-    for _, PseudoStatusGroupCondition in ipairs(SilencedCondition) do
-        if status == PseudoStatusGroupCondition then return true end
-    end
-    return false
+    return RelevantStatuses[status] == true
 end
 
 Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function(charID, status, causee, storyActionID)
