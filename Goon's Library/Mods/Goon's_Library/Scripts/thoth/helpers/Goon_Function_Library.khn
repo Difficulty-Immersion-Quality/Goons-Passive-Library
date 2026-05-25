@@ -355,7 +355,9 @@ function Goon_IsSneakAttackSpell()
          | SpellId('Target_LHB_Justicar_ConsecratedStrike') 
          | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike') 
          | SpellId('Projectile_LHB_Justicar_ConsecratedStrike') 
-         | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike') 
+         | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike')
+         | SpellId('Target_BoomingBlade_SneakAttack') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
 end
 
 function Goon_IsSneakAttackInterrupt()
@@ -557,18 +559,165 @@ end
 -- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis)
 -- TODO: Replace every instance of "HasFunctor(StatsFunctorType.DealDamage)" with this function, and include it wherever "SpellDamageTypeIs" is called (barring exceptions)
 
+-- TODO: Doing more testing later around "MAG_CharismaCaster_CantripBooster_Passive" to cement the implementation.
 function Goon_IsSpellDealingFunctorDamage()
-    return HasFunctor(StatsFunctorType.DealDamage) & (Goon_CharacterLevelEqualToOrGreaterThan_5() | 
-           ~(SpellId('Target_BoomingBlade')
-           | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
-           | SpellId('Target_BoomingBlade_ClassSpell')
-           | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
-           | SpellId('Target_BoomingBlade_5e')
-           | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')))
+    return HasFunctor(StatsFunctorType.DealDamage) 
+         & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageEligible())
+end
+
+function Goon_IsConditionalDamageSpellEligible()
+    return ~Goon_IsSpellWithoutDamageType()
+         & (Goon_IsBoomingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsGreenFlameBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsSparkingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsBloodlettingBiteSpell() & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
+         | Goon_IsMisfortunesMarkSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsRimeStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsRighteousIncitementSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsVortexDartSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsWardensRebukeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5())
+end
+
+function Goon_IsConditionalDamageSpell()
+    return Goon_IsConditionalDamageCantrip()
+end
+
+function Goon_IsConditionalDamageCantrip()
+    return Goon_IsBoomingBladeSpell()
+         | Goon_IsGreenFlameBladeSpell()
+         | Goon_IsSparkingBladeSpell()
+         | Goon_IsBloodlettingBiteSpell()
+         | Goon_IsMisfortunesMarkSpell()
+         | Goon_IsRimeStrikeSpell()
+         | Goon_IsRighteousIncitementSpell()
+         | Goon_IsSpellShatteringStrikeSpell()
+         | Goon_IsVortexDartSpell()
+         | Goon_IsWardensRebukeSpell()
+end
+
+function Goon_IsBoomingBladeSpell()
+    return SpellId('Target_BoomingBlade')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
+         | SpellId('Target_BoomingBlade_ClassSpell')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
+         | SpellId('Target_BoomingBlade_5e')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')
+         | SpellId('Target_BoomingBlade_Default') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_Default')
+         | SpellId('Target_BoomingBlade_SneakAttack') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
+         | SpellId('Target_BoomingBlade_DivineStrike_Life') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Life')
+         | SpellId('Target_BoomingBlade_DivineStrike_Cold') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Cold')
+         | SpellId('Target_BoomingBlade_DivineStrike_Fire') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Fire')
+         | SpellId('Target_BoomingBlade_DivineStrike_Lightning') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Lightning')
+         | SpellId('Target_BoomingBlade_DivineStrike_Thunder') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Thunder')
+         | SpellId('Target_BoomingBlade_DivineStrike_Poison') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Poison')
+         | SpellId('Target_BoomingBlade_DivineStrike_MeleeWeapon') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_MeleeWeapon')
+         | SpellId('Target_BoomingBlade_DivineStrike_Necrotic') 
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Necrotic')
+         | SpellId('Target_BoomingBlade_DivineStrike_Psychic')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Psychic')
+         | SpellId('Target_SVMagus_BoomingBlade')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_BoomingBlade')
+end
+
+function Goon_IsGreenFlameBladeSpell()
+    return SpellId('Target_GreenFlameBlade') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade')
+         | SpellId('Target_GreenFlameBlade_Default') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_Default')
+         | SpellId('Target_GreenFlameBlade_SneakAttack') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_SneakAttack')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Life') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Life')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Cold') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Cold')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Fire') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Fire')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Lightning') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Lightning')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Thunder') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Thunder')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Poison') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Poison')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_MeleeWeapon') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Necrotic') 
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Necrotic')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Psychic')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic')
+end
+
+function Goon_IsSparkingBladeSpell()
+    return SpellId('Target_Sparking_Blade') 
+         | IsSpellChildOrVariantFromContext('Target_Sparking_Blade')
+end
+
+function Goon_IsBloodlettingBiteSpell()
+    return SpellId('Target_SVMagus_BloodlettingBite')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite')
+         | SpellId('Target_SVMagus_BloodlettingBite_Melee') 
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite_Melee')
+         | SpellId('Projectile_SVMagus_BloodlettingBite') 
+         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_BloodlettingBite')
+end
+
+function Goon_IsMisfortunesMarkSpell()
+    return SpellId('Target_SVMagus_MisfortunesMark') 
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_MisfortunesMark')
+end
+
+function Goon_IsRimeStrikeSpell()
+    return SpellId('Projectile_SVMagus_RimeStrike') 
+         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_RimeStrike')
+end
+
+function Goon_IsRighteousIncitementSpell()
+    return SpellId('Target_SVMagus_RighteousIncitement') 
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_RighteousIncitement')
+end
+
+function Goon_IsSpellShatteringStrikeSpell()
+    return SpellId('Target_SVMagus_SpellShatteringStrike') 
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_SpellShatteringStrike')
+end
+
+function Goon_IsVortexDartSpell()
+    return SpellId('Projectile_SVMagus_VortexDart') 
+         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_VortexDart')
+end
+
+function Goon_IsWardensRebukeSpell()
+    return SpellId('Target_SVMagus_WardensRebuke') 
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_WardensRebuke')
 end
 
 -- ==================================== SpellDamageTypeIs checks
 -- Not to be confused with vanilla IsDamageTypeAcid() etc. checks that check damage done.
+
+function Goon_IsSpellWithoutDamageType()
+    return ~Goon_IsSpellDamageTypeAcid()
+         | ~Goon_IsSpellDamageTypeCold()
+         | ~Goon_IsSpellDamageTypeFire()
+         | ~Goon_IsSpellDamageTypeLightning()
+         | ~Goon_IsSpellDamageTypeThunder()
+         | ~Goon_IsSpellDamageTypeRadiant()
+         | ~Goon_IsSpellDamageTypePoison()
+         | ~Goon_IsSpellDamageTypePsychic()
+         | ~Goon_IsSpellDamageTypeNecrotic()
+         | ~Goon_IsSpellDamageTypeForce()
+         | ~Goon_IsSpellDamageTypeSlashing()
+         | ~Goon_IsSpellDamageTypePiercing()
+         | ~Goon_IsSpellDamageTypeBludgeoning()
+end
 
 function Goon_IsSpellDamageTypeAcid()
     return SpellDamageTypeIs(DamageType.Acid)
