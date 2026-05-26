@@ -7,11 +7,15 @@
 -- end
 
 -- ==================================== Attack types ====================================
--- TODO: Ye
+-- Vanilla only has functions for IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
+-- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
 
 function Goon_IsMeleeOffhandAttack()
-    -- was checking RangedWeaponAttack and MeleeWeaponAttack (both main-hand types); offhand has its own enum
-    return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeOffHandWeaponAttack) -- inlined result variable; no logic change
+    return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeOffHandWeaponAttack)
+end
+
+function Goon_IsRangedOffhandAttack()
+    return ConditionResult(context.HitDescription.AttackType == AttackType.RangedOffHandWeaponAttack)
 end
 
 -- ==================================== Spell Target conditions ====================================
@@ -20,19 +24,23 @@ end
 -- TODO: These will probably get moved to their own file, with checks for individual spells groups by level and listed alphabetically.
 
 function Goon_TargetConditions_HarmfulProjectile()
-    return Goon_IsPlayerInControl() & ~Self() | Goon_IsAIInControl() & ~Self() & (Enemy() | Item() | Goon_IsSurface())
+    return Goon_IsPlayerInControl() & ~Self()
+         | Goon_IsAIInControl() & ~Self() & (Enemy() | Item() | Goon_IsSurface())
 end
 
 function Goon_TargetConditions_BeneficialProjectile()
-    return Goon_IsPlayerInControl() & ~Self() | Goon_IsAIInControl() & (Character() and Ally())
+    return Goon_IsPlayerInControl() & ~Self()
+         | Goon_IsAIInControl() & (Character() and Ally())
 end
 
 function Goon_TargetConditions_HarmfulTarget()
-    return Goon_IsPlayerInControl() & ~Self() & (Item() or Character() or Dead()) | Goon_IsAIInControl() & (Character() and Enemy())
+    return Goon_IsPlayerInControl() & ~Self() & (Item() or Character() or Dead())
+         | Goon_IsAIInControl() & (Character() and Enemy())
 end
 
 function Goon_TargetConditions_BeneficialTarget()
-    return Goon_IsPlayerInControl() & (Item() or Character() or Dead()) | Goon_IsAIInControl() & (Character() and Ally())
+    return Goon_IsPlayerInControl() & (Item() or Character() or Dead())
+         | Goon_IsAIInControl() & (Character() and Ally())
 end
 
 -- ==================================== Interrupt conditions ====================================
@@ -104,13 +112,11 @@ end
 
 function Goon_HasSilencedCondition()
     -- GOON_SILENCED_AURA: not in the lua, intentional?
-    return HasAnyStatus(
-    { 'SILENCED', 'SHA_SILENTLIBRARY_LIBRARIANSILENCE_STATUS', 'LOW_VoicelessPenitent_Silenced', 'SILENCED_MOVEMENT', 'GARROTE_SILENCED' }, {}, {})
+    return HasAnyStatus({ 'SILENCED', 'SHA_SILENTLIBRARY_LIBRARIANSILENCE_STATUS', 'LOW_VoicelessPenitent_Silenced', 'SILENCED_MOVEMENT', 'GARROTE_SILENCED' }, {}, {})
 end
 
 function Goon_HasDeafenedCondition()
-    return HasAnyStatus(
-    { 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {})
+    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {})
 end
 
 -- TODO: "not" instead of ~? Allowed in if statement?
@@ -232,8 +238,7 @@ end
 -- ==================================== List functions
 
 function Goon_HasBurningCondition_Normal()
-    return HasAnyStatus(
-    { 'BURNING', 'BURNING_AZER', 'BURNING_LAVA', 'BURNING_TRAPWALL', 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9', 'FLAMING_SPHERE', 'FLAMING_SPHERE_3', 'FLAMING_SPHERE_4', 'FLAMING_SPHERE_5', 'FLAMING_SPHERE_6', 'FLAMING_SPHERE_7', 'FLAMING_SPHERE_8', 'FLAMING_SPHERE_9', 'HAV_MAG_INFERNAL_FIRE', 'LOW_HOH_BOAR_BURNING_DAMAGE', 'MAG_FIRE_HEAT', 'MAG_INFERNAL_BURNING', 'ORI_KARLACH_ENRAGE', 'ORI_KARLACH_INFERNAL_FURY', 'SEARING_SMITE', 'WILD_MAGIC_BURNING' }, {}, {})
+    return HasAnyStatus({ 'BURNING', 'BURNING_AZER', 'BURNING_LAVA', 'BURNING_TRAPWALL', 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9', 'FLAMING_SPHERE', 'FLAMING_SPHERE_3', 'FLAMING_SPHERE_4', 'FLAMING_SPHERE_5', 'FLAMING_SPHERE_6', 'FLAMING_SPHERE_7', 'FLAMING_SPHERE_8', 'FLAMING_SPHERE_9', 'HAV_MAG_INFERNAL_FIRE', 'LOW_HOH_BOAR_BURNING_DAMAGE', 'MAG_FIRE_HEAT', 'MAG_INFERNAL_BURNING', 'ORI_KARLACH_ENRAGE', 'ORI_KARLACH_INFERNAL_FURY', 'SEARING_SMITE', 'WILD_MAGIC_BURNING' }, {}, {})
 end
 
 function Goon_HasBurningCondition_Holy()
@@ -249,8 +254,7 @@ function Goon_IsKarlachCooking()
 end
 
 function Goon_HasFlamingSphereAuraCondition()
-    return HasAnyStatus(
-    { 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9' }, {}, {})
+    return HasAnyStatus({ 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9' }, {}, {})
 end
 
 -- ==================================== Fetch character levels ====================================
@@ -337,36 +341,39 @@ end
 
 function Goon_IsSneakAttack()
     return HasUseCosts('SneakAttack_Charge')
-        | Goon_IsSneakAttackSpell()
-        | Goon_IsSneakAttackInterrupt()
+         | Goon_IsSneakAttackSpell()
+         | Goon_IsSneakAttackInterrupt()
 end
 
 function Goon_IsSneakAttackSpell()
 	return SpellId('Target_SneakAttack')
-        | SpellId('Projectile_SneakAttack')
-        | SpellId('Target_SneakAttack_Rakish')
-        | SpellId('Projectile_SneakAttack_Rakish')
-        | SpellId('Target_SneakAttack_Swarm')
-        | SpellId('Target_SneakAttack_Ruffian')
-        | SpellId('Projectile_SneakAttack_Ruffian')
-        | SpellId('Target_LLRuffian_SneakAttack_Unarmed')
-        | SpellId('Target_LHB_Justicar_ConsecratedStrike') 
-        | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike') 
-        | SpellId('Projectile_LHB_Justicar_ConsecratedStrike') 
-        | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike')
-        | SpellId('Target_BoomingBlade_SneakAttack') 
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
+         | SpellId('Projectile_SneakAttack')
+         | SpellId('Target_SneakAttack_Rakish')
+         | SpellId('Projectile_SneakAttack_Rakish')
+         | SpellId('Target_SneakAttack_Swarm')
+         | SpellId('Target_SneakAttack_Ruffian')
+         | SpellId('Projectile_SneakAttack_Ruffian')
+         | SpellId('Target_LLRuffian_SneakAttack_Unarmed')
+         | SpellId('Target_LHB_Justicar_ConsecratedStrike')
+         | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike')
+         | SpellId('Projectile_LHB_Justicar_ConsecratedStrike')
+         | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike')
+         | SpellId('Target_BoomingBlade_SneakAttack')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
 end
 
 function Goon_IsSneakAttackInterrupt()
     return Goon_IsUACunningStrikeSneakAttack()
-        | ConditionResult(string.match(context.InterruptId, '^Interrupt_SneakAttack'))                    -- catches _Critical, _Rakish, _Rakish_Critical, _Ruffian, _Ruffian_Critical
-        | ConditionResult(string.match(context.InterruptId, '^Interrupt_LHB_Justicar_ConsecratedStrike')) -- catches _2.._9 and _Critical, _Critical_2.._9
+           -- _Critical, _Rakish, _Rakish_Critical, _Ruffian, _Ruffian_Critical
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_SneakAttack'))
+           -- _2 .. _9 and _Critical, _Critical_2 .. _9
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_LHB_Justicar_ConsecratedStrike'))
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
     return ConditionResult(string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack'))
-        | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike')) -- catches both Interrupt_ and Goon_Interrupt_ prefixed variants
+           -- _Less1, _Less2, _Less3, _Less6, _Disarm, _Poison, Goon_ _Poison, _Trip, _Withdraw, _Daze, _KnockOut, _Obscure
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike'))
 end
 
 -- ==================================== Flourishes
@@ -374,78 +381,79 @@ end
 -- TODO: Fill this out with the custom reactions and temporary spells!
 function Goon_IsFlourish()
     return Goon_IsFlourishSpell()
-        | Goon_IsFlourishTemporarySpell()
-        | Goon_IsFlourishInterrupt()
+         | Goon_IsFlourishTemporarySpell()
+         | Goon_IsFlourishInterrupt()
 end
 
 function Goon_IsFlourishSpell()
     return SpellId('Target_BladeFlourish_Defensive')
-        | SpellId('Projectile_BladeFlourish_Defensive')
-        | SpellId('Target_BladeFlourish_Mobile')
-        | SpellId('Projectile_BladeFlourish_Mobile')
-        | SpellId('Zone_BladeFlourish_Slashing')
-        | SpellId('Projectile_BladeFlourish_Slashing')
+         | SpellId('Projectile_BladeFlourish_Defensive')
+         | SpellId('Target_BladeFlourish_Mobile')
+         | SpellId('Projectile_BladeFlourish_Mobile')
+         | SpellId('Zone_BladeFlourish_Slashing')
+         | SpellId('Projectile_BladeFlourish_Slashing')
 end
 
 function Goon_IsFlourishTemporarySpell()
     return SpellId('Goon_Target_BladeFlourish_Defensive_Temporary')
-        | SpellId('Goon_Projectile_BladeFlourish_Defensive_Temporary')
-        | SpellId('Goon_Target_BladeFlourish_Mobile_Temporary')
-        | SpellId('Goon_Projectile_BladeFlourish_Mobile_Temporary')
-        | SpellId('Goon_Target_BladeFlourish_Slashing_Temporary')
-        | SpellId('Goon_Projectile_BladeFlourish_Slashing_Temporary')
-        | SpellId('Goon_Throw_BladeFlourish_Slashing_Temporary')
+         | SpellId('Goon_Projectile_BladeFlourish_Defensive_Temporary')
+         | SpellId('Goon_Target_BladeFlourish_Mobile_Temporary')
+         | SpellId('Goon_Projectile_BladeFlourish_Mobile_Temporary')
+         | SpellId('Goon_Target_BladeFlourish_Slashing_Temporary')
+         | SpellId('Goon_Projectile_BladeFlourish_Slashing_Temporary')
+         | SpellId('Goon_Throw_BladeFlourish_Slashing_Temporary')
 end
 
 function Goon_IsFlourishInterrupt()
-    return ConditionResult(string.match(context.InterruptId, '^Goon_Interrupt_BladeFlourish_')) -- catches _Defensive, _Mobile, _Slashing
+    return -- _Defensive, _Mobile, _Slashing
+           ConditionResult(string.match(context.InterruptId, '^Goon_Interrupt_BladeFlourish_'))
 end
 
 -- ==================================== Bardic Inspiration
 
 function Goon_IsBardicInspirationSpell()
     return SpellId('Target_BardicInspiration')
-        | SpellId('Target_BardicInspiration_2')
-        | SpellId('Target_BardicInspiration_Combat')
-        | SpellId('Target_BardicInspiration_Combat_2')
-        | SpellId('Target_MantleOfInspiration')
-        | SpellId('Target_MantleOfInspiration_2')
-        | SpellId('Target_MantleOfInspiration_3')
-        | SpellId('Shout_BardicInspiration_PeerlessSkill')
+         | SpellId('Target_BardicInspiration_2')
+         | SpellId('Target_BardicInspiration_Combat')
+         | SpellId('Target_BardicInspiration_Combat_2')
+         | SpellId('Target_MantleOfInspiration')
+         | SpellId('Target_MantleOfInspiration_2')
+         | SpellId('Target_MantleOfInspiration_3')
+         | SpellId('Shout_BardicInspiration_PeerlessSkill')
 end
 
 -- ==================================== Sorcerer stuff
 
 function Goon_IsCreateSorceryPoints()
     return SpellId('Shout_CreateSorceryPoints_1')
-        | SpellId('Shout_CreateSorceryPoints_2')
-        | SpellId('Shout_CreateSorceryPoints_3')
-        | SpellId('Shout_CreateSorceryPoints_4')
-        | SpellId('Shout_CreateSorceryPoints_5')
-        | SpellId('Shout_CreateSorceryPoints_6')
-        | SpellId('Shout_CreateSorceryPoints_7')
-        | SpellId('Shout_CreateSorceryPoints_8')
-        | SpellId('Shout_CreateSorceryPoints_9')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_1')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_2')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_3')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_4')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_5')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_6')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_7')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_8')
-        | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_9')
+         | SpellId('Shout_CreateSorceryPoints_2')
+         | SpellId('Shout_CreateSorceryPoints_3')
+         | SpellId('Shout_CreateSorceryPoints_4')
+         | SpellId('Shout_CreateSorceryPoints_5')
+         | SpellId('Shout_CreateSorceryPoints_6')
+         | SpellId('Shout_CreateSorceryPoints_7')
+         | SpellId('Shout_CreateSorceryPoints_8')
+         | SpellId('Shout_CreateSorceryPoints_9')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_1')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_2')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_3')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_4')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_5')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_6')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_7')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_8')
+         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_9')
 end
 
 -- ==================================== Common Actions
 
 function Goon_IsDisengageSpell()
     return SpellId('Shout_Disengage')
-        | SpellId('Shout_Disengage_BonusAction')
-        | SpellId('Shout_Disengage_CunningAction')
-        | SpellId('Shout_Disengage_StepOfTheWind')
-        | SpellId('Shout_BootsOfSpeed')
-        | SpellId('SYR_Shout_Disengage_BonusAction_DruidQoL')
+         | SpellId('Shout_Disengage_BonusAction')
+         | SpellId('Shout_Disengage_CunningAction')
+         | SpellId('Shout_Disengage_StepOfTheWind')
+         | SpellId('Shout_BootsOfSpeed')
+         | SpellId('SYR_Shout_Disengage_BonusAction_DruidQoL')
 end
 
 -- One says condition the other says status gonna kms no cap
@@ -454,8 +462,7 @@ function Goon_HasDisengageCondition()
 end
 
 function Goon_HasDashStatus()
-    return HasAnyStatus(
-    { 'DASH', 'DASH_STACKED', 'DASH_STACKED_2', 'GOON_DASH_STACKED_3', 'GOON_DASH_STACKED_4', 'GOON_DASH_STACKED_5', 'GOON_DASH_STACKED_6', 'GOON_DASH_STACKED_7', 'GOON_DASH_STACKED_8', 'GOON_DASH_STACKED_9' }, {}, {})
+    return HasAnyStatus({ 'DASH', 'DASH_STACKED', 'DASH_STACKED_2', 'GOON_DASH_STACKED_3', 'GOON_DASH_STACKED_4', 'GOON_DASH_STACKED_5', 'GOON_DASH_STACKED_6', 'GOON_DASH_STACKED_7', 'GOON_DASH_STACKED_8', 'GOON_DASH_STACKED_9' }, {}, {})
 end
 
 function Goon_IsDashSpellCategory()
@@ -470,12 +477,12 @@ end
 
 function Goon_IsBanishSpell()
     return SpellId('Target_Banishment')
-        | IsSpellChildOrVariantFromContext('Target_Banishment')
-        | SpellId('Target_Smite_Banishing')
-        | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
-        | SpellId('Projectile_Smite_Banishing')
-        | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
-        | SpellId('Projectile_ArcaneShot_BanishingArrow')
+         | IsSpellChildOrVariantFromContext('Target_Banishment')
+         | SpellId('Target_Smite_Banishing')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
+         | SpellId('Projectile_Smite_Banishing')
+         | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
+         | SpellId('Projectile_ArcaneShot_BanishingArrow')
 end
 
 -- ==================================== Spells that aren't spells
@@ -486,33 +493,33 @@ end
 
 function Goon_IsAuraOfVitality()
     return SpellId('Target_AuraOfVitality_Activate')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
-        | SpellId('Target_AuraOfVitality_Activate_4')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4')
-        | SpellId('Target_AuraOfVitality_Activate_5')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5')
-        | SpellId('Target_AuraOfVitality_Activate_6')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6')
-        | SpellId('Target_AuraOfVitality_Activate_7')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7')
-        | SpellId('Target_AuraOfVitality_Activate_8')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8')
-        | SpellId('Target_AuraOfVitality_Activate_9')
-        | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9')
-        | SpellId('Goon_Target_AuraOfVitality_Activate')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate')
-        | SpellId('Goon_Target_AuraOfVitality_Activate_4')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4')
-        | SpellId('Goon_Target_AuraOfVitality_Activate_5')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5')
-        | SpellId('Goon_Target_AuraOfVitality_Activate_6')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6')
-        | SpellId('Goon_Target_AuraOfVitality_Activate_7')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7')
-        | SpellId('Goon_Target_AuraOfVitality_Activate_8')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8')
-        | SpellId('Goon_Target_AuraOfVitality_Activate_9')
-        | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
+         | SpellId('Target_AuraOfVitality_Activate_4')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4')
+         | SpellId('Target_AuraOfVitality_Activate_5')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5')
+         | SpellId('Target_AuraOfVitality_Activate_6')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6')
+         | SpellId('Target_AuraOfVitality_Activate_7')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7')
+         | SpellId('Target_AuraOfVitality_Activate_8')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8')
+         | SpellId('Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9')
+         | SpellId('Goon_Target_AuraOfVitality_Activate')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_4')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_5')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_6')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_7')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_8')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8')
+         | SpellId('Goon_Target_AuraOfVitality_Activate_9')
+         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
 end
 
 -- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
@@ -526,21 +533,21 @@ end
 -- TODO: Doing more testing later around "MAG_CharismaCaster_CantripBooster_Passive" to cement the implementation.
 function Goon_IsSpellDealingFunctorDamage()
     return HasFunctor(StatsFunctorType.DealDamage) 
-        & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible()) -- was Goon_IsConditionalDamageEligible(); that function doesn't exist, name mismatch with Goon_IsConditionalDamageSpellEligible()
+        & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible())
 end
 
 function Goon_IsConditionalDamageSpellEligible()
     return ~Goon_IsSpellWithoutDamageType()
-        & (Goon_IsBoomingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsGreenFlameBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsSparkingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsBloodlettingBiteSpell() & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
-        | Goon_IsMisfortunesMarkSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsRimeStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsRighteousIncitementSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsVortexDartSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-        | Goon_IsWardensRebukeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5())
+         & (Goon_IsBoomingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsGreenFlameBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsSparkingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsBloodlettingBiteSpell() & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
+         | Goon_IsMisfortunesMarkSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsRimeStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsRighteousIncitementSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsVortexDartSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsWardensRebukeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5())
 end
 
 function Goon_IsConditionalDamageSpell()
@@ -549,137 +556,138 @@ end
 
 function Goon_IsConditionalDamageCantrip()
     return Goon_IsBoomingBladeSpell()
-        | Goon_IsGreenFlameBladeSpell()
-        | Goon_IsSparkingBladeSpell()
-        | Goon_IsBloodlettingBiteSpell()
-        | Goon_IsMisfortunesMarkSpell()
-        | Goon_IsRimeStrikeSpell()
-        | Goon_IsRighteousIncitementSpell()
-        | Goon_IsSpellShatteringStrikeSpell()
-        | Goon_IsVortexDartSpell()
-        | Goon_IsWardensRebukeSpell()
+         | Goon_IsGreenFlameBladeSpell()
+         | Goon_IsSparkingBladeSpell()
+         | Goon_IsBloodlettingBiteSpell()
+         | Goon_IsMisfortunesMarkSpell()
+         | Goon_IsRimeStrikeSpell()
+         | Goon_IsRighteousIncitementSpell()
+         | Goon_IsSpellShatteringStrikeSpell()
+         | Goon_IsVortexDartSpell()
+         | Goon_IsWardensRebukeSpell()
 end
 
 function Goon_IsBoomingBladeSpell()
     return SpellId('Target_BoomingBlade')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
-        | SpellId('Target_BoomingBlade_ClassSpell')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
-        | SpellId('Target_BoomingBlade_5e')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')
-        | SpellId('Target_BoomingBlade_Default')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_Default')
-        | SpellId('Target_BoomingBlade_SneakAttack')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
-        | SpellId('Target_BoomingBlade_DivineStrike_Life')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Life')
-        | SpellId('Target_BoomingBlade_DivineStrike_Cold')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Cold')
-        | SpellId('Target_BoomingBlade_DivineStrike_Fire')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Fire')
-        | SpellId('Target_BoomingBlade_DivineStrike_Lightning')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Lightning')
-        | SpellId('Target_BoomingBlade_DivineStrike_Thunder')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Thunder')
-        | SpellId('Target_BoomingBlade_DivineStrike_Poison')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Poison')
-        | SpellId('Target_BoomingBlade_DivineStrike_MeleeWeapon')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_MeleeWeapon')
-        | SpellId('Target_BoomingBlade_DivineStrike_Necrotic')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Necrotic')
-        | SpellId('Target_BoomingBlade_DivineStrike_Psychic')
-        | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Psychic')
-        | SpellId('Target_SVMagus_BoomingBlade')
-        | IsSpellChildOrVariantFromContext('Target_SVMagus_BoomingBlade')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
+         | SpellId('Target_BoomingBlade_ClassSpell')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
+         | SpellId('Target_BoomingBlade_5e')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')
+         | SpellId('Target_BoomingBlade_Default')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_Default')
+         | SpellId('Target_BoomingBlade_SneakAttack')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
+         | SpellId('Target_BoomingBlade_DivineStrike_Life')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Life')
+         | SpellId('Target_BoomingBlade_DivineStrike_Cold')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Cold')
+         | SpellId('Target_BoomingBlade_DivineStrike_Fire')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Fire')
+         | SpellId('Target_BoomingBlade_DivineStrike_Lightning')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Lightning')
+         | SpellId('Target_BoomingBlade_DivineStrike_Thunder')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Thunder')
+         | SpellId('Target_BoomingBlade_DivineStrike_Poison')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Poison')
+         | SpellId('Target_BoomingBlade_DivineStrike_MeleeWeapon')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_MeleeWeapon')
+         | SpellId('Target_BoomingBlade_DivineStrike_Necrotic')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Necrotic')
+         | SpellId('Target_BoomingBlade_DivineStrike_Psychic')
+         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Psychic')
+         | SpellId('Target_SVMagus_BoomingBlade')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_BoomingBlade')
 end
 
 function Goon_IsGreenFlameBladeSpell()
     return SpellId('Target_GreenFlameBlade') 
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade')
-        | SpellId('Target_GreenFlameBlade_Default')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_Default')
-        | SpellId('Target_GreenFlameBlade_SneakAttack')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_SneakAttack')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Life')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Life')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Cold')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Cold')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Fire')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Fire')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Lightning')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Lightning')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Thunder')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Thunder')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Poison')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Poison')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Necrotic')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Necrotic')
-        | SpellId('Target_GreenFlameBlade_DivineStrike_Psychic')
-        | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade')
+         | SpellId('Target_GreenFlameBlade_Default')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_Default')
+         | SpellId('Target_GreenFlameBlade_SneakAttack')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_SneakAttack')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Life')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Life')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Cold')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Cold')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Fire')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Fire')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Lightning')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Lightning')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Thunder')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Thunder')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Poison')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Poison')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Necrotic')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Necrotic')
+         | SpellId('Target_GreenFlameBlade_DivineStrike_Psychic')
+         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic')
 end
 
 function Goon_IsSparkingBladeSpell()
     return SpellId('Target_Sparking_Blade')
-        | IsSpellChildOrVariantFromContext('Target_Sparking_Blade')
+         | IsSpellChildOrVariantFromContext('Target_Sparking_Blade')
 end
 
 function Goon_IsBloodlettingBiteSpell()
     return SpellId('Target_SVMagus_BloodlettingBite')
-        | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite')
-        | SpellId('Target_SVMagus_BloodlettingBite_Melee') 
-        | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite_Melee')
-        | SpellId('Projectile_SVMagus_BloodlettingBite') 
-        | IsSpellChildOrVariantFromContext('Projectile_SVMagus_BloodlettingBite')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite')
+         | SpellId('Target_SVMagus_BloodlettingBite_Melee')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite_Melee')
+         | SpellId('Projectile_SVMagus_BloodlettingBite')
+         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_BloodlettingBite')
 end
 
 function Goon_IsMisfortunesMarkSpell()
     return SpellId('Target_SVMagus_MisfortunesMark')
-        | IsSpellChildOrVariantFromContext('Target_SVMagus_MisfortunesMark')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_MisfortunesMark')
 end
 
 function Goon_IsRimeStrikeSpell()
     return SpellId('Projectile_SVMagus_RimeStrike')
-        | IsSpellChildOrVariantFromContext('Projectile_SVMagus_RimeStrike')
+         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_RimeStrike')
 end
 
 function Goon_IsRighteousIncitementSpell()
     return SpellId('Target_SVMagus_RighteousIncitement')
-        | IsSpellChildOrVariantFromContext('Target_SVMagus_RighteousIncitement')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_RighteousIncitement')
 end
 
 function Goon_IsSpellShatteringStrikeSpell()
     return SpellId('Target_SVMagus_SpellShatteringStrike')
-        | IsSpellChildOrVariantFromContext('Target_SVMagus_SpellShatteringStrike')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_SpellShatteringStrike')
 end
 
 function Goon_IsVortexDartSpell()
     return SpellId('Projectile_SVMagus_VortexDart')
-        | IsSpellChildOrVariantFromContext('Projectile_SVMagus_VortexDart')
+         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_VortexDart')
 end
 
 function Goon_IsWardensRebukeSpell()
-    return SpellId('Target_SVMagus_WardensRebuke') | IsSpellChildOrVariantFromContext('Target_SVMagus_WardensRebuke')
+    return SpellId('Target_SVMagus_WardensRebuke')
+         | IsSpellChildOrVariantFromContext('Target_SVMagus_WardensRebuke')
 end
 
 -- ==================================== SpellDamageTypeIs checks
 -- Not to be confused with vanilla IsDamageTypeAcid() etc. checks that check damage done.
 
-function Goon_IsSpellWithoutDamageType() -- was all |; tautology: a spell can't be every damage type, so at least one ~Is* is always true; & means "not any of these"
+function Goon_IsSpellWithoutDamageType()
     return ~Goon_IsSpellDamageTypeAcid()
-        & ~Goon_IsSpellDamageTypeCold()
-        & ~Goon_IsSpellDamageTypeFire()
-        & ~Goon_IsSpellDamageTypeLightning()
-        & ~Goon_IsSpellDamageTypeThunder()
-        & ~Goon_IsSpellDamageTypeRadiant()
-        & ~Goon_IsSpellDamageTypePoison()
-        & ~Goon_IsSpellDamageTypePsychic()
-        & ~Goon_IsSpellDamageTypeNecrotic()
-        & ~Goon_IsSpellDamageTypeForce()
-        & ~Goon_IsSpellDamageTypeSlashing()
-        & ~Goon_IsSpellDamageTypePiercing()
-        & ~Goon_IsSpellDamageTypeBludgeoning()
+         & ~Goon_IsSpellDamageTypeCold()
+         & ~Goon_IsSpellDamageTypeFire()
+         & ~Goon_IsSpellDamageTypeLightning()
+         & ~Goon_IsSpellDamageTypeThunder()
+         & ~Goon_IsSpellDamageTypeRadiant()
+         & ~Goon_IsSpellDamageTypePoison()
+         & ~Goon_IsSpellDamageTypePsychic()
+         & ~Goon_IsSpellDamageTypeNecrotic()
+         & ~Goon_IsSpellDamageTypeForce()
+         & ~Goon_IsSpellDamageTypeSlashing()
+         & ~Goon_IsSpellDamageTypePiercing()
+         & ~Goon_IsSpellDamageTypeBludgeoning()
 end
 
 function Goon_IsSpellDamageTypeAcid()
@@ -791,8 +799,7 @@ end
 -- TODO: These don't work for the intended purposes, HasAnyStatus is likely the problem when trying to call these? Or just the context they were being called in...
 
 function Goon_IsSpellcastingModifierWeapon()
-    return HasAnyStatus(
-    { 'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9' }, {}, {})
+    return HasAnyStatus({ 'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9' }, {}, {})
 end
 
 -- TODO: No INT-based weapon modifier statuses known yet (unlike Shillelagh for WIS).
@@ -813,27 +820,27 @@ end
 
 function Goon_AttackingWithSpellcastingModifierWeapon()
     return HasStatus('SHILLELAGH', GetAttackWeapon(context.Source))
-        | HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(context.Source))
-        | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(context.Source))
-        | HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(context.Source))
-        | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(context.Source))
-        | HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(context.Source))
+         | HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(context.Source))
+         | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(context.Source))
+         | HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(context.Source))
+         | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(context.Source))
+         | HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(context.Source))
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -869,8 +876,8 @@ end
 
 function Goon_AttackingWithBoundWeapon()
     return HasStatus('WEAPON_BOND', GetAttackWeapon(context.Source))
-        | HasStatus('PACT_BLADE', GetAttackWeapon(context.Source))
-        | HasStatus('HEXBLADE_BIND', GetAttackWeapon(context.Source))
+         | HasStatus('PACT_BLADE', GetAttackWeapon(context.Source))
+         | HasStatus('HEXBLADE_BIND', GetAttackWeapon(context.Source))
 end
 
 -- ==================================== Tag piles ====================================
@@ -880,48 +887,48 @@ end
 
 function Goon_IsWeapon()
     return Goon_IsMeleeWeapon()
-        | Goon_IsRangedWeapon()
+         | Goon_IsRangedWeapon()
 end
 
 -- Just use HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject) instead
 function Goon_IsMeleeWeapon()
     return Tagged('WPN_BATTLEAXE')
-        | Tagged('WPN_CLUB')
-        | Tagged('WPN_DAGGER')
-        | Tagged('WPN_DART')
-        | Tagged('WPN_FLAIL')
-        | Tagged('WPN_GLAIVE')
-        | Tagged('WPN_GREATAXE')
-        | Tagged('WPN_GREATSWORD')
-        | Tagged('WPN_HALBERD')
-        | Tagged('WPN_HANDAXE')
-        | Tagged('WPN_JAVELIN')
-        | Tagged('WPN_LIGHT_HAMMER')
-        | Tagged('WPN_LONGSWORD')
-        | Tagged('WPN_MACE')
-        | Tagged('WPN_MAUL')
-        | Tagged('WPN_MORNINGSTAR')
-        | Tagged('WPN_PIKE')
-        | Tagged('WPN_STAVE')
-        | Tagged('WPN_RAPIER')
-        | Tagged('WPN_SCIMITAR')
-        | Tagged('WPN_SHORTSWORD')
-        | Tagged('WPN_SICKLE')
-        | Tagged('WPN_SPEAR')
-        | Tagged('WPN_TRIDENT')
-        | Tagged('WPN_WAR_PICK')
-        | Tagged('WPN_WARHAMMER')
+         | Tagged('WPN_CLUB')
+         | Tagged('WPN_DAGGER')
+         | Tagged('WPN_DART')
+         | Tagged('WPN_FLAIL')
+         | Tagged('WPN_GLAIVE')
+         | Tagged('WPN_GREATAXE')
+         | Tagged('WPN_GREATSWORD')
+         | Tagged('WPN_HALBERD')
+         | Tagged('WPN_HANDAXE')
+         | Tagged('WPN_JAVELIN')
+         | Tagged('WPN_LIGHT_HAMMER')
+         | Tagged('WPN_LONGSWORD')
+         | Tagged('WPN_MACE')
+         | Tagged('WPN_MAUL')
+         | Tagged('WPN_MORNINGSTAR')
+         | Tagged('WPN_PIKE')
+         | Tagged('WPN_STAVE')
+         | Tagged('WPN_RAPIER')
+         | Tagged('WPN_SCIMITAR')
+         | Tagged('WPN_SHORTSWORD')
+         | Tagged('WPN_SICKLE')
+         | Tagged('WPN_SPEAR')
+         | Tagged('WPN_TRIDENT')
+         | Tagged('WPN_WAR_PICK')
+         | Tagged('WPN_WARHAMMER')
 end
 
 -- Just use HasWeaponProperty(WeaponProperties.Ammunition, context.HitDescription.ThrownObject) instead
 function Goon_IsRangedWeapon()
     return Tagged('WPN_HAND_CROSSBOW')
-        | Tagged('WPN_HEAVY_CROSSBOW')
-        | Tagged('WPN_LIGHT_CROSSBOW')
-        | Tagged('WPN_LONGBOW')
-        | Tagged('WPN_SHORTBOW')
-        | Tagged('WPN_SLING')
-        | Tagged('FIREARM_MOD')
+         | Tagged('WPN_HEAVY_CROSSBOW')
+         | Tagged('WPN_LIGHT_CROSSBOW')
+         | Tagged('WPN_LONGBOW')
+         | Tagged('WPN_SHORTBOW')
+         | Tagged('WPN_SLING')
+         | Tagged('FIREARM_MOD')
 end
 
 function Goon_IsThrownWeapon()
@@ -930,32 +937,32 @@ end
 
 function Goon_IsAxe()
     return Tagged('WPN_BATTLEAXE')
-        | Tagged('WPN_GREATAXE')
-        | Tagged('WPN_HANDAXE')
+         | Tagged('WPN_GREATAXE')
+         | Tagged('WPN_HANDAXE')
 end
 
 function Goon_IsPolearm()
     return Tagged('WPN_GLAIVE')
-        | Tagged('WPN_HALBERD')
-        | Tagged('WPN_JAVELIN')
-        | Tagged('WPN_PIKE')
-        | Tagged('WPN_STAVE')
-        | Tagged('WPN_SPEAR')
-        | Tagged('WPN_TRIDENT')
+         | Tagged('WPN_HALBERD')
+         | Tagged('WPN_JAVELIN')
+         | Tagged('WPN_PIKE')
+         | Tagged('WPN_STAVE')
+         | Tagged('WPN_SPEAR')
+         | Tagged('WPN_TRIDENT')
 end
 
 function Goon_IsSword()
     return Tagged('WPN_GREATSWORD')
-        | Tagged('WPN_LONGSWORD')
-        | Tagged('WPN_RAPIER')
-        | Tagged('WPN_SCIMITAR')
-        | Tagged('WPN_SHORTSWORD')
+         | Tagged('WPN_LONGSWORD')
+         | Tagged('WPN_RAPIER')
+         | Tagged('WPN_SCIMITAR')
+         | Tagged('WPN_SHORTSWORD')
 end
 
 function Goon_IsHammer()
     return Tagged('WPN_LIGHT_HAMMER')
-        | Tagged('WPN_MAUL')
-        | Tagged('WPN_WARHAMMER')
+         | Tagged('WPN_MAUL')
+         | Tagged('WPN_WARHAMMER')
 end
 
 -- ==================================== Magical unarmed ====================================
@@ -965,34 +972,34 @@ end
 function Goon_HasMagicalUnarmed(entity)
     entity = entity or context.Source
     return Goon_IsWildshapeDruidPolymorph() & HasPassive('PrimalStrike', entity)
-        | HasPassive('KiEmpoweredStrikes', entity)
-        | Goon_HasMagicalUnarmed_Expansion()
-        | Goon_HasMagicalUnarmed_BloodHunter()
-        | Goon_HasMagicalUnarmed_Veenab()
-        | HasPassive('InvestmentOfTheChainMaster_Familiar', entity)
-        | HasPassive('SVZephyr_TapestryTatteringArms', entity)
-        | HasPassive('Passive_Mystic_FlawlessTechnique', entity)
-        | HasPassive('MightySummonMagicalUnarmed', entity)
-        | HasAnyStatus({ 'DREADOVERLORD_NECROTICBLADE_UNARMED' }, {}, {}, entity)
+         | HasPassive('KiEmpoweredStrikes', entity)
+         | Goon_HasMagicalUnarmed_Expansion()
+         | Goon_HasMagicalUnarmed_BloodHunter()
+         | Goon_HasMagicalUnarmed_Veenab()
+         | HasPassive('InvestmentOfTheChainMaster_Familiar', entity)
+         | HasPassive('SVZephyr_TapestryTatteringArms', entity)
+         | HasPassive('Passive_Mystic_FlawlessTechnique', entity)
+         | HasPassive('MightySummonMagicalUnarmed', entity)
+         | HasAnyStatus({ 'DREADOVERLORD_NECROTICBLADE_UNARMED' }, {}, {}, entity)
 end
 
 function Goon_HasMagicalUnarmed_Expansion(entity)
     entity = entity or context.Source
     return HasPassive('ExceptionalTraining_EXP', entity)
-        | HasAnyStatus({ 'ALTER_SELF_BLUDGEONING_WEAPON', 'ALTER_SELF_SLASHING_WEAPON', 'ALTER_SELF_PIERCING_WEAPON' }, {}, {}, entity)
+         | HasAnyStatus({ 'ALTER_SELF_BLUDGEONING_WEAPON', 'ALTER_SELF_SLASHING_WEAPON', 'ALTER_SELF_PIERCING_WEAPON' }, {}, {}, entity)
 end
 
 function Goon_HasMagicalUnarmed_BloodHunter(entity)
     entity = entity or context.Source
     return HasPassive('ImprovedPredatoryStrikes', entity)
-        | HasPassive('ImprovedPredatoryStrikes11', entity)
+         | HasPassive('ImprovedPredatoryStrikes11', entity)
 end
 
 function Goon_HasMagicalUnarmed_Veenab(entity)
     entity = entity or context.Source
     return HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_1', entity)
-        | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_2', entity)
-        | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_3', entity)
+         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_2', entity)
+         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_3', entity)
 end
 
 -- ==================================== Condition errors ====================================
@@ -1053,8 +1060,7 @@ end
 
 function Goon_IsHumanoidDruidPolymorph(entity)
     entity = entity or context.Source
-    return HasAnyStatus(
-    { 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER' }, {}, {}, entity)
+    return HasAnyStatus({ 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER' }, {}, {}, entity)
 end
 
 function Goon_IsOtherPolymorph(entity)
@@ -1079,14 +1085,14 @@ end
 function Goon_CanIgnoreBlindness_Melee(entity)
     entity = entity or context.Source
     return IsImmuneToStatus('SG_Blinded', entity)
-        | HasPassive('FightingStyle_BlindFighting', entity) & ~DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, 3)
-        | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
+         | HasPassive('FightingStyle_BlindFighting', entity) & ~DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, 3)
+         | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
 end
 
 function Goon_CanIgnoreBlindness_Ranged(entity)
     entity = entity or context.Source
     return IsImmuneToStatus('SG_Blinded', entity)
-        | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
+         | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
 end
 
 -- ==================================== Invisibility - DrKekyll ====================================
@@ -1110,10 +1116,10 @@ function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
     end
 
     return Tagged('BLINDSIGHT', source)
-        | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
-        | (HasStatus('TRUESIGHT', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5))
-        | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source) | HasStatus('TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5))
-        | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
+         | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
+         | (HasStatus('TRUESIGHT', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5))
+         | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source) | HasStatus('TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5))
+         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
 end
 
 function Goon_CanSeeSneaking(source, target) -- from, to were declared but never used
@@ -1126,25 +1132,25 @@ end
 function Goon_IsInvisibleSeen(entity)
     local entity = entity or context.Target
     return HasStatus('GOON_INVISIBLE_SEEN', entity)
-        | HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', entity)
-        | HasStatus('GOON_INVISIBILITY_SEEN', entity)
-        | HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', entity)
-        | HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', entity)
-        | HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', entity)
-        | HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', entity)
-        | HasStatus('GOON_UMBRAL_CLOAK_SEEN', entity)
-        | HasStatus('GOON_GREATER_INVISIBILITY_SEEN', entity)
-        | HasStatus('GOON_SHADOWBLEND_SEEN', entity)
-        | HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', entity)
-        | HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', entity)
-        | HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', entity)
-        | HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', entity)
-        | HasStatus('GOON_SHROUD_SELF_SEEN', entity)
-        | HasStatus('GOON_SUPREME_SNEAK_SEEN', entity)
-        | HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', entity)
-        | HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', entity)
-        | HasStatus('GOON_SHADOW_WALKER_SEEN', entity)
-        | HasStatus('GOON_EMPTY_BODY_SEEN', entity)
+         | HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', entity)
+         | HasStatus('GOON_INVISIBILITY_SEEN', entity)
+         | HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', entity)
+         | HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', entity)
+         | HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', entity)
+         | HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', entity)
+         | HasStatus('GOON_UMBRAL_CLOAK_SEEN', entity)
+         | HasStatus('GOON_GREATER_INVISIBILITY_SEEN', entity)
+         | HasStatus('GOON_SHADOWBLEND_SEEN', entity)
+         | HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', entity)
+         | HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', entity)
+         | HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', entity)
+         | HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', entity)
+         | HasStatus('GOON_SHROUD_SELF_SEEN', entity)
+         | HasStatus('GOON_SUPREME_SNEAK_SEEN', entity)
+         | HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', entity)
+         | HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', entity)
+         | HasStatus('GOON_SHADOW_WALKER_SEEN', entity)
+         | HasStatus('GOON_EMPTY_BODY_SEEN', entity)
 end
 
 -- ==================================== Max Strength Conditions ====================================
@@ -1162,22 +1168,26 @@ end
 -- Spellcaster resource checks
 function Goon_HasPactMagic()
     return HasActionResource('WarlockSpellSlot', 1, 1, false, false, context.Source)
-        | HasActionResource('WarlockSpellSlot', 1, 2, false, false, context.Source)
-        | HasActionResource('WarlockSpellSlot', 1, 3, false, false, context.Source)
-        | HasActionResource('WarlockSpellSlot', 1, 4, false, false, context.Source)
-        | HasActionResource('WarlockSpellSlot', 1, 5, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 2, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 3, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 4, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 5, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 6, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 7, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 8, false, false, context.Source)
+         | HasActionResource('WarlockSpellSlot', 1, 9, false, false, context.Source)
 end
 
 function Goon_HasSpellSlots()
     return HasActionResource('SpellSlot', 1, 1, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 2, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 3, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 4, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 5, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 6, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 7, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 8, false, false, context.Source)
-        | HasActionResource('SpellSlot', 1, 9, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 2, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 3, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 4, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 5, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 6, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 7, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 8, false, false, context.Source)
+         | HasActionResource('SpellSlot', 1, 9, false, false, context.Source)
 end
 
 -- Character tag checks
@@ -1689,45 +1699,45 @@ end
 -- Disguise Self check
 function Goon_IsDisguiseSelfSpell()
     return SpellId('Shout_DisguiseSelf')
-        | SpellId('Shout_DisguiseSelf_Tiefling_Male') | SpellId('Shout_DisguiseSelf_Tiefling_Female')
-        | SpellId('Shout_DisguiseSelf_Drow_Male') | SpellId('Shout_DisguiseSelf_Drow_Female')
-        | SpellId('Shout_DisguiseSelf_Human_Male') | SpellId('Shout_DisguiseSelf_Human_Female')
-        | SpellId('Shout_DisguiseSelf_Githyanki_Male') | SpellId('Shout_DisguiseSelf_Githyanki_Female')
-        | SpellId('Shout_DisguiseSelf_Dwarf_Male') | SpellId('Shout_DisguiseSelf_Dwarf_Female')
-        | SpellId('Shout_DisguiseSelf_Elf_Male') | SpellId('Shout_DisguiseSelf_Elf_Female')
-        | SpellId('Shout_DisguiseSelf_HalfElf_Male') | SpellId('Shout_DisguiseSelf_HalfElf_Female')
-        | SpellId('Shout_DisguiseSelf_Halfling_Male') | SpellId('Shout_DisguiseSelf_Halfling_Female')
-        | SpellId('Shout_DisguiseSelf_Dragonborn_Male') | SpellId('Shout_DisguiseSelf_Dragonborn_Female')
-        | SpellId('Shout_DisguiseSelf_HalfOrc_Male') | SpellId('Shout_DisguiseSelf_HalfOrc_Female')
-        | SpellId('Shout_DisguiseSelf_Gnome_Male') | SpellId('Shout_DisguiseSelf_Gnome_Female')
-        | SpellId('Shout_DisguiseSelf_Human_Strong_Male') | SpellId('Shout_DisguiseSelf_Human_Strong_Female')
-        | SpellId('Shout_DisguiseSelf_Drow_Strong_Male') | SpellId('Shout_DisguiseSelf_Drow_Strong_Female')
-        | SpellId('Shout_DisguiseSelf_Elf_Strong_Male') | SpellId('Shout_DisguiseSelf_Elf_Strong_Female')
-        | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Male') | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Female')
-        | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Male') | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Female')
+         | SpellId('Shout_DisguiseSelf_Tiefling_Male')        | SpellId('Shout_DisguiseSelf_Tiefling_Female')
+         | SpellId('Shout_DisguiseSelf_Drow_Male')            | SpellId('Shout_DisguiseSelf_Drow_Female')
+         | SpellId('Shout_DisguiseSelf_Human_Male')           | SpellId('Shout_DisguiseSelf_Human_Female')
+         | SpellId('Shout_DisguiseSelf_Githyanki_Male')       | SpellId('Shout_DisguiseSelf_Githyanki_Female')
+         | SpellId('Shout_DisguiseSelf_Dwarf_Male')           | SpellId('Shout_DisguiseSelf_Dwarf_Female')
+         | SpellId('Shout_DisguiseSelf_Elf_Male')             | SpellId('Shout_DisguiseSelf_Elf_Female')
+         | SpellId('Shout_DisguiseSelf_HalfElf_Male')         | SpellId('Shout_DisguiseSelf_HalfElf_Female')
+         | SpellId('Shout_DisguiseSelf_Halfling_Male')        | SpellId('Shout_DisguiseSelf_Halfling_Female')
+         | SpellId('Shout_DisguiseSelf_Dragonborn_Male')      | SpellId('Shout_DisguiseSelf_Dragonborn_Female')
+         | SpellId('Shout_DisguiseSelf_HalfOrc_Male')         | SpellId('Shout_DisguiseSelf_HalfOrc_Female')
+         | SpellId('Shout_DisguiseSelf_Gnome_Male')           | SpellId('Shout_DisguiseSelf_Gnome_Female')
+         | SpellId('Shout_DisguiseSelf_Human_Strong_Male')    | SpellId('Shout_DisguiseSelf_Human_Strong_Female')
+         | SpellId('Shout_DisguiseSelf_Drow_Strong_Male')     | SpellId('Shout_DisguiseSelf_Drow_Strong_Female')
+         | SpellId('Shout_DisguiseSelf_Elf_Strong_Male')      | SpellId('Shout_DisguiseSelf_Elf_Strong_Female')
+         | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Male')  | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Female')
+         | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Male') | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Female')
 end
 
 -- Surface checks
 function Goon_IsInWaterSurface(entity)
     local entity = entity or context.Target
     return InSurface('SurfaceBlood', entity)
-        | InSurface('SurfaceBloodElectrified', entity)
-        | InSurface('SurfaceBloodFrozen', entity)
-        | InSurface('SurfaceWater', entity)
-        | InSurface('SurfaceWaterElectrified', entity)
-        | InSurface('SurfaceWaterFrozen', entity)
-        | InSurface('SurfaceDeepWater', entity)
-        | InSurface('SurfaceDeepWaterRunning', entity)
-        | InSurface('Sewer', entity)
+         | InSurface('SurfaceBloodElectrified', entity)
+         | InSurface('SurfaceBloodFrozen', entity)
+         | InSurface('SurfaceWater', entity)
+         | InSurface('SurfaceWaterElectrified', entity)
+         | InSurface('SurfaceWaterFrozen', entity)
+         | InSurface('SurfaceDeepWater', entity)
+         | InSurface('SurfaceDeepWaterRunning', entity)
+         | InSurface('Sewer', entity)
 end
 
 function Goon_IsInFreezableSurface(entity)
     local entity = entity or context.Target
     return InSurface('SurfaceWater', entity)
-        | InSurface('SurfaceWaterElectrified', entity)
-        | InSurface('SurfaceBlood', entity)
-        | InSurface('SurfaceAlcohol', entity)
-        | InSurface('SurfaceAcid', entity)
+         | InSurface('SurfaceWaterElectrified', entity)
+         | InSurface('SurfaceBlood', entity)
+         | InSurface('SurfaceAlcohol', entity)
+         | InSurface('SurfaceAcid', entity)
 end
 
 -- ==================================== String Lookups - JuuM ====================================
@@ -1770,11 +1780,7 @@ end
 
 -- TODO: Knife of the Undermountain King and probably others
 function Goon_IsShadowBlade()
-    return HasAnyStatus({
-        'SHADOWBLADE_TECHNICAL',
-        ' ', -- dead code, delete?
-        'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL'
-    }, {}, {})
+    return HasAnyStatus({ 'SHADOWBLADE_TECHNICAL', ' ', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL' }, {}, {})
 end
 
 -- TODO: Yeah this no work
@@ -1787,19 +1793,23 @@ function Goon_IsPassiveSourceWeapon()
     local result = false -- BUG: should be ConditionResult(false); | with ConditionResult fails when result is a plain boolean
 
     if MeleeMainHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
+        result = result | IsPassiveSource(context.Passive, MeleeMainHand, context.Source)
+                        | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
     end
 
     if MeleeOffHand.IsValid then
-        result = result |IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
+        result = result | IsPassiveSource(context.Passive, MeleeOffHand, context.Source)
+                        | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
     end
 
     if RangedMainHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
+        result = result | IsPassiveSource(context.Passive, RangedMainHand, context.Source)
+                        | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
     end
 
     if RangedOffHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
+        result = result | IsPassiveSource(context.Passive, RangedOffHand, context.Source)
+                        | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
     end
 
     return result
