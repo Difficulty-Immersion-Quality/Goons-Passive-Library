@@ -536,6 +536,7 @@ end
 
 function Goon_IsConditionalDamageSpellEligible()
     return ~Goon_IsSpellWithoutDamageType() & IsSpell() & ~IsCantrip()
+         & SpellId('BroWhereEvenAreTheConditionalDamageSpellsFR')
          | Goon_IsConditionalDamageCantripEligible()
 end
 
