@@ -671,8 +671,8 @@ function Goon_IsWardensRebukeSpell()
          | IsSpellChildOrVariantFromContext('Target_SVMagus_WardensRebuke')
 end
 
--- ==================================== SpellDamageTypeIs checks
--- Not to be confused with vanilla IsDamageTypeAcid() etc. checks that check damage done.
+-- ==================================== "SpellDamageTypeIs" "DamageTypes" checks
+-- Functions for "SpellDamageTypeIs" "DamageTypes" checks, not to be confused with damage dealt.
 
 function Goon_IsSpellWithoutDamageType()
     return ~Goon_IsSpellDamageTypeAcid()
