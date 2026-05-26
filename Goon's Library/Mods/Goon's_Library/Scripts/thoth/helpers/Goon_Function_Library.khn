@@ -535,7 +535,7 @@ function Goon_IsSpellDealingFunctorDamage()
 end
 
 function Goon_IsConditionalDamageSpellEligible()
-    return ~Goon_IsSpellWithoutDamageType() & IsSpell() ~IsCantrip()
+    return ~Goon_IsSpellWithoutDamageType() & IsSpell() & ~IsCantrip()
          | Goon_IsConditionalDamageCantripEligible()
 end
 
