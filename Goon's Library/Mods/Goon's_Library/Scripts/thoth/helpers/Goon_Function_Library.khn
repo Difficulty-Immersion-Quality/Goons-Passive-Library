@@ -537,16 +537,16 @@ end
 -- This one kinda turned into the main function, the one above can be worked on later for adjacent purposes, if needed.
 function Goon_IsConditionalDamageSpellEligible()
     return ~Goon_IsSpellWithoutDamageType()
-         & (Goon_IsBoomingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsGreenFlameBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsSparkingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsBloodlettingBiteSpell() & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
-         | Goon_IsMisfortunesMarkSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsRimeStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsRighteousIncitementSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsVortexDartSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         | Goon_IsWardensRebukeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5())
+         & (Goon_IsBoomingBladeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsGreenFlameBladeSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsSparkingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsBloodlettingBiteSpell()      & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
+         |  Goon_IsMisfortunesMarkSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsRimeStrikeSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsRighteousIncitementSpell()   & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsVortexDartSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         |  Goon_IsWardensRebukeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5())
 end
 
 function Goon_IsConditionalDamageSpell()
@@ -1784,10 +1784,10 @@ end
 
 -- TODO: Yeah this no work
 function Goon_IsPassiveSourceWeapon()
-    local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
-    local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+    local MeleeMainHand  = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+    local MeleeOffHand   = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
-    local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+    local RangedOffHand  = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
 
     local result = false -- BUG: should be ConditionResult(false); | with ConditionResult fails when result is a plain boolean
 
