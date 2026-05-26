@@ -32,33 +32,28 @@ local function ApplyMasterPassives(entityID)
     end
 
     -- STEP 2 — Validate and add passives
-        for _, passive in ipairs(MasterPassives) do
-            local stat = Ext.Stats.Get(passive, nil, false)
-            if stat == nil then
-                -- print(string.format("[Goon's Library] WARNING: Passive does not exist: %s", passive))
-            else
-                if not assigned[entityID][passive] then
-                    if Osi.HasPassive(entityID, passive) == 0 then
-                        Osi.AddPassive(entityID, passive)
-                        -- print(string.format("[Goon's Library] Added new passive %s to %s", passive, entityID))
-                    end
-                    assigned[entityID][passive] = true
+    for _, passive in ipairs(MasterPassives) do
+        local stat = Ext.Stats.Get(passive, nil, false)
+        if stat ~= nil then -- inverted; else branch was only a commented-out warning
+            if not assigned[entityID][passive] then
+                if Osi.HasPassive(entityID, passive) == 0 then
+                    Osi.AddPassive(entityID, passive)
+                    -- print(string.format("[Goon's Library] Added new passive %s to %s", passive, entityID))
                 end
+                assigned[entityID][passive] = true
             end
         end
     end
+end
 
 -- LevelGameplayStarted listener - Apply to all party members and ServerCharacters (NPCs)
-Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(level, _)
+Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(_, _) -- level param was never used inside the function
     for _, row in ipairs(Osi.DB_PartyMembers:Get(nil) or {}) do
         ApplyMasterPassives(row[1])
     end
 
     for _, entity in ipairs(Ext.Entity.GetAllEntitiesWithComponent("ServerCharacter") or {}) do
-        local charID = entity.Uuid and entity.Uuid.EntityUuid
-        if charID then
-            ApplyMasterPassives(charID)
-        end
+        ApplyMasterPassives(entity.Uuid.EntityUuid) -- Uuid always present on ServerCharacter entities
     end
 end)
 
