@@ -522,8 +522,8 @@ function Goon_IsAuraOfVitality()
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
 end
 
--- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
--- Some spells have conditional damage that, this conditional damage may even be the spell's declared "DamageType" and yet the character may not be able to have the spell deal said damage. The conditional nature of these spells is not accounted for in some circumstances, the below functions are intended to try and make additional damage mirror what the character is actually dealing. 
+-- ==================================== Conditional damage cantrips and spells
+-- Some spells have conditional damage, this conditional damage may even be the spell's declared "DamageType" and yet the character may not be able to have the spell deal said damage. The conditional nature of these spells is not accounted for in some circumstances, the below functions are intended to try and make additional damage mirror what the character is actually dealing.
 -- Disallows spells with a DamageType but no DealDamage functors from triggering things improperly
 -- TODO: Add support for more conditional spells from mods. E.g. Homebrew Blade Cantrips by zx10rx.
 -- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis and circumstantially really annoying to implement I imagine.)
@@ -534,19 +534,24 @@ function Goon_IsSpellDealingFunctorDamage()
         & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible())
 end
 
--- This one kinda turned into the main function, the one above can be worked on later for adjacent purposes, if needed.
 function Goon_IsConditionalDamageSpellEligible()
-    return ~Goon_IsSpellWithoutDamageType()
-         & (Goon_IsBoomingBladeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsGreenFlameBladeSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsSparkingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsBloodlettingBiteSpell()      & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
-         |  Goon_IsMisfortunesMarkSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsRimeStrikeSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsRighteousIncitementSpell()   & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsVortexDartSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5()
-         |  Goon_IsWardensRebukeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5())
+    return ~Goon_IsSpellWithoutDamageType() & IsSpell()
+         | Goon_IsConditionalDamageCantripEligible()
+end
+
+-- This is the main function, the above functions can be worked on later for adjacent purposes if needed.
+function Goon_IsConditionalDamageCantripEligible()
+    return ~Goon_IsSpellWithoutDamageType() & IsCantrip()
+         & (Goon_IsBoomingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsGreenFlameBladeSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsSparkingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsBloodlettingBiteSpell()      & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, context.Target)
+         | Goon_IsMisfortunesMarkSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsRimeStrikeSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsRighteousIncitementSpell()   & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsVortexDartSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5()
+         | Goon_IsWardensRebukeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5())
 end
 
 function Goon_IsConditionalDamageSpell()
