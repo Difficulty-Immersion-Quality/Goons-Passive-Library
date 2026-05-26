@@ -523,19 +523,18 @@ function Goon_IsAuraOfVitality()
 end
 
 -- ==================================== Conditions to be used in interrupts or passives that seek to trigger from spells with set "DamageType"
--- Handles cantrips (or whatever other conditional stuff) that don't deal damage until level 5 and need exclusion from shit
+-- Some spells have conditional damage that, this conditional damage may even be the spell's declared "DamageType" and yet the character may not be able to have the spell deal said damage. The conditional nature of these spells is not accounted for in some circumstances, the below functions are intended to try and make additional damage mirror what the character is actually dealing. 
 -- Disallows spells with a DamageType but no DealDamage functors from triggering things improperly
--- TODO: Track down all cantrips that only directly deal damage after level 5
--- TODO: Expand for handling of edge cases
--- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis)
--- TODO: Replace every instance of "HasFunctor(StatsFunctorType.DealDamage)" with this function, and include it wherever "SpellDamageTypeIs" is called (barring exceptions)
+-- TODO: Add support for more conditional spells from mods. E.g. Homebrew Blade Cantrips by zx10rx.
+-- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis and circumstantially really annoying to implement I imagine.)
+-- TODO: Replace every instance of "HasFunctor(StatsFunctorType.DealDamage)" with this function, and include it wherever "SpellDamageTypeIs" is called, barring exceptions. (Is this really necessary? What am I on about here...)
 
--- TODO: Doing more testing later around "MAG_CharismaCaster_CantripBooster_Passive" to cement the implementation.
 function Goon_IsSpellDealingFunctorDamage()
     return HasFunctor(StatsFunctorType.DealDamage) 
         & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible())
 end
 
+-- This one kinda turned into the main function, the one above can be worked on later for adjacent purposes, if needed.
 function Goon_IsConditionalDamageSpellEligible()
     return ~Goon_IsSpellWithoutDamageType()
          & (Goon_IsBoomingBladeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5()
