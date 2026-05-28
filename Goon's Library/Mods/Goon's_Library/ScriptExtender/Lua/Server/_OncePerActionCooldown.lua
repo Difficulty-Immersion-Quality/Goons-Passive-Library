@@ -23,14 +23,14 @@
 -- ==================================== Once per action cooldown stuff ====================================
 -- Credit to Nzx for making this cleaner than I would have by a mile.
 
-local trackedTargets = {}  -- [uuid] = { [statusId] = true }
+local trackedEntity = {}  -- [uuid] = { [statusId] = true }
 
 Ext.Entity.OnCreate("ServerStatusApplyEvent", function(entity)
     local comp = entity.ServerStatusApplyEvent
     if not string.find(comp.StatusId, "^GOON_ONCEPERACTIONCOOLDOWN_") then return end
     local uuid = comp.Target.Uuid.EntityUuid
-    local set = trackedTargets[uuid] or {}
-    trackedTargets[uuid] = set
+    local set = trackedEntity[uuid] or {}
+    trackedEntity[uuid] = set
     set[comp.StatusId] = true
 end)
 
@@ -38,16 +38,23 @@ Ext.Entity.OnCreate("ServerStatusRemoveEvent", function(entity)
     local comp = entity.ServerStatusRemoveEvent
     if not string.find(comp.StatusId, "^GOON_ONCEPERACTIONCOOLDOWN_") then return end
     local uuid = comp.Target.Uuid.EntityUuid
-    local set = trackedTargets[uuid]
+    local set = trackedEntity[uuid]
     if not set then return end
     set[comp.StatusId] = nil
-    if not next(set) then trackedTargets[uuid] = nil end
+    if not next(set) then trackedEntity[uuid] = nil end
 end)
 
-Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(_, target)
-    local set = trackedTargets[target:sub(-36)]
-    if not set then return end
-    for statusId in pairs(set) do
+Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target)
+    local casterSet = trackedEntity[caster:sub(-36)]
+    if casterSet then
+    for statusId in pairs(casterSet) do
+        Osi.RemoveStatus(caster, statusId)
+        end
+    end
+
+    local targetSet = trackedEntity[target:sub(-36)]
+    if not targetSet then return end
+    for statusId in pairs(targetSet) do
         Osi.RemoveStatus(target, statusId)
     end
 end)
