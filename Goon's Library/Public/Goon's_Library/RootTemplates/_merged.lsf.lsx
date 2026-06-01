@@ -453,6 +453,82 @@
 						</node>
 					</children>
 				</node>
+				<!-- Goon_HookHorror_Oubliette_Patrolling -->
+				<node id="GameObjects">
+					<attribute id="AnubisConfigName" type="FixedString" value="MOO_HookHorror_Patrolling" />
+					<attribute id="Flag" type="int32" value="0" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="MapKey" type="FixedString" value="6a514a3b-399a-4ded-9a2f-95e5003ed088" />
+					<attribute id="Name" type="LSString" value="Goon_HookHorror_Oubliette_Patrolling" />
+					<attribute id="ParentTemplateId" type="FixedString" value="bfe9ad10-c5f7-4a08-a2af-acefb296ffcc" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209024" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="ScriptConfigGlobalParameters">
+							<children>
+								<node id="ScriptConfigParameter">
+									<attribute id="Name" type="LSString" value="patrolSpline" />
+									<children>
+										<node id="Value">
+											<children>
+												<node id="Scalar">
+													<children>
+														<node id="Scalar">
+															<children>
+																<node id="String">
+																	<attribute id="String" type="LSString" value="S_MOO_HookHorror_Patrol_Spline_6394ac19-a631-49fc-a1ac-66a66bed0162" />
+																</node>
+															</children>
+														</node>
+													</children>
+												</node>
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
+				<!-- Goon_HookHorror_Oubliette_Feeding -->
+				<node id="GameObjects">
+					<attribute id="AnubisConfigName" type="FixedString" value="MOO_HookHorror_CorpseEater" />
+					<attribute id="Flag" type="int32" value="0" />
+					<attribute id="LevelName" type="FixedString" value="" />
+					<attribute id="MapKey" type="FixedString" value="967ab785-17bf-45e1-9737-8c2360b1cedc" />
+					<attribute id="Name" type="LSString" value="Goon_HookHorror_Oubliette_Feeding" />
+					<attribute id="ParentTemplateId" type="FixedString" value="bfe9ad10-c5f7-4a08-a2af-acefb296ffcc" />
+					<attribute id="Type" type="FixedString" value="character" />
+					<attribute id="_OriginalFileVersion_" type="int64" value="144115207403209024" />
+					<children>
+						<node id="LocomotionParams" />
+						<node id="ScriptConfigGlobalParameters">
+							<children>
+								<node id="ScriptConfigParameter">
+									<attribute id="Name" type="LSString" value="Corpse" />
+									<children>
+										<node id="Value">
+											<children>
+												<node id="Scalar">
+													<children>
+														<node id="Scalar">
+															<children>
+																<node id="String">
+																	<attribute id="String" type="LSString" value="S_MOO_HookHorror_LurkArea_000_33ab54b1-a8f2-41de-b48b-9407ba781dd8" />
+																</node>
+															</children>
+														</node>
+													</children>
+												</node>
+											</children>
+										</node>
+									</children>
+								</node>
+							</children>
+						</node>
+					</children>
+				</node>
 			</children>
 		</node>
 	</region>
