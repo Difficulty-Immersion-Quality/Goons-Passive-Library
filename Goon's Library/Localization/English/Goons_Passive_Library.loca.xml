@@ -251,6 +251,15 @@
 
 	<!-- ==================================== G - Custom NPC Passives and Abilities.txt ==================================== -->
 
+	<!-- "Goon_BonusAction_Cantrips" --> <content contentuid="hbb4a5f6ag9c1ag4dc2ga18dgbfda73a58c81" version="1">Spellcasting Adept</content>
+	<!-- "Goon_BonusAction_Cantrips" --> <content contentuid="hda74da1cgb3eeg47ebg90cag9321e8d122ec" version="1">Experienced spellcasters can cast &lt;LSTag Tooltip="Cantrip"&gt;cantrips&lt;/LSTag&gt; that cost an &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; using a &lt;LSTag Tooltip="BonusAction"&gt;bonus action&lt;/LSTag&gt; instead.</content>
+	<!-- "Goon_BonusAction_WeaponAttacks" --> <content contentuid="h927e5c5egef5fg45d4ga065g8a64f272894f" version="1">Martial Mastery</content>
+	<!-- "Goon_BonusAction_WeaponAttacks" --> <content contentuid="ha6fbec4eg9a63g48f9g92f6gffa6ef3fe569" version="1">Experienced warriors can use a &lt;LSTag Tooltip="BonusAction"&gt;bonus action&lt;/LSTag&gt; to make a weapon attack that deals half damage.</content>
+	<!-- "" --> <content contentuid="h6de92ebbgafdag4b42g8df4g4822ceab9376" version="1">Relentless Flurry</content>
+	<!-- "" --> <content contentuid="h351f7d46g5fa0g474eg8d18g6c2a835c3c61" version="1">Experienced warriors can turn a miss into a new strike. Once per turn, when you miss with a weapon or unarmed attack, you can make another weapon or unarmed attack for free.</content>
+	<!-- "" --> <content contentuid="h71aa6f7fgfb5bg451eg9f88gc85f5daeb8f1" version="1">Relentless Flurry</content>
+	<!-- "" --> <content contentuid="h70ff8f1dgaa9dg4599g8f20g274fad7d244e" version="1">Affected entity can take an additional weapon or unarmed attack for free.</content>
+
 	<!-- "Goon_PLA_ConflictedFlind_Flail_Broken_Passive" --> <content contentuid="h984fea75gd691g4870g97e6g007d029d5385" version="1">Yeenoghu's Gift</content>
 	<!-- "Goon_PLA_ConflictedFlind_Flail_Broken_Passive" --> <content contentuid="hab54fb07ga384g4293gb73bg3e68489adf71" version="1">Hitting an enemy heals Flind for [1] - but she can go &lt;LSTag Type="Status" Tooltip="MADNESS"&gt;Mad&lt;/LSTag&gt; if she doesn't continue hitting an enemy each turn.</content>
 
