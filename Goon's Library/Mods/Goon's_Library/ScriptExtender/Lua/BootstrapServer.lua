@@ -14,4 +14,5 @@ Ext.Vars.RegisterModVariable(ModuleUUID, "HasGoonLibraryPassives", opts)
 
 Ext.Require("Server/_MasterPassives.lua")
 Ext.Require("Server/_PseudoStatusGroups.lua")
+Ext.Require("Server/_OncePerActionCooldown.lua")
 -- Ext.Require("Server/_WeaponEnchantTracking.lua")

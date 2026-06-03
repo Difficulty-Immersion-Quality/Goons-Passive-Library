@@ -632,6 +632,10 @@ function Goon_IsGreenFlameBladeSpell()
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic')
 end
 
+-- TODO: why do some of Celes' variants not do _Large?
+-- Projectile_GreenFlameBlade_Explosion
+-- Projectile_GreenFlameBlade_Explosion_Large
+
 function Goon_IsSparkingBladeSpell()
     return SpellId('Target_Sparking_Blade')
          | IsSpellChildOrVariantFromContext('Target_Sparking_Blade')
