@@ -134,6 +134,18 @@ function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
     end
 end
 
+-- ==================================== Prone
+-- "Target_ExtractBrain_Mindflayer" has some dumb shit going on, and why is there such overlap between prone and unconscious anyway?
+-- TODO: Unfuck prone I guess.
+
+function Goon_HasProneCondition_Conscious()
+    return HasAnyStatus({ 'PRONE','PRONE_GREASE','PRONE_ICE','PRONE_FALLEN','PRONE_THUNDEROUS_SMITE' }, {}, {})
+end
+
+function Goon_HasProneCondition_Unconscious()
+    return HasStatus('SG_Prone') & HasStatus('SG_Unconscious') & ~Goon_HasProneCondition_Conscious()
+end
+
 -- ==================================== Surfaces
 -- TODO: Break into groups and call them all in the main function.
 
@@ -682,6 +694,7 @@ end
 
 -- ==================================== "SpellDamageTypeIs" "DamageTypes" checks
 -- Functions for "SpellDamageTypeIs" "DamageTypes" checks, not to be confused with damage dealt.
+-- TODO: Support spell damage type transmutation.
 
 function Goon_IsSpellWithoutDamageType()
     return ~Goon_IsSpellDamageTypeAcid()
