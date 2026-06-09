@@ -6,6 +6,21 @@
 --     return HasDamageEffectFlag(DamageFlags.KillingBlow) | HasHPLessThan(1)
 -- end
 
+-- ==================================== IsSpellChildOrVariantFromContext Bug Fixing
+-- It also checks CombatAIOverrideSpell which is blank for most spells and may give you lots of false positives.
+-- For example if there is no spell set in the context, IsSpellChildOrVariantFromContext("Target_HoldMonster") will still return true. So keep that in mind. - From joow.
+-- Found in 5e Spells and surely other mods too.
+
+function IsSpellChildOrVariantFromContext(spellId)
+  -- No maidens?
+  if spellId == "" then
+    return ls.thoth.shared.IsSpellChildOrVariantFromContext(spellId)
+  end
+
+  -- ong that spell better be more than some quotes fr
+  return ls.thoth.shared.IsSpellChildOrVariantFromContext(spellId) & ~ls.thoth.shared.IsSpellChildOrVariantFromContext("")
+end
+
 -- ==================================== Attack types ====================================
 -- Vanilla only has functions for IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
