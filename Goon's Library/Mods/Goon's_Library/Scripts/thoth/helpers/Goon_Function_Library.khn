@@ -488,13 +488,13 @@ end
 -- ==================================== Do the dawg be Banishing
 
 function Goon_IsBanishSpell()
-    return SpellId('Target_Banishment')
-         | IsSpellChildOrVariantFromContext('Target_Banishment')
-         | SpellId('Target_Smite_Banishing')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
-         | SpellId('Projectile_Smite_Banishing')
-         | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
-         | SpellId('Projectile_ArcaneShot_BanishingArrow')
+    return SpellId('Target_Banishment')                     | IsSpellChildOrVariantFromContext('Target_Banishment')
+         | SpellId('Target_Smite_Banishing')                | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
+         | SpellId('Projectile_Smite_Banishing')            | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
+         | SpellId('Projectile_ArcaneShot_BanishingArrow')  | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_BanishingArrow')
+         | SpellID('Shout_WildMagic_Banish')                | IsSpellChildOrVariantFromContext('Shout_WildMagic_Banish')
+         | SpellID('OO_Shout_BanishUnholy')                 | IsSpellChildOrVariantFromContext('OO_Shout_BanishUnholy')
+         | SpellID('Target_DispelEvilAndGood_Dismissal')    | IsSpellChildOrVariantFromContext('Target_DispelEvilAndGood_Dismissal')
 end
 
 -- ==================================== Spells that aren't spells
