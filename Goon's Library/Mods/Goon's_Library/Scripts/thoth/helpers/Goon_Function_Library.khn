@@ -363,6 +363,8 @@ function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
 end
 
 -- ==================================== Spell batching ====================================
+-- TODO: Referencing the interrupts below doesn't really work the same as spells, e.g. OnDamage contexts for functors.
+-- Best course of action is likely to have the interrupts UseSpell, replacing animations with the instant cast one. "Target_NULLSPELL"?
 
 -- ==================================== Sneak Attacks
 
@@ -470,6 +472,150 @@ function Goon_IsCreateSorceryPoints()
          | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_7')
          | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_8')
          | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_9')
+end
+
+-- ==================================== Smites
+
+function Goon_IsDivineSmite()
+    return IsSpellChildOrVariantFromContext('Target_Smite_Divine')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unlock')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Critical_Unlock')
+        -- Paladin and Oaths DnD 5R PHB2024 by ChizFreak
+         | IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free')
+         | IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free_Melee')
+         | IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free_Unarmed')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Unarmed') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed_Unlock')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed_Critical_Unlock')
+         | IsSpellChildOrVariantFromContext('Target_RWI_Smite_Divine') -- I dunno, it's there in the khn anyway
+        --  Unholy Smite for Oathbreakers by ChizFreak
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_CHIZ_Unholy_Smite') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unlock')
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unlock_Critical')
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unarmed_Unlock')
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unarmed_Unlock_Critical')
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Free')
+         | IsSpellChildOrVariantFromContext('Target_CHIZ_TEST_SMITE')
+         | IsSpellChildOrVariantFromContext('Target_RWI_CHIZ_Unholy_Smite')
+        -- Unholy Smite - Empowering Oathbreakers (And Other Paladin Subclasses) by GraphicFade  
+         | IsSpellChildOrVariantFromContext('Target_Smite_Unholy_Oathbreaker')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Unholy_Oathbreaker') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Unholy_Oathbreaker_Unlock')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Unholy_OB_Reaction')
+        -- Beyond Divine Smite by GraphicFade
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Acid')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Acid') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Acid') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Chaos')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Chaos') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Chaos') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Cold')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Cold') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Cold') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Fire')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Fire') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Fire') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Force')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Force') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Force') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Lightning')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Lightning') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Lightning') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Necro')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Necro') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Necro') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Poison')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Poison') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Poison') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Psychic')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Psychic') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Psychic') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Thunder')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Thunder') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Thunder') ~= nil)
+         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_War')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_War') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_War') ~= nil)
+        -- Blackguard smites by Xarara
+        -- TODO: Add support for Hell Knight and Death Knight subclass variants if they get released.
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_PROFANE') 
+         | ConditionResult(string.match(context.InterruptId, '^INTERRUPT_SMITE_PROFANE') ~= nil)
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_PROFANE_BLOOD') 
+         | ConditionResult(string.match(context.InterruptId, '^INTERRUPT_SMITE_PROFANE_BLOOD') ~= nil)
+        -- Mizora's Rewards by malonkey1
+         | IsSpellChildOrVariantFromContext('Target_Smite_Eldritch')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Eldritch') ~= nil)
+        -- Oathbreaker Reborn by K_Constantine and faceplug
+         | IsSpellChildOrVariantFromContext('Target_Smite_Malicious')
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Malicious') ~= nil)
+end
+
+function Goon_IsSmiteSpells()
+    return Goon_IsDivineSmite()
+        -- Banishing Smite
+         | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
+         | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
+        -- Blinding Smite
+         | IsSpellChildOrVariantFromContext('Target_Smite_Blinding')
+        -- Branding Smite
+         | IsSpellChildOrVariantFromContext('Target_Smite_Branding')
+         | IsSpellChildOrVariantFromContext('Projectile_Smite_Branding')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Branding_ZarielTiefling')
+         | IsSpellChildOrVariantFromContext('Projectile_Smite_Branding_ZarielTiefling')
+        -- Searing Smite
+         | IsSpellChildOrVariantFromContext('Target_Smite_Searing')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Searing_ZarielTiefling')
+         | IsSpellChildOrVariantFromContext('Target_FOR_Smite_Searing_DeathOfATrueSoul')
+         | IsSpellChildOrVariantFromContext('Target_UND_Smite_Searing_DuergarBlacksmithHammer')
+         | IsSpellChildOrVariantFromContext('Goon_Target_UND_Smite_Searing_DuergarBlacksmithHammer_Offhand')
+        -- Staggering Smite
+         | IsSpellChildOrVariantFromContext('Target_StaggeringSmite')
+        -- Thunderous Smite
+         | IsSpellChildOrVariantFromContext('Target_Smite_Thunderous') 
+         | IsSpellChildOrVariantFromContext('Target_MAG_ThunderousSmite')
+        -- Wrathful Smite
+         | IsSpellChildOrVariantFromContext('Target_Smite_Wrathful') 
+         | IsSpellChildOrVariantFromContext('Target_MAG_Smite_Wrathful')
+        -- Lunar Smite - Vanilla and Xarara's Lunar Smite mod
+         | IsSpellChildOrVariantFromContext('Target_LunarSmite')
+         | IsSpellChildOrVariantFromContext('Target_MOO_Nightsong_SearingSmite')
+         | IsSpellChildOrVariantFromContext('Target_LOW_RamazithsTower_Nightsong_Smite')
+        -- Veenab stuff
+         | IsSpellChildOrVariantFromContext('VBT_Spell_0_SappingBlade') 
+         | IsSpellChildOrVariantFromContext('VBT_Spell_2_DrainingSmite_Container') 
+         | IsSpellChildOrVariantFromContext('VBT_Target_LifeDrain') 
+         | IsSpellChildOrVariantFromContext('VBT_Projectile_LifeDrain')
+        -- Some dude's homebrew
+         | IsSpellChildOrVariantFromContext('Target_Smite_Pitiless')
+        -- Blackguard smites by Xarara
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_ENDARKENING')                         -- Endarkening (Subclass unique)
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_ENDARKENING_TRUE')
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_VENOMOUS')                            -- Venomous
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_VENOMOUS_BLOOD')
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CHILLING')                            -- Chilling
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CHILLING_BLOOD')
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_SILENCING')                           -- Silencing
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_SILENCING_BLOOD')
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CAUSTIC')                             -- Caustic
+         | IsSpellChildOrVariantFromContext('PROJECTILE_SMITE_CAUSTIC')
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CAUSTIC_BLOOD')
+         | IsSpellChildOrVariantFromContext('PROJECTILE_SMITE_CAUSTIC_BLOOD')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLINDING_SICKNESS')       -- Necrotising
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_FILTH_FEVER')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_FLESH_ROT')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_MINDFIRE')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_SEIZURE')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_SLIMY_DOOM')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_BLINDING_SICKNESS')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_FILTH_FEVER')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_FLESH_ROT')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_MINDFIRE')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_SEIZURE')
+         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_SLIMY_DOOM')
+         | IsSpellChildOrVariantFromContext('TARGET_SMITE_VAMPIRIC')                            -- Vampiric
 end
 
 -- ==================================== Common Actions
