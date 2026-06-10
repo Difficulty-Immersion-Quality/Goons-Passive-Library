@@ -392,15 +392,15 @@ end
 function Goon_IsSneakAttackInterrupt()
     return Goon_IsUACunningStrikeSneakAttack()
            -- _Critical, _Rakish, _Rakish_Critical, _Ruffian, _Ruffian_Critical
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_SneakAttack'))
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_SneakAttack') ~= nil)
            -- _2 .. _9 and _Critical, _Critical_2 .. _9
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_LHB_Justicar_ConsecratedStrike'))
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_LHB_Justicar_ConsecratedStrike') ~= nil)
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
-    return ConditionResult(string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack'))
+    return ConditionResult(string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack') ~= nil)
            -- _Less1, _Less2, _Less3, _Less6, _Disarm, _Poison, Goon_ _Poison, _Trip, _Withdraw, _Daze, _KnockOut, _Obscure
-         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike'))
+         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike') ~= nil)
 end
 
 -- ==================================== Flourishes
@@ -433,7 +433,7 @@ end
 
 function Goon_IsFlourishInterrupt()
     return -- _Defensive, _Mobile, _Slashing
-           ConditionResult(string.match(context.InterruptId, '^Goon_Interrupt_BladeFlourish_'))
+           ConditionResult(string.match(context.InterruptId, '^Goon_Interrupt_BladeFlourish_') ~= nil)
 end
 
 -- ==================================== Bardic Inspiration
@@ -484,6 +484,7 @@ function Goon_IsDisengageSpell()
 end
 
 -- One says condition the other says status gonna kms no cap
+-- TODO: Psuedo status group
 function Goon_HasDisengageCondition()
     return HasAnyStatus({ 'SG_Disengage', 'DISENGAGE', 'DRUNKEN_TECHNIQUE', 'CLICK_HEELS' }, {}, {})
 end
