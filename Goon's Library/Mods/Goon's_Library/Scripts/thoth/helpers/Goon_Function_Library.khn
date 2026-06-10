@@ -365,6 +365,7 @@ end
 -- ==================================== Spell batching ====================================
 -- TODO: Referencing the interrupts below doesn't really work the same as spells, e.g. OnDamage contexts for functors.
 -- Best course of action is likely to have the interrupts UseSpell, replacing animations with the instant cast one. "Target_NULLSPELL"?
+-- "I think context.InterruptId is only for the interrupt RollConditions" - Joow
 
 -- ==================================== Sneak Attacks
 
