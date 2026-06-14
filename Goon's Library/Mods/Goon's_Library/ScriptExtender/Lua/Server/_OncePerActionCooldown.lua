@@ -47,41 +47,41 @@ Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster, spell, sp
     print("[OncePerAction] Updated previousCaster =", previousCaster)
 end)
 
--- ==================================== Once per action cooldown stuff - Oldge
+-- ==================================== Oldge
 -- Credit to Nzx for making this cleaner than I would have by a mile.
 
-local trackedEntity = {}  -- [uuid] = { [statusId] = true }
+-- local trackedEntity = {}  -- [uuid] = { [statusId] = true }
 
-Ext.Entity.OnCreate("ServerStatusApplyEvent", function(entity)
-    local comp = entity.ServerStatusApplyEvent
-    if not string.find(comp.StatusId, "^GOON_ONCEPERACTION_COOLDOWN_") then return end
-    local uuid = comp.Target.Uuid.EntityUuid
-    local set = trackedEntity[uuid] or {}
-    trackedEntity[uuid] = set
-    set[comp.StatusId] = true
-end)
+-- Ext.Entity.OnCreate("ServerStatusApplyEvent", function(entity)
+--     local comp = entity.ServerStatusApplyEvent
+--     if not string.find(comp.StatusId, "^GOON_ONCEPERACTION_COOLDOWN_") then return end
+--     local uuid = comp.Target.Uuid.EntityUuid
+--     local set = trackedEntity[uuid] or {}
+--     trackedEntity[uuid] = set
+--     set[comp.StatusId] = true
+-- end)
 
-Ext.Entity.OnCreate("ServerStatusRemoveEvent", function(entity)
-    local comp = entity.ServerStatusRemoveEvent
-    if not string.find(comp.StatusId, "^GOON_ONCEPERACTION_COOLDOWN_") then return end
-    local uuid = comp.Target.Uuid.EntityUuid
-    local set = trackedEntity[uuid]
-    if not set then return end
-    set[comp.StatusId] = nil
-    if not next(set) then trackedEntity[uuid] = nil end
-end)
+-- Ext.Entity.OnCreate("ServerStatusRemoveEvent", function(entity)
+--     local comp = entity.ServerStatusRemoveEvent
+--     if not string.find(comp.StatusId, "^GOON_ONCEPERACTION_COOLDOWN_") then return end
+--     local uuid = comp.Target.Uuid.EntityUuid
+--     local set = trackedEntity[uuid]
+--     if not set then return end
+--     set[comp.StatusId] = nil
+--     if not next(set) then trackedEntity[uuid] = nil end
+-- end)
 
-Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target)
-    local casterSet = trackedEntity[caster:sub(-36)]
-    if casterSet then
-    for statusId in pairs(casterSet) do
-        Osi.RemoveStatus(caster, statusId)
-        end
-    end
+-- Ext.Osiris.RegisterListener("UsingSpellOnTarget", 6, "after", function(caster, target)
+--     local casterSet = trackedEntity[caster:sub(-36)]
+--     if casterSet then
+--     for statusId in pairs(casterSet) do
+--         Osi.RemoveStatus(caster, statusId)
+--         end
+--     end
 
-    local targetSet = trackedEntity[target:sub(-36)]
-    if not targetSet then return end
-    for statusId in pairs(targetSet) do
-        Osi.RemoveStatus(target, statusId)
-    end
-end)
+--     local targetSet = trackedEntity[target:sub(-36)]
+--     if not targetSet then return end
+--     for statusId in pairs(targetSet) do
+--         Osi.RemoveStatus(target, statusId)
+--     end
+-- end)
