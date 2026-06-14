@@ -1047,6 +1047,14 @@ end
 -- MartialArts_DextrousUnarmedAttacks in DIQ Misc Patches needs this shit bad.
 -- Might need additional custom statuses for my Shadow Blade/Flame Blade edits.
 
+function Goon_IsPactWeapon()
+    return StatusId('PACT_BLADE') | StatusId('HEXBLADE_BIND') | Tagged('PACT_OF_THE_BLADE')
+end
+
+function Goon_HasPactWeapon()
+    return HasStatus('PACT_BLADE') | HasStatus('HEXBLADE_BIND') | Tagged('PACT_OF_THE_BLADE')
+end
+
 -- ==================================== Weapon enchant checks - Bound weapons only
 -- TODO: Add support for any custom statuses that fit the bill
 -- TODO: Replace all instances where all 3 of these are called with the functions
