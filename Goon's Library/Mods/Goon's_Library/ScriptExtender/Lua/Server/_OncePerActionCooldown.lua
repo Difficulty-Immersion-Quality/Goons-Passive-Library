@@ -26,37 +26,24 @@
 -- Note: Further examples of use can be found in my mod, Goon's (Gear) and Throwing Overhaul. Unpack it and search for "GOON_ONCEPERACTION_COOLDOWN_" to see.
 
 -- ==================================== Once per action cooldown stuff ====================================
--- Jank city bitch jank jank city bitch
+-- Credit to Nzx for making this cleaner than I would have by a mile.
 
-local casterQueue = {}
+local lastCaster = nil
 
-Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster, spell, spellType, spellElement, storyActionID)
-
-    local casterId = caster:sub(-36)
-
-    -- print("[OncePerAction] UsingSpell fired:", casterId)
-    
-    table.insert(casterQueue, casterId)
-
-    Ext.Timer.WaitFor(200, function()
-
-        if #casterQueue == 0 then return end
-        local previousCaster = casterQueue[1]
-        table.remove(casterQueue, 1)
-
-        local currentCaster = casterId
-
-        -- print("[OncePerAction] Processing previousCaster:", previousCaster)
-        -- print("[OncePerAction] Current caster:", currentCaster)
-
-        -- print("[OncePerAction] Applying technical status to:", previousCaster)
-        Osi.ApplyStatus(previousCaster, "GOON_ONCEPERACTION_CASTER_TECHNICAL", 0, 1)
-
-    end)
+Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
+    local previousCaster = lastCaster
+    local castTime = Ext.Utils.MonotonicTime()
+    -- print("[OncePerAction] cast:", caster:sub(-36), "| previous:", tostring(previousCaster))
+    if previousCaster then
+        Ext.Timer.WaitFor(200, function()
+            -- print("[OncePerAction]", Ext.Utils.MonotonicTime(), "apply to:", previousCaster, "| scheduled:", castTime)
+            Osi.ApplyStatus(previousCaster, "GOON_ONCEPERACTION_CASTER_TECHNICAL", 0, 1)
+        end)
+    end
+    lastCaster = caster:sub(-36)
 end)
 
 -- ==================================== Oldge
--- Credit to Nzx for making this cleaner than I would have by a mile.
 
 -- local trackedEntity = {}  -- [uuid] = { [statusId] = true }
 
