@@ -23,13 +23,38 @@
 -- data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead"
 
 -- ==================================== Once per action cooldown stuff ====================================
+-- Jank city bitch jank jank city bitch
+
+local trackedCaster = {}
+local previousCaster = nil
+
+Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster, spell, spellType, spellElement, storyActionID)
+
+    local casterId = caster:sub(-36)
+
+    print("[OncePerAction] UsingSpell fired")
+    print("[OncePerAction] Current caster:", casterId)
+    print("[OncePerAction] Previous caster:", previousCaster)
+
+    if previousCaster then
+        print("[OncePerAction] Applying technical status to:", previousCaster)
+        Osi.ApplyStatus(previousCaster, "GOON_ONCEPERACTION_CASTER_TECHNICAL", 0, 1)
+    else
+        print("[OncePerAction] NO PREVIOUS CASTER STORED")
+    end
+
+    previousCaster = casterId
+    print("[OncePerAction] Updated previousCaster =", previousCaster)
+end)
+
+-- ==================================== Once per action cooldown stuff - Oldge
 -- Credit to Nzx for making this cleaner than I would have by a mile.
 
 local trackedEntity = {}  -- [uuid] = { [statusId] = true }
 
 Ext.Entity.OnCreate("ServerStatusApplyEvent", function(entity)
     local comp = entity.ServerStatusApplyEvent
-    if not string.find(comp.StatusId, "^GOON_ONCEPERACTIONCOOLDOWN_") then return end
+    if not string.find(comp.StatusId, "^GOON_ONCEPERACTION_COOLDOWN_") then return end
     local uuid = comp.Target.Uuid.EntityUuid
     local set = trackedEntity[uuid] or {}
     trackedEntity[uuid] = set
@@ -38,7 +63,7 @@ end)
 
 Ext.Entity.OnCreate("ServerStatusRemoveEvent", function(entity)
     local comp = entity.ServerStatusRemoveEvent
-    if not string.find(comp.StatusId, "^GOON_ONCEPERACTIONCOOLDOWN_") then return end
+    if not string.find(comp.StatusId, "^GOON_ONCEPERACTION_COOLDOWN_") then return end
     local uuid = comp.Target.Uuid.EntityUuid
     local set = trackedEntity[uuid]
     if not set then return end
