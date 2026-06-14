@@ -1,0 +1,16 @@
+// ==================================== Once per action cooldown ====================================
+
+new entry "GOON_ONCEPERACTION_COOLDOWN_TEMPLATE"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "GOON_ONCEPERACTION_COOLDOWN_TEMPLATE"
+data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead;TickingWithSource"
+// data "StatusPropertyFlags" "ApplyToDead;TickingWithSource"
+data "RemoveEvents" "OnSourceStatusApplied"
+data "RemoveConditions" "HasStatus('GOON_ONCEPERACTION_CASTER_TECHNICAL',context.Source)"
+
+new entry "GOON_ONCEPERACTION_CASTER_TECHNICAL"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "GOON_ONCEPERACTION_CASTER_TECHNICAL"
+data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead"
