@@ -4,7 +4,8 @@
     <region id="TooltipExtraTexts">
         <node id="root">
             <children>
-                <!-- Passives not using cooldowns  -->
+            <!-- ==================================== Cooldowns ==================================== -->
+                <!-- Once per action  -->
 				<node id="TooltipExtraTexts">
                     <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt;. -->
 					<attribute id="Text" type="TranslatedString" handle="h5d5792d8g0017g4d4fg843ege21c7fc31282" version="1" />
@@ -15,6 +16,13 @@
 					<attribute id="Text" type="TranslatedString" handle="h06680d3agce4eg46d5ga213g95800e8ba4fc" version="1" />
 					<attribute id="UUID" type="guid" value="2e9bcfe0-6444-477c-a767-40e967ca7b55" />
 				</node>
+                <!-- Once per attack -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can trigger &lt;b&gt;once&lt;/b&gt; per &lt;LSTag Tooltip="AttackRoll"&gt;Attack&lt;/LSTag&gt;. -->
+                    <attribute id="Text" type="TranslatedString" handle="h32c61940gcc68g4656gaba7g520594efd435" version="1"/>
+                    <attribute id="UUID" type="guid" value="f63b2f2d-b29b-40b8-86ea-9978c782c32e"/>
+                </node>
+            <!-- ==================================== Class specific ==================================== -->
                 <!-- Panache: Disadvantage ends if non-caster harms target  -->
 				<node id="TooltipExtraTexts">
                     <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; &lt;LSTag Type="Status" Tooltip="PANACHE"&gt;Panache: Disadvantage&lt;/LSTag&gt; ends early if an entity other than the caster harms the target. -->
@@ -45,37 +53,35 @@
                     <attribute id="Text" type="TranslatedString" handle="he169c217g2ad1g4d5ag82dfg1d7a1acc9444" version="1"/>
                     <attribute id="UUID" type="guid" value="8b0c9dc7-cfb4-43ff-9514-9acc807fc663"/>
                 </node>
+            <!-- ==================================== Clarifications ==================================== -->
                 <!-- Cumulative NOT multiplicative -->
                 <node id="TooltipExtraTexts">
                     <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is cumulative, &lt;b&gt;not&lt;/b&gt; multiplicative. -->
                     <attribute id="Text" type="TranslatedString" handle="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1"/>
                     <attribute id="UUID" type="guid" value="d193dbf2-c16f-4416-934a-98037bf6a98e"/>
                 </node>
-                <!-- Once per attack -->
+            <!-- ==================================== Wild Shape/Polymorph ==================================== -->
+                <!-- Works in Polymorph and Wild Shape -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can trigger &lt;b&gt;once&lt;/b&gt; per &lt;LSTag Tooltip="AttackRoll"&gt;Attack&lt;/LSTag&gt;. -->
-                    <attribute id="Text" type="TranslatedString" handle="h32c61940gcc68g4656gaba7g520594efd435" version="1"/>
-                    <attribute id="UUID" type="guid" value="f63b2f2d-b29b-40b8-86ea-9978c782c32e"/>
-                </node>
-                <!-- Works in Polymorph -->
-                <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is &lt;b&gt;also&lt;/b&gt; active while Polymorphed, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect continues to function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPHED"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="h2aa95070gb790g4f45g825bg9aff35a5f7d1" version="1"/>
                     <attribute id="UUID" type="guid" value="28186bf3-e19b-43a9-8395-7dc31a6a211d"/>
                 </node>
                 <!-- Works in Wild Shape -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is &lt;b&gt;also&lt;/b&gt; active while &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shaped&lt;/LSTag&gt;. -->
-                    <attribute id="Text" type="TranslatedString" handle="3a0502dc-9a6c-41fb-8f1c-96ff3f879791" version="1"/>
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect continues to function while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <attribute id="Text" type="TranslatedString" handle="h24c442a8g51ccg4d6fg8f47gd20b9841f35d" version="1"/>
                     <attribute id="UUID" type="guid" value="fd6917c0-a47f-4b75-b2e4-1c60189210b0"/>
                 </node>
+                <!-- Only works in Wild Shape -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect is &lt;b&gt;only&lt;/b&gt; active in &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect only functions while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1"/>
                     <attribute id="UUID" type="guid" value="0960bfe9-875f-4b41-8bfc-c8c707e93e1b"/>
                 </node>
+                <!-- Doesn't work in Wild Shape -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; This effect is &lt;b&gt;not&lt;/b&gt; active in &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; This effect does not function while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1"/>
                     <attribute id="UUID" type="guid" value="af675b0e-50b9-4451-b006-29bded4a4280"/>
                 </node>
