@@ -1,0 +1,64 @@
+// ==================================== Polymorph Item Templates ====================================
+// Note: The implementation demands that your status inheriting from the template has a valid, and unique "StackId".
+
+// ==================================== Works in Polymorphs and Wild Shape
+// // &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Continues to function while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.
+// data "TooltipPermanentWarnings" "28186bf3-e19b-43a9-8395-7dc31a6a211d"
+
+new entry "Goon_Gear_Polymorph_Template"
+type "PassiveData"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnStatusApplied"
+data "Conditions" "Goon_IsRestrictedPolymorphStatus() and Goon_IsNonHostilePolymorphStatus()"
+// data "StatsFunctors" "ApplyStatus(GOON_GEAR_POLYMORPH_TEMPLATE, 100, -1)"
+
+new entry "GOON_GEAR_POLYMORPH_TEMPLATE"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackType" "Ignore"
+data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead;IgnoreResting"
+data "RemoveEvents" "OnStatusRemoved"
+data "RemoveConditions" "not Goon_IsRestrictedPolymorphStatus() and not Goon_IsNonHostilePolymorphStatus()"
+data "Boosts" ""
+data "Passives" ""
+
+// ==================================== Only works in Polymorphs and Wild Shape
+// // &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.
+// data "TooltipPermanentWarnings" "fd6917c0-a47f-4b75-b2e4-1c60189210b0"
+
+// new entry "Goon_Gear_Polymorph_Template"
+// type "PassiveData"
+// using "Goon_Gear_Polymorph_Template"
+
+// new entry "GOON_GEAR_POLYMORPH_TEMPLATE"
+// type "StatusData"
+// data "StatusType" "BOOST"
+// using "GOON_GEAR_POLYMORPH_TEMPLATE"
+
+// ==================================== Only works in Wild Shape
+// // &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.
+// data "TooltipPermanentWarnings" "0960bfe9-875f-4b41-8bfc-c8c707e93e1b"
+
+new entry "Goon_Gear_Polymorph_Template_WildShape"
+type "PassiveData"
+using "Goon_Gear_Polymorph_Template"
+data "Conditions" "Goon_IsDruidWildshape() and Goon_IsNonHostilePolymorphStatus()"
+
+new entry "GOON_GEAR_POLYMORPH_TEMPLATE_WILDSHAPE"
+type "StatusData"
+data "StatusType" "BOOST"
+using "GOON_GEAR_POLYMORPH_TEMPLATE"
+data "RemoveConditions" "not Goon_IsDruidWildshape() and not Goon_IsNonHostilePolymorphStatus()"
+
+// ==================================== Doesn't work in Polymorphs and Wild Shape
+// // &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.
+// data "TooltipPermanentWarnings" "af675b0e-50b9-4451-b006-29bded4a4280"
+
+// new entry "Goon_Gear_Polymorph_Template"
+// type "PassiveData"
+// using "Goon_Gear_Polymorph_Template"
+
+// new entry "GOON_GEAR_POLYMORPH_TEMPLATE"
+// type "StatusData"
+// data "StatusType" "BOOST"
+// using "GOON_GEAR_POLYMORPH_TEMPLATE"

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentList>
-	<!-- ==================================== E - MagicAllergy.txt ==================================== -->
+<!-- ==================================== E - MagicAllergy.txt ==================================== -->
 
 	<!-- "" --> <content contentuid="hcbd0a4a3g5b20g46f8g9c35g5733c101d779" version="1">Magic Allergy</content>
 	<!-- "" --> <content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
@@ -13,14 +13,14 @@
 	<!-- "" --> <content contentuid="hb3a26f07g52dfg4d55g9620gfa00fdd39a99" version="1">Magic Allergy</content>
 	<!-- "" --> <content contentuid="hf677acbfgb2e1g401agb55dg5accaf8f69d5" version="1">An omnipotent force has given this creature a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== A - Critical Hit Passives.txt ==================================== -->
+<!-- ==================================== A - Critical Hit Passives.txt ==================================== -->
 	
 	<!-- "Goon_Critical_Hit_Immunity" --> <content contentuid="he547088cg3538g477dg8019gd30052e44f34" version="1">Critical Hit Immunity</content>
 	<!-- "Goon_Critical_Hit_Immunity" --> <content contentuid="h7da4d760g695eg4090g965fg1039b73cf76e" version="1">&lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 	<!-- "Goon_Critical_Hit_Resistance" --> <content contentuid="h4e558d13g9001g4543g8e18g661852a597ec" version="1">Critical Hit Resistance</content>
 	<!-- "Goon_Critical_Hit_Resistance" --> <content contentuid="h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b" version="1">&lt;LSTag Tooltip="Resistant"&gt;Resistant&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== D - Fall damage.txt ==================================== -->
+<!-- ==================================== D - Fall damage.txt ==================================== -->
 
 	<!-- "Goon_Fall_Damage_Vulnerability" --> <content contentuid="h6822e288ga459g4837gac9cg29836b5858fb" version="1">Fall Damage Vulnerability</content>
 	<!-- "Goon_Fall_Damage_Vulnerability" --> <content contentuid="h24211675g665eg43f4ga3cfg327548af17b1" version="1">An omnipotent force has doubled the fall damage this creature receives.</content>
@@ -31,7 +31,7 @@
 	<!-- "Goon_Fall_Damage_Immunity" --> <content contentuid="hc8b5d5fcg7767g4f14gbeb4g11a2b8597936" version="1">Fall Damage Immunity</content>
 	<!-- "Goon_Fall_Damage_Immunity" --> <content contentuid="hd1bf669eg5186g468fga5c5g627632e63b4a" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.</content>
 
-	<!-- ==================================== D - Weight, size and scale.txt ==================================== -->
+<!-- ==================================== D - Weight, size and scale.txt ==================================== -->
 
 	<!-- "" --> <content contentuid="hbc9fdc9dg1effg4d5fgb285g307e57b67e94" version="1">Increased Weight, Size &amp; Scale 1</content>
 	<!-- "" --> <content contentuid="hcdc9345bgbbfbg47dfgb578g58fd40d85cd5" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="Weight"&gt;Weight&lt;/LSTag&gt; and &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; by [1] category.</content>
@@ -79,7 +79,7 @@
 	<!-- "" --> <content contentuid="h85cfd39eg5f6fg4b29gadecgeaebd966a19c" version="1">Reduced Scale 5</content>
 	<!-- "" --> <content contentuid="h560b483ag3987g4fcega3b2g58ab8eee0522" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="Size"&gt;Size&lt;/LSTag&gt; scaling to [1].</content>
 
-	<!-- ==================================== D - Movement.txt ==================================== -->
+<!-- ==================================== D - Movement.txt ==================================== -->
 	
 	<!-- "" --> <content contentuid="h800133d0g0528g46dcg963dg12576934c550" version="1">Impeded Movement 1</content>
 	<!-- "" --> <content contentuid="h101f92deg74f3g4146g838ega86aec6062aa" version="1">An omnipotent force has reduced this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
@@ -123,7 +123,7 @@
 	<!-- "" --> <content contentuid="he77c0e21gb5e5g4ce6gb1ddga2c02bebd391" version="1">Increased Movement 1,000,000</content>
 	<!-- "" --> <content contentuid="h462ef6ceg81afg47ffg90dcg1fd33a70d46b" version="1">An omnipotent force has increased this creature's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by [1].</content>
 
-	<!-- ==================================== D - Resistances, Vulnerability and Immunity.txt ==================================== -->
+<!-- ==================================== D - Resistances, Vulnerability and Immunity.txt ==================================== -->
 
 	<!-- "Goon_X_Vulnerable" --> <content contentuid="h740ba49eg60c0g447bgb752g95811a55d60c" version="1">An omnipotent force has weakened this creature rendering it &lt;LSTag Tooltip="Vulnerable"&gt;Vulnerable&lt;/LSTag&gt; to[1].</content>
 	<!-- "Goon_X_Resistant" --> <content contentuid="hb12d20b1g8633g4489gab88g5e246913000f" version="1">An omnipotent force has granted this creature &lt;LSTag Tooltip="Resistant"&gt;Resistance&lt;/LSTag&gt; to[1].</content>
@@ -209,7 +209,7 @@
 	<!-- "Goon_Thunder_Ignore_Resistance" --> <content contentuid="ha64f98f1g10bcg4d2eg9743g1fed769865c8" version="1">Ignore Thunder Resistance</content>
 	<!-- "Goon_Thunder_Ignore_Immune" --> <content contentuid="hb9c2c393gb253g456cgb88cgc997fa4e3fd9" version="1">Ignore Thunder Immunity</content>
 
-	<!-- ==================================== D - Damage bonuses.txt ==================================== -->
+<!-- ==================================== D - Damage bonuses.txt ==================================== -->
 
 	<!-- "Goon_Damage_X_X_Attacks" --> <content contentuid="h3025cc0egeb05g4ae3gb20fg46161d9f527b" version="1">Attack Damage Bonus</content>
 	<!-- "Goon_Damage_X_X_Attacks" --> <content contentuid="h45bdc878g3c3bg45c7g88bfg04af046e6c23" version="1">An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].</content>
@@ -220,7 +220,7 @@
 	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="hb075868dg6954g48b7gb23cg3a2c93d39a66" version="1">Spells Damage Bonus</content>
 	<!-- "Goon_Damage_X_X_Spells" --> <content contentuid="h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f" version="1">An omnipotent force allows this creature's spells to deal an additional [1].</content>
 
-	<!-- ==================================== D - Stat boosts.txt ==================================== -->
+<!-- ==================================== D - Stat boosts.txt ==================================== -->
 
 	<!-- "Goon_DamageReduction" --> <content contentuid="h5b4280056a754abe83ad50c05af217cfg861" version="1">Impervious Defence</content>
 	<!-- "Goon_DamageReduction" --> <content contentuid="hfef70fe222774b49b7eb7812b9c04e27cage" version="1">All incoming damage is reduced by [1], equal to your &lt;LSTag Tooltip="ProficiencyBonus"&gt;Proficiency Bonus&lt;/LSTag&gt;.</content>
@@ -232,7 +232,7 @@
 	<!-- "Goon_AttackRoll_1" --> <content contentuid="h93157a8fg6f18g4545g88a1g18e16621b367" version="1">Improved Accuracy</content>
 	<!-- "Goon_AttackRoll_1" --> <content contentuid="h9171a2e1g4beag44e8gb069gcbf8150c0c44" version="1">You gain a +[1] bonus to &lt;LSTag Tooltip="AttackRoll"&gt;Attack Rolls&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== C - Potion summoning.txt ==================================== -->
+<!-- ==================================== C - Potion summoning.txt ==================================== -->
 
 	<!-- "Goon_Summon_Potion_Healing_x1" --> <content contentuid="hd701ed72gc3e9g4162g957fg513c16f91234" version="1">Potions of Healing</content>
 	<!-- "Goon_Summon_Potion_Healing_x1" --> <content contentuid="h49522c5cg0c15g45a8gb648g2cab00a813a3" version="1">An omnipotent force has gifted this creature x[1] Potion of Healing.</content>
@@ -249,7 +249,7 @@
 	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h4379027bga5afg4a91g9f63gdf2721a953eb" version="1">Dream Mist</content>
 	<!-- "Goon_Summon_Drugs_Dream_Mist_x1" --> <content contentuid="h25f6ae9dg10c3g4502gaa76ge35fbedb87d6" version="1">An omnipotent force has gifted this creature x[1] Dream Mist.</content>
 
-	<!-- ==================================== G - Custom NPC Passives and Abilities.txt ==================================== -->
+<!-- ==================================== G - Custom NPC Passives and Abilities.txt ==================================== -->
 
 	<!-- "Goon_BonusAction_Cantrips" --> <content contentuid="hbb4a5f6ag9c1ag4dc2ga18dgbfda73a58c81" version="1">Spellcasting Adept</content>
 	<!-- "Goon_BonusAction_Cantrips" --> <content contentuid="hda74da1cgb3eeg47ebg90cag9321e8d122ec" version="1">Experienced spellcasters can cast &lt;LSTag Tooltip="Cantrip"&gt;cantrips&lt;/LSTag&gt; that cost an &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; using a &lt;LSTag Tooltip="BonusAction"&gt;bonus action&lt;/LSTag&gt; instead.</content>
@@ -263,13 +263,13 @@
 	<!-- "Goon_PLA_ConflictedFlind_Flail_Broken_Passive" --> <content contentuid="h984fea75gd691g4870g97e6g007d029d5385" version="1">Yeenoghu's Gift</content>
 	<!-- "Goon_PLA_ConflictedFlind_Flail_Broken_Passive" --> <content contentuid="hab54fb07ga384g4293gb73bg3e68489adf71" version="1">Hitting an enemy heals Flind for [1] - but she can go &lt;LSTag Type="Status" Tooltip="MADNESS"&gt;Mad&lt;/LSTag&gt; if she doesn't continue hitting an enemy each turn.</content>
 
-	<!-- ==================================== Z - Retired entries.txt ==================================== -->
+<!-- ==================================== Z - Retired entries.txt ==================================== -->
 
 	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat", "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="h441396f0g2826g49efgbe51gcbcbabde0f12" version="1">Automatic Sanctuary</content>
 	<!-- "Goon_Sanctuary_Auto_Cast_Start_Combat" --> <content contentuid="hd7db620dg26c9g4a4fgb530ge7b997be5ba5" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the start of combat.</content>
 	<!-- "Goon_Sanctuary_Auto_Cast_End_Turn" --> <content contentuid="hcdf47849g0d0bg418dg82b5g7b5063a8e5a8" version="1">An omnipotent force provides this creature with &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+<!-- ==================================== XXXXX ==================================== -->
 
 	<!-- "" --> <content contentuid="hab61f9ffg8d8eg433eg9c35gc4ec76ddb823" version="1">Spooder Invisibility Point</content>
 	<!-- "" --> <content contentuid="hb023f549g9e93g4be0gb917g8e2287c9be1c" version="1">The Spider Queen Matriarch certainly got the gyatt.</content>
@@ -300,14 +300,14 @@
 	<!-- "" --> <content contentuid="h02124374g23f7g48b1gb73dgce128b2b83ff" version="1">Devoured Magic</content>
 	<!-- "" --> <content contentuid="h2900144dg8afdg48d6ga41fgfeac4c706774" version="1">A presence is draining the entity of its magical energy, preventing it from casting spells.</content>
 
-	<!-- ==================================== XXXXX ==================================== -->
+<!-- ==================================== XXXXX ==================================== -->
 
 	<!-- "NPC_CbD" --> <content contentuid="h8bec4a12g45a3g424ag9fe0g7bd2637635f8" version="1">Favoured by the Divine</content>
 	<!-- "NPC_CbD" --> <content contentuid="h602b3e3dgd4f9g448fgb73bg6113c025e719" version="1">The creature's targets are cursed by transgressed and irritable gods. When it falls unconscious, it immediately dies. Moreover, when it dies, a terrible envoy of the offended deity is conjured from the entity's corpse.</content>
 	<!-- "DeGreaser_Rolans_Stolen_Spellbook" --> <content contentuid="h51d96a5bg2f20g4b73g89f0g7c73e947d78e" version="1">Rolan's Stolen Spellbook</content>
 	<!-- "DeGreaser_Rolans_Stolen_Spellbook" --> <content contentuid="hb376ba8bg8842g4230ga9cdgf4e549b40767" version="1">According to Lorroakan, these are nothing but "Meaningless cantrips and playthings." Yet you can tell someone has studied it closely, tried to copy the formula, and failed.</content>
 
-	<!-- ==================================== Status immunity passives ==================================== -->
+<!-- ==================================== Status immunity passives ==================================== -->
 
 	<!-- "Goon_Immunity_Approaching" --> <content contentuid="h4f424c66g025dg405bg81d2ga431facf24a2" version="1">Immunity: Approach</content>
 	<!-- "Goon_Immunity_Approaching" --> <content contentuid="hc84e7b31ga283g438ag969egfd0ffb60f8ab" version="1">This creature cannot be forced to &lt;LSTag Type="Status" Tooltip="COMMAND_APPROACH"&gt;Approach&lt;/LSTag&gt;.</content>
@@ -376,7 +376,7 @@
 	<!-- "Goon_Immunity_Unconscious" --> <content contentuid="h85774a25ga19bg4c45g9d8egd4ee2dce4a66" version="1">Immunity: Unconscious</content>
 	<!-- "Goon_Immunity_Unconscious" --> <content contentuid="hfd4ca1c7gfd74g4600gb892gd9bac02e7305" version="1">This creature cannot become Unconscious.</content>
 
-	<!-- ==================================== Tooltippermanentwarning ==================================== -->
+<!-- ==================================== Tooltippermanentwarning ==================================== -->
 
 	<!-- "46edbd50-74b9-4e37-9f05-28505b94cf8f" --> <content contentuid="h5e337669g3e9ag448fgb5b6g4bb4b67e4152" version="1">Your &lt;LSTag Tooltip="Intelligence"&gt;Intelligence&lt;/LSTag&gt; &lt;LSTag Tooltip="AbilityModifier"&gt;Modifier&lt;/LSTag&gt; increases the &lt;LSTag Tooltip="SpellDifficultyClass"&gt;Spell Save DC&lt;/LSTag&gt; of Arcane Shots.</content>
 	<!-- "87a38a64-94d2-4aa5-8627-4abb43fea3ae" --> <content contentuid="he8581dfbga41bg466ag8368gc0310456f8fc" version="1">Does not consume a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt; or &lt;LSTag Tooltip="SpellSlot"&gt;Spell Slot&lt;/LSTag&gt;.</content>
@@ -385,16 +385,25 @@
 	<!-- "d58d5fff-c41b-46a7-afde-9bfd4852eb0a" --> <content contentuid="h5d5792d8g0017g4d4fg843ege21c7fc31282" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt;.</content>
 	<!-- "2e9bcfe0-6444-477c-a767-40e967ca7b55" --> <content contentuid="h06680d3agce4eg46d5ga213g95800e8ba4fc" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can only trigger once per &lt;LSTag Tooltip="Action"&gt;action&lt;/LSTag&gt; for each target.</content>
 
-	<!-- ==================================== Extra descriptions for meta information ==================================== -->
+<!-- ==================================== Extra descriptions for meta information ==================================== -->
 
-	<!-- d193dbf2-c16f-4416-934a-98037bf6a98e --> <content contentuid="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is cumulative, &lt;b&gt;not&lt;/b&gt; multiplicative.</content>
-	<!-- "f63b2f2d-b29b-40b8-86ea-9978c782c32e" --> <content contentuid="h32c61940gcc68g4656gaba7g520594efd435" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can trigger &lt;b&gt;once&lt;/b&gt; per &lt;LSTag Tooltip="AttackRoll"&gt;Attack&lt;/LSTag&gt;.</content>
-	<!-- "28186bf3-e19b-43a9-8395-7dc31a6a211d" --> <content contentuid="h2aa95070gb790g4f45g825bg9aff35a5f7d1" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect continues to function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPHED"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
-	<!-- "fd6917c0-a47f-4b75-b2e4-1c60189210b0" --> <content contentuid="h24c442a8g51ccg4d6fg8f47gd20b9841f35d" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect continues to function while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
-	<!-- "0960bfe9-875f-4b41-8bfc-c8c707e93e1b" --> <content contentuid="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect only functions while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
-	<!-- "af675b0e-50b9-4451-b006-29bded4a4280" --> <content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; This effect does not function while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+	<!-- ==================================== Cooldowns ==================================== -->
+	<!-- d193dbf2-c16f-4416-934a-98037bf6a98e --> 
+	<content contentuid="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect is cumulative, &lt;b&gt;not&lt;/b&gt; multiplicative.</content>
+	<!-- "f63b2f2d-b29b-40b8-86ea-9978c782c32e" --> 
+	<content contentuid="h32c61940gcc68g4656gaba7g520594efd435" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect can trigger &lt;b&gt;once&lt;/b&gt; per &lt;LSTag Tooltip="AttackRoll"&gt;Attack&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== Error descriptions ==================================== -->
+	<!-- ==================================== Wild Shape/Polymorph -->
+	<!-- "28186bf3-e19b-43a9-8395-7dc31a6a211d" --> 
+	<content contentuid="h2aa95070gb790g4f45g825bg9aff35a5f7d1" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Continues to function while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+	<!-- "fd6917c0-a47f-4b75-b2e4-1c60189210b0" --> 
+	<content contentuid="h24c442a8g51ccg4d6fg8f47gd20b9841f35d" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+	<!-- "0960bfe9-875f-4b41-8bfc-c8c707e93e1b" --> 
+	<content contentuid="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+	<!-- "af675b0e-50b9-4451-b006-29bded4a4280" --> 
+	<content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+
+<!-- ==================================== Error descriptions ==================================== -->
 	
 	<!-- "Goon_IsNotSurface" --> <content contentuid="h0175bef3g57f5g4565gbfa9g9849b4d63549" version="1">Must be a surface.</content>
 	<!-- "Goon_IsNotDippableSurfaceOrEntity" --> <content contentuid="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1">Must be a Dippable surface or entity.</content>
@@ -402,15 +411,15 @@
 	<!-- "Goon_HasAttackedOrCast" --> <content contentuid="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1">Can only be used after attacking or casting a spell.</content>
 	<!-- "CE_Status_GOON_BLOODIED_False" --> <content contentuid="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1">Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;.</content>
 
-	<!-- ==================================== Upcast descriptions ==================================== -->
+<!-- ==================================== Upcast descriptions ==================================== -->
 
 	<!-- "2064b895-e4aa-4c67-b443-94b6a36a7afc" --> <content contentuid="h84c65138g3cd3g4f6cgbbd8g0ae2bc52cfd7" version="1">Deals an additional [1] or [2] per level.</content>
 
-	<!-- ==================================== Tags ==================================== -->
+<!-- ==================================== Tags ==================================== -->
 
 	<!-- b5b9303d-a3cb-435b-b8d6-a5560cd48815 --> <content contentuid="h28e1e7bag2addg4ff5gb28aga12442569030" version="1">Returning Weapon</content>
 
-	<!-- ==================================== Templates ==================================== -->
+<!-- ==================================== Templates ==================================== -->
 
 	<!-- "" --> <content contentuid="" version="1"></content>
 	<!-- "" --> <content contentuid="" version="1"></content>

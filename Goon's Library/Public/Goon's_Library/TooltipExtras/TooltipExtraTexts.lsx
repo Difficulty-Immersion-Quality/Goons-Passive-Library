@@ -61,27 +61,27 @@
                     <attribute id="UUID" type="guid" value="d193dbf2-c16f-4416-934a-98037bf6a98e"/>
                 </node>
             <!-- ==================================== Wild Shape/Polymorph ==================================== -->
-                <!-- Works in Polymorph and Wild Shape -->
+                <!-- Works in Polymorphs and Wild Shape - main one on my items and such -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect continues to function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPHED"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Continues to function while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="h2aa95070gb790g4f45g825bg9aff35a5f7d1" version="1"/>
                     <attribute id="UUID" type="guid" value="28186bf3-e19b-43a9-8395-7dc31a6a211d"/>
                 </node>
-                <!-- Works in Wild Shape -->
+                <!-- Only works in Polymorphs and Wild Shape -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; This effect continues to function while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="h24c442a8g51ccg4d6fg8f47gd20b9841f35d" version="1"/>
                     <attribute id="UUID" type="guid" value="fd6917c0-a47f-4b75-b2e4-1c60189210b0"/>
                 </node>
                 <!-- Only works in Wild Shape -->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect only functions while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1"/>
                     <attribute id="UUID" type="guid" value="0960bfe9-875f-4b41-8bfc-c8c707e93e1b"/>
                 </node>
-                <!-- Doesn't work in Wild Shape -->
+                <!-- Doesn't work in Polymorphs and Wild Shape-->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; This effect does not function while under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1"/>
                     <attribute id="UUID" type="guid" value="af675b0e-50b9-4451-b006-29bded4a4280"/>
                 </node>
