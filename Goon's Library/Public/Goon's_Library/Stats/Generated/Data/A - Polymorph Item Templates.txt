@@ -16,9 +16,10 @@ new entry "GOON_GEAR_POLYMORPH_TEMPLATE"
 type "StatusData"
 data "StatusType" "BOOST"
 data "StackType" "Ignore"
+// data "StackId" "GOON_GEAR_POLYMORPH_TEMPLATE"
 data "StatusPropertyFlags" "DisablePortraitIndicator;DisableOverhead;DisableCombatlog;ApplyToDead;IgnoreResting"
-data "RemoveEvents" "OnStatusRemoved"
-data "RemoveConditions" "not Goon_IsRestrictedPolymorphStatus() and not Goon_IsNonHostilePolymorphStatus()"
+data "RemoveEvents" "OnStatusApplied;OnStatusRemoved"
+data "RemoveConditions" "not Goon_IsRestrictedPolymorphStatus() or not Goon_IsNonHostilePolymorphStatus()"
 data "Boosts" ""
 data "Passives" ""
 
@@ -48,7 +49,7 @@ new entry "GOON_GEAR_POLYMORPH_TEMPLATE_WILDSHAPE"
 type "StatusData"
 data "StatusType" "BOOST"
 using "GOON_GEAR_POLYMORPH_TEMPLATE"
-data "RemoveConditions" "not Goon_IsDruidWildshape() and not Goon_IsNonHostilePolymorphStatus()"
+data "RemoveConditions" "not Goon_IsDruidWildshape() or not Goon_IsNonHostilePolymorphStatus()"
 
 // ==================================== Doesn't work in Polymorphs and Wild Shape
 // // &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.

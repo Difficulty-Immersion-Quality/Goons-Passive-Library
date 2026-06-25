@@ -81,7 +81,7 @@
                 </node>
                 <!-- Doesn't work in Polymorphs and Wild Shape-->
                 <node id="TooltipExtraTexts">
-                    <!-- &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <!-- &lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
                     <attribute id="Text" type="TranslatedString" handle="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1"/>
                     <attribute id="UUID" type="guid" value="af675b0e-50b9-4451-b006-29bded4a4280"/>
                 </node>

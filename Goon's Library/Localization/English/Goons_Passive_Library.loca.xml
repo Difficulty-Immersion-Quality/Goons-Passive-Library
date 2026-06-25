@@ -401,7 +401,7 @@
 	<!-- "0960bfe9-875f-4b41-8bfc-c8c707e93e1b" --> 
 	<content contentuid="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 	<!-- "af675b0e-50b9-4451-b006-29bded4a4280" --> 
-	<content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+	<content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 
 <!-- ==================================== Error descriptions ==================================== -->
 	
