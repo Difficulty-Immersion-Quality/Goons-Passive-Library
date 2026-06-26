@@ -404,26 +404,39 @@
 	<content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 
 <!-- ==================================== Error descriptions ==================================== -->
-	
-	<!-- "Goon_IsNotSurface" --> <content contentuid="h0175bef3g57f5g4565gbfa9g9849b4d63549" version="1">Must be a surface.</content>
-	<!-- "Goon_IsNotDippableSurfaceOrEntity" --> <content contentuid="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1">Must be a Dippable surface or entity.</content>
-	<!-- "Goon_HasBrokenOath" --> <content contentuid="h47d9ad6ag86bbg472bg9933g4d43eedade6b" version="1">Must uphold an oath.</content>
-	<!-- "Goon_HasAttackedOrCast" --> <content contentuid="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1">Can only be used after attacking or casting a spell.</content>
-	<!-- "CE_Status_GOON_BLOODIED_False" --> <content contentuid="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1">Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;.</content>
+
+	<!-- "Goon_HasEnemyWithinRange" -->
+	<content contentuid="hbda78c48g3496g424egafecg18b2f62458c4" version="1">Enemy can't be within [1].</content>
+	<!-- "Goon_HasNotEnemyWithinRange" -->
+	<content contentuid="h65e4a940ga820g4d40g96bbg020ee44c4a4b" version="1">Enemy must be within [1].</content>
+	<!-- "Goon_IsNotSurface" -->
+	<content contentuid="h0175bef3g57f5g4565gbfa9g9849b4d63549" version="1">Must be a surface.</content>
+	<!-- "Goon_IsNotDippableSurfaceOrEntity" -->
+	<content contentuid="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1">Must be a Dippable surface or entity.</content>
+	<!-- "Goon_HasBrokenOath" -->
+	<content contentuid="h47d9ad6ag86bbg472bg9933g4d43eedade6b" version="1">Must uphold an oath.</content>
+	<!-- "Goon_HasAttackedOrCast" -->
+	<content contentuid="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1">Can only be used after attacking or casting a spell.</content>
+	<!-- "CE_Status_GOON_BLOODIED_False" -->
+	<content contentuid="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1">Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;.</content>
 
 <!-- ==================================== Upcast descriptions ==================================== -->
 
-	<!-- "2064b895-e4aa-4c67-b443-94b6a36a7afc" --> <content contentuid="h84c65138g3cd3g4f6cgbbd8g0ae2bc52cfd7" version="1">Deals an additional [1] or [2] per level.</content>
+	<!-- "2064b895-e4aa-4c67-b443-94b6a36a7afc" -->
+	<content contentuid="h84c65138g3cd3g4f6cgbbd8g0ae2bc52cfd7" version="1">Deals an additional [1] or [2] per level.</content>
 
 <!-- ==================================== Tags ==================================== -->
 
-	<!-- b5b9303d-a3cb-435b-b8d6-a5560cd48815 --> <content contentuid="h28e1e7bag2addg4ff5gb28aga12442569030" version="1">Returning Weapon</content>
+	<!-- b5b9303d-a3cb-435b-b8d6-a5560cd48815 -->
+	<content contentuid="h28e1e7bag2addg4ff5gb28aga12442569030" version="1">Returning Weapon</content>
 
 <!-- ==================================== Templates ==================================== -->
 
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
-	<!-- "" --> <content contentuid="" version="1"></content>
+	<!-- "" -->
+	<content contentuid="" version="1"></content>
+	<!-- "" -->
+	<content contentuid="" version="1"></content>
+	<!-- "" -->
+	<content contentuid="" version="1"></content>
 
 </contentList>

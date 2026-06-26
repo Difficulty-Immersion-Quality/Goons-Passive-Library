@@ -6,7 +6,7 @@
 --     return HasDamageEffectFlag(DamageFlags.KillingBlow) | HasHPLessThan(1)
 -- end
 
--- ==================================== IsSpellChildOrVariantFromContext Bug Fixing
+-- ==================================== IsSpellChildOrVariantFromContext bug fixing
 -- It also checks CombatAIOverrideSpell which is blank for most spells and may give you lots of false positives.
 -- For example if there is no spell set in the context, IsSpellChildOrVariantFromContext("Target_HoldMonster") will still return true. So keep that in mind. - From joow.
 -- Found in 5e Spells and surely other mods too.
@@ -19,6 +19,58 @@ function IsSpellChildOrVariantFromContext(spellId)
 
   -- ong that spell better be more than some quotes fr
   return ls.thoth.shared.IsSpellChildOrVariantFromContext(spellId) & ~ls.thoth.shared.IsSpellChildOrVariantFromContext("")
+end
+
+-- ==================================== HasEnemyWithinRange bug fixing
+-- Credit to XiphiasRex - Enemies are now filtered properly based on exclusionStatus and tag.
+
+function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, target, source)
+    distance = distance or 1.5
+    NumberOfEnemy = NumberOfEnemy or 1
+    target = target or context.Target
+    source = source or context.Source
+
+    -- local errorTrue = {ConditionError("HasAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
+    local errorTrue = {ConditionError("Goon_HasEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
+    -- local errorFalse = {ConditionError("HasNotAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
+    local errorFalse = {ConditionError("Goon_HasNotEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
+
+    -- get all enemies in range
+    local enemies = GetEnemiesWithinRange(distance, target, source)
+    -- if enemies ~= nil then
+        -- Only do the check when we are surounded by more than or equal the NumberOfEnemy
+        -- if #enemies.Enemies >= NumberOfEnemy then
+
+    -- only both if total enemies is at least desired amount
+        if enemies ~= nil and #enemies.Enemies >= NumberOfEnemy then
+            local validEnemies = 0
+
+            for _, entity in ipairs(enemies.Enemies) do
+                -- ensure entity does not have the excluded status
+                local noExcludedStatus = ConditionResult(exclusionStatus == nil)
+                if exclusionStatus then
+                    noExcludedStatus = ~HasStatus(exclusionStatus, entity)
+                end
+
+                -- filter by tag if provided
+                local hasTag = ConditionResult(tag == nil)
+                if tag then
+                    hasTag = Tagged(tag, entity)
+                end
+
+            -- increment counter
+                if noExcludedStatus.Result and hasTag.Result then
+                validEnemies = validEnemies + 1
+            end
+
+            -- if at desired amount we done
+            if validEnemies >= NumberOfEnemy then
+                    return ConditionResult(true, errorFalse, errorTrue)
+                -- end
+            end
+        end
+    end
+    return ConditionResult(false, errorFalse, errorTrue)
 end
 
 -- ==================================== Attack types ====================================
@@ -575,19 +627,19 @@ function Goon_IsSmiteSpells()
         -- Staggering Smite
          | IsSpellChildOrVariantFromContext('Target_StaggeringSmite')
         -- Thunderous Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Thunderous') 
+         | IsSpellChildOrVariantFromContext('Target_Smite_Thunderous')
          | IsSpellChildOrVariantFromContext('Target_MAG_ThunderousSmite')
         -- Wrathful Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Wrathful') 
+         | IsSpellChildOrVariantFromContext('Target_Smite_Wrathful')
          | IsSpellChildOrVariantFromContext('Target_MAG_Smite_Wrathful')
         -- Lunar Smite - Vanilla and Xarara's Lunar Smite mod
          | IsSpellChildOrVariantFromContext('Target_LunarSmite')
          | IsSpellChildOrVariantFromContext('Target_MOO_Nightsong_SearingSmite')
          | IsSpellChildOrVariantFromContext('Target_LOW_RamazithsTower_Nightsong_Smite')
         -- Veenab stuff
-         | IsSpellChildOrVariantFromContext('VBT_Spell_0_SappingBlade') 
-         | IsSpellChildOrVariantFromContext('VBT_Spell_2_DrainingSmite_Container') 
-         | IsSpellChildOrVariantFromContext('VBT_Target_LifeDrain') 
+         | IsSpellChildOrVariantFromContext('VBT_Spell_0_SappingBlade')
+         | IsSpellChildOrVariantFromContext('VBT_Spell_2_DrainingSmite_Container')
+         | IsSpellChildOrVariantFromContext('VBT_Target_LifeDrain')
          | IsSpellChildOrVariantFromContext('VBT_Projectile_LifeDrain')
         -- Some dude's homebrew
          | IsSpellChildOrVariantFromContext('Target_Smite_Pitiless')

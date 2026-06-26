@@ -4,6 +4,22 @@
     <region id="ConditionErrors">
         <node id="root">
             <children>
+                <!-- Enemy can't be within [1]. -->
+                <node id="ConditionErrors">
+                    <attribute id="DisplayName" type="TranslatedString" handle="hbda78c48g3496g424egafecg18b2f62458c4" version="1" />
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_HasEnemyWithinRange" />
+                    <!-- Goon_HasEnemyWithinRange - Enemy can't be within [1]. -->
+                    <attribute id="UUID" type="guid" value="2cbe73b2-de7d-47d7-997b-755a923cf962" />
+                </node>
+                <!-- Enemy must be within [1]. -->
+                <node id="ConditionErrors">
+                    <attribute id="DisplayName" type="TranslatedString" handle="h65e4a940ga820g4d40g96bbg020ee44c4a4b" version="1" />
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_HasNotEnemyWithinRange" />
+	                <!-- Goon_HasNotEnemyWithinRange - Enemy must be within [1]. -->
+                    <attribute id="UUID" type="guid" value="c3a2e120-b747-4dfc-b7d4-8e3e95493924" />
+                </node>
                 <node id="ConditionErrors">
                     <!-- Must be a surface. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h0175bef3g57f5g4565gbfa9g9849b4d63549" version="1"/>
@@ -11,29 +27,29 @@
                     <attribute id="Identifier" type="FixedString" value="Goon_IsNotSurface"/>
                     <attribute id="UUID" type="guid" value="68c36536-279a-45ec-b77c-e950bb8b291c"/>
                 </node>
+                <!-- Must be a Dippable surface or entity. -->
                 <node id="ConditionErrors">
-                    <!-- Must be a Dippable surface or entity. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="Goon_IsNotDippableSurfaceOrEntity"/>
                     <attribute id="UUID" type="guid" value="f140a315-a39a-4fe1-b7ca-6a0666708cbb"/>
                 </node>
+                <!-- Must uphold an oath. -->
                 <node id="ConditionErrors">
-                    <!-- Must uphold an oath. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h47d9ad6ag86bbg472bg9933g4d43eedade6b" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="Goon_HasBrokenOath"/>
                     <attribute id="UUID" type="guid" value="49f3cb94-36a2-41ce-ac7c-020a7cbfb9a2"/>
                 </node>
+                <!-- Can only be used after attacking or casting a spell. -->
                 <node id="ConditionErrors">
-                    <!-- Can only be used after attacking or casting a spell. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="Goon_HasAttackedOrCast"/>
                     <attribute id="UUID" type="guid" value="ccc7ac34-90e5-4450-886f-faf81f95f26b"/>
                 </node>
+                <!-- Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;. -->
                 <node id="ConditionErrors">
-                    <!-- Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="CE_Status_GOON_BLOODIED_False"/>
