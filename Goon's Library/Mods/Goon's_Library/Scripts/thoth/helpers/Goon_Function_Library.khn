@@ -1950,6 +1950,29 @@ function Goon_IsInFreezableSurface(entity)
          | InSurface('SurfaceAcid', entity)
 end
 
+function Goon_IsInSlipperySurface(entity)
+    local entity = entity or context.Target
+    return InSurface('SurfaceWaterFrozen', entity)
+         | InSurface('SurfaceGreaseFrozen', entity)
+         | InSurface('SurfaceBloodFrozen', entity)
+         | InSurface('SurfaceGrease', entity)
+end
+
+function Goon_IsInLiquidSurface(entity)
+    local entity = entity or context.Target
+    return InSurface('SurfaceBlood', entity)
+         | InSurface('SurfaceBloodElectrified', entity)
+         | InSurface('SurfaceBloodFrozen', entity)
+         | InSurface('SurfaceWater', entity)
+         | InSurface('SurfaceWaterElectrified', entity)
+         | InSurface('SurfaceWaterFrozen', entity)
+         | InSurface('SurfaceDeepWater', entity)
+         | InSurface('SurfaceDeepWaterRunning', entity)
+         | InSurface('Sewer', entity)
+         | InSurface('SurfaceAlcohol', entity)
+         | InSurface('SurfaceOil', entity)
+end
+
 -- ==================================== BIG BRAIN FUNCTIONS ====================================
 
 -- ==================================== String Lookups
