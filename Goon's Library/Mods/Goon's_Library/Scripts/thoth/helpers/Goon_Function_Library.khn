@@ -23,6 +23,8 @@ end
 
 -- ==================================== HasEnemyWithinRange bug fixing
 -- Credit to XiphiasRex - Enemies are now filtered properly based on exclusionStatus and tag.
+-- TODO: I feel like this could be expanded some, I want to filter better. Saying no to a single status, or yes to a tag is pretty limited.
+-- Need to think a bit on how best to differentiate between dudes that actually pose a threat vs ones who don't. Incapacitated exclusions gets a good ways, but it's not everything.
 
 function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, target, source)
     distance = distance or 1.5
@@ -428,19 +430,16 @@ function Goon_IsSneakAttack()
 end
 
 function Goon_IsSneakAttackSpell()
-	return SpellId('Target_SneakAttack')
-         | SpellId('Projectile_SneakAttack')
-         | SpellId('Target_SneakAttack_Rakish')
-         | SpellId('Projectile_SneakAttack_Rakish')
-         | SpellId('Target_SneakAttack_Swarm')
-         | SpellId('Target_SneakAttack_Ruffian')
-         | SpellId('Projectile_SneakAttack_Ruffian')
-         | SpellId('Target_LLRuffian_SneakAttack_Unarmed')
-         | SpellId('Target_LHB_Justicar_ConsecratedStrike')
+	return IsSpellChildOrVariantFromContext('Target_SneakAttack')
+         | IsSpellChildOrVariantFromContext('Projectile_SneakAttack')
+         | IsSpellChildOrVariantFromContext('Target_SneakAttack_Rakish')
+         | IsSpellChildOrVariantFromContext('Projectile_SneakAttack_Rakish')
+         | IsSpellChildOrVariantFromContext('Target_SneakAttack_Swarm')
+         | IsSpellChildOrVariantFromContext('Target_SneakAttack_Ruffian')
+         | IsSpellChildOrVariantFromContext('Projectile_SneakAttack_Ruffian')
+         | IsSpellChildOrVariantFromContext('Target_LLRuffian_SneakAttack_Unarmed')
          | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike')
-         | SpellId('Projectile_LHB_Justicar_ConsecratedStrike')
          | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike')
-         | SpellId('Target_BoomingBlade_SneakAttack')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
 end
 
@@ -468,22 +467,22 @@ function Goon_IsFlourish()
 end
 
 function Goon_IsFlourishSpell()
-    return SpellId('Target_BladeFlourish_Defensive')
-         | SpellId('Projectile_BladeFlourish_Defensive')
-         | SpellId('Target_BladeFlourish_Mobile')
-         | SpellId('Projectile_BladeFlourish_Mobile')
-         | SpellId('Zone_BladeFlourish_Slashing')
-         | SpellId('Projectile_BladeFlourish_Slashing')
+    return IsSpellChildOrVariantFromContext('Target_BladeFlourish_Defensive')
+         | IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Defensive')
+         | IsSpellChildOrVariantFromContext('Target_BladeFlourish_Mobile')
+         | IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Mobile')
+         | IsSpellChildOrVariantFromContext('Zone_BladeFlourish_Slashing')
+         | IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Slashing')
 end
 
 function Goon_IsFlourishTemporarySpell()
-    return SpellId('Goon_Target_BladeFlourish_Defensive_Temporary')
-         | SpellId('Goon_Projectile_BladeFlourish_Defensive_Temporary')
-         | SpellId('Goon_Target_BladeFlourish_Mobile_Temporary')
-         | SpellId('Goon_Projectile_BladeFlourish_Mobile_Temporary')
-         | SpellId('Goon_Target_BladeFlourish_Slashing_Temporary')
-         | SpellId('Goon_Projectile_BladeFlourish_Slashing_Temporary')
-         | SpellId('Goon_Throw_BladeFlourish_Slashing_Temporary')
+    return IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Defensive_Temporary')
+         | IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Defensive_Temporary')
+         | IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Mobile_Temporary')
+         | IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Mobile_Temporary')
+         | IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Slashing_Temporary')
+         | IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Slashing_Temporary')
+         | IsSpellChildOrVariantFromContext('Goon_Throw_BladeFlourish_Slashing_Temporary')
 end
 
 function Goon_IsFlourishInterrupt()
@@ -494,37 +493,38 @@ end
 -- ==================================== Bardic Inspiration
 
 function Goon_IsBardicInspirationSpell()
-    return SpellId('Target_BardicInspiration')
-         | SpellId('Target_BardicInspiration_2')
-         | SpellId('Target_BardicInspiration_Combat')
-         | SpellId('Target_BardicInspiration_Combat_2')
-         | SpellId('Target_MantleOfInspiration')
-         | SpellId('Target_MantleOfInspiration_2')
-         | SpellId('Target_MantleOfInspiration_3')
-         | SpellId('Shout_BardicInspiration_PeerlessSkill')
+    return IsSpellChildOrVariantFromContext('Target_BardicInspiration')
+         | IsSpellChildOrVariantFromContext('Target_BardicInspiration_2')
+         | IsSpellChildOrVariantFromContext('Target_BardicInspiration_Combat')
+         | IsSpellChildOrVariantFromContext('Target_BardicInspiration_Combat_2')
+         | IsSpellChildOrVariantFromContext('Target_MantleOfInspiration')
+         | IsSpellChildOrVariantFromContext('Target_MantleOfInspiration_2')
+         | IsSpellChildOrVariantFromContext('Target_MantleOfInspiration_3')
+         | IsSpellChildOrVariantFromContext('Shout_BardicInspiration_PeerlessSkill')
 end
 
 -- ==================================== Sorcerer stuff
 
+-- TODO: Pretty sure these are proper upcasts.
 function Goon_IsCreateSorceryPoints()
-    return SpellId('Shout_CreateSorceryPoints_1')
-         | SpellId('Shout_CreateSorceryPoints_2')
-         | SpellId('Shout_CreateSorceryPoints_3')
-         | SpellId('Shout_CreateSorceryPoints_4')
-         | SpellId('Shout_CreateSorceryPoints_5')
-         | SpellId('Shout_CreateSorceryPoints_6')
-         | SpellId('Shout_CreateSorceryPoints_7')
-         | SpellId('Shout_CreateSorceryPoints_8')
-         | SpellId('Shout_CreateSorceryPoints_9')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_1')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_2')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_3')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_4')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_5')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_6')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_7')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_8')
-         | SpellId('Goon_Shout_CreateSorceryPoints_Warlock_9')
+    return IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_1')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_2')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_3')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_4')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_5')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_6')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_7')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_8')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_9')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_1')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_2')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_3')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_4')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_5')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_6')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_7')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_8')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_9')
 end
 
 -- ==================================== Smites
@@ -674,12 +674,12 @@ end
 -- ==================================== Common Actions
 
 function Goon_IsDisengageSpell()
-    return SpellId('Shout_Disengage')
-         | SpellId('Shout_Disengage_BonusAction')
-         | SpellId('Shout_Disengage_CunningAction')
-         | SpellId('Shout_Disengage_StepOfTheWind')
-         | SpellId('Shout_BootsOfSpeed')
-         | SpellId('SYR_Shout_Disengage_BonusAction_DruidQoL')
+    return IsSpellChildOrVariantFromContext('Shout_Disengage')
+         | IsSpellChildOrVariantFromContext('Shout_Disengage_BonusAction')
+         | IsSpellChildOrVariantFromContext('Shout_Disengage_CunningAction')
+         | IsSpellChildOrVariantFromContext('Shout_Disengage_StepOfTheWind')
+         | IsSpellChildOrVariantFromContext('Shout_BootsOfSpeed')
+         | IsSpellChildOrVariantFromContext('SYR_Shout_Disengage_BonusAction_DruidQoL')
 end
 
 -- One says condition the other says status gonna kms no cap
@@ -703,13 +703,13 @@ end
 -- ==================================== Do the dawg be Banishing
 
 function Goon_IsBanishSpell()
-    return SpellId('Target_Banishment')                     | IsSpellChildOrVariantFromContext('Target_Banishment')
-         | SpellId('Target_Smite_Banishing')                | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
-         | SpellId('Projectile_Smite_Banishing')            | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
-         | SpellId('Projectile_ArcaneShot_BanishingArrow')  | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_BanishingArrow')
-         | SpellID('Shout_WildMagic_Banish')                | IsSpellChildOrVariantFromContext('Shout_WildMagic_Banish')
-         | SpellID('OO_Shout_BanishUnholy')                 | IsSpellChildOrVariantFromContext('OO_Shout_BanishUnholy')
-         | SpellID('Target_DispelEvilAndGood_Dismissal')    | IsSpellChildOrVariantFromContext('Target_DispelEvilAndGood_Dismissal')
+    return IsSpellChildOrVariantFromContext('Target_Banishment')
+         | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
+         | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
+         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_BanishingArrow')
+         | IsSpellChildOrVariantFromContext('Target_DispelEvilAndGood_Dismissal')
+         | IsSpellChildOrVariantFromContext('Shout_WildMagic_Banish')
+         | IsSpellChildOrVariantFromContext('OO_Shout_BanishUnholy')
 end
 
 -- ==================================== Spells that aren't spells
@@ -719,33 +719,19 @@ function Goon_IsHealingActionGrantedBySpell()
 end
 
 function Goon_IsAuraOfVitality()
-    return SpellId('Target_AuraOfVitality_Activate')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
-         | SpellId('Target_AuraOfVitality_Activate_4')
+    return IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
          | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4')
-         | SpellId('Target_AuraOfVitality_Activate_5')
          | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5')
-         | SpellId('Target_AuraOfVitality_Activate_6')
          | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6')
-         | SpellId('Target_AuraOfVitality_Activate_7')
          | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7')
-         | SpellId('Target_AuraOfVitality_Activate_8')
          | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8')
-         | SpellId('Target_AuraOfVitality_Activate_9')
          | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9')
-         | SpellId('Goon_Target_AuraOfVitality_Activate')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate')
-         | SpellId('Goon_Target_AuraOfVitality_Activate_4')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4')
-         | SpellId('Goon_Target_AuraOfVitality_Activate_5')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5')
-         | SpellId('Goon_Target_AuraOfVitality_Activate_6')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6')
-         | SpellId('Goon_Target_AuraOfVitality_Activate_7')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7')
-         | SpellId('Goon_Target_AuraOfVitality_Activate_8')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8')
-         | SpellId('Goon_Target_AuraOfVitality_Activate_9')
          | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
 end
 
@@ -800,62 +786,35 @@ function Goon_IsConditionalDamageCantrip()
 end
 
 function Goon_IsBoomingBladeSpell()
-    return SpellId('Target_BoomingBlade')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade')
-         | SpellId('Target_BoomingBlade_ClassSpell')
+    return IsSpellChildOrVariantFromContext('Target_BoomingBlade')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
-         | SpellId('Target_BoomingBlade_5e')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')
-         | SpellId('Target_BoomingBlade_Default')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_Default')
-         | SpellId('Target_BoomingBlade_SneakAttack')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
-         | SpellId('Target_BoomingBlade_DivineStrike_Life')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Life')
-         | SpellId('Target_BoomingBlade_DivineStrike_Cold')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Cold')
-         | SpellId('Target_BoomingBlade_DivineStrike_Fire')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Fire')
-         | SpellId('Target_BoomingBlade_DivineStrike_Lightning')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Lightning')
-         | SpellId('Target_BoomingBlade_DivineStrike_Thunder')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Thunder')
-         | SpellId('Target_BoomingBlade_DivineStrike_Poison')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Poison')
-         | SpellId('Target_BoomingBlade_DivineStrike_MeleeWeapon')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_MeleeWeapon')
-         | SpellId('Target_BoomingBlade_DivineStrike_Necrotic')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Necrotic')
-         | SpellId('Target_BoomingBlade_DivineStrike_Psychic')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Psychic')
-         | SpellId('Target_SVMagus_BoomingBlade')
          | IsSpellChildOrVariantFromContext('Target_SVMagus_BoomingBlade')
 end
 
 function Goon_IsGreenFlameBladeSpell()
-    return SpellId('Target_GreenFlameBlade') 
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade')
-         | SpellId('Target_GreenFlameBlade_Default')
+    return IsSpellChildOrVariantFromContext('Target_GreenFlameBlade') 
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_Default')
-         | SpellId('Target_GreenFlameBlade_SneakAttack')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_SneakAttack')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Life')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Life')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Cold')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Cold')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Fire')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Fire')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Lightning')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Lightning')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Thunder')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Thunder')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Poison')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Poison')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Necrotic')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Necrotic')
-         | SpellId('Target_GreenFlameBlade_DivineStrike_Psychic')
          | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic')
 end
 
@@ -864,47 +823,37 @@ end
 -- Projectile_GreenFlameBlade_Explosion_Large
 
 function Goon_IsSparkingBladeSpell()
-    return SpellId('Target_Sparking_Blade')
-         | IsSpellChildOrVariantFromContext('Target_Sparking_Blade')
+    return IsSpellChildOrVariantFromContext('Target_Sparking_Blade')
 end
 
 function Goon_IsBloodlettingBiteSpell()
-    return SpellId('Target_SVMagus_BloodlettingBite')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite')
-         | SpellId('Target_SVMagus_BloodlettingBite_Melee')
+    return IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite')
          | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite_Melee')
-         | SpellId('Projectile_SVMagus_BloodlettingBite')
          | IsSpellChildOrVariantFromContext('Projectile_SVMagus_BloodlettingBite')
 end
 
 function Goon_IsMisfortunesMarkSpell()
-    return SpellId('Target_SVMagus_MisfortunesMark')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_MisfortunesMark')
+    return IsSpellChildOrVariantFromContext('Target_SVMagus_MisfortunesMark')
 end
 
 function Goon_IsRimeStrikeSpell()
-    return SpellId('Projectile_SVMagus_RimeStrike')
-         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_RimeStrike')
+    return IsSpellChildOrVariantFromContext('Projectile_SVMagus_RimeStrike')
 end
 
 function Goon_IsRighteousIncitementSpell()
-    return SpellId('Target_SVMagus_RighteousIncitement')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_RighteousIncitement')
+    return IsSpellChildOrVariantFromContext('Target_SVMagus_RighteousIncitement')
 end
 
 function Goon_IsSpellShatteringStrikeSpell()
-    return SpellId('Target_SVMagus_SpellShatteringStrike')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_SpellShatteringStrike')
+    return IsSpellChildOrVariantFromContext('Target_SVMagus_SpellShatteringStrike')
 end
 
 function Goon_IsVortexDartSpell()
-    return SpellId('Projectile_SVMagus_VortexDart')
-         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_VortexDart')
+    return IsSpellChildOrVariantFromContext('Projectile_SVMagus_VortexDart')
 end
 
 function Goon_IsWardensRebukeSpell()
-    return SpellId('Target_SVMagus_WardensRebuke')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_WardensRebuke')
+    return IsSpellChildOrVariantFromContext('Target_SVMagus_WardensRebuke')
 end
 
 -- ==================================== "SpellDamageTypeIs" "DamageTypes" checks
@@ -1943,23 +1892,39 @@ end
 
 -- Disguise Self check
 function Goon_IsDisguiseSelfSpell()
-    return SpellId('Shout_DisguiseSelf')
-         | SpellId('Shout_DisguiseSelf_Tiefling_Male')        | SpellId('Shout_DisguiseSelf_Tiefling_Female')
-         | SpellId('Shout_DisguiseSelf_Drow_Male')            | SpellId('Shout_DisguiseSelf_Drow_Female')
-         | SpellId('Shout_DisguiseSelf_Human_Male')           | SpellId('Shout_DisguiseSelf_Human_Female')
-         | SpellId('Shout_DisguiseSelf_Githyanki_Male')       | SpellId('Shout_DisguiseSelf_Githyanki_Female')
-         | SpellId('Shout_DisguiseSelf_Dwarf_Male')           | SpellId('Shout_DisguiseSelf_Dwarf_Female')
-         | SpellId('Shout_DisguiseSelf_Elf_Male')             | SpellId('Shout_DisguiseSelf_Elf_Female')
-         | SpellId('Shout_DisguiseSelf_HalfElf_Male')         | SpellId('Shout_DisguiseSelf_HalfElf_Female')
-         | SpellId('Shout_DisguiseSelf_Halfling_Male')        | SpellId('Shout_DisguiseSelf_Halfling_Female')
-         | SpellId('Shout_DisguiseSelf_Dragonborn_Male')      | SpellId('Shout_DisguiseSelf_Dragonborn_Female')
-         | SpellId('Shout_DisguiseSelf_HalfOrc_Male')         | SpellId('Shout_DisguiseSelf_HalfOrc_Female')
-         | SpellId('Shout_DisguiseSelf_Gnome_Male')           | SpellId('Shout_DisguiseSelf_Gnome_Female')
-         | SpellId('Shout_DisguiseSelf_Human_Strong_Male')    | SpellId('Shout_DisguiseSelf_Human_Strong_Female')
-         | SpellId('Shout_DisguiseSelf_Drow_Strong_Male')     | SpellId('Shout_DisguiseSelf_Drow_Strong_Female')
-         | SpellId('Shout_DisguiseSelf_Elf_Strong_Male')      | SpellId('Shout_DisguiseSelf_Elf_Strong_Female')
-         | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Male')  | SpellId('Shout_DisguiseSelf_HalfElf_Strong_Female')
-         | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Male') | SpellId('Shout_DisguiseSelf_Tiefling_Strong_Female')
+    return IsSpellChildOrVariantFromContext('Shout_DisguiseSelf')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Male')  
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Githyanki_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Githyanki_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dwarf_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dwarf_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Halfling_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Halfling_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dragonborn_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dragonborn_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfOrc_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfOrc_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Gnome_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Gnome_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Strong_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Strong_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Strong_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Strong_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Strong_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Strong_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Strong_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Strong_Female')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Strong_Male')
+         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Strong_Female')
 end
 
 -- Surface checks
@@ -1985,7 +1950,9 @@ function Goon_IsInFreezableSurface(entity)
          | InSurface('SurfaceAcid', entity)
 end
 
--- ==================================== String Lookups - JuuM ====================================
+-- ==================================== BIG BRAIN FUNCTIONS ====================================
+
+-- ==================================== String Lookups
 -- Conditions created by JuuM that do string lookups that can be used for better upcast checking
 
 -- JM_HasStringInSpellId('Spell1','Spell2')
