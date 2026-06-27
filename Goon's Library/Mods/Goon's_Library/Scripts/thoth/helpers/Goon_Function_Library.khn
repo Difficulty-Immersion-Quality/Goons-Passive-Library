@@ -79,6 +79,14 @@ end
 -- Vanilla only has functions for IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
 
+function Goon_IsMeleeMainhandAttack()
+    return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeWeaponAttack)
+end
+
+function Goon_IsRangedMainhandAttack()
+    return ConditionResult(context.HitDescription.AttackType == AttackType.RangedWeaponAttack)
+end
+
 function Goon_IsMeleeOffhandAttack()
     return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeOffHandWeaponAttack)
 end
@@ -220,85 +228,91 @@ end
 
 function Goon_IsSurface()
     result = Surface('SurfaceNone')
-        | Surface('SurfaceWater')
-        | Surface('SurfaceWaterElectrified')
-        | Surface('SurfaceWaterFrozen')
-        | Surface('SurfaceBlood')
-        | Surface('SurfaceBloodElectrified')
-        | Surface('SurfaceBloodFrozen')
-        | Surface('SurfacePoison')
-        | Surface('SurfaceOil')
-        | Surface('SurfaceLava')
-        | Surface('SurfaceGrease')
-        | Surface('SurfaceWyvernPoison')
-        | Surface('SurfaceWeb')
-        | Surface('SurfaceDeepwater')
-        | Surface('SurfaceVines')
-        | Surface('SurfaceFire')
-        | Surface('SurfaceAcid')
-        | Surface('SurfaceTrialFire')
-        | Surface('SurfaceBlackpowder')
-        | Surface('SurfaceAlienoil')
-        | Surface('SurfaceMud')
-        | Surface('SurfaceAlcohol')
-        | Surface('SurfaceInvisibleWeb')
-        | Surface('SurfaceBloodSilver')
-        | Surface('SurfaceChasm')
-        | Surface('SurfaceHellfire')
-        | Surface('SurfaceCausticBrine')
-        | Surface('SurfaceBloodExploding')
-        | Surface('SurfaceAsh')
-        | Surface('SurfaceSpikeGrowth')
-        | Surface('SurfaceHolyFire')
-        | Surface('SurfaceBlackTentacles')
-        | Surface('SurfaceOvergrowth')
-        | Surface('SurfacePurpleWormPoison')
-        | Surface('SurfaceSerpentVenom')
-        | Surface('SurfaceInvisibleGithAcid')
-        | Surface('SurfaceBladeBarrier')
-        | Surface('SurfaceSewer')
-        | Surface('SurfaceWaterCloud')
-        | Surface('SurfaceWaterCloudElectrified')
-        | Surface('SurfacePoisonCloud')
-        | Surface('SurfaceExplosionCloud')
-        | Surface('SurfaceShockwaveCloud')
-        | Surface('SurfaceCloudkillCloud')
-        | Surface('SurfaceMaliceCloud')
-        | Surface('SurfaceBloodCloud')
-        | Surface('SurfaceStinkingCloud')
-        | Surface('SurfaceDarknessCloud')
-        | Surface('SurfaceFogCloud')
-        | Surface('SurfaceGithPheromoneGasCloud')
-        | Surface('SurfaceSporeWhiteCloud')
-        | Surface('SurfaceSporeGreenCloud')
-        | Surface('SurfaceSporeBlackCloud')
-        | Surface('SurfaceDrowPoisonCloud')
-        | Surface('SurfaceIceCloud')
-        | Surface('SurfacePotionHealingCloud')
-        | Surface('SurfacePotionHealingGreaterCloud')
-        | Surface('SurfacePotionHealingSuperiorCloud')
-        | Surface('SurfacePotionHealingSupremeCloud')
-        | Surface('SurfacePotionInvisibilityCloud')
-        | Surface('SurfacePotionSpeedCloud')
-        | Surface('SurfacePotionVitalityCloud')
-        | Surface('SurfacePotionAntitoxinCloud')
-        | Surface('SurfacePotionResistanceAcidCloud')
-        | Surface('SurfacePotionResistanceColdCloud')
-        | Surface('SurfacePotionResistanceFireCloud')
-        | Surface('SurfacePotionResistanceForceCloud')
-        | Surface('SurfacePotionResistanceLightningCloud')
-        | Surface('SurfacePotionResistancePoisonCloud')
-        | Surface('SurfaceSporePinkCloud')
-        | Surface('SurfaceBlackPowderDetonationCloud')
-        | Surface('SurfaceVoidCloud')
-        | Surface('SurfaceCrawlerMucusCloud')
-        | Surface('SurfaceCloudkill6Cloud')
-        | Surface('SurfaceSentinel')
+           | Surface('SurfaceWater')
+           | Surface('SurfaceWaterElectrified')
+           | Surface('SurfaceWaterFrozen')
+           | Surface('SurfaceBlood')
+           | Surface('SurfaceBloodElectrified')
+           | Surface('SurfaceBloodFrozen')
+           | Surface('SurfacePoison')
+           | Surface('SurfaceOil')
+           | Surface('SurfaceLava')
+           | Surface('SurfaceGrease')
+           | Surface('SurfaceWyvernPoison')
+           | Surface('SurfaceWeb')
+           | Surface('SurfaceDeepwater')
+           | Surface('SurfaceVines')
+           | Surface('SurfaceFire')
+           | Surface('SurfaceAcid')
+           | Surface('SurfaceTrialFire')
+           | Surface('SurfaceBlackpowder')
+           | Surface('SurfaceAlienoil')
+           | Surface('SurfaceMud')
+           | Surface('SurfaceAlcohol')
+           | Surface('SurfaceInvisibleWeb')
+           | Surface('SurfaceBloodSilver')
+           | Surface('SurfaceChasm')
+           | Surface('SurfaceHellfire')
+           | Surface('SurfaceCausticBrine')
+           | Surface('SurfaceBloodExploding')
+           | Surface('SurfaceAsh')
+           | Surface('SurfaceSpikeGrowth')
+           | Surface('SurfaceHolyFire')
+           | Surface('SurfaceBlackTentacles')
+           | Surface('SurfaceOvergrowth')
+           | Surface('SurfacePurpleWormPoison')
+           | Surface('SurfaceSerpentVenom')
+           | Surface('SurfaceInvisibleGithAcid')
+           | Surface('SurfaceBladeBarrier')
+           | Surface('SurfaceSewer')
+           | Surface('SurfaceWaterCloud')
+           | Surface('SurfaceWaterCloudElectrified')
+           | Surface('SurfacePoisonCloud')
+           | Surface('SurfaceExplosionCloud')
+           | Surface('SurfaceShockwaveCloud')
+           | Surface('SurfaceCloudkillCloud')
+           | Surface('SurfaceMaliceCloud')
+           | Surface('SurfaceBloodCloud')
+           | Surface('SurfaceStinkingCloud')
+           | Surface('SurfaceDarknessCloud')
+           | Surface('SurfaceFogCloud')
+           | Surface('SurfaceGithPheromoneGasCloud')
+           | Surface('SurfaceSporeWhiteCloud')
+           | Surface('SurfaceSporeGreenCloud')
+           | Surface('SurfaceSporeBlackCloud')
+           | Surface('SurfaceDrowPoisonCloud')
+           | Surface('SurfaceIceCloud')
+           | Surface('SurfacePotionHealingCloud')
+           | Surface('SurfacePotionHealingGreaterCloud')
+           | Surface('SurfacePotionHealingSuperiorCloud')
+           | Surface('SurfacePotionHealingSupremeCloud')
+           | Surface('SurfacePotionInvisibilityCloud')
+           | Surface('SurfacePotionSpeedCloud')
+           | Surface('SurfacePotionVitalityCloud')
+           | Surface('SurfacePotionAntitoxinCloud')
+           | Surface('SurfacePotionResistanceAcidCloud')
+           | Surface('SurfacePotionResistanceColdCloud')
+           | Surface('SurfacePotionResistanceFireCloud')
+           | Surface('SurfacePotionResistanceForceCloud')
+           | Surface('SurfacePotionResistanceLightningCloud')
+           | Surface('SurfacePotionResistancePoisonCloud')
+           | Surface('SurfaceSporePinkCloud')
+           | Surface('SurfaceBlackPowderDetonationCloud')
+           | Surface('SurfaceVoidCloud')
+           | Surface('SurfaceCrawlerMucusCloud')
+           | Surface('SurfaceCloudkill6Cloud')
+           | Surface('SurfaceSentinel')
     return ConditionResult(result.Result, { ConditionError("Goon_IsNotSurface") })
 end
 
 function Goon_IsDippableSurface()
-    result = Surface('SurfaceFire') | Surface('SurfaceHellfire') | Surface('SurfacePoison') | Surface('SurfaceWater') | Surface('SurfaceSerpentVenom') | Surface('SurfaceWyvernPoison') | Surface('SurfacePurpleWormPoison')
+    result = Surface('SurfaceFire')
+           | Surface('SurfaceHellfire')
+           | Surface('SurfacePoison')
+           | Surface('SurfaceWater')
+           | Surface('SurfaceSerpentVenom')
+           | Surface('SurfaceWyvernPoison')
+           | Surface('SurfacePurpleWormPoison')
     return ConditionResult(result.Result, { ConditionError("Goon_IsNotDippableSurfaceOrEntity") })
 end
 
@@ -339,7 +353,6 @@ function Goon_HasFlamingSphereAuraCondition()
 end
 
 -- ==================================== Fetch character levels ====================================
--- TODO: Goon_ change all occurances
 
 function Goon_CharacterLevelEqualTo(value, entity)
     entity = entity or context.Source
@@ -985,20 +998,23 @@ end
 -- TODO: These don't work for the intended purposes, HasAnyStatus is likely the problem when trying to call these? Or just the context they were being called in...
 
 function Goon_IsSpellcastingModifierWeapon()
-    return HasAnyStatus({ 'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9' }, {}, {})
+    return HasAnyStatus({ 'SHILLELAGH', 'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9' }, {}, {})
 end
 
--- TODO: No INT-based weapon modifier statuses known yet (unlike Shillelagh for WIS).
 function Goon_IsIntelligenceModifierWeapon()
     return HasAnyStatus({}, {}, {})
 end
 
 function Goon_IsWisdomModifierWeapon()
-    return HasAnyStatus({ 'SHILLELAGH', 'FourEle_Attuned' }, {}, {})
+    return HasAnyStatus({ 'FourEle_Attuned' }, {}, {})
 end
 
 function Goon_IsCharismaModifierWeapon()
-    return HasAnyStatus({ 'HEXBLADE_BIND', 'PACT_BLADE' }, {}, {})
+    return HasAnyStatus({ 'HEXBLADE_BIND', 'PACT_BLADE' }, {}, {}) | Tagged('PACT_OF_THE_BLADE')
+end
+
+function Goon_IsShadowBladeWeapon()
+    return HasAnyStatus({ 'SHADOWBLADE_TECHNICAL', 'GOON_KNIFEOFTHEUNDERMOUNTAINKING_WEAPON_TECHNICAL', 'GOON_SHADOWRENDINGDAGGER_WEAPON_TECHNICAL', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL' }, {}, {})
 end
 
 -- ==================================== Weapon enchant checks - Cahoot's revision
@@ -2030,40 +2046,71 @@ function Goon_GetHighestAbility(abilities,entity)
 end
 
 -- ==================================== Junk ====================================
+-- Trying to check the source of a passive for use in boost conditions.
+-- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
 
--- TODO: Knife of the Undermountain King and probably others
-function Goon_IsShadowBlade()
-    return HasAnyStatus({ 'SHADOWBLADE_TECHNICAL', ' ', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL' }, {}, {})
-end
+-- function Goon_IsPassiveSourceWeapon()
+--     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
+-- end
 
--- TODO: Yeah this no work
-function Goon_IsPassiveSourceWeapon()
-    local MeleeMainHand  = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
-    local MeleeOffHand   = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
-    local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
-    local RangedOffHand  = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
 
-    local result = false -- BUG: should be ConditionResult(false); | with ConditionResult fails when result is a plain boolean
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
 
-    if MeleeMainHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, MeleeMainHand, context.Source)
-                        | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
-    end
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
 
-    if MeleeOffHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, MeleeOffHand, context.Source)
-                        | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
-    end
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
 
-    if RangedMainHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, RangedMainHand, context.Source)
-                        | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
-    end
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
 
-    if RangedOffHand.IsValid then
-        result = result | IsPassiveSource(context.Passive, RangedOffHand, context.Source)
-                        | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
-    end
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
 
-    return result
-end
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if MeleeMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if MeleeOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedMainHand()
+--     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
+
+--     if RangedMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedOffHand()
+--     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+
+--     if RangedOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
