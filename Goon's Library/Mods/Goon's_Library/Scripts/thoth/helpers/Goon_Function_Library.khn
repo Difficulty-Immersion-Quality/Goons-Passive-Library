@@ -468,6 +468,28 @@ function Goon_IsWeaponActionWithoutAttackRoll_Spell()
          | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
 end
 
+-- ==================================== Sanctuary
+-- Spells that need manually specifying in "SanctuarySpecificSpell", for removal of the caster's Sanctuary.
+
+function Goon_IsSanctuarySpecificSpell()
+    return IsSpellChildOrVariantFromContext('Wall_BladeBarrier')
+         | IsSpellChildOrVariantFromContext('Target_Polymorph')
+         | IsSpellChildOrVariantFromContext('Target_HungerOfHadar')
+         | IsSpellChildOrVariantFromContext('Target_Banishment')
+         | IsSpellChildOrVariantFromContext('Zone_Fear')
+         | IsSpellChildOrVariantFromContext('Target_FleshToStone')
+         | IsSpellChildOrVariantFromContext('Target_HypnoticPattern')
+         | IsSpellChildOrVariantFromContext('Target_Slow')
+         | IsSpellChildOrVariantFromContext('Target_StinkingCloud')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Acid')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Cold')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Fire')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Lightning')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Thunder')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Detonation')
+         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Sleep')
+end
+
 -- ==================================== Sneak Attacks
 
 function Goon_IsSneakAttack()
