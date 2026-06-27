@@ -2011,6 +2011,24 @@ function Goon_SpellOrUpcastOf(...)
     return ConditionResult(false)
 end
 
+-- ==================================== Get Highest Ability
+-- Credit to JuuM: Returns the highest ability checked because... 
+-- "But no way to get the observers spellcasting ability from khonsu unfortunately" - joow
+
+function Goon_GetHighestAbility(abilities,entity)
+    local entity = entity or context.Source
+    local highestValue = 0
+    local highestAbility = abilities[1]
+    --will return first ability if tie
+    for _,ability in ipairs(abilities) do
+        if entity[ability] > highestValue then
+            highestValue = entity[ability]
+            highestAbility = Ability[ability]
+        end
+    end
+    return highestAbility
+end
+
 -- ==================================== Junk ====================================
 
 -- TODO: Knife of the Undermountain King and probably others
