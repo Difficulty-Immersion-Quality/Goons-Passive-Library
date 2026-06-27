@@ -1,3 +1,5 @@
+// ==================================== Critical Hit Passives ====================================
+
 new entry "Goon_Critical_Hit_Immunity"
 type "PassiveData"
 // Critical Hit Immunity

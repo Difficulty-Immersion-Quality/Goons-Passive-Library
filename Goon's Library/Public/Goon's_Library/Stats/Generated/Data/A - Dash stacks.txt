@@ -1,3 +1,5 @@
+// ==================================== Dash Stacks ====================================
+
 new entry "GOON_DASH_STACKED_3"
 type "StatusData"
 data "StatusType" "BOOST"
