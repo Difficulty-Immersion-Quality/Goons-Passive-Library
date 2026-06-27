@@ -434,6 +434,40 @@ end
 -- Best course of action is likely to have the interrupts UseSpell, replacing animations with the instant cast one. "Target_NULLSPELL"?
 -- "I think context.InterruptId is only for the interrupt RollConditions" - Joow
 
+-- ==================================== AttackedWithPassiveSourceWeapon() edge cases
+-- TODO: IsAttack SpellFlags?
+
+function Goon_IsWeaponActionWithoutAttackRoll()
+    return Goon_IsWeaponActionWithoutAttackRoll_Melee()
+         | Goon_IsWeaponActionWithoutAttackRoll_Ranged()
+         | Goon_IsWeaponActionWithoutAttackRoll_Spell()
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_Melee()
+    return IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam')                    | IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave') | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_ZephyrBreak')                                 | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_ZephyrBreak_Offhand')
+         | IsSpellChildOrVariantFromContext('Rush_MAG_ZephyrFlash')                                 | IsSpellChildOrVariantFromContext('Goon_Rush_MAG_ZephyrFlash_Offhand')
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_Ranged()
+    return IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot')                            | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')                        | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot')                       | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate')              | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand')
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_Spell()
+    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage')                                  | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee')                            | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged')                           | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')                              | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves')         | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_LightningArrow')                            | IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
+end
+
 -- ==================================== Sneak Attacks
 
 function Goon_IsSneakAttack()
@@ -518,26 +552,13 @@ end
 
 -- ==================================== Sorcerer stuff
 
--- TODO: Pretty sure these are proper upcasts.
 function Goon_IsCreateSorceryPoints()
-    return IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_1')
+    return IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints')
+         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_1')
          | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_2')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_3')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_4')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_5')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_6')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_7')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_8')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_9')
+         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock')
          | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_1')
          | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_2')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_3')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_4')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_5')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_6')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_7')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_8')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_9')
 end
 
 -- ==================================== Smites
@@ -2048,6 +2069,7 @@ end
 -- ==================================== Junk ====================================
 -- Trying to check the source of a passive for use in boost conditions.
 -- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
+-- TODO: GetActiveWeapon?
 
 -- function Goon_IsPassiveSourceWeapon()
 --     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
