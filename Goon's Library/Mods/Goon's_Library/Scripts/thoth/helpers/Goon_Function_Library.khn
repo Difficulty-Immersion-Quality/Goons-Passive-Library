@@ -76,23 +76,86 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
 end
 
 -- ==================================== Attack types ====================================
--- Vanilla only has functions for IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
+-- Vanilla only has functions for IsWeaponAttack(), IsMainHandAttack(), IsMainHandWeaponAttack(), IsOffHandAttack(), IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
+-- Some actions and spells use weapon damage but don't have an attack roll, needing to be manually listed or caught another way.
 
-function Goon_IsMeleeMainhandAttack()
+function Goon_IsMeleeMainhandWeaponAttack()
     return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeWeaponAttack)
+         | IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam') -- Actions
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave')
+         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee') -- Spells
+         | Goon_IsFlameBladeSpellAttack_Mainhand()
 end
 
-function Goon_IsRangedMainhandAttack()
-    return ConditionResult(context.HitDescription.AttackType == AttackType.RangedWeaponAttack)
-end
-
-function Goon_IsMeleeOffhandAttack()
+function Goon_IsMeleeOffhandWeaponAttack()
     return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeOffHandWeaponAttack)
+         | IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand') -- Actions
+         | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand')
+         | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand') -- Spells
+         | Goon_IsFlameBladeSpellAttack_Offhand()
 end
 
-function Goon_IsRangedOffhandAttack()
+function Goon_IsRangedMainhandWeaponAttack()
+    return ConditionResult(context.HitDescription.AttackType == AttackType.RangedWeaponAttack)
+         | IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot') -- Actions
+         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')
+         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')
+         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged') -- Spells
+         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')
+         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves')
+end
+
+function Goon_IsRangedOffhandWeaponAttack()
     return ConditionResult(context.HitDescription.AttackType == AttackType.RangedOffHandWeaponAttack)
+         | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand') -- Actions
+         | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand') -- Spells
+         | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
+         | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
+end
+
+-- I'm conflicted with what I'm doing regarding throwing and shit, but here's a function anyway.
+function Goon_IsThrownWeaponAttack()
+    return SpellTypeIs(SpellType.Throw) & HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject)
+end
+
+-- ==================================== AttackedWithPassiveSourceWeapon() edge cases
+-- TODO: IsAttack SpellFlags?
+
+function Goon_IsWeaponActionWithoutAttackRoll()
+    return Goon_IsWeaponActionWithoutAttackRoll_Melee()
+         | Goon_IsWeaponActionWithoutAttackRoll_Ranged()
+         | Goon_IsWeaponActionWithoutAttackRoll_MeleeSpell()
+         | Goon_IsWeaponActionWithoutAttackRoll_RangedSpell()
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_Melee()
+    return IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam')                    | IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave') | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_ZephyrBreak')                                 | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_ZephyrBreak_Offhand')
+         | IsSpellChildOrVariantFromContext('Rush_MAG_ZephyrFlash')                                 | IsSpellChildOrVariantFromContext('Goon_Rush_MAG_ZephyrFlash_Offhand')
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_Ranged()
+    return IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot')                            | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')                        | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot')                       | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate')              | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand')
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_MeleeSpell()
+    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee')                            | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand')
+end
+
+function Goon_IsWeaponActionWithoutAttackRoll_RangedSpell()
+    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged')                           | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')                              | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves')         | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_LightningArrow')                            | IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
 end
 
 -- ==================================== Spell Target conditions ====================================
@@ -433,40 +496,6 @@ end
 -- TODO: Referencing the interrupts below doesn't really work the same as spells, e.g. OnDamage contexts for functors.
 -- Best course of action is likely to have the interrupts UseSpell, replacing animations with the instant cast one. "Target_NULLSPELL"?
 -- "I think context.InterruptId is only for the interrupt RollConditions" - Joow
-
--- ==================================== AttackedWithPassiveSourceWeapon() edge cases
--- TODO: IsAttack SpellFlags?
-
-function Goon_IsWeaponActionWithoutAttackRoll()
-    return Goon_IsWeaponActionWithoutAttackRoll_Melee()
-         | Goon_IsWeaponActionWithoutAttackRoll_Ranged()
-         | Goon_IsWeaponActionWithoutAttackRoll_Spell()
-end
-
-function Goon_IsWeaponActionWithoutAttackRoll_Melee()
-    return IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam')                    | IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave') | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_ZephyrBreak')                                 | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_ZephyrBreak_Offhand')
-         | IsSpellChildOrVariantFromContext('Rush_MAG_ZephyrFlash')                                 | IsSpellChildOrVariantFromContext('Goon_Rush_MAG_ZephyrFlash_Offhand')
-end
-
-function Goon_IsWeaponActionWithoutAttackRoll_Ranged()
-    return IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot')                            | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')                        | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot')                       | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate')              | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand')
-end
-
-function Goon_IsWeaponActionWithoutAttackRoll_Spell()
-    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage')                                  | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee')                            | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged')                           | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')                              | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves')         | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_LightningArrow')                            | IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
-end
 
 -- ==================================== Sanctuary
 -- Spells that need manually specifying in "SanctuarySpecificSpell", for removal of the caster's Sanctuary.
@@ -1131,6 +1160,39 @@ function Goon_AttackingWithBoundWeapon()
     return HasStatus('WEAPON_BOND', GetAttackWeapon(context.Source))
          | HasStatus('PACT_BLADE', GetAttackWeapon(context.Source))
          | HasStatus('HEXBLADE_BIND', GetAttackWeapon(context.Source))
+end
+
+-- ==================================== Weapon enchant checks - Vanilla Flame Blade
+-- Don't need to add my custom conditions here, it's already doing an attack roll in Goon's Spell Overhaul.
+
+function Goon_IsFlameBladeSpellAttack()
+    return Goon_IsFlameBladeSpellAttack_Mainhand() | Goon_IsFlameBladeSpellAttack_Offhand()
+end
+
+function Goon_IsFlameBladeSpellAttack_Mainhand()
+    return IsMeleeSpellAttack()
+         & HasStatus('FLAME_BLADE', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(context.Source, true))
+         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(context.Source, true))
+end
+
+function Goon_IsFlameBladeSpellAttack_Offhand()
+    return IsMeleeSpellAttack()
+         & HasStatus('FLAME_BLADE', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(context.Source, false))
+         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(context.Source, false))
 end
 
 -- ==================================== Tag piles ====================================
