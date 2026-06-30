@@ -60,6 +60,12 @@
                     <attribute id="Text" type="TranslatedString" handle="haa7d238cg4064g4947ga9c8g3d908d1bd860" version="1"/>
                     <attribute id="UUID" type="guid" value="d193dbf2-c16f-4416-934a-98037bf6a98e"/>
                 </node>
+                <!-- Does not stack -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect does &lt;b&gt;not&lt;/b&gt; stack with similar effects. -->
+                    <attribute id="Text" type="TranslatedString" handle="habf225e3ged78g4754ga87cge475eb21a459" version="1"/>
+                    <attribute id="UUID" type="guid" value="a41be849-2738-425e-966e-4f031583bc2f"/>
+                </node>
             <!-- ==================================== Wild Shape/Polymorph ==================================== -->
                 <!-- Works in Polymorphs and Wild Shape - main one on my items and such -->
                 <node id="TooltipExtraTexts">

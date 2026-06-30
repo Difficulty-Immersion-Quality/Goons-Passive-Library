@@ -499,6 +499,7 @@ end
 
 -- ==================================== Sanctuary
 -- Spells that need manually specifying in "SanctuarySpecificSpell", for removal of the caster's Sanctuary.
+-- TODO: Shouldn't these spells just have IsHarmful?
 
 function Goon_IsSanctuarySpecificSpell()
     return IsSpellChildOrVariantFromContext('Wall_BladeBarrier')

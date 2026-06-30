@@ -28,5 +28,8 @@ Goon_Armour_BootsClothing_StatusMap = {
     ["bc82f909-ade5-4ada-9b94-cec7ca1d4a68"] = "GOON_HELLDUSKBOOTS_ARMOUR_TECHNICAL",               -- Helldusk Boots
     ["ac9145d1-31d0-4aa3-8755-62cc85dad22b"] = "GOON_DISINTEGRATINGNIGHTWALKERS_ARMOUR_TECHNICAL",  -- Disintegrating Night Walkers
     ["93cc1480-9fe1-4e76-8c0b-0ad3caf35285"] = "GOON_BRISKWINDBOOTS_ARMOUR_TECHNICAL",              -- Briskwind Boots (Innaccessible/cut content)
+    -- Featherlight Boots (Innaccessible/cut content)
+    -- Wavemother's Boots (Innaccessible/cut content)
+    -- Gargoyle Boots (Innaccessible/cut content)
     ["6cae9a98-b75d-408e-ac59-d6bde6e4ab13"] = "GOON_SHADOWSTEPBOOTS_ARMOUR_TECHNICAL",             -- Shadowstep Boots (Innaccessible/cut content)
 }
