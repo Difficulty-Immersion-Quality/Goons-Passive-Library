@@ -20,12 +20,17 @@
 
 <!-- ==================================== A - Critical Hit Passives.txt ==================================== -->
 	
-	<!-- "Goon_Critical_Hit_Immunity" -->
+	<!-- "Goon_Critical_Hit_Immunity", "Goon_Critical_Hit_Immunity_Gear" -->
 	<content contentuid="he547088cg3538g477dg8019gd30052e44f34" version="1">Critical Hit Immunity</content>
-	<content contentuid="h7da4d760g695eg4090g965fg1039b73cf76e" version="1">&lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
-	<!-- "Goon_Critical_Hit_Resistance" -->
+	<content contentuid="h7da4d760g695eg4090g965fg1039b73cf76e" version="1">Entity is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
+	<!-- "Goon_Critical_Hit_Immunity_Gear" -->
+	<content contentuid="ha01f4791ge931g4546gad77g4e20d6ebec4d" version="1">The wearer is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
+
+	<!-- "Goon_Critical_Hit_Resistance", "Goon_Critical_Hit_Resistance_Gear" -->
 	<content contentuid="h4e558d13g9001g4543g8e18g661852a597ec" version="1">Critical Hit Resistance</content>
-	<content contentuid="h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b" version="1">&lt;LSTag Tooltip="Resistant"&gt;Resistant&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
+	<content contentuid="h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b" version="1">Entity takes half damage from &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
+	<!-- "Goon_Critical_Hit_Resistance_Gear" -->
+	<content contentuid="hd403089dg3b56g49ceg8b39g0cc0d468d2a4" version="1">The wearer takes half damage from &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.</content>
 
 <!-- ==================================== D - Fall damage.txt ==================================== -->
 

@@ -1,26 +1,57 @@
 // ==================================== Critical Hit Passives ====================================
+// TODO: Make sure there's no weird moments where IsCritical() triggers, e.g. self damage/reflected damage when landing a critical hit on an enemy.
+// TODO: Could do a clearer warning than "This effect does &lt;b&gt;not&lt;/b&gt; stack with similar effects." as it's there for two half DRs not stacking, not that the half DR doesn't work alongside numerical DR.
+
+// ==================================== Immunity
 
 new entry "Goon_Critical_Hit_Immunity"
 type "PassiveData"
 // Critical Hit Immunity
 data "DisplayName" "he547088cg3538g477dg8019gd30052e44f34;1"
-// &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+// Entity is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
 data "Description" "h7da4d760g695eg4090g965fg1039b73cf76e;1"
 data "Icon" "PassiveFeature_ShieldMaster_Block"
+data "Properties" "Highlighted"
 data "Boosts" "CriticalHit(AttackTarget,Success,Never)"
+
+new entry "Goon_Critical_Hit_Immunity_Gear"
+type "PassiveData"
+using "Goon_Critical_Hit_Immunity"
+// The wearer is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+data "Description" "ha01f4791ge931g4546gad77g4e20d6ebec4d;1"
+data "Icon" ""
+
+new entry "Goon_Critical_Hit_Immunity_Polymorph"
+type "PassiveData"
+using "Goon_Critical_Hit_Immunity_Gear"
+// // &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Continues to function while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.
+data "TooltipPermanentWarnings" "28186bf3-e19b-43a9-8395-7dc31a6a211d"
+
+// ==================================== Resistance
 
 new entry "Goon_Critical_Hit_Resistance"
 type "PassiveData"
 // Critical Hit Resistance
 data "DisplayName" "h4e558d13g9001g4543g8e18g661852a597ec;1"
-// &lt;LSTag Tooltip="Resistant"&gt;Resistant&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+// Entity takes half damage from &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
 data "Description" "h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b;1"
 data "DescriptionParams" "1"
 data "Icon" "PassiveFeature_ShieldMaster_Block"
+// // &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect does &lt;b&gt;not&lt;/b&gt; stack with similar effects.
+data "TooltipPermanentWarnings" "a41be849-2738-425e-966e-4f031583bc2f"
+data "Properties" "Highlighted"
 data "Boosts" "IF(IsCritical()):DamageReduction(All, Half)"
 
-// TODO: Make sure there's no weird moments where this triggers, e.g. self damage/reflected damage when landing a critical hit on an enemy.
+new entry "Goon_Critical_Hit_Resistance_Gear"
+type "PassiveData"
+using "Goon_Critical_Hit_Resistance"
+// The wearer takes half damage from &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+data "Description" "hd403089dg3b56g49ceg8b39g0cc0d468d2a4;1"
+data "Icon" ""
 
-// function IsCritical()
-//     return ConditionResult(context.HitDescription.IsCriticalHit)
-// end
+new entry "Goon_Critical_Hit_Resistance_Polymorph"
+type "PassiveData"
+using "Goon_Critical_Hit_Resistance_Gear"
+// // &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; This effect does &lt;b&gt;not&lt;/b&gt; stack with similar effects.
+// // &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Continues to function while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.
+data "TooltipPermanentWarnings" "a41be849-2738-425e-966e-4f031583bc2f;28186bf3-e19b-43a9-8395-7dc31a6a211d"
