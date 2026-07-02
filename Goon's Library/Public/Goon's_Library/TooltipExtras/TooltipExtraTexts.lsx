@@ -79,6 +79,12 @@
                     <attribute id="Text" type="TranslatedString" handle="h24c442a8g51ccg4d6fg8f47gd20b9841f35d" version="1"/>
                     <attribute id="UUID" type="guid" value="fd6917c0-a47f-4b75-b2e4-1c60189210b0"/>
                 </node>
+                <!-- Only works in druidic Polymorphs and Wild Shape -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of druidic forms, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->
+                    <attribute id="Text" type="TranslatedString" handle="h2014bd9eg114dg4dafg90bagd105c7b13fb4" version="1"/>
+                    <attribute id="UUID" type="guid" value="f1b808d9-9442-4269-a2f3-1bc5de0f0a00"/>
+                </node>
                 <!-- Only works in Wild Shape -->
                 <node id="TooltipExtraTexts">
                     <!-- &lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;. -->

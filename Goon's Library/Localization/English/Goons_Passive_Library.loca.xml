@@ -567,6 +567,8 @@
 	<content contentuid="h2aa95070gb790g4f45g825bg9aff35a5f7d1" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Continues to function while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 	<!-- "fd6917c0-a47f-4b75-b2e4-1c60189210b0" --> 
 	<content contentuid="h24c442a8g51ccg4d6fg8f47gd20b9841f35d" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
+	<!-- "f1b808d9-9442-4269-a2f3-1bc5de0f0a00" -->
+	<content contentuid="h2014bd9eg114dg4dafg90bagd105c7b13fb4" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of druidic forms, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 	<!-- "0960bfe9-875f-4b41-8bfc-c8c707e93e1b" --> 
 	<content contentuid="hd6719b5ag959eg49d9ga484g4ebe6721b4a7" version="1">&lt;LSTag Type="Image" Info="TutorialYellowWarning"/&gt; Only functions while willingly under the effects of &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 	<!-- "af675b0e-50b9-4451-b006-29bded4a4280" --> 
