@@ -765,13 +765,19 @@ function Goon_IsDisengageSpell()
          | IsSpellChildOrVariantFromContext('Shout_Disengage_CunningAction')
          | IsSpellChildOrVariantFromContext('Shout_Disengage_StepOfTheWind')
          | IsSpellChildOrVariantFromContext('Shout_BootsOfSpeed')
+         | IsSpellChildOrVariantFromContext('Target_DrunkenTechnique')
+         | IsSpellChildOrVariantFromContext('Shout_LOW_Dolor_Disengage')
+         | IsSpellChildOrVariantFromContext('Shout_Disengage_Goblin')
+         | IsSpellChildOrVariantFromContext('Shout_GOB_WolfPens_Disengage_GoblinKid')
+         | IsSpellChildOrVariantFromContext('Shout_ShadowStealth_Meazel')
          | IsSpellChildOrVariantFromContext('SYR_Shout_Disengage_BonusAction_DruidQoL')
 end
 
 -- One says condition the other says status gonna kms no cap
--- TODO: Psuedo status group
+-- TODO: Psuedo status group for Disengage specifically?
+-- TODO: Give them all SG_Ignore_AOO
 function Goon_HasDisengageCondition()
-    return HasAnyStatus({ 'SG_Disengage', 'DISENGAGE', 'DRUNKEN_TECHNIQUE', 'CLICK_HEELS' }, {}, {})
+    return HasAnyStatus({ 'SG_Disengage', 'DISENGAGE', 'DRUNKEN_TECHNIQUE', 'CLICK_HEELS', 'HALF_MOVEMENT', 'SHADOW_STEALTH' }, {}, {})
 end
 
 function Goon_HasDashStatus()
@@ -960,6 +966,14 @@ function Goon_IsSpellWithoutDamageType()
          & ~Goon_IsSpellDamageTypeSlashing()
          & ~Goon_IsSpellDamageTypePiercing()
          & ~Goon_IsSpellDamageTypeBludgeoning()
+end
+
+function Goon_IsSpellDamageTypeElemental()
+    return Goon_IsSpellDamageTypeAcid()
+         | Goon_IsSpellDamageTypeCold()
+         | Goon_IsSpellDamageTypeFire()
+         | Goon_IsSpellDamageTypeLightning()
+         | Goon_IsSpellDamageTypeThunder()
 end
 
 function Goon_IsSpellDamageTypeAcid()
