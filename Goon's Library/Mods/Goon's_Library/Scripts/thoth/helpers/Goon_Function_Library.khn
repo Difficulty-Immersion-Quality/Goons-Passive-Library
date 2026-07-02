@@ -1353,6 +1353,8 @@ end
 -- Check for any and all druid forms, only druid forms and not stinky disguise self etc.
 -- Mod support: Circle of Storm Chasers and the custom Circle of Stars.
 -- TODO: Maybe remove declaring entities and leave it blank like condition status checks above.
+-- TODO: Refactor, do functions for StatusId as well as HasStatus. Do status checks for Slayer and Myrmidons, instead of just tag.
+-- TODO: Support for that one druid class mod?
 
 function Goon_IsDruidWildshapeOrStatus(entity)
     entity = entity or context.Source
@@ -1371,11 +1373,10 @@ end
 
 function Goon_IsUnrestrictedPolymorphStatus(entity)
     entity = entity or context.Source
-    return Goon_IsHumanoidDruidPolymorph() | Goon_IsOtherPolymorph()
+    return (Goon_IsHumanoidDruidPolymorph() | Goon_IsOtherPolymorph()) & (~Goon_IsRestrictedPolymorphStatus() & Goon_IsNonHostilePolymorphStatus())
 end
 
--- TODO: Need to sort out Immutable Form so it doesn't block non-hostile Polymorphs
---  & (Goon_IsWildshapeDruidPolymorph() | Goon_IsMyrmidonDruidPolymorph() | Goon_IsHumanoidDruidPolymorph() | Goon_IsOtherPolymorph() | Tagged('SLAYER', entity))
+-- TODO: How would I go about filtering sources of unwilling polymorphs for a custom ImmutableForm? Pseudo status group?
 function Goon_IsNonHostilePolymorphStatus(entity)
     entity = entity or context.Source
     return ~Tagged('POLYMORPHED_UNWILLING', entity)
