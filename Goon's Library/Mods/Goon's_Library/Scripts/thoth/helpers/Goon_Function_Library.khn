@@ -1067,6 +1067,25 @@ function Goon_HasLightArmorAlt(entity)
     return ConditionResult(hasLightArmor)
 end
 
+-- WearingArmor and HasShieldEquipped functions DGAF about you being in wildshape and count your equipment, unlike when using GetItemInEquipmentSlot where it doesn't work for wildshape.
+function Goon_NotWearingArmorOrHasShieldEquipped(entity)
+    entity = entity or context.Source
+    return (~WearingArmor(entity) & ~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus()) 
+         & Goon_IsNonHostilePolymorphStatus()
+end
+
+function Goon_NotWearingArmor(entity)
+    entity = entity or context.Source
+    return (~WearingArmor(entity) | Goon_IsRestrictedPolymorphStatus()) 
+         & Goon_IsNonHostilePolymorphStatus()
+end
+
+function Goon_NotHasShieldEquipped(entity)
+    entity = entity or context.Source
+    return (~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus()) 
+         & Goon_IsNonHostilePolymorphStatus()
+end
+
 -- ==================================== Weapon enchant checks ====================================
 -- TODO: These don't work for the intended purposes, HasAnyStatus is likely the problem when trying to call these? Or just the context they were being called in...
 
@@ -1374,6 +1393,7 @@ function Goon_IsMyrmidonDruidPolymorph(entity)
     return Tagged('MYRMIDON_AIR', entity) | Tagged('MYRMIDON_EARTH', entity) | Tagged('MYRMIDON_FIRE', entity) | Tagged('MYRMIDON_WATER', entity)
 end
 
+-- TODO: 'SYMBIOTIC_ENTITY' doesn't really fit the bill, but I feel like it would be fitting for BG3.
 function Goon_IsHumanoidDruidPolymorph(entity)
     entity = entity or context.Source
     return HasAnyStatus({ 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER' }, {}, {}, entity)
