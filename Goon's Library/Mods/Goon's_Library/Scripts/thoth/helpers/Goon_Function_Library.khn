@@ -256,7 +256,7 @@ function Goon_HasSilencedCondition()
 end
 
 function Goon_HasDeafenedCondition()
-    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {})
+    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}) -- | HasPassive('Deafness')
 end
 
 -- TODO: "not" instead of ~? Allowed in if statement?
@@ -1431,7 +1431,8 @@ function Goon_IsItemOrDead(entity)
     return Item(entity) | Dead(entity)
 end
 
--- ==================================== Blindness, Darkness ====================================
+-- ==================================== Blindness, Darkness, Illusions ====================================
+-- TODO: These could be more robust no?
 
 function Goon_CanIgnoreBlindness_Melee(entity)
     entity = entity or context.Source
@@ -1446,8 +1447,16 @@ function Goon_CanIgnoreBlindness_Ranged(entity)
          | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
 end
 
--- ==================================== Invisibility - DrKekyll ====================================
--- Expansion edited versions
+function Goon_CanIgnoreIllusions(entity)
+    entity = entity or context.Source
+    return Tagged('BLINDSIGHT', entity) 
+         | (HasStatus('TRUESIGHT', entity) | DistanceToTargetGreaterThan(36.5))
+         | ((HasPassive('FightingStyle_BlindFighting', entity) | (HasPassive('Blindsense', entity)) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))) & ~DistanceToTargetGreaterThan(3))
+         | HasPassive('WitchSight', entity) -- TODO: Same/similar distance check as TRUESIGHT?
+end
+
+-- ==================================== Invisibility & Sneaking ====================================
+-- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
 function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
     local source = source or context.Source
