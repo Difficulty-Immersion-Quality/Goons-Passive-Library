@@ -499,7 +499,10 @@ end
 
 -- ==================================== Sanctuary
 -- Spells that need manually specifying in "SanctuarySpecificSpell", for removal of the caster's Sanctuary.
--- TODO: Shouldn't these spells just have IsHarmful?
+-- TODO: Couldn't these spells just have IsHarmful?
+-- TODO: It's a little awkward, I think the way this is implemented in the vanilla passive could be expanded more.
+-- Could probably track if surfaces and walls and whatever do damage, instead of the cast. Could see if statuses were applied to enemies after the cast.
+-- Does "DealDamage(SWAP" not get counted for OnDamage?
 
 function Goon_IsSanctuarySpecificSpell()
     return IsSpellChildOrVariantFromContext('Wall_BladeBarrier')
@@ -518,6 +521,16 @@ function Goon_IsSanctuarySpecificSpell()
          | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Thunder')
          | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Detonation')
          | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Sleep')
+         | IsSpellChildOrVariantFromContext('Target_Moonbeam')
+         | IsSpellChildOrVariantFromContext('Target_Moonbeam_Move')
+        --  | IsSpellChildOrVariantFromContext('Target_CreateWater')
+        --  | IsSpellChildOrVariantFromContext('Target_CreateWater_StaffOfRain')
+        --  | IsSpellChildOrVariantFromContext('Target_CreateWater_NPC')
+        --  | IsSpellChildOrVariantFromContext('Target_CreateWater_MinorConjuration')
+        --  | IsSpellChildOrVariantFromContext('Target_MAG_Umberlee_CreateWater')
+        --  | IsSpellChildOrVariantFromContext('Target_CreateDestroyWater')
+        --  | IsSpellChildOrVariantFromContext('Target_MAG_Umberlee_CreateDestroyWater')
+         | IsSpellChildOrVariantFromContext('Target_SleetStorm')
 end
 
 -- ==================================== Sneak Attacks
