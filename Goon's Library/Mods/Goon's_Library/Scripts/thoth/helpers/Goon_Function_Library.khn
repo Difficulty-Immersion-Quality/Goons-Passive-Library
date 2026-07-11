@@ -204,6 +204,7 @@ function Goon_AttackOfOpportunityConditions()
         & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target)
         & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target))
         & ((~HasStatus('PANACHE', context.Source)) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
+		& ~Tagged('OCS_ObjectCharacter', context.Target)
 end
 
 -- // Regular:
@@ -214,6 +215,55 @@ end
 
 -- // Polarm Master:
 -- // Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
+
+-- ==================================== Interrupt conditions - Sneak Attack
+-- Goon_IsSpellDamageTypePhysical() for the druid shit, if not for unreliable DamageType usage...
+-- Add IsCritical() or not IsCritical() as needed, after the function calls.
+-- Note: Rakish stuff is 5e RAW, not whatever vanilla was trying and failing to do.
+
+function Goon_SneakAttackInterruptConditions()
+    return Goon_BasicHarmfulInterruptConditions()
+        & Self(context.Source,context.Observer) & ~Self() & ~Dead() & ~Tagged('INANIMATE')
+        & IsHit()
+        & (~IsKillingBlow() | ~HasHPLessThan(1))
+        & ~HasDamageEffectFlag(DamageFlags.AttackDisadvantage) 
+        & ~AnyEntityIsItem()
+        & ~Goon_IsSneakAttack()
+        & ((WieldingFinesseWeaponInSpecificHand(context.Observer,false) & IsMainHandWeaponAttack()) 
+        | (WieldingFinesseWeaponInSpecificHand(context.Observer,true) & IsOffHandAttack())
+        | (SpellTypeIs(SpellType.Throw) & (HasWeaponProperty(WeaponProperties.Finesse, context.HitDescription.ThrownObject) 
+        | HasPassive('SneakAttack_LLRuffian', context.Source) & ~HasWeaponProperty(WeaponProperties.Twohanded, context.HitDescription.ThrownObject) & HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject))) -- IsThrowAttackRoll()
+        | (WieldingWeapon('Ammunition', false, true, context.Observer) & IsRangedWeaponAttack())
+        | (Goon_IsDruidWildshape(context.Observer) & (IsMeleeAttack() | IsRangedAttack()) & (IsDamageTypePiercing() | IsDamageTypeSlashing() | IsDamageTypeBludgeoning()))
+        | (HasPassive('SneakAttack_LLRuffian', context.Source) & (IsMainHandAttack() | IsMonkWeaponAttack())))
+        & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',1.5) 
+        | ((HasPassive('RakishAudacity', context.Source) | HasPassive('DWE_RakishAudacity', context.Source)) 
+        & (~HasAllyWithinRange(nil,1.5,nil,nil, context.Observer,context.Source) & ~HasEnemyWithinRange(nil,1.5,nil,2, context.Observer,context.Source)) & ~DistanceToEntityGreaterThan(2)))
+end
+
+-- Sneak Attack action "TargetConditions"
+-- TODO: The error message of "Must have Advantage against the target" is not accurate to mechanics - at least for the Rakish versions.
+function Goon_SneakAttackTargetConditions_Melee()
+    return Character() & ~Self() & ~Dead() & ~Tagged('INANIMATE')
+         & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
+         & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',1.5))
+         | ((HasPassive('RakishAudacity', context.Source) | HasPassive('DWE_RakishAudacity', context.Source)) 
+         & (~HasAllyWithinRange(nil,1.5,nil,nil, context.Source,context.Source) & ~HasEnemyWithinRange(nil,1.5,nil,2, context.Source,context.Source)) & ~DistanceToEntityGreaterThan(2)))
+end
+
+function Goon_SneakAttackTargetConditions_Ranged()
+    return Character() & ~Self() & ~Dead() & ~Tagged('INANIMATE')
+         & (~HasDisadvantage(AttackType.RangedWeaponAttack))
+         & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',1.5))
+         | ((HasPassive('RakishAudacity', context.Source) | HasPassive('DWE_RakishAudacity', context.Source)) 
+         & (~HasAllyWithinRange(nil,1.5,nil,nil, context.Source,context.Source) & ~HasEnemyWithinRange(nil,1.5,nil,2, context.Source,context.Source)) & ~DistanceToEntityGreaterThan(2)))
+end
+
+function Goon_SneakAttackTargetConditions_Unarmed()
+    return Character() & ~Self() & ~Dead() & ~Tagged('INANIMATE')
+         & (~HasDisadvantage(AttackType.MeleeUnarmedAttack))
+         & (HasAdvantage(AttackType.MeleeUnarmedAttack) | HasAllyWithinRange('SG_Incapacitated',1.5))
+end
 
 -- ==================================== Player vs NPC checks + in control vs not in control ====================================
 -- TODO: Check for edge cases where an AI controlled character might be a "Player", or find a better means of checking this stuff.
@@ -533,6 +583,16 @@ function Goon_IsSanctuarySpecificSpell()
          | IsSpellChildOrVariantFromContext('Target_SleetStorm')
 end
 
+-- ==================================== Revivify
+
+function Goon_IsRevivifySpell()
+    return IsSpellChildOrVariantFromContext('Teleportation_Revivify')
+         | IsSpellChildOrVariantFromContext('Teleportation_Revivify_Scroll')
+         | IsSpellChildOrVariantFromContext('Teleportation_TrueResurection_Scroll')
+         | IsSpellChildOrVariantFromContext('Teleportation_Revivify_Deva')
+         | IsSpellChildOrVariantFromContext('Teleportation_MAG_Revivify') 
+end
+
 -- ==================================== Sneak Attacks
 
 function Goon_IsSneakAttack()
@@ -805,7 +865,7 @@ function Goon_IsJumpSpellCategory()
     return SpellCategoryIs(SpellCategory.Jump)
 end
 
--- ==================================== Do the dawg be Banishing
+-- ==================================== Debuffs
 
 function Goon_IsBanishSpell()
     return IsSpellChildOrVariantFromContext('Target_Banishment')
@@ -815,6 +875,11 @@ function Goon_IsBanishSpell()
          | IsSpellChildOrVariantFromContext('Target_DispelEvilAndGood_Dismissal')
          | IsSpellChildOrVariantFromContext('Shout_WildMagic_Banish')
          | IsSpellChildOrVariantFromContext('OO_Shout_BanishUnholy')
+end
+
+-- TODO: Pseudo status group.
+function Goon_HasSlowStatus()
+    return HasAnyStatus({ 'SLOW', 'TAD_BLACK_HOLE_SLOW', 'MF_BLACK_HOLE_SLOW', 'END_NETHERBRAIN_SLOW', 'LOW_BG_SLOW_WARNING1', 'KICKUP_BOAR', 'LOW_BG_SLOW_WARNING2', 'ABJURE_ENEMY_SLOW', 'LOW_OSKARSBELOVED_SKULL_SLOW' }, {}, {})
 end
 
 -- ==================================== Spells that aren't spells
@@ -979,6 +1044,12 @@ function Goon_IsSpellWithoutDamageType()
          & ~Goon_IsSpellDamageTypeSlashing()
          & ~Goon_IsSpellDamageTypePiercing()
          & ~Goon_IsSpellDamageTypeBludgeoning()
+end
+
+function Goon_IsSpellDamageTypePhysical()
+    return Goon_IsSpellDamageTypeSlashing()
+         | Goon_IsSpellDamageTypePiercing()
+         | Goon_IsSpellDamageTypeBludgeoning()
 end
 
 function Goon_IsSpellDamageTypeElemental()
@@ -1330,6 +1401,8 @@ end
 -- ==================================== Magical unarmed ====================================
 -- Hunting down everything with the UnarmedMagicalProperty() boost.
 -- Supports Expansion, 5e Spells, Blood Hunter, Veenab stuff, Mystic Expansion, Zephyr, Mizora's Rewards, Book of Druids, Dread Overlord
+-- Note: UnarmedDamage*0 inserted into a DealDamage like so: DealDamage(2d10+UnarmedDamage*0,Slashing) gives full functionality while retaining static numbers or specific die sizes.
+-- This shit below is cumbersome and far less dynamic by comparison, just do the above where appropriate.
 
 function Goon_HasMagicalUnarmed(entity)
     entity = entity or context.Source
@@ -1422,9 +1495,10 @@ function Goon_IsMyrmidonDruidPolymorph(entity)
 end
 
 -- TODO: 'SYMBIOTIC_ENTITY' doesn't really fit the bill, but I feel like it would be fitting for BG3.
+-- TODO: DWE_BM_POLYMORPHED_CONCENTRATION what this for exactly?
 function Goon_IsHumanoidDruidPolymorph(entity)
     entity = entity or context.Source
-    return HasAnyStatus({ 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER' }, {}, {}, entity)
+    return HasAnyStatus({ 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER', 'DWE_BM_POLYMORPHED_CONCENTRATION' }, {}, {}, entity)
 end
 
 function Goon_IsOtherPolymorph(entity)
@@ -1463,7 +1537,7 @@ end
 function Goon_CanIgnoreIllusions(entity)
     entity = entity or context.Source
     return Tagged('BLINDSIGHT', entity) 
-         | (HasStatus('TRUESIGHT', entity) | DistanceToTargetGreaterThan(36.5))
+         | (HasStatus('TRUESIGHT', entity) & ~DistanceToTargetGreaterThan(36.5))
          | ((HasPassive('FightingStyle_BlindFighting', entity) | (HasPassive('Blindsense', entity)) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))) & ~DistanceToTargetGreaterThan(3))
          | HasPassive('WitchSight', entity) -- TODO: Same/similar distance check as TRUESIGHT?
 end
