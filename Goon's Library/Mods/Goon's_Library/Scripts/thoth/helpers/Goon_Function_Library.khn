@@ -80,6 +80,18 @@ end
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
 -- Some actions and spells use weapon damage but don't have an attack roll, needing to be manually listed or caught another way.
 
+-- Intentionally loose as it's just for use in CharacterWeaponDamage conditions, where ranged weapon attacks are being excluded but throwing melee weapons or using blade spells should be accepted.
+function IsAttackUsingMeleeWeapon()
+    return IsMeleeAttack() | Goon_IsThrownWeaponAttack()
+end
+
+-- function IsAttackUsingRangedWeapon()
+-- No tangible use case, unless I for some unknown reason want to make something only work for throwing bows and shit.
+
+function Goon_IsThrownWeaponAttack()
+    return SpellTypeIs(SpellType.Throw) & HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject)
+end
+
 function Goon_IsMeleeMainhandWeaponAttack()
     return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeWeaponAttack)
          | IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam') -- Actions
@@ -114,11 +126,6 @@ function Goon_IsRangedOffhandWeaponAttack()
          | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand') -- Spells
          | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
          | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
-end
-
--- I'm conflicted with what I'm doing regarding throwing and shit, but here's a function anyway.
-function Goon_IsThrownWeaponAttack()
-    return SpellTypeIs(SpellType.Throw) & HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject)
 end
 
 -- ==================================== AttackedWithPassiveSourceWeapon() edge cases
