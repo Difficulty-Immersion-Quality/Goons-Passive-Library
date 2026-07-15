@@ -198,17 +198,25 @@ function Goon_BasicHarmfulInterruptConditions()
         & (~HasStatus('SG_Invisible', context.Target) | Goon_CanSeeInvisible())
 end
 
+-- ==================================== Interrupt conditions - Attack of Opportunity
+-- Variants of the conditions can all inherit from _Lenient.
+
 function Goon_AttackOfOpportunityConditions()
+    return Goon_AttackOfOpportunityConditions_Lenient()
+        & ~WieldingWeapon('Ammunition', false, false, context.Source)
+end
+
+function Goon_AttackOfOpportunityConditions_Lenient()
     return Goon_BasicHarmfulInterruptConditions()
         & Enemy()
         & (Goon_IsPlayerInControl() | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, context.Source)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
-        & ~WieldingWeapon('Ammunition', false, false, context.Source)
-        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious', 'MOBILE_NO_AOO' }, {}, {}, context.Source)
-        & ~HasAnyStatus({ 'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'MOBILE_NO_AOO_SOURCE', 'SNEAKING', 'SG_Ignore_AOO' }, {}, {}, context.Target)
+        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, context.Source)
+        & ~HasAnyStatus({ 'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'SNEAKING', 'SG_Ignore_AOO' }, {}, {}, context.Target)
+        & ~(HasStatus('MOBILE_NO_AOO', context.Source) & HasStatus('MOBILE_NO_AOO_SOURCE', context.Target))
         & ~(~Goon_IsPlayerInControl() & Tagged('AI_IGNORED_TARGET'))
         & ~Goon_HasFlamingSphereAuraCondition()
         & ~AnyEntityIsItem()
-        & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target)
+        & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target) -- Huh?
         & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target))
         & ((~HasStatus('PANACHE', context.Source)) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
 		& ~Tagged('OCS_ObjectCharacter', context.Target)
@@ -1333,37 +1341,42 @@ function Goon_IsCastingModifierGreaterThanDexterity_IsDexterityGreaterThanStreng
     local source = context.Source
     local mainHandWeapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
 
-    local IsSpellcastingModifierGreaterThanDexterityAndStrength = ConditionResult(false)
-    local IsIntelligenceGreaterThanDexterityAndStrength = ConditionResult(false)
-    local IsWisdomGreaterThanDexterityAndStrength = ConditionResult(false)
-    local IsCharismaGreaterThanDexterityAndStrength = ConditionResult(false)
+    local IsConstitutionGreaterThanDexterity            = ConditionResult(false)
+    local IsSpellcastingModifierGreaterThanDexterity    = ConditionResult(false)
+    local IsIntelligenceGreaterThanDexterity            = ConditionResult(false)
+    local IsWisdomGreaterThanDexterity                  = ConditionResult(false)
+    local IsCharismaGreaterThanDexterity                = ConditionResult(false)
+
+    IsConstitutionGreaterThanDexterity = (HasPassive('LLBoulder_DextrousUnarmedAttacks', source) | Tagged('BOULDER', source))
+        -- & ConditionResult(source.Constitution >= source.Strength)
+        & ConditionResult(source.Constitution >= source.Dexterity)
 
     if mainHandWeapon.IsValid then
-        IsSpellcastingModifierGreaterThanDexterityAndStrength = Goon_IsSpellcastingModifierWeapon(mainHandWeapon)
-            & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Strength)
+        IsSpellcastingModifierGreaterThanDexterity = Goon_IsSpellcastingModifierWeapon(mainHandWeapon)
+            -- & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Strength)
             & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Dexterity)
 
-        IsIntelligenceGreaterThanDexterityAndStrength = Goon_IsIntelligenceModifierWeapon(mainHandWeapon)
-            & ConditionResult(source.Intelligence >= source.Strength)
+        IsIntelligenceGreaterThanDexterity = Goon_IsIntelligenceModifierWeapon(mainHandWeapon)
+            -- & ConditionResult(source.Intelligence >= source.Strength)
             & ConditionResult(source.Intelligence >= source.Dexterity)
 
-        IsWisdomGreaterThanDexterityAndStrength = Goon_IsWisdomModifierWeapon(mainHandWeapon)
-            & ConditionResult(source.Wisdom >= source.Strength)
+        IsWisdomGreaterThanDexterity = Goon_IsWisdomModifierWeapon(mainHandWeapon)
+            -- & ConditionResult(source.Wisdom >= source.Strength)
             & ConditionResult(source.Wisdom >= source.Dexterity)
 
-        IsCharismaGreaterThanDexterityAndStrength = Goon_IsCharismaModifierWeapon(mainHandWeapon)
-            & ConditionResult(source.Charisma >= source.Strength)
+        IsCharismaGreaterThanDexterity = Goon_IsCharismaModifierWeapon(mainHandWeapon)
+            -- & ConditionResult(source.Charisma >= source.Strength)
             & ConditionResult(source.Charisma >= source.Dexterity)
     end
 
     return IsDexterityGreaterThanStrength()
-        & ~Tagged('BOULDER', source)
         & ~Tagged('VESSEL', source)
         & ~HasStatus('ASTRALSELF_EMPOWERED_WISDOM', source)
-        & ~IsSpellcastingModifierGreaterThanDexterityAndStrength
-        & ~IsIntelligenceGreaterThanDexterityAndStrength
-        & ~IsWisdomGreaterThanDexterityAndStrength
-        & ~IsCharismaGreaterThanDexterityAndStrength
+        & ~IsConstitutionGreaterThanDexterity
+        & ~IsSpellcastingModifierGreaterThanDexterity
+        & ~IsIntelligenceGreaterThanDexterity
+        & ~IsWisdomGreaterThanDexterity
+        & ~IsCharismaGreaterThanDexterity
 end
 
 -- ==================================== Tag piles ====================================
@@ -1573,18 +1586,19 @@ end
 
 -- ==================================== Blindness, Darkness, Illusions ====================================
 -- TODO: These could be more robust no?
+-- TODO: DistanceToTargetGreaterThan(3) vs DistanceToGreaterThan. Edges are preferable to center of entity most of the time I reckon.
 
 function Goon_CanIgnoreBlindness_Melee(entity)
     entity = entity or context.Source
     return IsImmuneToStatus('SG_Blinded', entity)
          | HasPassive('FightingStyle_BlindFighting', entity) & ~DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, 3)
-         | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
+         | HasPassive('Blindsense', entity) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))
 end
 
 function Goon_CanIgnoreBlindness_Ranged(entity)
     entity = entity or context.Source
     return IsImmuneToStatus('SG_Blinded', entity)
-         | HasPassive('Blindsense', entity) & ~HasStatus('SG_Deafened', entity)
+         | HasPassive('Blindsense', entity) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))
 end
 
 function Goon_CanIgnoreIllusions(entity)
