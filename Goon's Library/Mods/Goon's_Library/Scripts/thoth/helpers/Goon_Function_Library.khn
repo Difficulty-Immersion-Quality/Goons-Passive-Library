@@ -192,44 +192,70 @@ end
 
 -- ==================================== Interrupt conditions ====================================
 
-function Goon_BasicHarmfulInterruptConditions()
-    return (Player(context.Observer) | ~HasStatus('SG_Invisible', context.Observer))
-        & IsAbleToReact(context.Observer)
-        & (~HasStatus('SG_Invisible', context.Target) | Goon_CanSeeInvisible())
+function Goon_BasicHarmfulInterruptConditions(target, source, observer)
+	local target = target or context.Target
+	local source = source or context.Source
+	local observer = observer or context.Observer
+    return (Player(observer) | ~HasStatus('SG_Invisible', observer))
+        & IsAbleToReact(observer)
+        & (~HasStatus('SG_Invisible', target) | Goon_CanSeeInvisible(source, target))
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
--- Variants of the conditions can all inherit from _Lenient.
 
 function Goon_AttackOfOpportunityConditions()
-    return Goon_AttackOfOpportunityConditions_Lenient()
-        & ~WieldingWeapon('Ammunition', false, false, context.Source)
-end
+	local target = target or context.Target
+	local source = source or context.Source
+	local observer = observer or context.Observer
 
-function Goon_AttackOfOpportunityConditions_Lenient()
-    return Goon_BasicHarmfulInterruptConditions()
-        & Enemy()
-        & (Goon_IsPlayerInControl() | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, context.Source)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
-        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, context.Source)
-        & ~HasAnyStatus({ 'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'SNEAKING', 'SG_Ignore_AOO' }, {}, {}, context.Target)
-        & ~(HasStatus('MOBILE_NO_AOO', context.Source) & HasStatus('MOBILE_NO_AOO_SOURCE', context.Target))
-        & ~(~Goon_IsPlayerInControl() & Tagged('AI_IGNORED_TARGET'))
-        & ~Goon_HasFlamingSphereAuraCondition()
+    return Goon_BasicHarmfulInterruptConditions(target, source, observer)
+        & Enemy(observer, target) & ~Self(observer, target) & ~Self(source, target)
+        & ~HasSpellFlag(SpellFlags.IgnoreAoO, target)
         & ~AnyEntityIsItem()
-        & ~HasSpellFlag(SpellFlags.IgnoreAoO, context.Target) -- Huh?
-        & ~(HasStatus('FANCYFOOTWORK', context.Source, context.Target) & HasStatus('FANCYFOOTWORK_OWNER', context.Target))
-        & ((~HasStatus('PANACHE', context.Source)) | (HasStatus('PANACHE', context.Source) & HasStatus('PANACHE_OWNER', context.Target)))
-		& ~Tagged('OCS_ObjectCharacter', context.Target)
+		& ~Tagged('OCS_ObjectCharacter', target)
+        & ~(~Goon_IsPlayerInControl(source) & Tagged('AI_IGNORED_TARGET', target))
+        & (Goon_IsPlayerInControl(source) | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, source)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
+        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source)
+        & ~HasAnyStatus({ 'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'SNEAKING', 'SG_Ignore_AOO' }, {}, {}, target)
+        & ~Goon_HasFlamingSphereAuraCondition(target)
+        & ~(HasStatus('MOBILE_NO_AOO', source) & HasStatus('MOBILE_NO_AOO_SOURCE', target))
+        & ~(HasStatus('FANCYFOOTWORK', source, target) & HasStatus('FANCYFOOTWORK_OWNER', target))
+        & ((~HasStatus('PANACHE', source)) | (HasStatus('PANACHE', source) & HasStatus('PANACHE_OWNER', target)))
 end
 
--- // Regular:
--- // Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target)
+-- EXAMPLE: 
+-- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source)
+-- EXAMPLE - WAR CASTER:
+-- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source) and not HasSpellCastBlocked(context.Observer)
+-- EXAMPLE - POLEARM MASTER:
+-- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
 
--- // War Caster:
--- // Goon_AttackOfOpportunityConditions() and not Self(context.Observer, context.Target) and Self(context.Observer, context.Source) and not HasSpellCastBlocked(context.Observer)
+function Goon_AttackOfOpportunityConditions_CriticalMiss()
+	local target = target or context.Target
+	local source = source or context.Source
+	local observer = observer or context.Observer
 
--- // Polarm Master:
--- // Goon_AttackOfOpportunityConditions() and Self(context.Source,context.Observer) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
+    local target_ = source -- flipped due to context
+    local source_ = target
+
+    return Goon_BasicHarmfulInterruptConditions(target_, source_, observer)
+        & Self(observer, target) & ~Self(observer, source) & ~Self(target, source)
+        & HasLastAttackTriggered()
+        -- & IsCriticalMiss()
+        & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail...
+        -- & (~DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, critRetaliateRange) | IsMeleeAttack()) -- TODO: Function for checking as many things as possible to determine good estimates of weapon reach. DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source)
+        & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
+        & ~AnyEntityIsItem()
+		& ~Tagged('OCS_ObjectCharacter', target_)
+        & ~(~Goon_IsPlayerInControl(source_) & Tagged('AI_IGNORED_TARGET', target_))
+        & (Goon_IsPlayerInControl(source_) | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, source_)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
+        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source_)
+        & ~HasAnyStatus({ 'GNOLL_SUDDENRUSH', 'SHOCKWAVE', 'SNEAKING', 'SG_Ignore_AOO' }, {}, {}, target_)
+        & ~Goon_HasFlamingSphereAuraCondition(target_)
+        & ~(HasStatus('MOBILE_NO_AOO', source_) & HasStatus('MOBILE_NO_AOO_SOURCE', target_))
+        & ~(HasStatus('FANCYFOOTWORK', source_, target_) & HasStatus('FANCYFOOTWORK_OWNER', target_))
+        & ((~HasStatus('PANACHE', source_)) | (HasStatus('PANACHE', source_) & HasStatus('PANACHE_OWNER', target_)))
+end
 
 -- ==================================== Interrupt conditions - Sneak Attack
 -- Goon_IsSpellDamageTypePhysical() for the druid shit, if not for unreliable DamageType usage...
@@ -283,20 +309,24 @@ end
 -- ==================================== Player vs NPC checks + in control vs not in control ====================================
 -- TODO: Check for edge cases where an AI controlled character might be a "Player", or find a better means of checking this stuff.
 
-function Goon_IsPlayerInControl()
-    return Player(context.Source) & ~Goon_IsEntityDominated() & ~Goon_IsEntityMad()
+function Goon_IsPlayerInControl(entity)
+    entity = entity or context.Source
+    return Player(entity) & ~Goon_IsEntityDominated(entity) & ~Goon_IsEntityMad(entity)
 end
 
-function Goon_IsAIInControl()
-    return (Player(context.Source) & Goon_IsEntityDominated() | ~Player(context.Source)) & ~Goon_IsEntityMad()
+function Goon_IsAIInControl(entity)
+    entity = entity or context.Source
+    return (Player(entity) & Goon_IsEntityDominated(entity) | ~Player(entity)) & ~Goon_IsEntityMad(entity)
 end
 
-function Goon_IsEntityMad()
-    return HasAnyStatus({ 'SG_Mad' }, {}, {})
+function Goon_IsEntityMad(entity)
+    entity = entity or context.Source
+    return HasAnyStatus({ 'SG_Mad' }, {}, {}, entity)
 end
 
-function Goon_IsEntityDominated()
-    return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {})
+function Goon_IsEntityDominated(entity)
+    entity = entity or context.Source
+    return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {}, entity)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
@@ -476,8 +506,9 @@ function Goon_IsKarlachCooking()
     return Tagged('REALLY_KARLACH') & ~Tagged('KARLACH_CAN_TOUCH')
 end
 
-function Goon_HasFlamingSphereAuraCondition()
-    return HasAnyStatus({ 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9' }, {}, {})
+function Goon_HasFlamingSphereAuraCondition(entity)
+    entity = entity or context.Source
+    return HasAnyStatus({ 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9' }, {}, {}, entity)
 end
 
 -- ==================================== Fetch character levels ====================================
