@@ -196,6 +196,7 @@ function Goon_BasicHarmfulInterruptConditions(target, source, observer)
 	local target = target or context.Target
 	local source = source or context.Source
 	local observer = observer or context.Observer
+
     return (Player(observer) | ~HasStatus('SG_Invisible', observer))
         & IsAbleToReact(observer)
         & (~HasStatus('SG_Invisible', target) | Goon_CanSeeInvisible(source, target))
@@ -209,7 +210,7 @@ function Goon_AttackOfOpportunityConditions()
 	local observer = observer or context.Observer
 
     return Goon_BasicHarmfulInterruptConditions(target, source, observer)
-        & Enemy(observer, target) & ~Self(observer, target) & ~Self(source, target)
+        & Enemy(source, target) & ~Self(observer, target) & ~Self(source, target)
         & ~HasSpellFlag(SpellFlags.IgnoreAoO, target)
         & ~AnyEntityIsItem()
 		& ~Tagged('OCS_ObjectCharacter', target)
@@ -240,9 +241,9 @@ function Goon_AttackOfOpportunityConditions_CriticalMiss()
 
     return Goon_BasicHarmfulInterruptConditions(target_, source_, observer)
         & Self(observer, target) & ~Self(observer, source) & ~Self(target, source)
+        & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.IsHarmful)
         & HasLastAttackTriggered()
         -- & IsCriticalMiss()
-        & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail...
         -- & (~DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, critRetaliateRange) | IsMeleeAttack()) -- TODO: Function for checking as many things as possible to determine good estimates of weapon reach. DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source)
         & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
         & ~AnyEntityIsItem()
