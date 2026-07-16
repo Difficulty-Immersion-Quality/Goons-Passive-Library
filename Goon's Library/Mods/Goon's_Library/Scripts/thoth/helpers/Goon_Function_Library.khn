@@ -203,6 +203,7 @@ function Goon_BasicHarmfulInterruptConditions(target, source, observer)
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
+-- Bug: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
 
 function Goon_AttackOfOpportunityConditions()
 	local target = target or context.Target
@@ -231,6 +232,7 @@ end
 -- EXAMPLE - POLEARM MASTER:
 -- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
 
+-- Note: Use with Goon_InMeleeAttackRange
 function Goon_AttackOfOpportunityConditions_CriticalMiss()
 	local target = target or context.Target
 	local source = source or context.Source
@@ -241,10 +243,9 @@ function Goon_AttackOfOpportunityConditions_CriticalMiss()
 
     return Goon_BasicHarmfulInterruptConditions(target_, source_, observer)
         & Self(observer, target) & ~Self(observer, source) & ~Self(target, source)
-        & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.IsHarmful)
+        & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.Harmful)
         & HasLastAttackTriggered()
-        -- & IsCriticalMiss()
-        -- & (~DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, critRetaliateRange) | IsMeleeAttack()) -- TODO: Function for checking as many things as possible to determine good estimates of weapon reach. DistanceToEntityGreaterThan(2, context.ObserverPosition, context.Source)
+        & IsCriticalMiss()
         & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
         & ~AnyEntityIsItem()
 		& ~Tagged('OCS_ObjectCharacter', target_)
@@ -328,6 +329,41 @@ end
 function Goon_IsEntityDominated(entity)
     entity = entity or context.Source
     return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {}, entity)
+end
+
+-- ==================================== Range checks ====================================
+-- TODO: DistanceToTargetGreaterThan vs DistanceToGreaterThan. Edges are preferable to center of entity most of the time I reckon.
+-- TODO: Better calculate estimates, try fetching actual melee range for main hand.
+
+function Goon_HasReachWeaponEquipped_MainHand(source)
+    local source = source or context.Source
+    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
+    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon)
+end
+
+function Goon_HasReachWeaponEquipped_OffHand(source)
+    local source = source or context.Source
+    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, source)
+    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon)
+end
+
+function Goon_InMeleeAttackRange(source, offhand)
+    source = source or context.Source
+
+    local range = 2
+    if offhand ~= nil then
+        local hasReach
+        if offhand then
+            hasReach = Goon_HasReachWeaponEquipped_OffHand(source)
+        else
+            hasReach = Goon_HasReachWeaponEquipped_MainHand(source)
+        end
+        if hasReach then
+            range = 3
+        end
+    end
+
+    return ~DistanceToTargetGreaterThan(range)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
@@ -1618,7 +1654,6 @@ end
 
 -- ==================================== Blindness, Darkness, Illusions ====================================
 -- TODO: These could be more robust no?
--- TODO: DistanceToTargetGreaterThan(3) vs DistanceToGreaterThan. Edges are preferable to center of entity most of the time I reckon.
 
 function Goon_CanIgnoreBlindness_Melee(entity)
     entity = entity or context.Source
