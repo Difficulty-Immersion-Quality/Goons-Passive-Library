@@ -1305,20 +1305,20 @@ end
 -- WearingArmor and HasShieldEquipped functions DGAF about you being in wildshape and count your equipment, unlike when using GetItemInEquipmentSlot where it doesn't work for wildshape.
 function Goon_NotWearingArmorOrHasShieldEquipped(entity)
     entity = entity or context.Source
-    return (~WearingArmor(entity) & ~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus()) 
-         & Goon_IsNonHostilePolymorphStatus()
+    return (~WearingArmor(entity) & ~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus(entity)) 
+         & Goon_IsNonHostilePolymorphStatus(entity)
 end
 
 function Goon_NotWearingArmor(entity)
     entity = entity or context.Source
-    return (~WearingArmor(entity) | Goon_IsRestrictedPolymorphStatus()) 
-         & Goon_IsNonHostilePolymorphStatus()
+    return (~WearingArmor(entity) | Goon_IsRestrictedPolymorphStatus(entity)) 
+         & Goon_IsNonHostilePolymorphStatus(entity)
 end
 
 function Goon_NotHasShieldEquipped(entity)
     entity = entity or context.Source
-    return (~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus()) 
-         & Goon_IsNonHostilePolymorphStatus()
+    return (~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus(entity)) 
+         & Goon_IsNonHostilePolymorphStatus(entity)
 end
 
 -- ==================================== Weapon enchant checks ====================================
@@ -1506,6 +1506,33 @@ end
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
 -- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game.
 
+function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, entity)
+    entity = entity or context.Source
+
+    local slot
+    if isRanged then
+        if isOffhand then
+            slot = EquipmentSlot.RangedOffHand
+        else
+            slot = EquipmentSlot.RangedMainHand
+        end
+    else
+        if isOffhand then
+            slot = EquipmentSlot.MeleeOffHand
+        else
+            slot = EquipmentSlot.MeleeMainHand
+        end
+    end
+
+    local weapon = GetItemInEquipmentSlot(slot, entity)
+    local property = WeaponProperties.Melee
+    if isRanged then
+        property = WeaponProperties.Ranged
+    end
+
+    return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
+end
+
 function Goon_IsWeapon()
     return Goon_IsMeleeWeapon()
          | Goon_IsRangedWeapon()
@@ -1594,11 +1621,11 @@ end
 
 function Goon_HasMagicalUnarmed(entity)
     entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph() & HasPassive('PrimalStrike', entity)
+    return Goon_IsWildshapeDruidPolymorph(entity) & HasPassive('PrimalStrike', entity)
          | HasPassive('KiEmpoweredStrikes', entity)
-         | Goon_HasMagicalUnarmed_Expansion()
-         | Goon_HasMagicalUnarmed_BloodHunter()
-         | Goon_HasMagicalUnarmed_Veenab()
+         | Goon_HasMagicalUnarmed_Expansion(entity)
+         | Goon_HasMagicalUnarmed_BloodHunter(entity)
+         | Goon_HasMagicalUnarmed_Veenab(entity)
          | HasPassive('InvestmentOfTheChainMaster_Familiar', entity)
          | HasPassive('SVZephyr_TapestryTatteringArms', entity)
          | HasPassive('Passive_Mystic_FlawlessTechnique', entity)
@@ -1646,22 +1673,22 @@ end
 
 function Goon_IsDruidWildshapeOrStatus(entity)
     entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph() | Goon_IsMyrmidonDruidPolymorph() | Goon_IsHumanoidDruidPolymorph()
+    return Goon_IsWildshapeDruidPolymorph(entity) | Goon_IsMyrmidonDruidPolymorph(entity) | Goon_IsHumanoidDruidPolymorph(entity)
 end
 
 function Goon_IsDruidWildshape(entity)
     entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph() | Goon_IsMyrmidonDruidPolymorph()
+    return Goon_IsWildshapeDruidPolymorph(entity) | Goon_IsMyrmidonDruidPolymorph(entity)
 end
 
 function Goon_IsRestrictedPolymorphStatus(entity)
     entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph() | Goon_IsMyrmidonDruidPolymorph() | Tagged('SLAYER', entity)
+    return Goon_IsWildshapeDruidPolymorph(entity) | Goon_IsMyrmidonDruidPolymorph(entity) | Tagged('SLAYER', entity)
 end
 
 function Goon_IsUnrestrictedPolymorphStatus(entity)
     entity = entity or context.Source
-    return (Goon_IsHumanoidDruidPolymorph() | Goon_IsOtherPolymorph()) & (~Goon_IsRestrictedPolymorphStatus() & Goon_IsNonHostilePolymorphStatus())
+    return (Goon_IsHumanoidDruidPolymorph(entity) | Goon_IsOtherPolymorph(entity)) & (~Goon_IsRestrictedPolymorphStatus(entity) & Goon_IsNonHostilePolymorphStatus(entity))
 end
 
 -- TODO: How would I go about filtering sources of unwilling polymorphs for a custom ImmutableForm? Pseudo status group?
