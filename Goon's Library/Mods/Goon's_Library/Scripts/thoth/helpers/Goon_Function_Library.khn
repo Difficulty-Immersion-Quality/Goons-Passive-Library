@@ -204,6 +204,7 @@ end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
 -- Bug: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
+-- WieldingWeapon('Ammunition', false, false, context.Source)
 
 function Goon_AttackOfOpportunityConditions()
 	local target = target or context.Target
@@ -285,7 +286,7 @@ function Goon_SneakAttackInterruptConditions()
 end
 
 -- Sneak Attack action "TargetConditions"
--- TODO: The error message of "Must have Advantage against the target" is not accurate to mechanics - at least for the Rakish versions.
+-- TODO: The default error message of "Must have Advantage against the target" is not accurate to mechanics - at least for the Rakish versions.
 function Goon_SneakAttackTargetConditions_Melee()
     return Character() & ~Self() & ~Dead() & ~Tagged('INANIMATE')
          & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
@@ -332,20 +333,8 @@ function Goon_IsEntityDominated(entity)
 end
 
 -- ==================================== Range checks ====================================
--- TODO: DistanceToTargetGreaterThan vs DistanceToGreaterThan. Edges are preferable to center of entity most of the time I reckon.
+-- TODO: DistanceToTargetGreaterThan vs DistanceToGreaterThan vs DistanceToEntityGreaterThan. Edges are preferable to center of entity most of the time I reckon, DistanceToEntityGreaterThan based.
 -- TODO: Better calculate estimates, try fetching actual melee range for main hand.
-
-function Goon_HasReachWeaponEquipped_MainHand(source)
-    local source = source or context.Source
-    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
-    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon)
-end
-
-function Goon_HasReachWeaponEquipped_OffHand(source)
-    local source = source or context.Source
-    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, source)
-    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon)
-end
 
 function Goon_InMeleeAttackRange(source, offhand)
     source = source or context.Source
@@ -364,6 +353,51 @@ function Goon_InMeleeAttackRange(source, offhand)
     end
 
     return ~DistanceToTargetGreaterThan(range)
+    -- return ~DistanceToEntityGreaterThan(range)
+end
+
+function Goon_HasReachWeaponEquipped_MainHand(source)
+    local source = source or context.Source
+    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
+    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+end
+
+function Goon_HasReachWeaponEquipped_OffHand(source)
+    local source = source or context.Source
+    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, source)
+    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+end
+
+-- ==================================== Range checks - Ranged
+
+function Goon_InRangedAttackRange(source, offhand)
+    source = source or context.Source
+
+    local range = 18
+    local isHandCrossbow
+    if offhand then
+        isHandCrossbow = Goon_IsHandCrossbowEquipped_RangedOffHand(source)
+    else
+        isHandCrossbow = Goon_IsHandCrossbowEquipped_RangedMainHand(source)
+    end
+    if isHandCrossbow then
+        range = 15
+    end
+
+    return ~DistanceToTargetGreaterThan(range)
+    -- return ~DistanceToEntityGreaterThan(range)
+end
+
+function Goon_IsHandCrossbowEquipped_RangedMainHand(source)
+    local source = source or context.Source
+    local weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, source)
+    return weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+end
+
+function Goon_IsHandCrossbowEquipped_RangedOffHand(source)
+    local source = source or context.Source
+    local weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, source)
+    return weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
