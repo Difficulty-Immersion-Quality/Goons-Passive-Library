@@ -1527,7 +1527,7 @@ function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, entity)
     local weapon = GetItemInEquipmentSlot(slot, entity)
     local property = WeaponProperties.Melee
     if isRanged then
-        property = WeaponProperties.Ranged
+        property = WeaponProperties.Ammunition
     end
 
     return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
