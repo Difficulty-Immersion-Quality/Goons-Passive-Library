@@ -333,71 +333,91 @@ function Goon_IsEntityDominated(entity)
 end
 
 -- ==================================== Range checks ====================================
--- TODO: DistanceToTargetGreaterThan vs DistanceToGreaterThan vs DistanceToEntityGreaterThan. Edges are preferable to center of entity most of the time I reckon, DistanceToEntityGreaterThan based.
--- TODO: Better calculate estimates, try fetching actual melee range for main hand.
+-- Note: Edges are preferable to center of entity when trying to mirror attack ranges. Gigachad DistanceToEntityGreaterThan vs virgin DistanceToTargetGreaterThan and DistanceToGreaterThan.
+-- TODO: Account for stuff like creature size, and whatever else needs factoring in.
 
-function Goon_InMeleeAttackRange(source, offhand)
-    source = source or context.Source
+-- function DistanceToEntityGreaterThan(value, from, to)
+--     local from = from or context.SourcePosition
+--     local to = to or context.Target
+--     return ConditionResult(DistanceToEntityHitBounds(from, to) > value)
+-- end
 
-    local range = 2
-    if offhand ~= nil then
-        local hasReach
-        if offhand then
-            hasReach = Goon_HasReachWeaponEquipped_OffHand(source)
-        else
-            hasReach = Goon_HasReachWeaponEquipped_MainHand(source)
-        end
-        if hasReach then
-            range = 3
+-- EXAMPLE usage in interrupts
+-- // data "Conditions" "Goon_AttackOfOpportunityConditions() and Goon_InMeleeAttackRange(context.Source, true)"
+-- data "Conditions" "(Goon_AttackOfOpportunityConditions() and Goon_InMeleeAttackRange(true,true) and not IsAttack()) or (Goon_AttackOfOpportunityConditions_CriticalMiss() and Goon_InMeleeAttackRange(true,true,context.Source))"
+
+function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
+
+    if observerIsSourcePosition == nil then
+        observerIsSourcePosition = false
+    end
+
+    local position = context.SourcePosition
+    if observerIsSourcePosition then
+        position = context.ObserverPosition
+    end
+
+    if range == nil then
+        local mainWeaponRange = 2
+        local reachWeaponRange = 3
+
+        range = mainWeaponRange
+        if offhand ~= nil then
+            local weapon
+            if offhand then
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, observer)
+            else
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, observer)
+            end
+            local hasReach = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+            if hasReach then
+                range = reachWeaponRange
+            end
         end
     end
 
-    return ~DistanceToTargetGreaterThan(range)
-    -- return ~DistanceToEntityGreaterThan(range)
-end
-
-function Goon_HasReachWeaponEquipped_MainHand(source)
-    local source = source or context.Source
-    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
-    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
-end
-
-function Goon_HasReachWeaponEquipped_OffHand(source)
-    local source = source or context.Source
-    local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, source)
-    return weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+    return ~DistanceToEntityGreaterThan(range, position, target)
 end
 
 -- ==================================== Range checks - Ranged
 
-function Goon_InRangedAttackRange(source, offhand)
-    source = source or context.Source
+function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
 
-    local range = 18
-    local isHandCrossbow
-    if offhand then
-        isHandCrossbow = Goon_IsHandCrossbowEquipped_RangedOffHand(source)
-    else
-        isHandCrossbow = Goon_IsHandCrossbowEquipped_RangedMainHand(source)
-    end
-    if isHandCrossbow then
-        range = 15
+    if observerIsSourcePosition == nil then
+        observerIsSourcePosition = false
     end
 
-    return ~DistanceToTargetGreaterThan(range)
-    -- return ~DistanceToEntityGreaterThan(range)
-end
+    local position = context.SourcePosition
+    if observerIsSourcePosition then
+        position = context.ObserverPosition
+    end
 
-function Goon_IsHandCrossbowEquipped_RangedMainHand(source)
-    local source = source or context.Source
-    local weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, source)
-    return weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
-end
+    if range == nil then
+        local mainWeaponRange = 18.5
+        local handCrossbowRange = 15.5
 
-function Goon_IsHandCrossbowEquipped_RangedOffHand(source)
-    local source = source or context.Source
-    local weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, source)
-    return weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+        range = mainWeaponRange
+        if offhand ~= nil then
+            local weapon
+            if offhand then
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, observer)
+            else
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, observer)
+            end
+            local isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+            if isHandCrossbow then
+                range = handCrossbowRange
+            end
+        end
+    end
+
+    return ~DistanceToEntityGreaterThan(range, position, target)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
@@ -1723,11 +1743,11 @@ function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
     local targetPosition = context.TargetPosition
 
     if sourceObserver then
-        sourcePosition = context.ObserverPosition
+        sourcePosition = context.ObserverIsSourcePosition
     end
 
     if targetObserver then
-        targetPosition = context.ObserverPosition
+        targetPosition = context.ObserverIsSourcePosition
     end
 
     return Tagged('BLINDSIGHT', source)
