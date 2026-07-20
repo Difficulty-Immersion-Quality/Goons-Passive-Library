@@ -346,7 +346,7 @@ end
 -- end
 
 -- EXAMPLE usage in interrupt conditions:
--- "((Goon_AttackOfOpportunityConditions() and not IsAttack()) or (Goon_AttackOfOpportunityConditions_CriticalMiss() and Goon_InMeleeAttackRange(false,true,context.Source))) and Goon_HasWeaponTypeInSlot(false,false,context.Observer)"
+-- "(Goon_AttackOfOpportunityConditions() or (Goon_AttackOfOpportunityConditions_CriticalMiss() and Goon_InMeleeAttackRange(false,true,context.Source))) and Goon_HasWeaponTypeInSlot(false,false,context.Observer)"
 
 function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
 	target = target or context.Target
