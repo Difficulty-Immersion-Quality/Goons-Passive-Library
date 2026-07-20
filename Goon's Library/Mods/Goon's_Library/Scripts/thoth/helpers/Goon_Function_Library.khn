@@ -214,6 +214,7 @@ function Goon_AttackOfOpportunityConditions()
 
     return Goon_BasicHarmfulInterruptConditions(target, source, observer)
         & Enemy(source, target) & ~Self(observer, target) & ~Self(source, target)
+        & ~Goon_IsAction()
         & ~HasSpellFlag(SpellFlags.IgnoreAoO, target)
         & ~AnyEntityIsItem()
 		& ~Tagged('OCS_ObjectCharacter', target)
@@ -336,6 +337,7 @@ end
 -- ==================================== Range checks ====================================
 -- Note: Edges are preferable to center of entity when trying to mirror attack ranges. Gigachad DistanceToEntityGreaterThan vs virgin DistanceToTargetGreaterThan and DistanceToGreaterThan.
 -- TODO: Account for stuff like creature size, and whatever else needs factoring in.
+-- TODO: As above, increase for wildshapes and shit, it gets really tedious when that measurement from edge to centre is a net negative.
 
 -- function DistanceToEntityGreaterThan(value, from, to)
 --     local from = from or context.SourcePosition
@@ -683,6 +685,20 @@ end
 -- TODO: Referencing the interrupts below doesn't really work the same as spells, e.g. OnDamage contexts for functors.
 -- Best course of action is likely to have the interrupts UseSpell, replacing animations with the instant cast one. "Target_NULLSPELL"?
 -- "I think context.InterruptId is only for the interrupt RollConditions" - Joow
+
+function Goon_IsAction()
+    return IsAttack()
+         | IsSpell()
+         | SpellTypeIs(SpellType.Zone)
+         | SpellTypeIs(SpellType.Projectile)
+         | SpellTypeIs(SpellType.ProjectileStrike)
+         | SpellTypeIs(SpellType.Rush)
+         | SpellTypeIs(SpellType.Shout)
+         | SpellTypeIs(SpellType.Target)
+         | SpellTypeIs(SpellType.Teleportation)
+         | SpellTypeIs(SpellType.Wall)
+         | SpellTypeIs(SpellType.Throw)
+end
 
 -- ==================================== Sanctuary
 -- Spells that need manually specifying in "SanctuarySpecificSpell", for removal of the caster's Sanctuary.
