@@ -256,7 +256,7 @@ function Goon_AttackOfOpportunityConditions_CriticalMiss(target_, source_, obser
         & Self(observer, source_) & ~Self(observer, target_) & ~Self(source_, target_) & ~Dead(target_) & ~Tagged('INANIMATE', target_)
         & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.Harmful)
         & HasLastAttackTriggered()
-        -- & IsCriticalMiss()
+        & IsCriticalMiss()
         & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
         & ~AnyEntityIsItem()
 		& ~Tagged('OCS_ObjectCharacter', target_)
@@ -1878,11 +1878,13 @@ function Goon_CanIgnoreBlindness_Ranged(entity)
          | HasPassive('Blindsense', entity) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))
 end
 
-function Goon_CanIgnoreIllusions(entity)
+function Goon_CanIgnoreIllusions(entity, sourcePosition, targetPosition)
     entity = entity or context.Source
+    sourcePosition = context.SourcePosition
+    targetPosition = context.TargetPosition
     return Tagged('BLINDSIGHT', entity) 
-         | (HasStatus('TRUESIGHT', entity) & ~DistanceToTargetGreaterThan(36.5))
-         | ((HasPassive('FightingStyle_BlindFighting', entity) | (HasPassive('Blindsense', entity)) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))) & ~DistanceToTargetGreaterThan(3))
+         | (HasStatus('TRUESIGHT', entity) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5))
+         | ((HasPassive('FightingStyle_BlindFighting', entity) | (HasPassive('Blindsense', entity)) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
          | HasPassive('WitchSight', entity) -- TODO: Same/similar distance check as TRUESIGHT?
 end
 
