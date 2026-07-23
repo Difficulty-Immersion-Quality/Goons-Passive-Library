@@ -193,9 +193,9 @@ end
 -- ==================================== Interrupt conditions ====================================
 
 function Goon_BasicHarmfulInterruptConditions(target, source, observer)
-	local target = target or context.Target
-	local source = source or context.Source
-	local observer = observer or context.Observer
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
 
     return IsAbleToReact(observer)
         & (Player(observer) | ~HasStatus('SG_Invisible', observer))
@@ -208,9 +208,9 @@ end
 -- WieldingWeapon('Ammunition', false, false, context.Source)
 
 function Goon_AttackOfOpportunityConditions()
-	local target = target or context.Target
-	local source = source or context.Source
-	local observer = observer or context.Observer
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
 
     return Goon_BasicHarmfulInterruptConditions(target, source, observer)
         & Enemy(source, target) & ~Self(observer, target) & ~Self(source, target)
@@ -237,12 +237,12 @@ end
 
 -- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange
 function Goon_AttackOfOpportunityConditions_CriticalMiss()
-	local target = target or context.Target
-	local source = source or context.Source
-	local observer = observer or context.Observer
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
 
-    local target_ = source -- flipped due to context
-    local source_ = target
+    target_ = source -- flipped due to context
+    source_ = target
 
     return Goon_BasicHarmfulInterruptConditions(target_, source_, observer)
         & Self(observer, target) & ~Self(observer, source) & ~Self(target, source)
@@ -357,24 +357,24 @@ function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, sour
         observerIsSourcePosition = false
     end
 
-    local position = context.SourcePosition
+    position = context.SourcePosition
     if observerIsSourcePosition then
         position = context.ObserverPosition
     end
 
     if range == nil then
-        local mainWeaponRange = 2
-        local reachWeaponRange = 3
+        mainWeaponRange = 2
+        reachWeaponRange = 3
 
         range = mainWeaponRange
         if offhand ~= nil then
-            local weapon
+            weapon
             if offhand then
                 weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, observer)
             else
                 weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, observer)
             end
-            local hasReach = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+            hasReach = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
             if hasReach then
                 range = reachWeaponRange
             end
@@ -395,24 +395,24 @@ function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, sou
         observerIsSourcePosition = false
     end
 
-    local position = context.SourcePosition
+    position = context.SourcePosition
     if observerIsSourcePosition then
         position = context.ObserverPosition
     end
 
     if range == nil then
-        local mainWeaponRange = 18.5
-        local handCrossbowRange = 15.5
+        mainWeaponRange = 18.5
+        handCrossbowRange = 15.5
 
         range = mainWeaponRange
         if offhand ~= nil then
-            local weapon
+            weapon
             if offhand then
                 weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, observer)
             else
                 weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, observer)
             end
-            local isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+            isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
             if isHandCrossbow then
                 range = handCrossbowRange
             end
@@ -447,12 +447,11 @@ function Goon_HasDeafenedCondition()
     return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}) -- | HasPassive('Deafness')
 end
 
--- TODO: "not" instead of ~? Allowed in if statement?
 -- IsDeaf not an included function
 function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
-    local advantage = advantage or false
-    local disadvantage = disadvantage or false
-    local target = target or context.Target
+    advantage = advantage or false
+    disadvantage = disadvantage or false
+    target = target or context.Target
 
     if not IsDeaf(target).Result then
         st = SavingThrow(ability, dc, advantage, disadvantage, target)
@@ -642,7 +641,7 @@ function Goon_CharacterLevelLessThanOrEqual(value, entity)
 end
 
 function Goon_IsCharacterLevelEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_CharacterLevelGreaterThanOrEqual(value, entity) & Goon_CharacterLevelLessThanOrEqual(value2, entity)
 end
 
@@ -676,8 +675,8 @@ end
 -- ==================================== Check current duration of status ====================================
 
 function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
-    local entity = entity or context.Target
-    local number = number or 0
+    entity = entity or context.Target
+    number = number or 0
     return ConditionResult(math.floor(GetStatusDuration(stringStatusGroupName, entity)) == number)
 end
 
@@ -1281,8 +1280,8 @@ end
 
 function Goon_Dueling_Check(entity)
     entity = entity or context.Target
-    local hasNonVersatileWeapon = WieldingWeapon('Melee', false, true, entity) & ~WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Twohanded', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity)
-    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & WieldingWeapon('Melee', false, true, entity) & HasShieldEquipped(entity)
+    hasNonVersatileWeapon = WieldingWeapon('Melee', false, true, entity) & ~WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Twohanded', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity)
+    hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & WieldingWeapon('Melee', false, true, entity) & HasShieldEquipped(entity)
     return hasNonVersatileWeapon | hasVersatileWeapon
 end
 
@@ -1294,8 +1293,8 @@ end
 
 function Goon_GreatWeapon_Check(entity)
     entity = entity or context.Target
-    local hasTwohandedWeapon = WieldingWeapon('Twohanded', false, true, entity) & WieldingWeapon('Melee', false, true, entity)
-    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity) & ~HasShieldEquipped(entity)
+    hasTwohandedWeapon = WieldingWeapon('Twohanded', false, true, entity) & WieldingWeapon('Melee', false, true, entity)
+    hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity) & ~HasShieldEquipped(entity)
     return hasTwohandedWeapon | hasVersatileWeapon
 end
 
@@ -1312,21 +1311,20 @@ end
 
 function Goon_Crossbow_Check(entity)
     entity = entity or context.Target
-    return WieldingWeapon('Loading', false, true, entity) -- result was discarded, always returned nil
+    return WieldingWeapon('Loading', false, true, entity)
 end
 
 function Goon_HasLightArmor(entity)
     entity = entity or context.Target
-    local armor = GetActiveArmor(entity)
+    armor = GetActiveArmor(entity)
     return IsOfProficiencyGroup("LightArmor", armor)
 end
 
 -- Alternative light armor check matching how it's checked in vanilla
 function Goon_HasLightArmorAlt(entity)
     entity = entity or context.Target
-    local armor = GetActiveArmor(entity)
-    local hasLightArmor = armor.ArmorType == ArmorType.Padded or armor.ArmorType == ArmorType.Leather or
-    armor.ArmorType == ArmorType.StuddedLeather
+    armor = GetActiveArmor(entity)
+    hasLightArmor = armor.ArmorType == ArmorType.Padded or armor.ArmorType == ArmorType.Leather or armor.ArmorType == ArmorType.StuddedLeather
     return ConditionResult(hasLightArmor)
 end
 
@@ -1355,22 +1353,22 @@ end
 -- TODO: I don't think "entity, context.Source" is the play. Test and alter later.
 
 function Goon_IsSpellcastingModifierWeapon(entity)
-    local entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
+    entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
     return HasAnyStatus({ 'SHILLELAGH', 'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9' }, {}, {}, entity, context.Source)
 end
 
 function Goon_IsIntelligenceModifierWeapon(entity)
-    local entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
+    entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
     return HasAnyStatus({ 'GOON_WHERETHEWIZARDBLADEENCHANTFRHARRYPOTTERGANGSHIT' }, {}, {}, entity, context.Source)
 end
 
 function Goon_IsWisdomModifierWeapon(entity)
-    local entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
+    entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
     return HasAnyStatus({ 'FourEle_Attuned' }, {}, {}, entity, context.Source)
 end
 
 function Goon_IsCharismaModifierWeapon(entity)
-    local entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
+    entity = entity or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
     return HasAnyStatus({ 'PACT_BLADE', 'HEXBLADE_BIND' }, {}, {}, entity, context.Source)
          | Tagged('PACT_OF_THE_BLADE', entity)
 end
@@ -1488,14 +1486,14 @@ end
 -- TODO: The tag checks after return are too binary for my liking, but that's pretty low prio because I'm unsure any of those even exist in DIQ rn. Though, I bet Sumra has some stuff...
 
 function Goon_IsCastingModifierGreaterThanDexterity_IsDexterityGreaterThanStrength()
-    local source = context.Source
-    local mainHandWeapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
+    source = context.Source
+    mainHandWeapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
 
-    local IsConstitutionGreaterThanDexterity            = ConditionResult(false)
-    local IsSpellcastingModifierGreaterThanDexterity    = ConditionResult(false)
-    local IsIntelligenceGreaterThanDexterity            = ConditionResult(false)
-    local IsWisdomGreaterThanDexterity                  = ConditionResult(false)
-    local IsCharismaGreaterThanDexterity                = ConditionResult(false)
+    IsConstitutionGreaterThanDexterity            = ConditionResult(false)
+    IsSpellcastingModifierGreaterThanDexterity    = ConditionResult(false)
+    IsIntelligenceGreaterThanDexterity            = ConditionResult(false)
+    IsWisdomGreaterThanDexterity                  = ConditionResult(false)
+    IsCharismaGreaterThanDexterity                = ConditionResult(false)
 
     IsConstitutionGreaterThanDexterity = (HasPassive('LLBoulder_DextrousUnarmedAttacks', source) | Tagged('BOULDER', source))
         -- & ConditionResult(source.Constitution >= source.Strength)
@@ -1537,7 +1535,7 @@ end
 function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, entity)
     entity = entity or context.Source
 
-    local slot
+    slot
     if isRanged then
         if isOffhand then
             slot = EquipmentSlot.RangedOffHand
@@ -1552,8 +1550,8 @@ function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, entity)
         end
     end
 
-    local weapon = GetItemInEquipmentSlot(slot, entity)
-    local property = WeaponProperties.Melee
+    weapon = GetItemInEquipmentSlot(slot, entity)
+    property = WeaponProperties.Melee
     if isRanged then
         property = WeaponProperties.Ammunition
     end
@@ -1811,13 +1809,13 @@ end
 -- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
 function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
-    local source = source or context.Source
-    local target = target or context.Target
-    local sourceObserver = sourceObserver or false
-    local targetObserver = targetObserver or false
+    source = source or context.Source
+    target = target or context.Target
+    sourceObserver = sourceObserver or false
+    targetObserver = targetObserver or false
 
-    local sourcePosition = context.SourcePosition
-    local targetPosition = context.TargetPosition
+    sourcePosition = context.SourcePosition
+    targetPosition = context.TargetPosition
 
     if sourceObserver then
         sourcePosition = context.ObserverIsSourcePosition
@@ -1835,16 +1833,15 @@ function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
 end
 
 function Goon_CanSeeSneaking(source, target)
-    local source = source or context.Source
-    local target = target or context.Target
-    -- local from = from or context.SourcePosition
-    -- local to = to or context.Target
-
+    source = source or context.Source
+    target = target or context.Target
+    -- from = from or context.SourcePosition
+    -- to = to or context.Target
     return HasStatus('SNEAKING', target) & (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
 end
 
 function Goon_IsInvisibleSeen(entity)
-    local entity = entity or context.Target
+    entity = entity or context.Target
     return HasStatus('GOON_INVISIBLE_SEEN', entity)
          | HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', entity)
          | HasStatus('GOON_INVISIBILITY_SEEN', entity)
@@ -2023,32 +2020,32 @@ end
 
 -- Class level checks
 function Goon_ClassLevelEquals(level, class, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.GetClassLevel(class) == level)
 end
 
 function Goon_ClassLevelGreaterThan(level, class, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.GetClassLevel(class) > level)
 end
 
 function Goon_ClassLevelLessThan(level, class, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.GetClassLevel(class) < level)
 end
 
 function Goon_ClassLevelGreaterThanOrEqual(level, class, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.GetClassLevel(class) >= level)
 end
 
 function Goon_ClassLevelLessThanOrEqual(level, class, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.GetClassLevel(class) <= level)
 end
 
 function Goon_IsClassLevelEqualOrBetween(value, value2, class, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     -- was missing class param; entity was landing in the class arg of the sub-calls, GetClassLevel would get 0
     -- if the intent was character level rather than class level, swap these for Goon_CharacterLevelGreaterThanOrEqual / LessThanOrEqual instead
     return Goon_ClassLevelGreaterThanOrEqual(value, class, entity) & Goon_ClassLevelLessThanOrEqual(value2, class, entity)
@@ -2081,194 +2078,194 @@ function Goon_ProficiencyBonusLessThanOrEqual(value, entity)
 end
 
 function Goon_IsProficiencyBonusEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_ProficiencyBonusGreaterThanOrEqual(value, entity) & Goon_ProficiencyBonusLessThanOrEqual(value2, entity)
 end
 
 -- Ability score checks
 -- Strength
 function Goon_StrengthEquals(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Strength == value)
 end
 
 function Goon_StrengthGreatherThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Strength > value)
 end
 
 function Goon_StrengthLessThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Strength < value)
 end
 
 function Goon_StrengthGreatherThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Strength >= value)
 end
 
 function Goon_StrengthLessThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Strength <= value)
 end
 
 function Goon_IsStrengthEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_StrengthGreatherThanOrEqual(value, entity) & Goon_StrengthLessThanOrEqual(value2, entity)
 end
 
 -- Dexterity
 function Goon_DexterityEquals(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Dexterity == value)
 end
 
 function Goon_DexterityGreatherThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Dexterity > value)
 end
 
 function Goon_DexterityLessThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Dexterity < value)
 end
 
 function Goon_DexterityGreatherThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Dexterity >= value)
 end
 
 function Goon_DexterityLessThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Dexterity <= value)
 end
 
 function Goon_IsDexterityEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_DexterityGreatherThanOrEqual(value, entity) & Goon_DexterityLessThanOrEqual(value2, entity)
 end
 
 -- Constitution
 function Goon_ConstitutionEquals(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Constitution == value)
 end
 
 function Goon_ConstitutionGreatherThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Constitution > value)
 end
 
 function Goon_ConstitutionLessThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Constitution < value)
 end
 
 function Goon_ConstitutionGreatherThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Constitution >= value)
 end
 
 function Goon_ConstitutionLessThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Constitution <= value)
 end
 
 function Goon_IsConstitutionEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_ConstitutionGreatherThanOrEqual(value, entity) & Goon_ConstitutionLessThanOrEqual(value2, entity)
 end
 
 -- Intelligence
 function Goon_IntelligenceEquals(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Intelligence == value)
 end
 
 function Goon_IntelligenceGreatherThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Intelligence > value)
 end
 
 function Goon_IntelligenceLessThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Intelligence < value)
 end
 
 function Goon_IntelligenceGreatherThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Intelligence >= value)
 end
 
 function Goon_IntelligenceLessThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Intelligence <= value)
 end
 
 function Goon_IsIntelligenceEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_IntelligenceGreatherThanOrEqual(value, entity) & Goon_IntelligenceLessThanOrEqual(value2, entity)
 end
 
 -- Wisdom
 function Goon_WisdomEquals(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Wisdom == value)
 end
 
 function Goon_WisdomGreatherThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Wisdom > value)
 end
 
 function Goon_WisdomLessThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Wisdom < value)
 end
 
 function Goon_WisdomGreatherThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Wisdom >= value)
 end
 
 function Goon_WisdomLessThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Wisdom <= value)
 end
 
 function Goon_IsWisdomEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_WisdomGreatherThanOrEqual(value, entity) & Goon_WisdomLessThanOrEqual(value2, entity)
 end
 
 -- Charisma
 function Goon_CharismaEquals(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Charisma == value)
 end
 
 function Goon_CharismaGreatherThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Charisma > value)
 end
 
 function Goon_CharismaLessThan(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Charisma < value)
 end
 
 function Goon_CharismaGreatherThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Charisma >= value)
 end
 
 function Goon_CharismaLessThanOrEqual(value, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return ConditionResult(entity.Charisma <= value)
 end
 
 function Goon_IsCharismaEqualOrBetween(value, value2, entity)
-    local entity = entity or context.Source
+    entity = entity or context.Source
     return Goon_CharismaGreatherThanOrEqual(value, entity) & Goon_CharismaLessThanOrEqual(value2, entity)
 end
 
@@ -2449,7 +2446,7 @@ end
 
 -- Surface checks
 function Goon_IsInWaterSurface(entity)
-    local entity = entity or context.Target
+    entity = entity or context.Target
     return InSurface('SurfaceBlood', entity)
          | InSurface('SurfaceBloodElectrified', entity)
          | InSurface('SurfaceBloodFrozen', entity)
@@ -2462,7 +2459,7 @@ function Goon_IsInWaterSurface(entity)
 end
 
 function Goon_IsInFreezableSurface(entity)
-    local entity = entity or context.Target
+    entity = entity or context.Target
     return InSurface('SurfaceWater', entity)
          | InSurface('SurfaceWaterElectrified', entity)
          | InSurface('SurfaceBlood', entity)
@@ -2471,7 +2468,7 @@ function Goon_IsInFreezableSurface(entity)
 end
 
 function Goon_IsInSlipperySurface(entity)
-    local entity = entity or context.Target
+    entity = entity or context.Target
     return InSurface('SurfaceWaterFrozen', entity)
          | InSurface('SurfaceGreaseFrozen', entity)
          | InSurface('SurfaceBloodFrozen', entity)
@@ -2479,7 +2476,7 @@ function Goon_IsInSlipperySurface(entity)
 end
 
 function Goon_IsInLiquidSurface(entity)
-    local entity = entity or context.Target
+    entity = entity or context.Target
     return InSurface('SurfaceBlood', entity)
          | InSurface('SurfaceBloodElectrified', entity)
          | InSurface('SurfaceBloodFrozen', entity)
@@ -2501,8 +2498,9 @@ end
 -- JM_HasStringInSpellId('Spell1','Spell2')
 -- Original name: function JM_HasStringInSpellId(...)
 function Goon_HasStringInSpellId(...)
-    local strings = { ... }
-    local spellId = context.SpellModificationDescription.SpellId
+    strings = { ... }
+    spellId = context.SpellModificationDescription.SpellId
+
     if spellId ~= "" then
         for _, v in ipairs(strings) do
             if string.find(spellId, v) then
@@ -2516,11 +2514,12 @@ end
 -- JM_SpellOrUpcastOf('Spell1','Spell2')
 -- Original name: function JM_SpellOrUpcastOf(...)
 function Goon_SpellOrUpcastOf(...)
-    local spells = { ... }
-    local spellLevel = context.HitDescription.SpellLevel
-    local spellPowerLevel = context.HitDescription.SpellPowerLevel
+    spells = { ... }
+    spellLevel = context.HitDescription.SpellLevel
+    spellPowerLevel = context.HitDescription.SpellPowerLevel
+
     for _, v in ipairs(spells) do
-        local spell = v
+        spell = v
         if spellPowerLevel ~= spellLevel then
             spell = spell .. string.format("_%i", spellPowerLevel)
         end
@@ -2536,9 +2535,10 @@ end
 -- "But no way to get the observers spellcasting ability from khonsu unfortunately" - joow
 
 function Goon_GetHighestAbility(abilities,entity)
-    local entity = entity or context.Source
-    local highestValue = 0
-    local highestAbility = abilities[1]
+    entity = entity or context.Source
+    highestValue = 0
+    highestAbility = abilities[1]
+
     --will return first ability if tie
     for _,ability in ipairs(abilities) do
         if entity[ability] > highestValue then
@@ -2551,8 +2551,9 @@ end
 
 -- Similar check, but returning the actual number.
 function Goon_GetHighestAbilityValue(abilities, entity)
-    local entity = entity or context.Source
-    local highestValue = 0
+    entity = entity or context.Source
+    highestValue = 0
+
     for _, ability in ipairs(abilities) do
         if entity[ability] > highestValue then
             highestValue = entity[ability]
@@ -2571,7 +2572,7 @@ end
 -- end
 
 -- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
---     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+--     weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
 
 --     if not IsValid(weapon) then
 --         return ConditionResult(false)
@@ -2584,7 +2585,7 @@ end
 -- end
 
 -- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
---     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+--     weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
 
 --     if not IsValid(weapon) then
 --         return ConditionResult(false)
@@ -2597,7 +2598,7 @@ end
 -- end
 
 -- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
---     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+--     MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
 
 --     if MeleeMainHand.IsValid then
 --         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
@@ -2606,7 +2607,7 @@ end
 -- end
 
 -- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
---     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+--     MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
 
 --     if MeleeOffHand.IsValid then
 --         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
@@ -2615,7 +2616,7 @@ end
 -- end
 
 -- function Goon_IsPassiveSourceWeapon_RangedMainHand()
---     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
+--     RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
 
 --     if RangedMainHand.IsValid then
 --         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
@@ -2624,7 +2625,7 @@ end
 -- end
 
 -- function Goon_IsPassiveSourceWeapon_RangedOffHand()
---     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+--     RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
 
 --     if RangedOffHand.IsValid then
 --         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
