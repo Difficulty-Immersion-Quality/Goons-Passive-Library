@@ -1611,6 +1611,20 @@ function Goon_IsThrownWeapon()
     return HasWeaponProperty(WeaponProperties.Thrown)
 end
 
+function Goon_IsThrownWeaponThrow(entity)
+    entity = entity or context.HitDescription.ThrownObject
+    return HasWeaponProperty(WeaponProperties.Thrown,entity)
+end
+
+function Goon_IsMeleeNotThrownWeapon()
+    return HasWeaponProperty(WeaponProperties.Melee) & ~HasWeaponProperty(WeaponProperties.Thrown)
+end
+
+function Goon_IsMeleeNotThrownWeaponThrow(entity)
+    entity = entity or context.HitDescription.ThrownObject
+    return HasWeaponProperty(WeaponProperties.Melee,entity) & ~HasWeaponProperty(WeaponProperties.Thrown,entity)
+end
+
 function Goon_IsAxe()
     return Tagged('WPN_BATTLEAXE')
          | Tagged('WPN_GREATAXE')
