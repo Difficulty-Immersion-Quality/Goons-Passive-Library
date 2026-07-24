@@ -339,30 +339,27 @@ function Goon_SneakAttackTargetConditions_Unarmed(target, source)
          & (HasAdvantage(AttackType.MeleeUnarmedAttack) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source))
 end
 
--- TODO: Does Interrupt_WrathOfTheStorm_Lightning have the best distance check for mirroring proper attack ranges edge to edge?
--- DistanceToGreaterThan(context.SourcePosition, context.TargetPosition, 2)
-
 -- ==================================== Player vs NPC checks + in control vs not in control ====================================
 -- TODO: Check for edge cases where an AI controlled character might be a "Player", or find a better means of checking this stuff.
 
-function Goon_IsPlayerInControl(entity)
-    entity = entity or context.Source
-    return Player(entity) & ~Goon_IsEntityDominated(entity) & ~Goon_IsEntityMad(entity)
+function Goon_IsPlayerInControl(source)
+    source = source or context.Source
+    return Player(source) & ~Goon_IsEntityDominated(source) & ~Goon_IsEntityMad(source)
 end
 
-function Goon_IsAIInControl(entity)
-    entity = entity or context.Source
-    return (Player(entity) & Goon_IsEntityDominated(entity) | ~Player(entity)) & ~Goon_IsEntityMad(entity)
+function Goon_IsAIInControl(source)
+    source = source or context.Source
+    return (Player(source) & Goon_IsEntityDominated(source) | ~Player(source)) & ~Goon_IsEntityMad(source)
 end
 
-function Goon_IsEntityMad(entity)
-    entity = entity or context.Source
-    return HasAnyStatus({ 'SG_Mad' }, {}, {}, entity)
+function Goon_IsEntityMad(source)
+    source = source or context.Source
+    return HasAnyStatus({ 'SG_Mad' }, {}, {}, source)
 end
 
-function Goon_IsEntityDominated(entity)
-    entity = entity or context.Source
-    return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {}, entity)
+function Goon_IsEntityDominated(source)
+    source = source or context.Source
+    return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {}, source)
 end
 
 -- ==================================== Range checks ====================================
@@ -458,29 +455,29 @@ end
 -- ==================================== Metal
 
 -- BUG? -- TODO: or instead of |
-function Goon_IsMetal(entity)
-    entity = entity or context.Target
-    return IsMetalItem(entity) or HasMetalWeaponInAnyHand(entity) or HasMetalArmor(entity) or IsMetalCharacter(entity)
+function Goon_IsMetal(target)
+    target = target or context.Target
+    return IsMetalItem(target) or HasMetalWeaponInAnyHand(target) or HasMetalArmor(target) or IsMetalCharacter(target)
 end
 
 -- ==================================== Bleeding
 
-function Goon_HasBleedingCondition(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'BLEEDING', 'BARBED_ARROW', 'HEAVY_BLEEDING' }, {}, {}, entity)
+function Goon_HasBleedingCondition(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'BLEEDING', 'BARBED_ARROW', 'HEAVY_BLEEDING' }, {}, {}, target)
 end
 
 -- ==================================== Silenced/Deafened
 
 -- TODO: GOON_SILENCED_AURA: not in the lua, intentional?
-function Goon_HasSilencedCondition(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'SILENCED', 'SHA_SILENTLIBRARY_LIBRARIANSILENCE_STATUS', 'LOW_VoicelessPenitent_Silenced', 'SILENCED_MOVEMENT', 'GARROTE_SILENCED' }, {}, {}, entity)
+function Goon_HasSilencedCondition(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'SILENCED', 'SHA_SILENTLIBRARY_LIBRARIANSILENCE_STATUS', 'LOW_VoicelessPenitent_Silenced', 'SILENCED_MOVEMENT', 'GARROTE_SILENCED' }, {}, {}, target)
 end
 
-function Goon_HasDeafenedCondition(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}, entity) -- | HasPassive('Deafness', entity)
+function Goon_HasDeafenedCondition(target)
+    target = enttargetity or context.Target
+    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}, target) -- | HasPassive('Deafness', target)
 end
 
 -- IsDeaf not an included function
@@ -501,14 +498,14 @@ end
 -- "Target_ExtractBrain_Mindflayer" has some dumb shit going on, and why is there such overlap between prone and unconscious anyway?
 -- TODO: Unfuck prone I guess.
 
-function Goon_HasProneCondition_Conscious(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'PRONE','PRONE_GREASE','PRONE_ICE','PRONE_FALLEN','PRONE_THUNDEROUS_SMITE' }, {}, {}, entity)
+function Goon_HasProneCondition_Conscious(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'PRONE','PRONE_GREASE','PRONE_ICE','PRONE_FALLEN','PRONE_THUNDEROUS_SMITE' }, {}, {}, target)
 end
 
-function Goon_HasProneCondition_Unconscious(entity)
-    entity = entity or context.Target
-    return HasStatus('SG_Prone', entity) & HasStatus('SG_Unconscious', entity) & ~Goon_HasProneCondition_Conscious(entity)
+function Goon_HasProneCondition_Unconscious(target)
+    target = target or context.Target
+    return HasStatus('SG_Prone', target) & HasStatus('SG_Unconscious', target) & ~Goon_HasProneCondition_Conscious(target)
 end
 
 -- ==================================== Surfaces
@@ -607,129 +604,129 @@ end
 -- ==================================== Fire shit - Is Karlach cooking?
 -- inlined result variable; .Result: | returns ConditionResult, error overload needs a plain bool
 
-function Goon_HasBurningCondition(entity)
-    entity = entity or context.Target
-    return ConditionResult((Goon_HasBurningCondition_Normal(entity) | Goon_HasBurningCondition_Holy(entity) | Goon_HasBurningCondition_Hell(entity)).Result, { ConditionError("IsNotOnFire") })
+function Goon_HasBurningCondition(target)
+    target = target or context.Target
+    return ConditionResult((Goon_HasBurningCondition_Normal(target) | Goon_HasBurningCondition_Holy(target) | Goon_HasBurningCondition_Hell(target)).Result, { ConditionError("IsNotOnFire") })
 end
 
-function Goon_HasBurningConditionOrTag_Normal(entity)
-    entity = entity or context.Target
-    return ConditionResult((Goon_HasBurningCondition_Normal(entity) | Goon_IsKarlachCooking(entity)).Result, { ConditionError("IsNotOnFire") })
+function Goon_HasBurningConditionOrTag_Normal(target)
+    target = target or context.Target
+    return ConditionResult((Goon_HasBurningCondition_Normal(target) | Goon_IsKarlachCooking(target)).Result, { ConditionError("IsNotOnFire") })
 end
 
-function Goon_HasBurningConditionOrTag(entity)
-    entity = entity or context.Target
-    return ConditionResult((Goon_HasBurningCondition_Normal(entity) | Goon_IsKarlachCooking(entity) | Goon_HasBurningCondition_Holy(entity) | Goon_HasBurningCondition_Hell(entity)).Result, { ConditionError("IsNotOnFire") })
+function Goon_HasBurningConditionOrTag(target)
+    target = target or context.Target
+    return ConditionResult((Goon_HasBurningCondition_Normal(target) | Goon_IsKarlachCooking(target) | Goon_HasBurningCondition_Holy(target) | Goon_HasBurningCondition_Hell(target)).Result, { ConditionError("IsNotOnFire") })
 end
 
 -- ==================================== List functions
 
-function Goon_HasBurningCondition_Normal(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'BURNING', 'BURNING_AZER', 'BURNING_LAVA', 'BURNING_TRAPWALL', 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9', 'FLAMING_SPHERE', 'FLAMING_SPHERE_3', 'FLAMING_SPHERE_4', 'FLAMING_SPHERE_5', 'FLAMING_SPHERE_6', 'FLAMING_SPHERE_7', 'FLAMING_SPHERE_8', 'FLAMING_SPHERE_9', 'HAV_MAG_INFERNAL_FIRE', 'LOW_HOH_BOAR_BURNING_DAMAGE', 'MAG_FIRE_HEAT', 'MAG_INFERNAL_BURNING', 'ORI_KARLACH_ENRAGE', 'ORI_KARLACH_INFERNAL_FURY', 'SEARING_SMITE', 'WILD_MAGIC_BURNING' }, {}, {}, entity)
+function Goon_HasBurningCondition_Normal(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'BURNING', 'BURNING_AZER', 'BURNING_LAVA', 'BURNING_TRAPWALL', 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9', 'FLAMING_SPHERE', 'FLAMING_SPHERE_3', 'FLAMING_SPHERE_4', 'FLAMING_SPHERE_5', 'FLAMING_SPHERE_6', 'FLAMING_SPHERE_7', 'FLAMING_SPHERE_8', 'FLAMING_SPHERE_9', 'HAV_MAG_INFERNAL_FIRE', 'LOW_HOH_BOAR_BURNING_DAMAGE', 'MAG_FIRE_HEAT', 'MAG_INFERNAL_BURNING', 'ORI_KARLACH_ENRAGE', 'ORI_KARLACH_INFERNAL_FURY', 'SEARING_SMITE', 'WILD_MAGIC_BURNING' }, {}, {}, target)
 end
 
-function Goon_HasBurningCondition_Holy(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'BURNING_HOLY' }, {}, {}, entity)
+function Goon_HasBurningCondition_Holy(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'BURNING_HOLY' }, {}, {}, target)
 end
 
-function Goon_HasBurningCondition_Hell(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'BURNING_HELLFIRE' }, {}, {}, entity)
+function Goon_HasBurningCondition_Hell(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'BURNING_HELLFIRE' }, {}, {}, target)
 end
 
-function Goon_IsKarlachCooking(entity)
-    entity = entity or context.Target
-    return Tagged('REALLY_KARLACH', entity) & ~Tagged('KARLACH_CAN_TOUCH', entity)
+function Goon_IsKarlachCooking(target)
+    target = target or context.Target
+    return Tagged('REALLY_KARLACH', target) & ~Tagged('KARLACH_CAN_TOUCH', target)
 end
 
-function Goon_HasFlamingSphereAuraCondition(entity)
-    entity = entity or context.Target
-    return HasAnyStatus({ 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9' }, {}, {}, entity)
+function Goon_HasFlamingSphereAuraCondition(target)
+    target = target or context.Target
+    return HasAnyStatus({ 'FLAMING_SPHERE_AURA', 'FLAMING_SPHERE_AURA_3', 'FLAMING_SPHERE_AURA_4', 'FLAMING_SPHERE_AURA_5', 'FLAMING_SPHERE_AURA_6', 'FLAMING_SPHERE_AURA_7', 'FLAMING_SPHERE_AURA_8', 'FLAMING_SPHERE_AURA_9' }, {}, {}, target)
 end
 
 -- ==================================== Fetch character levels ====================================
 
-function Goon_CharacterLevelEqualTo(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level == value)
+function Goon_CharacterLevelEqualTo(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Level == value)
 end
 
-function Goon_CharacterLevelEqualToOrGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level >= value)
+function Goon_CharacterLevelEqualToOrGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Level >= value)
 end
 
-function Goon_CharacterLevelEqualToOrGreaterThan_5(entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level >= 5)
+function Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+    source = source or context.Source
+    return ConditionResult(source.Level >= 5)
 end
 
-function Goon_CharacterLevelGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level > value)
+function Goon_CharacterLevelGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Level > value)
 end
 
-function Goon_CharacterLevelLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level < value)
+function Goon_CharacterLevelLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Level < value)
 end
 
-function Goon_CharacterLevelGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level >= value)
+function Goon_CharacterLevelGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Level >= value)
 end
 
-function Goon_CharacterLevelLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Level <= value)
+function Goon_CharacterLevelLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Level <= value)
 end
 
-function Goon_IsCharacterLevelEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_CharacterLevelGreaterThanOrEqual(value, entity) & Goon_CharacterLevelLessThanOrEqual(value2, entity)
+function Goon_IsCharacterLevelEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_CharacterLevelGreaterThanOrEqual(value, source) & Goon_CharacterLevelLessThanOrEqual(value2, source)
 end
 
 -- ==================================== Ability modifier not a negative value ====================================
 -- Functions to ensure ability modifiers aren't negative values when doing scaling bonuses
 
-function Goon_IsStrengthModifierPositive(entity)
-    entity = entity or context.Source
-    return GetModifier(entity.Strength) > 0
+function Goon_IsStrengthModifierPositive(source)
+    source = source or context.Source
+    return GetModifier(source.Strength) > 0
 end
 
-function Goon_IsDexterityModifierPositive(entity)
-    entity = entity or context.Source
-    return GetModifier(entity.Dexterity) > 0
+function Goon_IsDexterityModifierPositive(source)
+    source = source or context.Source
+    return GetModifier(source.Dexterity) > 0
 end
 
-function Goon_IsConstitutionModifierPositive(entity)
-    entity = entity or context.Source
-    return GetModifier(entity.Constitution) > 0
+function Goon_IsConstitutionModifierPositive(source)
+    source = source or context.Source
+    return GetModifier(source.Constitution) > 0
 end
 
-function Goon_IsIntelligenceModifierPositive(entity)
-    entity = entity or context.Source
-    return GetModifier(entity.Intelligence) > 0
+function Goon_IsIntelligenceModifierPositive(source)
+    source = source or context.Source
+    return GetModifier(source.Intelligence) > 0
 end
 
-function Goon_IsWisdomModifierPositive(entity)
-    entity = entity or context.Source
-    return GetModifier(entity.Wisdom) > 0
+function Goon_IsWisdomModifierPositive(source)
+    source = source or context.Source
+    return GetModifier(source.Wisdom) > 0
 end
 
-function Goon_IsCharismaModifierPositive(entity)
-    entity = entity or context.Source
-    return GetModifier(entity.Charisma) > 0
+function Goon_IsCharismaModifierPositive(source)
+    source = source or context.Source
+    return GetModifier(source.Charisma) > 0
 end
 
 -- ==================================== Check current duration of status ====================================
 
-function Goon_StatusGroupDurationEqualTo(entity, stringStatusGroupName, number)
-    entity = entity or context.Target
-    number = number or 0
-    return ConditionResult(math.floor(GetStatusDuration(stringStatusGroupName, entity)) == number)
+function Goon_StatusGroupDurationEqualTo(target, stringStatusGroupName, value)
+    target = target or context.Target
+    value = value or 0
+    return ConditionResult(math.floor(GetStatusDuration(stringStatusGroupName, target)) == value)
 end
 
 -- ==================================== Spell batching ====================================
@@ -1336,73 +1333,73 @@ end
 
 -- ==================================== Weapon/armour equipped checks ====================================
 
-function Goon_Dueling_Check(entity)
-    entity = entity or context.Target
-    local hasNonVersatileWeapon = WieldingWeapon('Melee', false, true, entity) & ~WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Twohanded', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity)
-    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & WieldingWeapon('Melee', false, true, entity) & HasShieldEquipped(entity)
+function Goon_Dueling_Check(target)
+    target = target or context.Target
+    local hasNonVersatileWeapon = WieldingWeapon('Melee', false, true, target) & ~WieldingWeapon('Versatile', false, true, target) & ~WieldingWeapon('Twohanded', false, true, target) & ~WieldingWeapon('Melee', true, true, target)
+    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, target) & WieldingWeapon('Melee', false, true, target) & HasShieldEquipped(target)
     return hasNonVersatileWeapon | hasVersatileWeapon
 end
 
 -- This is exact same as the vanilla DualWielder() khn function but putting this here for completeness
-function Goon_DualWielding_Check(entity)
-    entity = entity or context.Target
-    return WieldingWeapon('Melee', false, true, entity) & WieldingWeapon('Melee', true, true, entity)
+function Goon_DualWielding_Check(target)
+    target = target or context.Target
+    return WieldingWeapon('Melee', false, true, target) & WieldingWeapon('Melee', true, true, target)
 end
 
-function Goon_GreatWeapon_Check(entity)
-    entity = entity or context.Target
-    local hasTwohandedWeapon = WieldingWeapon('Twohanded', false, true, entity) & WieldingWeapon('Melee', false, true, entity)
-    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, entity) & ~WieldingWeapon('Melee', true, true, entity) & ~HasShieldEquipped(entity)
+function Goon_GreatWeapon_Check(target)
+    target = target or context.Target
+    local hasTwohandedWeapon = WieldingWeapon('Twohanded', false, true, target) & WieldingWeapon('Melee', false, true, target)
+    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, target) & ~WieldingWeapon('Melee', true, true, target) & ~HasShieldEquipped(target)
     return hasTwohandedWeapon | hasVersatileWeapon
 end
 
 -- Use in conjunction with Goon_IsPolearm() check (which only checks the active weapon) to reasonably cover all polearm-wielding possibilities for NPCs at least
-function Goon_Polearm_Check(entity)
-    entity = entity or context.Target
-    return WieldingWeapon('Reach', false, true, entity)
+function Goon_Polearm_Check(target)
+    target = target or context.Target
+    return WieldingWeapon('Reach', false, true, target)
 end
 
-function Goon_Bow_Check(entity)
-    entity = entity or context.Target
-    return WieldingWeapon('Ammunition', false, true, entity)
+function Goon_Bow_Check(target)
+    target = target or context.Target
+    return WieldingWeapon('Ammunition', false, true, target)
 end
 
-function Goon_Crossbow_Check(entity)
-    entity = entity or context.Target
-    return WieldingWeapon('Loading', false, true, entity)
+function Goon_Crossbow_Check(target)
+    target = target or context.Target
+    return WieldingWeapon('Loading', false, true, target)
 end
 
-function Goon_HasLightArmor(entity)
-    entity = entity or context.Target
-    local armor = GetActiveArmor(entity)
+function Goon_HasLightArmor(target)
+    target = target or context.Target
+    local armor = GetActiveArmor(target)
     return IsOfProficiencyGroup("LightArmor", armor)
 end
 
 -- Alternative light armor check matching how it's checked in vanilla
-function Goon_HasLightArmorAlt(entity)
-    entity = entity or context.Target
-    local armor = GetActiveArmor(entity)
+function Goon_HasLightArmorAlt(target)
+    target = target or context.Target
+    local armor = GetActiveArmor(target)
     local hasLightArmor = armor.ArmorType == ArmorType.Padded or armor.ArmorType == ArmorType.Leather or armor.ArmorType == ArmorType.StuddedLeather
     return ConditionResult(hasLightArmor)
 end
 
 -- WearingArmor and HasShieldEquipped functions DGAF about you being in wildshape and count your equipment, unlike when using GetItemInEquipmentSlot where it doesn't work for wildshape.
-function Goon_NotWearingArmorOrHasShieldEquipped(entity)
-    entity = entity or context.Source
-    return (~WearingArmor(entity) & ~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus(entity)) 
-         & Goon_IsNonHostilePolymorphStatus(entity)
+function Goon_NotWearingArmorOrHasShieldEquipped(source)
+    source = source or context.Source
+    return (~WearingArmor(source) & ~HasShieldEquipped(source) | Goon_IsRestrictedPolymorphStatus(source)) 
+         & Goon_IsNonHostilePolymorphStatus(source)
 end
 
-function Goon_NotWearingArmor(entity)
-    entity = entity or context.Source
-    return (~WearingArmor(entity) | Goon_IsRestrictedPolymorphStatus(entity)) 
-         & Goon_IsNonHostilePolymorphStatus(entity)
+function Goon_NotWearingArmor(source)
+    source = source or context.Source
+    return (~WearingArmor(source) | Goon_IsRestrictedPolymorphStatus(source)) 
+         & Goon_IsNonHostilePolymorphStatus(source)
 end
 
-function Goon_NotHasShieldEquipped(entity)
-    entity = entity or context.Source
-    return (~HasShieldEquipped(entity) | Goon_IsRestrictedPolymorphStatus(entity)) 
-         & Goon_IsNonHostilePolymorphStatus(entity)
+function Goon_NotHasShieldEquipped(source)
+    source = source or context.Source
+    return (~HasShieldEquipped(source) | Goon_IsRestrictedPolymorphStatus(source)) 
+         & Goon_IsNonHostilePolymorphStatus(source)
 end
 
 -- ==================================== Weapon enchant checks ====================================
@@ -1410,76 +1407,76 @@ end
 -- Tagged(string tag, [Entity target])
 -- TODO: Mainhand/offhand true/false arg
 
-function Goon_IsSpellcastingModifierWeapon(entity, weapon)
-    entity = entity or context.Source
-    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, entity)
+function Goon_IsSpellcastingModifierWeapon(source, weapon)
+    source = source or context.Source
+    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
     return HasAnyStatus({ 'SHILLELAGH', 'MAG_MELEE_CASTER_BOON', 'LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', 'MAG_MELEE_CASTER_BOON_SORROW', 'MAG_MELEE_CASTER_BOON_LATHANDER', 'GOON_SHADOW_BLADE_2', 'GOON_SHADOW_BLADE_3', 'GOON_SHADOW_BLADE_4', 'GOON_SHADOW_BLADE_5', 'GOON_SHADOW_BLADE_6', 'GOON_SHADOW_BLADE_7', 'GOON_SHADOW_BLADE_8', 'GOON_SHADOW_BLADE_9', 'GOON_FLAME_BLADE_MEPHISTOPHELES', 'GOON_FLAME_BLADE_2', 'GOON_FLAME_BLADE_3', 'GOON_FLAME_BLADE_4', 'GOON_FLAME_BLADE_5', 'GOON_FLAME_BLADE_6', 'GOON_FLAME_BLADE_7', 'GOON_FLAME_BLADE_8', 'GOON_FLAME_BLADE_9' }, {}, {}, weapon)
 end
 
-function Goon_IsIntelligenceModifierWeapon(entity, weapon)
-    entity = entity or context.Source
-    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, entity)
+function Goon_IsIntelligenceModifierWeapon(source, weapon)
+    source = source or context.Source
+    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
     return HasAnyStatus({ 'GOON_WHERETHEWIZARDBLADEENCHANTFRHARRYPOTTERGANGSHIT' }, {}, {}, weapon)
 end
 
-function Goon_IsWisdomModifierWeapon(entity, weapon)
-    entity = entity or context.Source
-    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, entity)
+function Goon_IsWisdomModifierWeapon(source, weapon)
+    source = source or context.Source
+    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
     return HasAnyStatus({ 'FourEle_Attuned' }, {}, {}, weapon)
 end
 
-function Goon_IsCharismaModifierWeapon(entity, weapon)
-    entity = entity or context.Source
-    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, entity)
+function Goon_IsCharismaModifierWeapon(source, weapon)
+    source = source or context.Source
+    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
     return HasAnyStatus({ 'PACT_BLADE', 'HEXBLADE_BIND' }, {}, {}, weapon) | Tagged('PACT_OF_THE_BLADE', weapon)
 end
 
-function Goon_IsShadowBladeWeapon(entity, weapon)
-    entity = entity or context.Source
-    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, entity)
+function Goon_IsShadowBladeWeapon(source, weapon)
+    source = source or context.Source
+    weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
     return HasAnyStatus({ 'SHADOWBLADE_TECHNICAL', 'GOON_KNIFEOFTHEUNDERMOUNTAINKING_WEAPON_TECHNICAL', 'GOON_SHADOWRENDINGDAGGER_WEAPON_TECHNICAL', 'GOON_JUSTICIARSSCIMITAR_WEAPON_TECHNICAL' }, {}, {}, weapon)
 end
 
 -- ==================================== Weapon enchant checks - Cahoot's revision
 
-function Goon_AttackingWithSpellcastingModifierWeapon(entity)
-    entity = entity or context.Source
-    return HasStatus('SHILLELAGH', GetAttackWeapon(entity))
-         | HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(entity))
-         | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(entity))
-         | HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(entity))
-         | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(entity))
-         | HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(entity))
-         | HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(entity))
+function Goon_AttackingWithSpellcastingModifierWeapon(source)
+    source = source or context.Source
+    return HasStatus('SHILLELAGH', GetAttackWeapon(source))
+         | HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(source))
+         | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(source))
+         | HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(source))
+         | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(source))
+         | HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(source))
+         | HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(source))
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
 --     return HasAnyStatus({}, {}, {})
 -- end
 
-function Goon_AttackingWithWisdomModifierWeapon(entity)
-    entity = entity or context.Source
-    return HasStatus('FourEle_Attuned', GetAttackWeapon(entity))
+function Goon_AttackingWithWisdomModifierWeapon(source)
+    source = source or context.Source
+    return HasStatus('FourEle_Attuned', GetAttackWeapon(source))
 end
 
-function Goon_AttackingWithCharismaModifierWeapon(entity)
-    entity = entity or context.Source
-    return HasStatus('HEXBLADE_BIND', GetAttackWeapon(entity)) | HasStatus('PACT_BLADE', GetAttackWeapon(entity))
+function Goon_AttackingWithCharismaModifierWeapon(source)
+    source = source or context.Source
+    return HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)) | HasStatus('PACT_BLADE', GetAttackWeapon(source))
 end
 
 -- ==================================== Weapon enchant checks - Trying something different
@@ -1494,9 +1491,9 @@ function Goon_IsPactWeapon()
     return StatusId('PACT_BLADE') | StatusId('HEXBLADE_BIND') | Tagged('PACT_OF_THE_BLADE')
 end
 
-function Goon_HasPactWeapon(entity)
-    entity = entity or context.Target
-    return HasStatus('PACT_BLADE', entity) | HasStatus('HEXBLADE_BIND', entity) | Tagged('PACT_OF_THE_BLADE', entity)
+function Goon_HasPactWeapon(target)
+    target = target or context.Target
+    return HasStatus('PACT_BLADE', target) | HasStatus('HEXBLADE_BIND', target) | Tagged('PACT_OF_THE_BLADE', target)
 end
 
 -- ==================================== Weapon enchant checks - Bound weapons only
@@ -1507,53 +1504,53 @@ function Goon_IsBoundWeaponStatus()
     return (StatusId('WEAPON_BOND') | StatusId('PACT_BLADE') | StatusId('HEXBLADE_BIND'))
 end
 
-function Goon_HasBoundWeaponStatus(entity)
-    entity = entity or context.Target
-    return (HasStatus('WEAPON_BOND', entity) | HasStatus('PACT_BLADE', entity) | HasStatus('HEXBLADE_BIND', entity))
+function Goon_HasBoundWeaponStatus(target)
+    target = target or context.Target
+    return (HasStatus('WEAPON_BOND', target) | HasStatus('PACT_BLADE', target) | HasStatus('HEXBLADE_BIND', target))
 end
 
-function Goon_AttackingWithBoundWeapon(entity)
-    entity = entity or context.Source
-    return HasStatus('WEAPON_BOND', GetAttackWeapon(entity))
-         | HasStatus('PACT_BLADE', GetAttackWeapon(entity))
-         | HasStatus('HEXBLADE_BIND', GetAttackWeapon(entity))
+function Goon_AttackingWithBoundWeapon(source)
+    source = source or context.Source
+    return HasStatus('WEAPON_BOND', GetAttackWeapon(source))
+         | HasStatus('PACT_BLADE', GetAttackWeapon(source))
+         | HasStatus('HEXBLADE_BIND', GetAttackWeapon(source))
 end
 
 -- ==================================== Weapon enchant checks - Vanilla Flame Blade
 -- Don't need to add my custom conditions here, it's already doing an attack roll in Goon's Spell Overhaul.
 -- TODO: Condense, arg for hand check.
 
-function Goon_IsFlameBladeSpellAttack(entity)
-    entity = entity or context.Source
-    return Goon_IsFlameBladeSpellAttack_Mainhand(entity) | Goon_IsFlameBladeSpellAttack_Offhand(entity)
+function Goon_IsFlameBladeSpellAttack(source)
+    source = source or context.Source
+    return Goon_IsFlameBladeSpellAttack_Mainhand(source) | Goon_IsFlameBladeSpellAttack_Offhand(source)
 end
 
-function Goon_IsFlameBladeSpellAttack_Mainhand(entity)
-    entity = entity or context.Source
+function Goon_IsFlameBladeSpellAttack_Mainhand(source)
+    source = source or context.Source
     return IsMeleeSpellAttack()
-         & HasStatus('FLAME_BLADE', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(entity, true))
-         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(entity, true))
+         & HasStatus('FLAME_BLADE', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, true))
 end
 
-function Goon_IsFlameBladeSpellAttack_Offhand(entity)
-    entity = entity or context.Source
+function Goon_IsFlameBladeSpellAttack_Offhand(source)
+    source = source or context.Source
     return IsMeleeSpellAttack()
-         & HasStatus('FLAME_BLADE', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(entity, false))
-         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(entity, false))
+         & HasStatus('FLAME_BLADE', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, false))
 end
 
 -- ==================================== Weapon enchant checks - IsDexterityGreaterThanStrength()
@@ -1607,8 +1604,8 @@ end
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
 -- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game.
 
-function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, entity)
-    entity = entity or context.Source
+function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
+    source = source or context.Source
 
     local slot
     if isRanged then
@@ -1625,7 +1622,7 @@ function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, entity)
         end
     end
 
-    local weapon = GetItemInEquipmentSlot(slot, entity)
+    local weapon = GetItemInEquipmentSlot(slot, source)
     local property = WeaponProperties.Melee
     if isRanged then
         property = WeaponProperties.Ammunition
@@ -1685,18 +1682,18 @@ function Goon_IsThrownWeapon()
     return HasWeaponProperty(WeaponProperties.Thrown)
 end
 
-function Goon_IsThrownWeaponThrow(entity)
-    entity = entity or context.HitDescription.ThrownObject
-    return HasWeaponProperty(WeaponProperties.Thrown,entity)
+function Goon_IsThrownWeaponThrow(weapon)
+    weapon = weapon or context.HitDescription.ThrownObject
+    return HasWeaponProperty(WeaponProperties.Thrown, weapon)
 end
 
 function Goon_IsMeleeNotThrownWeapon()
     return HasWeaponProperty(WeaponProperties.Melee) & ~HasWeaponProperty(WeaponProperties.Thrown)
 end
 
-function Goon_IsMeleeNotThrownWeaponThrow(entity)
-    entity = entity or context.HitDescription.ThrownObject
-    return HasWeaponProperty(WeaponProperties.Melee,entity) & ~HasWeaponProperty(WeaponProperties.Thrown,entity)
+function Goon_IsMeleeNotThrownWeaponThrow(weapon)
+    weapon = weapon or context.HitDescription.ThrownObject
+    return HasWeaponProperty(WeaponProperties.Melee, weapon) & ~HasWeaponProperty(WeaponProperties.Thrown, weapon)
 end
 
 function Goon_IsAxe()
@@ -1735,51 +1732,51 @@ end
 -- Note: UnarmedDamage*0 inserted into a DealDamage like so: DealDamage(2d10+UnarmedDamage*0,Slashing) gives full functionality while retaining static numbers or specific die sizes.
 -- This shit below is cumbersome and far less dynamic by comparison, just do the above where appropriate.
 
-function Goon_HasMagicalUnarmed(entity)
-    entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph(entity) & HasPassive('PrimalStrike', entity)
-         | HasPassive('KiEmpoweredStrikes', entity)
-         | Goon_HasMagicalUnarmed_Expansion(entity)
-         | Goon_HasMagicalUnarmed_BloodHunter(entity)
-         | Goon_HasMagicalUnarmed_Veenab(entity)
-         | HasPassive('InvestmentOfTheChainMaster_Familiar', entity)
-         | HasPassive('SVZephyr_TapestryTatteringArms', entity)
-         | HasPassive('Passive_Mystic_FlawlessTechnique', entity)
-         | HasPassive('MightySummonMagicalUnarmed', entity)
-         | HasAnyStatus({ 'DREADOVERLORD_NECROTICBLADE_UNARMED' }, {}, {}, entity)
+function Goon_HasMagicalUnarmed(source)
+    source = source or context.Source
+    return Goon_IsWildshapeDruidPolymorph(source) & HasPassive('PrimalStrike', source)
+         | HasPassive('KiEmpoweredStrikes', source)
+         | Goon_HasMagicalUnarmed_Expansion(source)
+         | Goon_HasMagicalUnarmed_BloodHunter(source)
+         | Goon_HasMagicalUnarmed_Veenab(source)
+         | HasPassive('InvestmentOfTheChainMaster_Familiar', source)
+         | HasPassive('SVZephyr_TapestryTatteringArms', source)
+         | HasPassive('Passive_Mystic_FlawlessTechnique', source)
+         | HasPassive('MightySummonMagicalUnarmed', source)
+         | HasAnyStatus({ 'DREADOVERLORD_NECROTICBLADE_UNARMED' }, {}, {}, source)
 end
 
-function Goon_HasMagicalUnarmed_Expansion(entity)
-    entity = entity or context.Source
-    return HasPassive('ExceptionalTraining_EXP', entity)
-         | HasAnyStatus({ 'ALTER_SELF_BLUDGEONING_WEAPON', 'ALTER_SELF_SLASHING_WEAPON', 'ALTER_SELF_PIERCING_WEAPON' }, {}, {}, entity)
+function Goon_HasMagicalUnarmed_Expansion(source)
+    source = source or context.Source
+    return HasPassive('ExceptionalTraining_EXP', source)
+         | HasAnyStatus({ 'ALTER_SELF_BLUDGEONING_WEAPON', 'ALTER_SELF_SLASHING_WEAPON', 'ALTER_SELF_PIERCING_WEAPON' }, {}, {}, source)
 end
 
-function Goon_HasMagicalUnarmed_BloodHunter(entity)
-    entity = entity or context.Source
-    return HasPassive('ImprovedPredatoryStrikes', entity)
-         | HasPassive('ImprovedPredatoryStrikes11', entity)
+function Goon_HasMagicalUnarmed_BloodHunter(source)
+    source = source or context.Source
+    return HasPassive('ImprovedPredatoryStrikes', source)
+         | HasPassive('ImprovedPredatoryStrikes11', source)
 end
 
-function Goon_HasMagicalUnarmed_Veenab(entity)
-    entity = entity or context.Source
-    return HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_1', entity)
-         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_2', entity)
-         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_3', entity)
+function Goon_HasMagicalUnarmed_Veenab(source)
+    source = source or context.Source
+    return HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_1', source)
+         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_2', source)
+         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_3', source)
 end
 
 -- ==================================== Condition errors ====================================
 -- inlined result variable; .Result: ~ returns ConditionResult, error overload needs a plain bool
 
-function Goon_HasUnbrokenOath(entity)
-    entity = entity or context.Source
-    return ConditionResult((~Tagged('OATHBREAKER', entity)).Result, { ConditionError("Goon_HasBrokenOath") })
+function Goon_HasUnbrokenOath(source)
+    source = source or context.Source
+    return ConditionResult((~Tagged('OATHBREAKER', source)).Result, { ConditionError("Goon_HasBrokenOath") })
 end
 
 -- TODO: Could be set up generic like, have SE apply a status and use it universally.
-function Goon_HasAttackedOrCast_FirstVampireWarlock(entity)
-    entity = entity or context.Source
-    return ConditionResult(HasAnyStatus({ 'GOON_DRAIN_LIFE_TECHNICAL', 'GOON_DRAIN_LIFE_TECHNICAL_ETERNAL_NIGHT' }, {}, {}, entity).Result, { ConditionError("Goon_HasAttackedOrCast") })
+function Goon_HasAttackedOrCast_FirstVampireWarlock(source)
+    source = source or context.Source
+    return ConditionResult(HasAnyStatus({ 'GOON_DRAIN_LIFE_TECHNICAL', 'GOON_DRAIN_LIFE_TECHNICAL_ETERNAL_NIGHT' }, {}, {}, source).Result, { ConditionError("Goon_HasAttackedOrCast") })
 end
 
 -- ==================================== Druid and Polymorph stuff ====================================
@@ -1790,66 +1787,66 @@ end
 -- TODO: Refactor, do functions for StatusId as well as HasStatus. Do status checks for Slayer and Myrmidons, instead of just tag.
 -- TODO: Support for that one druid class mod?
 
-function Goon_IsDruidWildshapeOrStatus(entity)
-    entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph(entity) | Goon_IsMyrmidonDruidPolymorph(entity) | Goon_IsHumanoidDruidPolymorph(entity)
+function Goon_IsDruidWildshapeOrStatus(source)
+    source = source or context.Source
+    return Goon_IsWildshapeDruidPolymorph(source) | Goon_IsMyrmidonDruidPolymorph(source) | Goon_IsHumanoidDruidPolymorph(source)
 end
 
-function Goon_IsDruidWildshape(entity)
-    entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph(entity) | Goon_IsMyrmidonDruidPolymorph(entity)
+function Goon_IsDruidWildshape(source)
+    source = source or context.Source
+    return Goon_IsWildshapeDruidPolymorph(source) | Goon_IsMyrmidonDruidPolymorph(source)
 end
 
-function Goon_IsRestrictedPolymorphStatus(entity)
-    entity = entity or context.Source
-    return Goon_IsWildshapeDruidPolymorph(entity) | Goon_IsMyrmidonDruidPolymorph(entity) | Tagged('SLAYER', entity)
+function Goon_IsRestrictedPolymorphStatus(source)
+    source = source or context.Source
+    return Goon_IsWildshapeDruidPolymorph(source) | Goon_IsMyrmidonDruidPolymorph(source) | Tagged('SLAYER', source)
 end
 
-function Goon_IsUnrestrictedPolymorphStatus(entity)
-    entity = entity or context.Source
-    return (Goon_IsHumanoidDruidPolymorph(entity) | Goon_IsOtherPolymorph(entity)) & (~Goon_IsRestrictedPolymorphStatus(entity) & Goon_IsNonHostilePolymorphStatus(entity))
+function Goon_IsUnrestrictedPolymorphStatus(source)
+    source = source or context.Source
+    return (Goon_IsHumanoidDruidPolymorph(source) | Goon_IsOtherPolymorph(source)) & (~Goon_IsRestrictedPolymorphStatus(source) & Goon_IsNonHostilePolymorphStatus(source))
 end
 
 -- TODO: How would I go about filtering sources of unwilling polymorphs for a custom ImmutableForm? Pseudo status group?
-function Goon_IsNonHostilePolymorphStatus(entity)
-    entity = entity or context.Source
-    return ~Tagged('POLYMORPHED_UNWILLING', entity)
+function Goon_IsNonHostilePolymorphStatus(source)
+    source = source or context.Source
+    return ~Tagged('POLYMORPHED_UNWILLING', source)
 end
 
 -- ==================================== Polymorph clusters
 
-function Goon_IsWildshapeDruidPolymorph(entity)
-    entity = entity or context.Source
-    return HasAnyStatus({ 'SG_Polymorph_BeastShape' }, {}, {}, entity)
+function Goon_IsWildshapeDruidPolymorph(source)
+    source = source or context.Source
+    return HasAnyStatus({ 'SG_Polymorph_BeastShape' }, {}, {}, source)
 end
 
-function Goon_IsMyrmidonDruidPolymorph(entity)
-    entity = entity or context.Source
-    return Tagged('MYRMIDON_AIR', entity) | Tagged('MYRMIDON_EARTH', entity) | Tagged('MYRMIDON_FIRE', entity) | Tagged('MYRMIDON_WATER', entity)
+function Goon_IsMyrmidonDruidPolymorph(source)
+    source = source or context.Source
+    return Tagged('MYRMIDON_AIR', source) | Tagged('MYRMIDON_EARTH', source) | Tagged('MYRMIDON_FIRE', source) | Tagged('MYRMIDON_WATER', source)
 end
 
 -- TODO: 'SYMBIOTIC_ENTITY' doesn't really fit the bill, but I feel like it would be fitting for BG3.
 -- TODO: DWE_BM_POLYMORPHED_CONCENTRATION what this for exactly?
-function Goon_IsHumanoidDruidPolymorph(entity)
-    entity = entity or context.Source
-    return HasAnyStatus({ 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER', 'DWE_BM_POLYMORPHED_CONCENTRATION' }, {}, {}, entity)
+function Goon_IsHumanoidDruidPolymorph(source)
+    source = source or context.Source
+    return HasAnyStatus({ 'WILDSHAPE_STARRY_ARCHER_PLAYER', 'WILDSHAPE_STARRY_CHALICE_PLAYER', 'WILDSHAPE_STARRY_DRAGON_PLAYER', 'STARRY_FORM_ARCHER', 'STARRY_FORM_CHALICE', 'STARRY_FORM_DRAGON', 'STORM_SHIFTER', 'DWE_BM_POLYMORPHED_CONCENTRATION' }, {}, {}, source)
 end
 
-function Goon_IsOtherPolymorph(entity)
-    entity = entity or context.Source
-    return HasAnyStatus({ 'SG_Disguise', 'SG_Doppelganger', 'WYR_GORTASH_GORTANE' }, {}, {}, entity) | Tagged('MINDFLAYER', entity)
+function Goon_IsOtherPolymorph(source)
+    source = source or context.Source
+    return HasAnyStatus({ 'SG_Disguise', 'SG_Doppelganger', 'WYR_GORTASH_GORTANE' }, {}, {}, source) | Tagged('MINDFLAYER', source)
 end
 
 -- ==================================== Surface check stuff ====================================
 
-function Goon_CreateSurfaceSpellCheck(entity)
-    entity = entity or context.Source
-    return ~HasStatus('GOON_SURFACE_CHECK', entity) | HasStatus('GOON_ITEMORDEAD_CHECK', entity)
+function Goon_CreateSurfaceSpellCheck(source)
+    source = source or context.Source
+    return ~HasStatus('GOON_SURFACE_CHECK', source) | HasStatus('GOON_ITEMORDEAD_CHECK', source)
 end
 
-function Goon_IsItemOrDead(entity)
-    entity = entity or context.Target
-    return Item(entity) | Dead(entity)
+function Goon_IsItemOrDead(target)
+    target = target or context.Target
+    return Item(target) | Dead(target)
 end
 
 -- ==================================== Blindness, Darkness, Illusions ====================================
@@ -1949,564 +1946,566 @@ end
 
 -- ==================================== Max Strength Conditions ====================================
 -- Hit Point checks
-function Goon_HasMaxHP(entity)
-    entity = entity or context.Target
-    return ConditionResult(entity.HPPercentage == 100)
+function Goon_HasMaxHP(target)
+    target = target or context.Target
+    return ConditionResult(target.HPPercentage == 100)
 end
 
-function Goon_IsBloodied(entity)
-    entity = entity or context.Target
-    return ConditionResult(HasHPPercentageEqualOrLessThan(50, entity).Result, { ConditionError("CE_Status_GOON_BLOODIED_False") }, {}) -- inlined result variable; see Goon_HasUnbrokenOath re .Result
+function Goon_IsBloodied(target)
+    target = target or context.Target
+    return ConditionResult(HasHPPercentageEqualOrLessThan(50, target).Result, { ConditionError("CE_Status_GOON_BLOODIED_False") }, {}) -- inlined result variable; see Goon_HasUnbrokenOath re .Result
 end
 
 -- Spellcaster resource checks
-function Goon_HasPactMagic()
-    return HasActionResource('WarlockSpellSlot', 1, 1, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 2, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 3, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 4, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 5, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 6, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 7, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 8, false, false, context.Source)
-         | HasActionResource('WarlockSpellSlot', 1, 9, false, false, context.Source)
+function Goon_HasPactMagic(source)
+    source = source or context.Source
+    return HasActionResource('WarlockSpellSlot', 1, 1, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 2, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 3, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 4, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 5, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 6, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 7, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 8, false, false, source)
+         | HasActionResource('WarlockSpellSlot', 1, 9, false, false, source)
 end
 
-function Goon_HasSpellSlots()
-    return HasActionResource('SpellSlot', 1, 1, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 2, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 3, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 4, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 5, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 6, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 7, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 8, false, false, context.Source)
-         | HasActionResource('SpellSlot', 1, 9, false, false, context.Source)
+function Goon_HasSpellSlots(source)
+    source = source or context.Source
+    return HasActionResource('SpellSlot', 1, 1, false, false, source)
+         | HasActionResource('SpellSlot', 1, 2, false, false, source)
+         | HasActionResource('SpellSlot', 1, 3, false, false, source)
+         | HasActionResource('SpellSlot', 1, 4, false, false, source)
+         | HasActionResource('SpellSlot', 1, 5, false, false, source)
+         | HasActionResource('SpellSlot', 1, 6, false, false, source)
+         | HasActionResource('SpellSlot', 1, 7, false, false, source)
+         | HasActionResource('SpellSlot', 1, 8, false, false, source)
+         | HasActionResource('SpellSlot', 1, 9, false, false, source)
 end
 
 -- Character tag checks
-function Goon_IsHumanoid(entity)
-    entity = entity or context.Target
-    return Tagged('HUMANOID', entity)
+function Goon_IsHumanoid(target)
+    target = target or context.Target
+    return Tagged('HUMANOID', target)
 end
 
-function Goon_IsFey(entity)
-    entity = entity or context.Target
-    return Tagged('FEY', entity)
+function Goon_IsFey(target)
+    target = target or context.Target
+    return Tagged('FEY', target)
 end
 
-function Goon_IsBeast(entity)
-    entity = entity or context.Target
-    return Tagged('BEAST', entity)
+function Goon_IsBeast(target)
+    entargettity = target or context.Target
+    return Tagged('BEAST', target)
 end
 
-function Goon_IsGoblinoid(entity)
-    entity = entity or context.Target
-    return Tagged('GOBLIN', entity) | Tagged('HOBGOBLIN', entity) | Tagged('BUGBEAR', entity)
+function Goon_IsGoblinoid(target)
+    target = target or context.Target
+    return Tagged('GOBLIN', target) | Tagged('HOBGOBLIN', target) | Tagged('BUGBEAR', target)
 end
 
-function Goon_IsAberration(entity)
-    entity = entity or context.Target
-    return Tagged('ABERRATION', entity)
+function Goon_IsAberration(target)
+    target = target or context.Target
+    return Tagged('ABERRATION', target)
 end
 
-function Goon_IsCelestial(entity)
-    entity = entity or context.Target
-    return Tagged('CELESTIAL', entity)
+function Goon_IsCelestial(target)
+    target = target or context.Target
+    return Tagged('CELESTIAL', target)
 end
 
-function Goon_IsFiend(entity)
-    entity = entity or context.Target
-    return Tagged('FIEND', entity)
+function Goon_IsFiend(target)
+    target = target or context.Target
+    return Tagged('FIEND', target)
 end
 
-function Goon_IsUndead(entity)
-    entity = entity or context.Target
-    return Tagged('UNDEAD', entity)
+function Goon_IsUndead(target)
+    target = target or context.Target
+    return Tagged('UNDEAD', target)
 end
 
-function Goon_IsConstruct(entity)
-    entity = entity or context.Target
-    return Tagged('CONSTRUCT', entity)
+function Goon_IsConstruct(target)
+    target = target or context.Target
+    return Tagged('CONSTRUCT', target)
 end
 
-function Goon_IsPlant(entity)
-    entity = entity or context.Target
-    return Tagged('PLANT', entity)
+function Goon_IsPlant(target)
+    target = target or context.Target
+    return Tagged('PLANT', target)
 end
 
-function Goon_IsMonstrosity(entity)
-    entity = entity or context.Target
-    return Tagged('MONSTROSITY', entity)
+function Goon_IsMonstrosity(target)
+    enttargetity = target or context.Target
+    return Tagged('MONSTROSITY', target)
 end
 
-function Goon_IsDemon(entity)
-    entity = entity or context.Target
-    return Tagged('DEMON', entity)
+function Goon_IsDemon(target)
+    target = target or context.Target
+    return Tagged('DEMON', target)
 end
 
-function Goon_IsDevil(entity)
-    entity = entity or context.Target
-    return Tagged('DEVIL', entity)
+function Goon_IsDevil(target)
+    target = target or context.Target
+    return Tagged('DEVIL', target)
 end
 
-function Goon_IsShortRace(entity)
-    entity = entity or context.Target
-    return Tagged('SHORT', entity)
+function Goon_IsShortRace(target)
+    target = target or context.Target
+    return Tagged('SHORT', target)
 end
 
-function Goon_IsFemale(entity)
-    entity = entity or context.Target
-    return Tagged('FEMALE', entity)
+function Goon_IsFemale(target)
+    target = target or context.Target
+    return Tagged('FEMALE', target)
 end
 
-function Goon_IsMale(entity)
-    entity = entity or context.Target
-    return Tagged('MALE', entity)
+function Goon_IsMale(target)
+    target = target or context.Target
+    return Tagged('MALE', target)
 end
 
-function Goon_IsFemaleStrong(entity)
-    entity = entity or context.Target
-    return Tagged('FEMALE', entity) & Tagged('BODYTYPE_STRONG', entity)
+function Goon_IsFemaleStrong(target)
+    target = target or context.Target
+    return Tagged('FEMALE', target) & Tagged('BODYTYPE_STRONG', target)
 end
 
-function Goon_IsMaleStrong(entity)
-    entity = entity or context.Target
-    return Tagged('MALE', entity) & Tagged('BODYTYPE_STRONG', entity)
+function Goon_IsMaleStrong(target)
+    target = target or context.Target
+    return Tagged('MALE', target) & Tagged('BODYTYPE_STRONG', target)
 end
 
 -- Character size checks
-function Goon_IsSize(size, entity)
-    entity = entity or context.Target
-    return ConditionResult(entity.Size ~= Size.None and entity.Size.value == size.value)
+function Goon_IsSize(size, target)
+    target = target or context.Target
+    return ConditionResult(target.Size ~= Size.None and target.Size.value == size.value)
 end
 
-function Goon_IsSizeGreaterThan(size, entity)
-    entity = entity or context.Target
-    return ConditionResult(entity.Size ~= Size.None and entity.Size.value > size.value)
+function Goon_IsSizeGreaterThan(size, target)
+    target = target or context.Target
+    return ConditionResult(target.Size ~= Size.None and target.Size.value > size.value)
 end
 
-function Goon_IsSizeLessThan(size, entity)
-    entity = entity or context.Target
-    return ConditionResult(entity.Size ~= Size.None and entity.Size.value < size.value)
+function Goon_IsSizeLessThan(size, target)
+    target = target or context.Target
+    return ConditionResult(target.Size ~= Size.None and target.Size.value < size.value)
 end
 
-function Goon_IsSizeGreaterThanOrEqual(size, entity)
-    entity = entity or context.Target
-    return ConditionResult(entity.Size ~= Size.None and entity.Size.value >= size.value)
+function Goon_IsSizeGreaterThanOrEqual(size, target)
+    target = target or context.Target
+    return ConditionResult(target.Size ~= Size.None and target.Size.value >= size.value)
 end
 
-function Goon_IsSizeLessThanOrEqual(size, entity)
-    entity = entity or context.Target
-    return ConditionResult(entity.Size ~= Size.None and entity.Size.value <= size.value)
+function Goon_IsSizeLessThanOrEqual(size, target)
+    target = target or context.Target
+    return ConditionResult(target.Size ~= Size.None and target.Size.value <= size.value)
 end
 
 -- Class level checks
-function Goon_ClassLevelEquals(level, class, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.GetClassLevel(class) == level)
+function Goon_ClassLevelEquals(level, class, source)
+    source = source or context.Source
+    return ConditionResult(target.GetClassLevel(class) == level)
 end
 
-function Goon_ClassLevelGreaterThan(level, class, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.GetClassLevel(class) > level)
+function Goon_ClassLevelGreaterThan(level, class, target)
+    target = target or context.Source
+    return ConditionResult(target.GetClassLevel(class) > level)
 end
 
-function Goon_ClassLevelLessThan(level, class, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.GetClassLevel(class) < level)
+function Goon_ClassLevelLessThan(level, class, source)
+    source = source or context.Source
+    return ConditionResult(source.GetClassLevel(class) < level)
 end
 
-function Goon_ClassLevelGreaterThanOrEqual(level, class, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.GetClassLevel(class) >= level)
+function Goon_ClassLevelGreaterThanOrEqual(level, class, source)
+    source = source or context.Source
+    return ConditionResult(source.GetClassLevel(class) >= level)
 end
 
-function Goon_ClassLevelLessThanOrEqual(level, class, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.GetClassLevel(class) <= level)
+function Goon_ClassLevelLessThanOrEqual(level, class, source)
+    source = source or context.Source
+    return ConditionResult(source.GetClassLevel(class) <= level)
 end
 
-function Goon_IsClassLevelEqualOrBetween(value, value2, class, entity)
-    entity = entity or context.Source
-    -- was missing class param; entity was landing in the class arg of the sub-calls, GetClassLevel would get 0
+function Goon_IsClassLevelEqualOrBetween(value, value2, class, source)
+    source = source or context.Source
+    -- was missing class param; source was landing in the class arg of the sub-calls, GetClassLevel would get 0
     -- if the intent was character level rather than class level, swap these for Goon_CharacterLevelGreaterThanOrEqual / LessThanOrEqual instead
-    return Goon_ClassLevelGreaterThanOrEqual(value, class, entity) & Goon_ClassLevelLessThanOrEqual(value2, class, entity)
+    return Goon_ClassLevelGreaterThanOrEqual(value, class, source) & Goon_ClassLevelLessThanOrEqual(value2, class, source)
 end
 
 -- Proficiency bonus checks
-function Goon_ProficiencyEquals(value, entity) -- was missing entity param; entity in body was reading an undefined variable
-    entity = entity or context.Source
-    return ConditionResult(entity.ProficiencyBonus == value)
+function Goon_ProficiencyEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(source.ProficiencyBonus == value)
 end
 
-function Goon_ProficiencyBonusGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.ProficiencyBonus > value)
+function Goon_ProficiencyBonusGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.ProficiencyBonus > value)
 end
 
-function Goon_ProficiencyBonusLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.ProficiencyBonus < value)
+function Goon_ProficiencyBonusLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.ProficiencyBonus < value)
 end
 
-function Goon_ProficiencyBonusGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.ProficiencyBonus >= value)
+function Goon_ProficiencyBonusGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.ProficiencyBonus >= value)
 end
 
-function Goon_ProficiencyBonusLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.ProficiencyBonus <= value)
+function Goon_ProficiencyBonusLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.ProficiencyBonus <= value)
 end
 
-function Goon_IsProficiencyBonusEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_ProficiencyBonusGreaterThanOrEqual(value, entity) & Goon_ProficiencyBonusLessThanOrEqual(value2, entity)
+function Goon_IsProficiencyBonusEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_ProficiencyBonusGreaterThanOrEqual(value, source) & Goon_ProficiencyBonusLessThanOrEqual(value2, source)
 end
 
 -- Ability score checks
 -- Strength
-function Goon_StrengthEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Strength == value)
+function Goon_StrengthEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Strength == value)
 end
 
-function Goon_StrengthGreatherThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Strength > value)
+function Goon_StrengthGreatherThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Strength > value)
 end
 
-function Goon_StrengthLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Strength < value)
+function Goon_StrengthLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Strength < value)
 end
 
-function Goon_StrengthGreatherThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Strength >= value)
+function Goon_StrengthGreatherThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Strength >= value)
 end
 
-function Goon_StrengthLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Strength <= value)
+function Goon_StrengthLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Strength <= value)
 end
 
-function Goon_IsStrengthEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_StrengthGreatherThanOrEqual(value, entity) & Goon_StrengthLessThanOrEqual(value2, entity)
+function Goon_IsStrengthEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_StrengthGreatherThanOrEqual(value, source) & Goon_StrengthLessThanOrEqual(value2, source)
 end
 
 -- Dexterity
-function Goon_DexterityEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Dexterity == value)
+function Goon_DexterityEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Dexterity == value)
 end
 
-function Goon_DexterityGreatherThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Dexterity > value)
+function Goon_DexterityGreatherThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Dexterity > value)
 end
 
-function Goon_DexterityLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Dexterity < value)
+function Goon_DexterityLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Dexterity < value)
 end
 
-function Goon_DexterityGreatherThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Dexterity >= value)
+function Goon_DexterityGreatherThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Dexterity >= value)
 end
 
-function Goon_DexterityLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Dexterity <= value)
+function Goon_DexterityLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Dexterity <= value)
 end
 
-function Goon_IsDexterityEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_DexterityGreatherThanOrEqual(value, entity) & Goon_DexterityLessThanOrEqual(value2, entity)
+function Goon_IsDexterityEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_DexterityGreatherThanOrEqual(value, source) & Goon_DexterityLessThanOrEqual(value2, source)
 end
 
 -- Constitution
-function Goon_ConstitutionEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Constitution == value)
+function Goon_ConstitutionEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Constitution == value)
 end
 
-function Goon_ConstitutionGreatherThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Constitution > value)
+function Goon_ConstitutionGreatherThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Constitution > value)
 end
 
-function Goon_ConstitutionLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Constitution < value)
+function Goon_ConstitutionLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Constitution < value)
 end
 
-function Goon_ConstitutionGreatherThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Constitution >= value)
+function Goon_ConstitutionGreatherThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Constitution >= value)
 end
 
-function Goon_ConstitutionLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Constitution <= value)
+function Goon_ConstitutionLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Constitution <= value)
 end
 
-function Goon_IsConstitutionEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_ConstitutionGreatherThanOrEqual(value, entity) & Goon_ConstitutionLessThanOrEqual(value2, entity)
+function Goon_IsConstitutionEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_ConstitutionGreatherThanOrEqual(value, source) & Goon_ConstitutionLessThanOrEqual(value2, source)
 end
 
 -- Intelligence
-function Goon_IntelligenceEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Intelligence == value)
+function Goon_IntelligenceEquals(value, source)
+    source = entsourceity or context.Source
+    return ConditionResult(source.Intelligence == value)
 end
 
-function Goon_IntelligenceGreatherThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Intelligence > value)
+function Goon_IntelligenceGreatherThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Intelligence > value)
 end
 
-function Goon_IntelligenceLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Intelligence < value)
+function Goon_IntelligenceLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Intelligence < value)
 end
 
-function Goon_IntelligenceGreatherThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Intelligence >= value)
+function Goon_IntelligenceGreatherThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Intelligence >= value)
 end
 
-function Goon_IntelligenceLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Intelligence <= value)
+function Goon_IntelligenceLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Intelligence <= value)
 end
 
-function Goon_IsIntelligenceEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_IntelligenceGreatherThanOrEqual(value, entity) & Goon_IntelligenceLessThanOrEqual(value2, entity)
+function Goon_IsIntelligenceEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_IntelligenceGreatherThanOrEqual(value, source) & Goon_IntelligenceLessThanOrEqual(value2, source)
 end
 
 -- Wisdom
-function Goon_WisdomEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Wisdom == value)
+function Goon_WisdomEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Wisdom == value)
 end
 
-function Goon_WisdomGreatherThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Wisdom > value)
+function Goon_WisdomGreatherThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Wisdom > value)
 end
 
-function Goon_WisdomLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Wisdom < value)
+function Goon_WisdomLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Wisdom < value)
 end
 
-function Goon_WisdomGreatherThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Wisdom >= value)
+function Goon_WisdomGreatherThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Wisdom >= value)
 end
 
-function Goon_WisdomLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Wisdom <= value)
+function Goon_WisdomLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Wisdom <= value)
 end
 
-function Goon_IsWisdomEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_WisdomGreatherThanOrEqual(value, entity) & Goon_WisdomLessThanOrEqual(value2, entity)
+function Goon_IsWisdomEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_WisdomGreatherThanOrEqual(value, source) & Goon_WisdomLessThanOrEqual(value2, source)
 end
 
 -- Charisma
-function Goon_CharismaEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Charisma == value)
+function Goon_CharismaEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Charisma == value)
 end
 
-function Goon_CharismaGreatherThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Charisma > value)
+function Goon_CharismaGreatherThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Charisma > value)
 end
 
-function Goon_CharismaLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Charisma < value)
+function Goon_CharismaLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Charisma < value)
 end
 
-function Goon_CharismaGreatherThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Charisma >= value)
+function Goon_CharismaGreatherThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Charisma >= value)
 end
 
-function Goon_CharismaLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(entity.Charisma <= value)
+function Goon_CharismaLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(source.Charisma <= value)
 end
 
-function Goon_IsCharismaEqualOrBetween(value, value2, entity)
-    entity = entity or context.Source
-    return Goon_CharismaGreatherThanOrEqual(value, entity) & Goon_CharismaLessThanOrEqual(value2, entity)
+function Goon_IsCharismaEqualOrBetween(value, value2, source)
+    source = source or context.Source
+    return Goon_CharismaGreatherThanOrEqual(value, source) & Goon_CharismaLessThanOrEqual(value2, source)
 end
 
 -- Ability modifier checks
 -- Strength modifier
-function Goon_StrengthModEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Strength) == value)
+function Goon_StrengthModEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Strength) == value)
 end
 
-function Goon_StrengthModGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Strength) > value)
+function Goon_StrengthModGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Strength) > value)
 end
 
-function Goon_StrengthModLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Strength) < value)
+function Goon_StrengthModLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Strength) < value)
 end
 
-function Goon_StrengthModGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Strength) >= value)
+function Goon_StrengthModGreaterThanOrEqual(value, source)
+    ensourcetity = source or context.Source
+    return ConditionResult(GetModifier(source.Strength) >= value)
 end
 
-function Goon_StrengthModLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Strength) <= value)
+function Goon_StrengthModLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Strength) <= value)
 end
 
 -- Dexterity modifier
-function Goon_DexterityModEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Dexterity) == value)
+function Goon_DexterityModEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Dexterity) == value)
 end
 
-function Goon_DexterityModGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Dexterity) > value)
+function Goon_DexterityModGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Dexterity) > value)
 end
 
-function Goon_DexterityModLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Dexterity) < value)
+function Goon_DexterityModLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Dexterity) < value)
 end
 
-function Goon_DexterityModGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Dexterity) >= value)
+function Goon_DexterityModGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Dexterity) >= value)
 end
 
-function Goon_DexterityModLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Dexterity) <= value)
+function Goon_DexterityModLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Dexterity) <= value)
 end
 
 -- Constitution modifier
-function Goon_ConstitutionModEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Constitution) == value)
+function Goon_ConstitutionModEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Constitution) == value)
 end
 
-function Goon_ConstitutionModGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Constitution) > value)
+function Goon_ConstitutionModGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Constitution) > value)
 end
 
-function Goon_ConstitutionModLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Constitution) < value)
+function Goon_ConstitutionModLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Constitution) < value)
 end
 
-function Goon_ConstitutionModGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Constitution) >= value)
+function Goon_ConstitutionModGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Constitution) >= value)
 end
 
-function Goon_ConstitutionModLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Constitution) <= value)
+function Goon_ConstitutionModLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Constitution) <= value)
 end
 
 -- Intelligence modifier
-function Goon_IntelligenceModEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Intelligence) == value)
+function Goon_IntelligenceModEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Intelligence) == value)
 end
 
-function Goon_IntelligenceModGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Intelligence) > value)
+function Goon_IntelligenceModGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Intelligence) > value)
 end
 
-function Goon_IntelligenceModLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Intelligence) < value)
+function Goon_IntelligenceModLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Intelligence) < value)
 end
 
-function Goon_IntelligenceModGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Intelligence) >= value)
+function Goon_IntelligenceModGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Intelligence) >= value)
 end
 
-function Goon_IntelligenceModLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Intelligence) <= value)
+function Goon_IntelligenceModLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Intelligence) <= value)
 end
 
 -- Wisdom modifier
-function Goon_WisdomModEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Wisdom) == value)
+function Goon_WisdomModEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Wisdom) == value)
 end
 
-function Goon_WisdomModGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Wisdom) > value)
+function Goon_WisdomModGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Wisdom) > value)
 end
 
-function Goon_WisdomModLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Wisdom) < value)
+function Goon_WisdomModLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Wisdom) < value)
 end
 
-function Goon_WisdomModGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Wisdom) >= value)
+function Goon_WisdomModGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Wisdom) >= value)
 end
 
-function Goon_WisdomModLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Wisdom) <= value)
+function Goon_WisdomModLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Wisdom) <= value)
 end
 
 -- Charisma modifier
-function Goon_CharismaModEquals(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Charisma) == value)
+function Goon_CharismaModEquals(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Charisma) == value)
 end
 
-function Goon_CharismaModGreaterThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Charisma) > value)
+function Goon_CharismaModGreaterThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Charisma) > value)
 end
 
-function Goon_CharismaModLessThan(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Charisma) < value)
+function Goon_CharismaModLessThan(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Charisma) < value)
 end
 
-function Goon_CharismaModGreaterThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Charisma) >= value)
+function Goon_CharismaModGreaterThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Charisma) >= value)
 end
 
-function Goon_CharismaModLessThanOrEqual(value, entity)
-    entity = entity or context.Source
-    return ConditionResult(GetModifier(entity.Charisma) <= value)
+function Goon_CharismaModLessThanOrEqual(value, source)
+    source = source or context.Source
+    return ConditionResult(GetModifier(source.Charisma) <= value)
 end
 
 -- Check for ability used in attack roll
@@ -2515,9 +2514,9 @@ function Goon_AttackAbility(ability)
 end
 
 -- Check for magical weapon properties on attacking weapon
-function Goon_AttackWeaponIsMagical(entity)
-    entity = entity or context.Source
-    return HasWeaponProperty(WeaponProperties.Magical, GetAttackWeapon(entity))
+function Goon_AttackWeaponIsMagical(source)
+    source = source or context.Source
+    return HasWeaponProperty(WeaponProperties.Magical, GetAttackWeapon(source))
 end
 
 -- Disguise Self check
@@ -2558,49 +2557,49 @@ function Goon_IsDisguiseSelfSpell()
 end
 
 -- Surface checks
-function Goon_IsInWaterSurface(entity)
-    entity = entity or context.Target
-    return InSurface('SurfaceBlood', entity)
-         | InSurface('SurfaceBloodElectrified', entity)
-         | InSurface('SurfaceBloodFrozen', entity)
-         | InSurface('SurfaceWater', entity)
-         | InSurface('SurfaceWaterElectrified', entity)
-         | InSurface('SurfaceWaterFrozen', entity)
-         | InSurface('SurfaceDeepWater', entity)
-         | InSurface('SurfaceDeepWaterRunning', entity)
-         | InSurface('Sewer', entity)
+function Goon_IsInWaterSurface(target)
+    target = target or context.Target
+    return InSurface('SurfaceBlood', target)
+         | InSurface('SurfaceBloodElectrified', target)
+         | InSurface('SurfaceBloodFrozen', target)
+         | InSurface('SurfaceWater', target)
+         | InSurface('SurfaceWaterElectrified', target)
+         | InSurface('SurfaceWaterFrozen', target)
+         | InSurface('SurfaceDeepWater', target)
+         | InSurface('SurfaceDeepWaterRunning', target)
+         | InSurface('Sewer', target)
 end
 
-function Goon_IsInFreezableSurface(entity)
-    entity = entity or context.Target
-    return InSurface('SurfaceWater', entity)
-         | InSurface('SurfaceWaterElectrified', entity)
-         | InSurface('SurfaceBlood', entity)
-         | InSurface('SurfaceAlcohol', entity)
-         | InSurface('SurfaceAcid', entity)
+function Goon_IsInFreezableSurface(target)
+    target = target or context.Target
+    return InSurface('SurfaceWater', target)
+         | InSurface('SurfaceWaterElectrified', target)
+         | InSurface('SurfaceBlood', target)
+         | InSurface('SurfaceAlcohol', target)
+         | InSurface('SurfaceAcid', target)
 end
 
-function Goon_IsInSlipperySurface(entity)
-    entity = entity or context.Target
-    return InSurface('SurfaceWaterFrozen', entity)
-         | InSurface('SurfaceGreaseFrozen', entity)
-         | InSurface('SurfaceBloodFrozen', entity)
-         | InSurface('SurfaceGrease', entity)
+function Goon_IsInSlipperySurface(target)
+    target = target or context.Target
+    return InSurface('SurfaceWaterFrozen', target)
+         | InSurface('SurfaceGreaseFrozen', target)
+         | InSurface('SurfaceBloodFrozen', target)
+         | InSurface('SurfaceGrease', target)
 end
 
-function Goon_IsInLiquidSurface(entity)
-    entity = entity or context.Target
-    return InSurface('SurfaceBlood', entity)
-         | InSurface('SurfaceBloodElectrified', entity)
-         | InSurface('SurfaceBloodFrozen', entity)
-         | InSurface('SurfaceWater', entity)
-         | InSurface('SurfaceWaterElectrified', entity)
-         | InSurface('SurfaceWaterFrozen', entity)
-         | InSurface('SurfaceDeepWater', entity)
-         | InSurface('SurfaceDeepWaterRunning', entity)
-         | InSurface('Sewer', entity)
-         | InSurface('SurfaceAlcohol', entity)
-         | InSurface('SurfaceOil', entity)
+function Goon_IsInLiquidSurface(target)
+    target = target or context.Target
+    return InSurface('SurfaceBlood', target)
+         | InSurface('SurfaceBloodElectrified', target)
+         | InSurface('SurfaceBloodFrozen', target)
+         | InSurface('SurfaceWater', target)
+         | InSurface('SurfaceWaterElectrified', target)
+         | InSurface('SurfaceWaterFrozen', target)
+         | InSurface('SurfaceDeepWater', target)
+         | InSurface('SurfaceDeepWaterRunning', target)
+         | InSurface('Sewer', target)
+         | InSurface('SurfaceAlcohol', target)
+         | InSurface('SurfaceOil', target)
 end
 
 -- ==================================== BIG BRAIN FUNCTIONS ====================================
@@ -2647,15 +2646,15 @@ end
 -- Credit to JuuM: Returns the highest ability checked because... 
 -- "But no way to get the observers spellcasting ability from khonsu unfortunately" - joow
 
-function Goon_GetHighestAbility(abilities, entity)
-    entity = entity or context.Source
+function Goon_GetHighestAbility(abilities, source)
+    source = source or context.Source
     local highestValue = 0
     local highestAbility = abilities[1]
 
     --will return first ability if tie
     for _,ability in ipairs(abilities) do
-        if entity[ability] > highestValue then
-            highestValue = entity[ability]
+        if source[ability] > highestValue then
+            highestValue = source[ability]
             highestAbility = Ability[ability]
         end
     end
@@ -2663,13 +2662,13 @@ function Goon_GetHighestAbility(abilities, entity)
 end
 
 -- Similar check, but returning the actual number.
-function Goon_GetHighestAbilityValue(abilities, entity)
-    entity = entity or context.Source
+function Goon_GetHighestAbilityValue(abilities, source)
+    source = source or context.Source
     local highestValue = 0
 
     for _, ability in ipairs(abilities) do
-        if entity[ability] > highestValue then
-            highestValue = entity[ability]
+        if source[ability] > highestValue then
+            highestValue = source[ability]
         end
     end
     return highestValue
