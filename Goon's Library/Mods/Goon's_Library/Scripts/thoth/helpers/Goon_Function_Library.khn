@@ -201,6 +201,34 @@ end
 
 -- ==================================== Interrupt conditions ====================================
 
+function Goon_IsAbleToReact(observer, target)
+	observer = observer or context.Observer
+    target = target or context.Target
+    return ~Goon_IsCrowdControlled_Hard(observer) & ~Dead(observer) 
+         & ~(Self(target, observer) & (IsKillingBlow() | HasHPLessThan(1, target)))
+end
+
+function Goon_AISafeguardInterruptConditions(target, observer)
+	target = target or context.Target
+	observer = observer or context.Observer
+
+    return ~(~Goon_IsPlayerInControl(observer) & Tagged('AI_IGNORED_TARGET', target))
+         & (Goon_IsPlayerInControl(observer) | ~HasAnyStatus({ 'SG_Invisible', 'SNEAKING' }, {}, {}, observer))
+         & (Goon_IsPlayerInControl(observer) | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, observer)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
+end
+
+-- I don't think this is as deprecated as the vanilla comment suggest, like, removing it allows me to Sneak Attack boxes dawg.
+function Goon_AnyEntityIsItem(source, target, observer)
+	source = source or context.Source
+	target = target or context.Target
+	observer = observer or context.Observer
+
+    return Item(source)           | Item(target)           | Item(observer) 
+         | CrowdCharacter(source) | CrowdCharacter(target) | CrowdCharacter(observer)
+end
+
+-- ==================================== Interrupt conditions - "Conditions"
+
 function Goon_BasicHarmfulInterruptConditions(target, source, observer)
 	target = target or context.Target
 	source = source or context.Source
@@ -458,6 +486,25 @@ end
 function Goon_IsMetal(target)
     target = target or context.Target
     return IsMetalItem(target) or HasMetalWeaponInAnyHand(target) or HasMetalArmor(target) or IsMetalCharacter(target)
+end
+
+-- ==================================== Crowd Control
+-- SG_Restrained blocking loads of interrupts with IsAbleToReact is a bit silly.
+
+function Goon_IsCrowdControlled(target)
+    local target = target or context.Target
+	return Goon_IsCrowdControlled_Hard(target) | Goon_IsCrowdControlled_Soft(target)
+end
+
+function Goon_IsCrowdControlled_Hard(target)
+    local target = target or context.Target
+	return HasAnyStatus({ 'SG_Fleeing', 'SG_Incapacitated', 'SG_Stunned', 'SG_Unconscious', 'SG_Petrified' }, {}, {}, target)
+         | ~Goon_IsNonHostilePolymorphStatus(target)
+end
+
+function Goon_IsCrowdControlled_Soft(target)
+    local target = target or context.Target
+	return HasAnyStatus({ 'SG_Restrained' }, {}, {}, target)
 end
 
 -- ==================================== Bleeding
@@ -1920,28 +1967,30 @@ function Goon_CanSeeSneaking(source, target)
     return HasStatus('SNEAKING', target) & (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
 end
 
-function Goon_IsInvisibleSeen(entity)
-    entity = entity or context.Target
-    return HasStatus('GOON_INVISIBLE_SEEN', entity)
-         | HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', entity)
-         | HasStatus('GOON_INVISIBILITY_SEEN', entity)
-         | HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', entity)
-         | HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', entity)
-         | HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', entity)
-         | HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', entity)
-         | HasStatus('GOON_UMBRAL_CLOAK_SEEN', entity)
-         | HasStatus('GOON_GREATER_INVISIBILITY_SEEN', entity)
-         | HasStatus('GOON_SHADOWBLEND_SEEN', entity)
-         | HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', entity)
-         | HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', entity)
-         | HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', entity)
-         | HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', entity)
-         | HasStatus('GOON_SHROUD_SELF_SEEN', entity)
-         | HasStatus('GOON_SUPREME_SNEAK_SEEN', entity)
-         | HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', entity)
-         | HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', entity)
-         | HasStatus('GOON_SHADOW_WALKER_SEEN', entity)
-         | HasStatus('GOON_EMPTY_BODY_SEEN', entity)
+-- ==================================== 
+
+function Goon_IsInvisibleSeen(target)
+    target = target or context.Target
+    return HasStatus('GOON_INVISIBLE_SEEN', target)
+         | HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', target)
+         | HasStatus('GOON_INVISIBILITY_SEEN', target)
+         | HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', target)
+         | HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', target)
+         | HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', target)
+         | HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', target)
+         | HasStatus('GOON_UMBRAL_CLOAK_SEEN', target)
+         | HasStatus('GOON_GREATER_INVISIBILITY_SEEN', target)
+         | HasStatus('GOON_SHADOWBLEND_SEEN', target)
+         | HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', target)
+         | HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', target)
+         | HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', target)
+         | HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', target)
+         | HasStatus('GOON_SHROUD_SELF_SEEN', target)
+         | HasStatus('GOON_SUPREME_SNEAK_SEEN', target)
+         | HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', target)
+         | HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', target)
+         | HasStatus('GOON_SHADOW_WALKER_SEEN', target)
+         | HasStatus('GOON_EMPTY_BODY_SEEN', target)
 end
 
 -- ==================================== Max Strength Conditions ====================================
