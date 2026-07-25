@@ -1894,8 +1894,8 @@ function Goon_IsItemOrDead(target)
     return Item(target) | Dead(target)
 end
 
--- ==================================== Blindness, Darkness, Illusions ====================================
--- TODO: These could be more robust no?
+-- ==================================== Blindness, Darkness, Illusions, Invisibility & Sneaking ====================================
+-- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
 -- _Melee but without range check, suitable for things with implicit melee range/no explicit target. E.g. EnableCondition on a melee interrupt.
 function Goon_CanIgnoreBlindness(entity)
@@ -1930,25 +1930,15 @@ function Goon_CanIgnoreIllusions(entity, sourcePosition, targetPosition)
          | HasPassive('WitchSight', entity) -- TODO: Same/similar distance check as TRUESIGHT?
 end
 
--- ==================================== Invisibility & Sneaking ====================================
--- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
+-- ==================================== 
+-- "Blindsense: Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you."
+-- This is not granting the ability to actually see or ignore anything, but in the context of BG3 it might as well?
 
-function Goon_CanSeeInvisible(source, target, sourceObserver, targetObserver)
+function Goon_CanSeeInvisible(source, target, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
-    sourceObserver = sourceObserver or false
-    targetObserver = targetObserver or false
-
-    local sourcePosition = context.SourcePosition
-    local targetPosition = context.TargetPosition
-
-    if sourceObserver then
-        sourcePosition = context.ObserverIsSourcePosition
-    end
-
-    if targetObserver then
-        targetPosition = context.ObserverIsSourcePosition
-    end
+    sourcePosition = context.SourcePosition
+    targetPosition = context.TargetPosition
 
     return Tagged('BLINDSIGHT', source)
          | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
