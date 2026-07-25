@@ -304,12 +304,12 @@ end
 -- Note: Rakish stuff is 5e RAW, not whatever vanilla was trying and failing to do.
 -- TODO: Custom HasAdvantage and HasDisadvantage functions with context in args.
 
-function Goon_SneakAttackInterruptConditions(target, source, observer, from, to)
-    observer = observer or context.Observer
+function Goon_SneakAttackInterruptConditions(target, source, observer, sourcePosition, targetPosition)
 	source = source or context.Source
     target = target or context.Target
-    from = from or context.SourcePosition
-    to = to or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
     return Goon_BasicHarmfulInterruptConditions(target, source, observer)
         & Self(observer, source) & ~Self(observer, target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
@@ -325,37 +325,35 @@ function Goon_SneakAttackInterruptConditions(target, source, observer, from, to)
         | (WieldingWeapon('Ammunition', false, true, observer) & IsRangedWeaponAttack())
         | (Goon_IsDruidWildshape(observer) & (IsMeleeAttack() | IsRangedAttack()) & (IsDamageTypePiercing() | IsDamageTypeSlashing() | IsDamageTypeBludgeoning()))
         | (HasPassive('SneakAttack_LLRuffian', source) & (IsMainHandAttack() | IsMonkWeaponAttack())))
-        & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',1.5)
+        & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source)
         | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source))
-        & (~HasAllyWithinRange(nil,1.5,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, observer,source)) & ~DistanceToEntityGreaterThan(2, from,to)))
+        & (~HasAllyWithinRange(nil,1.5,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, observer,source)) & ~DistanceToEntityGreaterThan(2, sourcePosition, target)))
 end
 
 -- Sneak Attack action "TargetConditions"
 -- TODO: The default error message of "Must have Advantage against the target" is not accurate to mechanics - at least for the Rakish versions.
-function Goon_SneakAttackTargetConditions_Melee(target, source, from, to)
+function Goon_SneakAttackTargetConditions_Melee(target, source, sourcePosition, targetPosition)
     target = target or context.Target
 	source = source or context.Source
-    from = from or context.SourcePosition
-    to = to or context.Target
+    sourcePosition = sourcePosition or context.SourcePosition
 
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
          & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,1.5,nil,nil, source,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, source,source)) & ~DistanceToEntityGreaterThan(2, from,to)))
+         & (~HasAllyWithinRange(nil,1.5,nil,nil, source,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, source,source)) & ~DistanceToEntityGreaterThan(2, sourcePosition, target)))
 end
 
-function Goon_SneakAttackTargetConditions_Ranged(target, source, from, to)
+function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition)
     target = target or context.Target
 	source = source or context.Source
-    from = from or context.SourcePosition
-    to = to or context.Target
+    sourcePosition = sourcePosition or context.SourcePosition
 
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.RangedWeaponAttack))
          & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,1.5,nil,nil, source,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, source,source)) & ~DistanceToEntityGreaterThan(2, from,to)))
+         & (~HasAllyWithinRange(nil,1.5,nil,nil, source,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, source,source)) & ~DistanceToEntityGreaterThan(2, sourcePosition, target)))
 end
 
 function Goon_SneakAttackTargetConditions_Unarmed(target, source)
@@ -424,7 +422,7 @@ function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, sour
 
         range = mainWeaponRange
         if offhand ~= nil then
-            local weapon
+            local weapon = weapon
             if offhand then
                 weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, observer)
             else
@@ -462,7 +460,7 @@ function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, sou
 
         range = mainWeaponRange
         if offhand ~= nil then
-            local weapon
+            local weapon = weapon
             if offhand then
                 weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, observer)
             else
@@ -523,7 +521,7 @@ function Goon_HasSilencedCondition(target)
 end
 
 function Goon_HasDeafenedCondition(target)
-    target = enttargetity or context.Target
+    target = target or context.Target
     return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}, target) -- | HasPassive('Deafness', target)
 end
 
@@ -1619,19 +1617,19 @@ function Goon_IsCastingModifierGreaterThanDexterity_IsDexterityGreaterThanStreng
         & ConditionResult(source.Constitution >= source.Dexterity)
 
     if mainHandWeapon.IsValid then
-        IsSpellcastingModifierGreaterThanDexterity = Goon_IsSpellcastingModifierWeapon(mainHandWeapon)
+        IsSpellcastingModifierGreaterThanDexterity = Goon_IsSpellcastingModifierWeapon(mainHandWeapon, source)
             -- & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Strength)
             & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Dexterity)
 
-        IsIntelligenceGreaterThanDexterity = Goon_IsIntelligenceModifierWeapon(mainHandWeapon)
+        IsIntelligenceGreaterThanDexterity = Goon_IsIntelligenceModifierWeapon(mainHandWeapon, source)
             -- & ConditionResult(source.Intelligence >= source.Strength)
             & ConditionResult(source.Intelligence >= source.Dexterity)
 
-        IsWisdomGreaterThanDexterity = Goon_IsWisdomModifierWeapon(mainHandWeapon)
+        IsWisdomGreaterThanDexterity = Goon_IsWisdomModifierWeapon(mainHandWeapon, source)
             -- & ConditionResult(source.Wisdom >= source.Strength)
             & ConditionResult(source.Wisdom >= source.Dexterity)
 
-        IsCharismaGreaterThanDexterity = Goon_IsCharismaModifierWeapon(mainHandWeapon)
+        IsCharismaGreaterThanDexterity = Goon_IsCharismaModifierWeapon(mainHandWeapon, source)
             -- & ConditionResult(source.Charisma >= source.Strength)
             & ConditionResult(source.Charisma >= source.Dexterity)
     end
@@ -1654,7 +1652,7 @@ end
 function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
     source = source or context.Source
 
-    local slot
+    local slot = slot
     if isRanged then
         if isOffhand then
             slot = EquipmentSlot.RangedOffHand
@@ -1962,8 +1960,6 @@ end
 function Goon_CanSeeSneaking(source, target)
     source = source or context.Source
     target = target or context.Target
-    -- from = from or context.SourcePosition
-    -- to = to or context.Target
     return HasStatus('SNEAKING', target) & (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
 end
 
@@ -2044,7 +2040,7 @@ function Goon_IsFey(target)
 end
 
 function Goon_IsBeast(target)
-    entargettity = target or context.Target
+    target = target or context.Target
     return Tagged('BEAST', target)
 end
 
@@ -2152,12 +2148,12 @@ end
 -- Class level checks
 function Goon_ClassLevelEquals(level, class, source)
     source = source or context.Source
-    return ConditionResult(target.GetClassLevel(class) == level)
+    return ConditionResult(source.GetClassLevel(class) == level)
 end
 
-function Goon_ClassLevelGreaterThan(level, class, target)
-    target = target or context.Source
-    return ConditionResult(target.GetClassLevel(class) > level)
+function Goon_ClassLevelGreaterThan(level, class, source)
+    source = source or context.Source
+    return ConditionResult(source.GetClassLevel(class) > level)
 end
 
 function Goon_ClassLevelLessThan(level, class, source)
@@ -2309,7 +2305,7 @@ end
 
 -- Intelligence
 function Goon_IntelligenceEquals(value, source)
-    source = entsourceity or context.Source
+    source = source or context.Source
     return ConditionResult(source.Intelligence == value)
 end
 
@@ -2418,7 +2414,7 @@ function Goon_StrengthModLessThan(value, source)
 end
 
 function Goon_StrengthModGreaterThanOrEqual(value, source)
-    ensourcetity = source or context.Source
+    source = source or context.Source
     return ConditionResult(GetModifier(source.Strength) >= value)
 end
 
