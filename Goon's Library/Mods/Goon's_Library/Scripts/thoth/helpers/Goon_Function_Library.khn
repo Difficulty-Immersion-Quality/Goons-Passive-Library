@@ -551,6 +551,12 @@ end
 
 -- ==================================== Metal
 
+function Goon_IsMetal(target)
+    target = target or context.Target
+    return IsMetalItem(target) or HasMetalWeaponInAnyHand(target) or HasMetalArmor(target) or IsMetalCharacter(target)
+end
+
+-- TODO: Unfuck this
 -- function Goon_IsMetal(target)
 --     target = target or context.Target
 
