@@ -75,20 +75,6 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
     return ConditionResult(false, errorFalse, errorTrue)
 end
 
--- ==================================== HELPERS ====================================
--- TODO: Attempt context auto-swap again.
-
-function Goon_Helper_ContextSwap(swapContext, source, observer)
-    source = source or context.Source
-    observer = observer or context.Observer
-
-    if swapContext ~= nil then
-        return swapContext
-    end
-
-    return observer.IsValid and source.IsValid and Self(observer, source)
-end
-
 -- ==================================== Attack types ====================================
 -- Vanilla only has functions for IsWeaponAttack(), IsMainHandAttack(), IsMainHandWeaponAttack(), IsOffHandAttack(), IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
@@ -251,13 +237,17 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    -- local isSwapped = Goon_Helper_ContextSwap(swapContext, source, observer)
+    local isSwapped = swapContext
+    if isSwapped == nil then
+       isSwapped = Self(observer, target).Result
+    end
+
     local source_ = source
     local target_ = target
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if swapContext then
+    if isSwapped then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
@@ -265,13 +255,13 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
     end
 
     return Goon_IsAbleToReact(observer, target_)
-        --  & Self(observer, source_)
-         & ~Self(observer, target_)
+         & ~Self(observer, target_) --  & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
          & ~Self(source_, target_)
          & ~Dead(target_)
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
          & ~Goon_AnyEntityIsItem(source_, target_, observer)
+        --  & Goon_CanSourceSeeTarget(source, target, sourcePosition, targetPosition) -- TODO: Implement!
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
@@ -295,13 +285,17 @@ function Goon_AttackOfOpportunityConditions(swapContext, source, target, observe
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    -- local isSwapped = Goon_Helper_ContextSwap(swapContext, source, observer)
+    local isSwapped = swapContext
+    if isSwapped == nil then
+       isSwapped = Self(observer, target).Result
+    end
+
     local source_ = source
     local target_ = target
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if swapContext then
+    if isSwapped then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
@@ -319,7 +313,7 @@ function Goon_AttackOfOpportunityConditions(swapContext, source, target, observe
                      & ~(HasStatus('FANCYFOOTWORK', source_, target_) & HasStatus('FANCYFOOTWORK_OWNER', target_))
                      & ((~HasStatus('PANACHE', source_)) | (HasStatus('PANACHE', source_) & HasStatus('PANACHE_OWNER', target_)))
 
-    if swapContext then
+    if isSwapped then
         -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.Harmful)
         return Conditions & Self(observer, source_)
                           & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
@@ -431,92 +425,142 @@ end
 --     return ConditionResult(DistanceToEntityHitBounds(from, to) > value)
 -- end
 
--- EXAMPLE usage in interrupt conditions:
--- "(Goon_AttackOfOpportunityConditions(false) or (Goon_AttackOfOpportunityConditions() and Goon_InMeleeAttackRange(false,true,context.Source))"
-
-function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
-    target = target or context.Target
+function Goon_DistanceCheck(value, greaterThan, swapContext, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
+    target = target or context.Target
     observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
-    if observerIsSourcePosition == nil then
-        observerIsSourcePosition = false
+    local isSwapped = swapContext
+    if isSwapped == nil then
+       isSwapped = Self(observer, target).Result
     end
 
-    local position = context.SourcePosition
-    if observerIsSourcePosition then
-        position = context.ObserverPosition
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
     end
 
-    if range == nil then
-        local mainWeaponRange = 2
-        local reachWeaponRange = 3
+    local result = result
+    local errorPrefix = errorPrefix
 
-        range = mainWeaponRange
-        if offhand ~= nil then
-            local weapon = weapon
-            if offhand then
-                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, observer)
-            else
-                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, observer)
-            end
-            local hasReach = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
-            if hasReach then
-                range = reachWeaponRange
-            end
-        end
+    if greaterThan then
+        result = DistanceToEntityHitBounds(sourcePosition_, target_) > value
+              or Distance(sourcePosition_, targetPosition_) > value
+        errorPrefix = "Goon_DistanceGreaterThan"
+    else
+        result = DistanceToEntityHitBounds(sourcePosition_, target_) < value
+              or Distance(sourcePosition_, targetPosition_) < value
+        errorPrefix = "Goon_DistanceLessThan"
     end
 
-    return ~DistanceToEntityGreaterThan(range, position, target)
+    local errorTrue = {ConditionError(errorPrefix .. "_True", {ConditionErrorData.MakeFromNumber(value, EErrorDataType.Distance)})}
+    local errorFalse = {ConditionError(errorPrefix .. "_False", {ConditionErrorData.MakeFromNumber(value, EErrorDataType.Distance)})}
+
+    return ConditionResult(result, errorFalse, errorTrue)
 end
 
--- ==================================== Range checks - Ranged
+-- EXAMPLE usage in interrupt conditions:
+-- "(Goon_AttackOfOpportunityConditions(false) or (Goon_AttackOfOpportunityConditions(true) and Goon_InAttackRange(false,true))"
 
-function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
-	target = target or context.Target
-	source = source or context.Source
-	observer = observer or context.Observer
+function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observer, sourcePosition, targetPosition, distance)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
-    if observerIsSourcePosition == nil then
-        observerIsSourcePosition = false
+    local isSwapped = swapContext
+    if isSwapped == nil then
+       isSwapped = Self(observer, target).Result
     end
 
-    local position = context.SourcePosition
-    if observerIsSourcePosition then
-        position = context.ObserverPosition
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
     end
 
-    if range == nil then
-        local mainWeaponRange = 18.5
-        local handCrossbowRange = 15.5
+    local weapon = weapon
+    local isHandCrossbow = isHandCrossbow
+    local isReachWeapon = isReachWeapon
 
-        range = mainWeaponRange
+    if distance == nil then
+        local defaultWeaponRange = 2        -- 1.5 + .5 padding (melee)
+        local reachWeaponRange = 3          -- 2.5 + .5 padding (melee reach)
+        local defaultRangedRange = 18.5     -- 18 + .5 padding (ranged)
+        local handCrossbowRange = 15.5      -- 15 + .5 padding (hand crossbow)
+
+        if ranged then
+            distance = defaultRangedRange
+        else
+            distance = defaultWeaponRange
+        end
+
         if offhand ~= nil then
-            local weapon = weapon
-            if offhand then
-                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, observer)
+            local slot
+
+            if ranged then
+                if offhand then
+                    slot = EquipmentSlot.RangedOffHand
+                else
+                    slot = EquipmentSlot.RangedMainHand
+                end
             else
-                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, observer)
+                if offhand then
+                    slot = EquipmentSlot.MeleeOffHand
+                else
+                    slot = EquipmentSlot.MeleeMainHand
+                end
             end
-            local isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
-            if isHandCrossbow then
-                range = handCrossbowRange
+
+            weapon = GetItemInEquipmentSlot(slot, source_)
+            isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+            isReachWeapon = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+
+            if ranged then
+                if isHandCrossbow then
+                    distance = handCrossbowRange
+                end
+            else
+                if isReachWeapon then
+                    distance = reachWeaponRange
+                end
             end
         end
     end
 
-    return ~DistanceToEntityGreaterThan(range, position, target)
+    return Goon_DistanceCheck(distance, false, false, source_, target_, observer, sourcePosition_, targetPosition_)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
 
 -- ==================================== Metal
 
--- BUG? -- TODO: or instead of |
-function Goon_IsMetal(target)
-    target = target or context.Target
-    return IsMetalItem(target) or HasMetalWeaponInAnyHand(target) or HasMetalArmor(target) or IsMetalCharacter(target)
-end
+-- function Goon_IsMetal(target)
+--     target = target or context.Target
+
+--     local isMetalItem = IsMetalItem(target)
+--     local hasMetalWeapon = HasMetalWeaponInAnyHand(target)
+--     local hasMetalArmor = HasMetalArmor(target)
+--     local isMetalCharacter = IsMetalCharacter(target)
+
+--     return ConditionResult(isMetalItem.Result or hasMetalWeapon.Result or hasMetalArmor.Result or isMetalCharacter.Result)
+-- end
 
 -- ==================================== Crowd Control
 -- SG_Restrained blocking loads of interrupts with IsAbleToReact is a bit silly.

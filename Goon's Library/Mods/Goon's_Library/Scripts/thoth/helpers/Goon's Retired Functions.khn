@@ -1,4 +1,98 @@
--- Goon_AttackOfOpportunityConditions now dynamically swaps based on context
+-- ==================================== HELPERS ====================================
+-- Didn't really have a purpose by the end.
+
+function Goon_Helper_ContextSwap(swapContext, source, observer)
+    source = source or context.Source
+    observer = observer or context.Observer
+
+    if swapContext ~= nil then
+        return swapContext
+    end
+
+    return observer.IsValid and source.IsValid and Self(observer, source)
+end
+
+
+-- ==================================== AoO ====================================
+-- Goon_AttackOfOpportunityConditions now dynamically swaps based on context of truthy.
+
 function Goon_AttackOfOpportunityConditions_CriticalMiss()
     return Goon_AttackOfOpportunityConditions()
+end
+
+-- ==================================== Range Checks ====================================
+-- Integrated with Goon_InAttackRange.
+
+function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
+    target = target or context.Target
+    source = source or context.Source
+    observer = observer or context.Observer
+
+    if observerIsSourcePosition == nil then
+        observerIsSourcePosition = false
+    end
+
+    local position = context.SourcePosition
+    if observerIsSourcePosition then
+        position = context.ObserverPosition
+    end
+
+    if range == nil then
+        local mainWeaponRange = 2
+        local reachWeaponRange = 3
+
+        range = mainWeaponRange
+        if offhand ~= nil then
+            local weapon = weapon
+            if offhand then
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, observer)
+            else
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, observer)
+            end
+            local hasReach = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+            if hasReach then
+                range = reachWeaponRange
+            end
+        end
+    end
+
+    return ~DistanceToEntityGreaterThan(range, position, target)
+end
+
+-- ==================================== Range checks - Ranged
+
+function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
+
+    if observerIsSourcePosition == nil then
+        observerIsSourcePosition = false
+    end
+
+    local position = context.SourcePosition
+    if observerIsSourcePosition then
+        position = context.ObserverPosition
+    end
+
+    if range == nil then
+        local mainWeaponRange = 18.5
+        local handCrossbowRange = 15.5
+
+        range = mainWeaponRange
+        if offhand ~= nil then
+            local weapon = weapon
+            if offhand then
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, observer)
+            else
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, observer)
+            end
+            local isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+            if isHandCrossbow then
+                range = handCrossbowRange
+            end
+        end
+    end
+
+    return ~DistanceToEntityGreaterThan(range, position, target)
 end
