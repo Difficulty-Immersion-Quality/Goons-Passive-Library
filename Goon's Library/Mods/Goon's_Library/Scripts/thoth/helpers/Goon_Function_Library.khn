@@ -75,6 +75,20 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
     return ConditionResult(false, errorFalse, errorTrue)
 end
 
+-- ==================================== HELPERS ====================================
+-- TODO: Attempt context auto-swap again.
+
+function Goon_Helper_ContextSwap(swapContext, source, observer)
+    source = source or context.Source
+    observer = observer or context.Observer
+
+    if swapContext ~= nil then
+        return swapContext
+    end
+
+    return observer.IsValid and source.IsValid and Self(observer, source)
+end
+
 -- ==================================== Attack types ====================================
 -- Vanilla only has functions for IsWeaponAttack(), IsMainHandAttack(), IsMainHandWeaponAttack(), IsOffHandAttack(), IsMeleeAttack(), IsRangedAttack(), IsUnarmedAttack(), and IsMeleeUnarmedAttack().
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
@@ -228,74 +242,93 @@ function Goon_AnyEntityIsItem(source, target, observer)
 end
 
 -- ==================================== Interrupt conditions - "Conditions"
+-- Call as Goon_BasicHarmfulInterruptConditions(true) if the observer is the target.
 
-function Goon_BasicHarmfulInterruptConditions(target, source, observer)
-	target = target or context.Target
+function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, observer, sourcePosition, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
+
+    -- local isSwapped = Goon_Helper_ContextSwap(swapContext, source, observer)
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if swapContext then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
+
+    return Goon_IsAbleToReact(observer, target_)
+        --  & Self(observer, source_)
+         & ~Self(observer, target_)
+         & ~Self(source_, target_)
+         & ~Dead(target_)
+         & ~(IsKillingBlow() | HasHPLessThan(1, target_))
+         & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
+         & ~Goon_AnyEntityIsItem(source_, target_, observer)
+         & Goon_AISafeguardInterruptConditions(target_, observer)
+end
+
+-- ==================================== Interrupt conditions - "EnableCondition"
+-- data "EnableContext" "OnStatusApplied;OnStatusRemoved"
+
+function Goon_BasicHarmfulInterruptEnableConditions(source)
 	source = source or context.Source
-	observer = observer or context.Observer
-
-    return IsAbleToReact(observer)
-        & (Player(observer) | ~HasStatus('SG_Invisible', observer))
-        & (~HasStatus('SG_Invisible', target) | Goon_CanSeeInvisible(source, target))
-        & (~HasStatus('SNEAKING', target) | Goon_CanSeeSneaking(source, target))
+    return (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(source, true))
+         & (~HasStatus('SG_Polymorph', source)  | Goon_IsUnrestrictedPolymorphStatus(source))
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
--- Bug: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
--- WieldingWeapon('Ammunition', false, false, context.Source)
+-- Note: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
+-- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange for swapContext. -- TODO: These are probably getting replaced with something better.
 
-function Goon_AttackOfOpportunityConditions(target, source, observer)
-	target = target or context.Target
+function Goon_AttackOfOpportunityConditions(swapContext, source, target, observer, sourcePosition, targetPosition)
 	source = source or context.Source
+	target = target or context.Target
 	observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
-    return Goon_BasicHarmfulInterruptConditions(target, source, observer)
-        & Enemy(source, target) & ~Self(observer, target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
-        & ~Goon_IsAction()
-        & ~HasSpellFlag(SpellFlags.IgnoreAoO, target)
-        & ~AnyEntityIsItem()
-		& ~Tagged('OCS_ObjectCharacter', target)
-        & ~(~Goon_IsPlayerInControl(source) & Tagged('AI_IGNORED_TARGET', target))
-        & (Goon_IsPlayerInControl(source) | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, source)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
-        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source)
-        & ~HasAnyStatus({ 'SHOCKWAVE', 'SG_Ignore_AOO' }, {}, {}, target)
-        & ~Goon_HasFlamingSphereAuraCondition(target)
-        & ~(HasStatus('MOBILE_NO_AOO', source) & HasStatus('MOBILE_NO_AOO_SOURCE', target))
-        & ~(HasStatus('FANCYFOOTWORK', source, target) & HasStatus('FANCYFOOTWORK_OWNER', target))
-        & ((~HasStatus('PANACHE', source)) | (HasStatus('PANACHE', source) & HasStatus('PANACHE_OWNER', target)))
-end
+    -- local isSwapped = Goon_Helper_ContextSwap(swapContext, source, observer)
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
 
--- EXAMPLE: 
--- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source)
--- EXAMPLE - WAR CASTER:
--- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source) and not HasSpellCastBlocked(context.Observer)
--- EXAMPLE - POLEARM MASTER:
--- Goon_AttackOfOpportunityConditions() and not WieldingWeapon('Ammunition', false, false, context.Source) and (Tagged('WPN_GLAIVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_HALBERD', GetActiveWeapon(context.Source, true)) or Tagged('WPN_JAVELIN', GetActiveWeapon(context.Source, true)) or Tagged('WPN_PIKE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_STAVE', GetActiveWeapon(context.Source, true)) or Tagged('WPN_SPEAR', GetActiveWeapon(context.Source, true)) or Tagged('WPN_TRIDENT', GetActiveWeapon(context.Source, true)))
+    if swapContext then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
 
--- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange
-function Goon_AttackOfOpportunityConditions_CriticalMiss(target_, source_, observer)
-	local target = target or context.Target
-	local source = source or context.Source
-	observer = observer or context.Observer
-    target_ = target_ or source -- flipped due to context
-    source_ = source_ or target
+    local Conditions = Goon_BasicHarmfulInterruptConditions(false, source_, target_, observer, sourcePosition_, targetPosition_)
+                     -- & ~WieldingWeapon('Ammunition', false, false, source_)
+                     & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
+                     & ~Tagged('OCS_ObjectCharacter', target_)
+                     & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source_)
+                     & ~HasAnyStatus({ 'SHOCKWAVE', 'SG_Ignore_AOO' }, {}, {}, target_)
+                     & ~Goon_HasFlamingSphereAuraCondition(target_)
+                     & ~(HasStatus('MOBILE_NO_AOO', source_) & HasStatus('MOBILE_NO_AOO_SOURCE', target_))
+                     & ~(HasStatus('FANCYFOOTWORK', source_, target_) & HasStatus('FANCYFOOTWORK_OWNER', target_))
+                     & ((~HasStatus('PANACHE', source_)) | (HasStatus('PANACHE', source_) & HasStatus('PANACHE_OWNER', target_)))
 
-    return Goon_BasicHarmfulInterruptConditions(target_, source_, observer)
-        & Self(observer, source_) & ~Self(observer, target_) & ~Self(source_, target_) & ~Dead(target_) & ~Tagged('INANIMATE', target_)
-        & IsAttack() -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.Harmful)
-        & HasLastAttackTriggered()
-        & IsCriticalMiss()
-        & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
-        & ~AnyEntityIsItem()
-		& ~Tagged('OCS_ObjectCharacter', target_)
-        & ~(~Goon_IsPlayerInControl(source_) & Tagged('AI_IGNORED_TARGET', target_))
-        & (Goon_IsPlayerInControl(source_) | ~HasAnyStatus({ 'SANCTUARY', 'SANCTUARY_TRANQUILITY' }, {}, {}, source_)) -- 'SCL_DRIDER_SANCTUARY_HARDCORE' not really appropriate.
-        & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source_)
-        & ~HasAnyStatus({ 'SHOCKWAVE', 'SG_Ignore_AOO' }, {}, {}, target_)
-        & ~Goon_HasFlamingSphereAuraCondition(target_)
-        & ~(HasStatus('MOBILE_NO_AOO', source_) & HasStatus('MOBILE_NO_AOO_SOURCE', target_))
-        & ~(HasStatus('FANCYFOOTWORK', source_, target_) & HasStatus('FANCYFOOTWORK_OWNER', target_))
-        & ((~HasStatus('PANACHE', source_)) | (HasStatus('PANACHE', source_) & HasStatus('PANACHE_OWNER', target_)))
+    if swapContext then
+        -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.Harmful)
+        return Conditions & Self(observer, source_)
+                          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
+                          & IsAttack() & HasLastAttackTriggered()
+                          & IsCriticalMiss()
+    end
+
+    return Conditions & Enemy(source_, target_)
+                      & ~Goon_IsAction()
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
@@ -304,19 +337,18 @@ end
 -- Note: Rakish stuff is 5e RAW, not whatever vanilla was trying and failing to do.
 -- TODO: Custom HasAdvantage and HasDisadvantage functions with context in args.
 
-function Goon_SneakAttackInterruptConditions(target, source, observer, sourcePosition, targetPosition)
+function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePosition, targetPosition)
 	source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    return Goon_BasicHarmfulInterruptConditions(target, source, observer)
-        & Self(observer, source) & ~Self(observer, target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
+    return Goon_BasicHarmfulInterruptConditions(false, source, target, observer, sourcePosition, targetPosition)
+        & Self(observer, source)
+        & ~Tagged('INANIMATE', target)
         & IsHit()
-        & (~IsKillingBlow() | ~HasHPLessThan(1))
         & ~HasDamageEffectFlag(DamageFlags.AttackDisadvantage)
-        & ~AnyEntityIsItem()
         & ~Goon_IsSneakAttack()
         & ((WieldingFinesseWeaponInSpecificHand(observer,false) & IsMainHandWeaponAttack())
         | (WieldingFinesseWeaponInSpecificHand(observer,true) & IsOffHandAttack())
@@ -400,7 +432,7 @@ end
 -- end
 
 -- EXAMPLE usage in interrupt conditions:
--- "(Goon_AttackOfOpportunityConditions() or (Goon_AttackOfOpportunityConditions_CriticalMiss() and Goon_InMeleeAttackRange(false,true,context.Source))) and Goon_HasWeaponTypeInSlot(false,false,context.Observer)"
+-- "(Goon_AttackOfOpportunityConditions(false) or (Goon_AttackOfOpportunityConditions() and Goon_InMeleeAttackRange(false,true,context.Source))"
 
 function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
     target = target or context.Target

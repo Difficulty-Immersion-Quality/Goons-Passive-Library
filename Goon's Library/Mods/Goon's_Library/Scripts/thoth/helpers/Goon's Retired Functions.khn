@@ -1,0 +1,4 @@
+-- Goon_AttackOfOpportunityConditions now dynamically swaps based on context
+function Goon_AttackOfOpportunityConditions_CriticalMiss()
+    return Goon_AttackOfOpportunityConditions()
+end
