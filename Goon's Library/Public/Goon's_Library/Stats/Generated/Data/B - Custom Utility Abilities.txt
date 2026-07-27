@@ -20,7 +20,7 @@ data "Boosts" "IF(not Tagged('SPIDER')):UnlockSpell(Goon_Custom_Target_Invisibil
 data "BoostConditions" "not HasStatus('GOON_UTILITY_COOLDOWN')"
 data "StatsFunctors" "IF(context.HasContextFlag(StatsFunctorContext.OnCast)):ApplyStatus(GOON_UTILITY_COOLDOWN,100,1)"
 data "StatsFunctorContext" "OnCast"
-data "Conditions" "(context.HasContextFlag(StatsFunctorContext.OnCast) and SpellId('Goon_Custom_Target_Invisibility'))"
+data "Conditions" "context.HasContextFlag(StatsFunctorContext.OnCast) and (SpellId('Goon_Custom_Target_Invisibility') or SpellId('Goon_Custom_Target_Invisibility_Spider'))"
 
 new entry "Goon_Utility_Target_Invisibility_2"
 type "PassiveData"
