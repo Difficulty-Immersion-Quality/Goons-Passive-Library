@@ -5,28 +5,57 @@
         <node id="root">
             <children>
             <!-- ==================================== Distance ==================================== -->
-                <!-- Enemy can't be within [1]. -->
                 <node id="ConditionErrors">
+                    <!-- Enemy can't be within [1]. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="hbda78c48g3496g424egafecg18b2f62458c4" version="1" />
                     <attribute id="ErrorDescriptionType" type="uint8" value="0" />
                     <attribute id="Identifier" type="FixedString" value="Goon_HasEnemyWithinRange" />
-                    <!-- Goon_HasEnemyWithinRange - Enemy can't be within [1]. -->
                     <attribute id="UUID" type="guid" value="2cbe73b2-de7d-47d7-997b-755a923cf962" />
                 </node>
-                <!-- Enemy must be within [1]. -->
                 <node id="ConditionErrors">
+	                <!-- Enemy must be within [1]. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h65e4a940ga820g4d40g96bbg020ee44c4a4b" version="1" />
                     <attribute id="ErrorDescriptionType" type="uint8" value="0" />
                     <attribute id="Identifier" type="FixedString" value="Goon_HasNotEnemyWithinRange" />
-	                <!-- Goon_HasNotEnemyWithinRange - Enemy must be within [1]. -->
                     <attribute id="UUID" type="guid" value="c3a2e120-b747-4dfc-b7d4-8e3e95493924" />
                 </node>
+
                 <node id="ConditionErrors">
-                    <!-- Can't be more than [1] away. -->
+                    <!-- Cannot be more than [1] away. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h1c261eefg80f1g4583gbeecg372d59168c5b" version="4" />
                     <attribute id="ErrorDescriptionType" type="uint8" value="0" />
-                    <attribute id="Identifier" type="FixedString" value="Goon_DistanceGreaterThan_True" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_DistanceEqualOrGreaterThan_True" />
                     <attribute id="UUID" type="guid" value="ded3386d-a373-4991-962c-9a30ca509cae" />
+                </node>
+                <node id="ConditionErrors">
+                    <!-- Must be equal to or more than [1] away. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="hdb6cdf4dgb257g4cd7g8f10gdd7ed6c8ebdb" version="3" />
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_DistanceEqualOrGreaterThan_False" />
+                    <attribute id="UUID" type="guid" value="48e6476f-34e2-4bd3-9ab8-f7125fe0d192" />
+                </node>
+
+                <node id="ConditionErrors">
+                    <!-- Cannot be less than [1] away. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h47574931g1bc5g4f13gaf65g9212279e29d3" version="4" />
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_DistanceEqualOrLessThan_True" />
+                    <attribute id="UUID" type="guid" value="0dab112a-b903-4a57-aae5-cf3aeef8fd79" />
+                </node>
+                <node id="ConditionErrors">
+                    <!-- Must be equal to or less than [1] away. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h44f10ac3g2b5ag422dg83d2gfb707794dbf3" version="3" />
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_DistanceEqualOrLessThan_False" />
+                    <attribute id="UUID" type="guid" value="4c04c273-3903-4f3f-8d18-e30987c5cb7d" />
+                </node>
+
+                <node id="ConditionErrors">
+                    <!-- Cannot be equal to or more than [1] away. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h8621b518g3d80g4723g9f0agd9d131bc54ab" version="3" />
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0" />
+                    <attribute id="Identifier" type="FixedString" value="Goon_DistanceGreaterThan_True" />
+                    <attribute id="UUID" type="guid" value="bedf486f-b791-4a4d-9adf-79eb48ca17f1" />
                 </node>
                 <node id="ConditionErrors">
                     <!-- Must be more than [1] away. -->
@@ -35,12 +64,13 @@
                     <attribute id="Identifier" type="FixedString" value="Goon_DistanceGreaterThan_False" />
                     <attribute id="UUID" type="guid" value="ba4e50a3-bd9c-4429-a446-42968663903e" />
                 </node>
+
                 <node id="ConditionErrors">
-                    <!-- Can't be less than [1] away. -->
-                    <attribute id="DisplayName" type="TranslatedString" handle="h47574931g1bc5g4f13gaf65g9212279e29d3" version="4" />
+                    <!-- Cannot be equal to or less than [1] away. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h8c44139dg146ag487dgb8b5gec7d201927b5" version="3" />
                     <attribute id="ErrorDescriptionType" type="uint8" value="0" />
                     <attribute id="Identifier" type="FixedString" value="Goon_DistanceLessThan_True" />
-                    <attribute id="UUID" type="guid" value="0dab112a-b903-4a57-aae5-cf3aeef8fd79" />
+                    <attribute id="UUID" type="guid" value="88d9bea9-59f8-4529-8cce-9a738c395f9d" />
                 </node>
                 <node id="ConditionErrors">
                     <!-- Must be less than [1] away. -->
@@ -57,31 +87,31 @@
                     <attribute id="Identifier" type="FixedString" value="Goon_IsNotSurface"/>
                     <attribute id="UUID" type="guid" value="68c36536-279a-45ec-b77c-e950bb8b291c"/>
                 </node>
-                <!-- Must be a Dippable surface or entity. -->
                 <node id="ConditionErrors">
+                    <!-- Must be a Dippable surface or entity. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="hcdc02744g6b9bg4489gbb8dg5a72131736a5" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="Goon_IsNotDippableSurfaceOrEntity"/>
                     <attribute id="UUID" type="guid" value="f140a315-a39a-4fe1-b7ca-6a0666708cbb"/>
                 </node>
             <!-- ==================================== Other ==================================== -->
-                <!-- Must uphold an oath. -->
                 <node id="ConditionErrors">
+                    <!-- Must uphold an oath. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h47d9ad6ag86bbg472bg9933g4d43eedade6b" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="Goon_HasBrokenOath"/>
                     <attribute id="UUID" type="guid" value="49f3cb94-36a2-41ce-ac7c-020a7cbfb9a2"/>
                 </node>
-                <!-- Can only be used after attacking or casting a spell. -->
                 <node id="ConditionErrors">
+                    <!-- Can only be used after attacking or casting a spell. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="hd0f130e9g8c2cg4a1fgb44fgc48ae968e51e" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="Goon_HasAttackedOrCast"/>
                     <attribute id="UUID" type="guid" value="ccc7ac34-90e5-4450-886f-faf81f95f26b"/>
                 </node>
             <!-- ==================================== MaxConditionErrorWizard ==================================== -->
-                <!-- Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;. -->
                 <node id="ConditionErrors">
+                    <!-- Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;. -->
                     <attribute id="DisplayName" type="TranslatedString" handle="h5ce07cccg1a2dg44cfg89f1g24b823a62693" version="1"/>
                     <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
                     <attribute id="Identifier" type="FixedString" value="CE_Status_GOON_BLOODIED_False"/>

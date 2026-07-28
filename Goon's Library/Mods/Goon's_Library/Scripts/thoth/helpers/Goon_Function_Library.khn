@@ -238,7 +238,7 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
     targetPosition = targetPosition or context.TargetPosition
 
     local isSwapped = swapContext
-    if isSwapped == nil then
+    if isSwapped == nil and observer.IsValid then
        isSwapped = Self(observer, target).Result
     end
 
@@ -267,6 +267,7 @@ end
 
 -- ==================================== Interrupt conditions - "EnableCondition"
 -- data "EnableContext" "OnStatusApplied;OnStatusRemoved"
+-- TODO: Arguments to allow restricted polymorphs and shit.
 
 function Goon_BasicHarmfulInterruptEnableConditions(source)
 	source = source or context.Source
@@ -286,7 +287,7 @@ function Goon_AttackOfOpportunityConditions(swapContext, source, target, observe
     targetPosition = targetPosition or context.TargetPosition
 
     local isSwapped = swapContext
-    if isSwapped == nil then
+    if isSwapped == nil and observer.IsValid then
        isSwapped = Self(observer, target).Result
     end
 
@@ -425,6 +426,38 @@ end
 --     return ConditionResult(DistanceToEntityHitBounds(from, to) > value)
 -- end
 
+function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
+
+    local isSwapped = swapContext
+    if isSwapped == nil then
+       isSwapped = false
+    end
+
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
+
+    if not source_.IsValid then
+        return .5
+    end
+
+    local centerToCenter = Distance(sourcePosition_, targetPosition_)
+    local edgeDistance = DistanceToEntityHitBounds(targetPosition_, source_)
+    return centerToCenter - edgeDistance
+end
+
 function Goon_DistanceCheck(value, greaterThan, swapContext, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
@@ -433,7 +466,7 @@ function Goon_DistanceCheck(value, greaterThan, swapContext, source, target, obs
     targetPosition = targetPosition or context.TargetPosition
 
     local isSwapped = swapContext
-    if isSwapped == nil then
+    if isSwapped == nil and observer.IsValid then
        isSwapped = Self(observer, target).Result
     end
 
@@ -453,13 +486,13 @@ function Goon_DistanceCheck(value, greaterThan, swapContext, source, target, obs
     local errorPrefix = errorPrefix
 
     if greaterThan then
-        result = DistanceToEntityHitBounds(sourcePosition_, target_) > value
-              or Distance(sourcePosition_, targetPosition_) > value
-        errorPrefix = "Goon_DistanceGreaterThan"
+        result = DistanceToEntityHitBounds(sourcePosition_, target_) >= value
+              or Distance(sourcePosition_, targetPosition_) >= value
+        errorPrefix = "Goon_DistanceEqualOGreaterThan"
     else
-        result = DistanceToEntityHitBounds(sourcePosition_, target_) < value
-              or Distance(sourcePosition_, targetPosition_) < value
-        errorPrefix = "Goon_DistanceLessThan"
+        result = DistanceToEntityHitBounds(sourcePosition_, target_) <= value
+              or Distance(sourcePosition_, targetPosition_) <= value
+        errorPrefix = "Goon_DistanceEqualOrLessThan"
     end
 
     local errorTrue = {ConditionError(errorPrefix .. "_True", {ConditionErrorData.MakeFromNumber(value, EErrorDataType.Distance)})}
@@ -479,7 +512,7 @@ function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observ
     targetPosition = targetPosition or context.TargetPosition
 
     local isSwapped = swapContext
-    if isSwapped == nil then
+    if isSwapped == nil and observer.IsValid then
        isSwapped = Self(observer, target).Result
     end
 
@@ -500,15 +533,16 @@ function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observ
     local isReachWeapon = isReachWeapon
 
     if distance == nil then
-        local defaultWeaponRange = 2        -- 1.5 + .5 padding (melee)
-        local reachWeaponRange = 3          -- 2.5 + .5 padding (melee reach)
-        local defaultRangedRange = 18.5     -- 18 + .5 padding (ranged)
-        local handCrossbowRange = 15.5      -- 15 + .5 padding (hand crossbow)
+        local hitBoxPadding = Goon_GetSourceHitBox(false, source_, target_, sourcePosition_, targetPosition_)
+        local defaultWeaponRange = 1.5
+        local reachWeaponRange = 2.5
+        local defaultRangedRange = 18
+        local handCrossbowRange = 15
 
         if ranged then
-            distance = defaultRangedRange
+            distance = defaultRangedRange + hitBoxPadding
         else
-            distance = defaultWeaponRange
+            distance = defaultWeaponRange + hitBoxPadding
         end
 
         if offhand ~= nil then
@@ -534,11 +568,11 @@ function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observ
 
             if ranged then
                 if isHandCrossbow then
-                    distance = handCrossbowRange
+                    distance = handCrossbowRange + hitBoxPadding
                 end
             else
                 if isReachWeapon then
-                    distance = reachWeaponRange
+                    distance = reachWeaponRange + hitBoxPadding
                 end
             end
         end
