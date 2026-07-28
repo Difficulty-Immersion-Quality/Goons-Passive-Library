@@ -261,7 +261,7 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
          & ~Goon_AnyEntityIsItem(source_, target_, observer)
-        --  & Goon_CanSourceSeeTarget(source, target, sourcePosition, targetPosition) -- TODO: Implement!
+         & Goon_CanSourceSeeTarget(source_, target_, observer, sourcePosition_, targetPosition_)
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
@@ -271,7 +271,8 @@ end
 
 function Goon_BasicHarmfulInterruptEnableConditions(source)
 	source = source or context.Source
-    return (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(source, true))
+
+    return (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(true, source))
          & (~HasStatus('SG_Polymorph', source)  | Goon_IsUnrestrictedPolymorphStatus(source))
 end
 
@@ -2021,60 +2022,73 @@ end
 -- ==================================== Blindness, Darkness, Illusions, Invisibility & Sneaking ====================================
 -- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
--- _Melee but without range check, suitable for things with implicit melee range/no explicit target. E.g. EnableCondition on a melee interrupt.
-function Goon_CanIgnoreBlindness(entity)
-    entity = entity or context.Source
-    return IsImmuneToStatus('SG_Blinded', entity)
-         | HasPassive('Blindsense', entity) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))
-         | HasPassive('FightingStyle_BlindFighting', entity)
-end
+function Goon_CanSourceSeeTarget(source, target, observer, sourcePosition, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
-function Goon_CanIgnoreBlindness_Melee(entity, sourcePosition, targetPosition)
-    entity = entity or context.Source
-    sourcePosition = context.SourcePosition
-    targetPosition = context.TargetPosition
-    return IsImmuneToStatus('SG_Blinded', entity)
-         | HasPassive('Blindsense', entity) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))
-         | HasPassive('FightingStyle_BlindFighting', entity) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3)
-end
-
-function Goon_CanIgnoreBlindness_Ranged(entity)
-    entity = entity or context.Source
-    return IsImmuneToStatus('SG_Blinded', entity)
-         | HasPassive('Blindsense', entity) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))
-end
-
-function Goon_CanIgnoreIllusions(entity, sourcePosition, targetPosition)
-    entity = entity or context.Source
-    sourcePosition = context.SourcePosition
-    targetPosition = context.TargetPosition
-    return Tagged('BLINDSIGHT', entity) 
-         | (HasStatus('TRUESIGHT', entity) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5))
-         | ((HasPassive('FightingStyle_BlindFighting', entity) | (HasPassive('Blindsense', entity)) & ~(HasPassive('Deafness', entity) or HasStatus('SG_Deafened', entity))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
-         | HasPassive('WitchSight', entity) -- TODO: Same/similar distance check as TRUESIGHT?
+    return (~HasStatus('SG_Invisible', target)  | Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPosition)) 
+         & (~HasStatus('SNEAKING', target)      | Goon_CanSeeSneaking(source, target))
+         & (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(false, source, target, observer, sourcePosition, targetPosition))
+        --  TODO: The illusion check is going to need some other shit, probably worth referencing Necrobroker. 
 end
 
 -- ==================================== 
 -- "Blindsense: Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you."
 -- This is not granting the ability to actually see or ignore anything, but in the context of BG3 it might as well?
 
-function Goon_CanSeeInvisible(source, target, sourcePosition, targetPosition)
+function Goon_CanIgnoreBlindness(ignoreDistance, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
-    sourcePosition = context.SourcePosition
-    targetPosition = context.TargetPosition
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
+
+    local Conditions = IsImmuneToStatus('SG_Blinded', source)
+                     | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
+                     | HasPassive('FightingStyle_BlindFighting', source))
+
+    if ignoreDistance then
+        return Conditions
+    end
+
+    return Conditions & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition)
+end
+
+function Goon_CanIgnoreIllusions(source, target, observer, sourcePosition, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
+
+    return Tagged('BLINDSIGHT', source) 
+         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, source, target, observer, sourcePosition, targetPosition))
+         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source)) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))) & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition))
+         | HasPassive('WitchSight', source) -- TODO: Same/similar distance check as TRUESIGHT?
+end
+
+function Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
     return Tagged('BLINDSIGHT', source)
          | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
-         | (HasStatus('TRUESIGHT', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 36.5))
-         | ((HasStatus('SEE_INVISIBILITY', source) | HasStatus('MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', source) | HasPassive('AllSeeingEye', source) | HasStatus('TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT', source)) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 18.5))
-         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3))
+         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, source, target, observer, sourcePosition, targetPosition))
+         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source) | HasPassive('AllSeeingEye', source)) & Goon_DistanceCheck(18.5, false, false, source, target, observer, sourcePosition, targetPosition))
+         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition))
 end
 
 function Goon_CanSeeSneaking(source, target)
     source = source or context.Source
     target = target or context.Target
-    return HasStatus('SNEAKING', target) & (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
+
+    return HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source)
 end
 
 -- ==================================== 

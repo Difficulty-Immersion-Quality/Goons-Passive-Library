@@ -96,3 +96,24 @@ function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, sou
 
     return ~DistanceToEntityGreaterThan(range, position, target)
 end
+
+-- ==================================== Blindness ====================================
+-- Goon_CanIgnoreBlindness now uses truthy for the distance check
+
+function Goon_CanIgnoreBlindness_Melee(source, sourcePosition, targetPosition)
+    source = source or context.Source
+    sourcePosition = context.SourcePosition
+    targetPosition = context.TargetPosition
+
+    return IsImmuneToStatus('SG_Blinded', source)
+         | HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
+         | HasPassive('FightingStyle_BlindFighting', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3)
+
+end
+
+function Goon_CanIgnoreBlindness_Ranged(source)
+    source = source or context.Source
+
+    return IsImmuneToStatus('SG_Blinded', source)
+         | HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
+end
