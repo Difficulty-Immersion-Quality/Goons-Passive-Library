@@ -25,9 +25,11 @@ end
 -- Credit to XiphiasRex - Enemies are now filtered properly based on exclusionStatus and tag.
 -- TODO: I feel like this could be expanded some, I want to filter better. Saying no to a single status, or yes to a tag is pretty limited.
 -- Need to think a bit on how best to differentiate between dudes that actually pose a threat vs ones who don't. Incapacitated exclusions gets a good ways, but it's not everything.
+-- TODO: Overwrite the ally one too, give it the better distance check.
 
 function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, target, source)
-    distance = distance or 1.5
+    -- distance = distance or 1.5
+    distance = distance or Goon_DistanceCheck(1.5, false, false, source, target)
     NumberOfEnemy = NumberOfEnemy or 1
     target = target or context.Target
     source = source or context.Source
@@ -353,9 +355,9 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
         | (WieldingWeapon('Ammunition', false, true, observer) & IsRangedWeaponAttack())
         | (Goon_IsDruidWildshape(observer) & (IsMeleeAttack() | IsRangedAttack()) & (IsDamageTypePiercing() | IsDamageTypeSlashing() | IsDamageTypeBludgeoning()))
         | (HasPassive('SneakAttack_LLRuffian', source) & (IsMainHandAttack() | IsMonkWeaponAttack())))
-        & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source)
+        & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source)
         | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source))
-        & (~HasAllyWithinRange(nil,1.5,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, observer,source)) & ~DistanceToEntityGreaterThan(2, sourcePosition, target)))
+        & (~HasAllyWithinRange(nil,nil,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,nil,nil,2, observer,source)) & Goon_DistanceCheck(1.5, false, false, source, target, observer, sourcePosition, targetPosition)))
 end
 
 -- Sneak Attack action "TargetConditions"
@@ -367,9 +369,9 @@ function Goon_SneakAttackTargetConditions_Melee(target, source, sourcePosition, 
 
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
-         & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source))
+         & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,1.5,nil,nil, source,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, source,source)) & ~DistanceToEntityGreaterThan(2, sourcePosition, target)))
+         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, source, target, observer, sourcePosition, targetPosition)))
 end
 
 function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition)
@@ -379,9 +381,9 @@ function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition)
 
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.RangedWeaponAttack))
-         & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source))
+         & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,1.5,nil,nil, source,source) & ~HasEnemyWithinRange(nil,1.5,nil,2, source,source)) & ~DistanceToEntityGreaterThan(2, sourcePosition, target)))
+         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, source, target, observer, sourcePosition, targetPosition)))
 end
 
 function Goon_SneakAttackTargetConditions_Unarmed(target, source)
@@ -390,7 +392,7 @@ function Goon_SneakAttackTargetConditions_Unarmed(target, source)
     
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.MeleeUnarmedAttack))
-         & (HasAdvantage(AttackType.MeleeUnarmedAttack) | HasAllyWithinRange('SG_Incapacitated',1.5,nil,nil, target,source))
+         & (HasAdvantage(AttackType.MeleeUnarmedAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
 end
 
 -- ==================================== Player vs NPC checks + in control vs not in control ====================================
