@@ -263,19 +263,30 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
          & ~Goon_AnyEntityIsItem(source_, target_, observer)
-         & Goon_CanSourceSeeTarget(source_, target_, observer, sourcePosition_, targetPosition_)
+         & Goon_CanSourceSeeTarget(false, source_, target_, observer, sourcePosition_, targetPosition_)
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
 -- ==================================== Interrupt conditions - "EnableCondition"
 -- data "EnableContext" "OnStatusApplied;OnStatusRemoved"
--- TODO: Arguments to allow restricted polymorphs and shit.
 
-function Goon_BasicHarmfulInterruptEnableConditions(source)
+function Goon_BasicHarmfulInterruptEnableConditions(allowRestrictedWildshapes, source)
 	source = source or context.Source
 
-    return (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(true, source))
-         & (~HasStatus('SG_Polymorph', source)  | Goon_IsUnrestrictedPolymorphStatus(source))
+    local unrestricted = allowRestrictedWildshapes
+    if unrestricted == nil then
+       unrestricted = false
+    end
+
+    local Conditions = (~HasStatus('SG_Blinded', source) | Goon_CanIgnoreBlindness(true, source))
+
+    if unrestricted then
+        return Conditions & (~HasStatus('SG_Polymorph', source) 
+                          | Goon_IsUnrestrictedPolymorphStatus(source))
+    end
+
+    return Conditions & (~HasStatus('SG_Polymorph', source) 
+                      | Goon_IsNonHostilePolymorphStatus(source))
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
@@ -433,7 +444,7 @@ end
 
 -- DistanceToEntityHitBounds = 🐐📏✨
 
--- TODO: It can't handle when observer isn't either the source or target...
+-- TODO: It can't handle when observer isn't either the source or target... Interrupt_Sentinel.
 function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
@@ -2024,7 +2035,7 @@ end
 -- ==================================== Blindness, Darkness, Illusions, Invisibility & Sneaking ====================================
 -- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
-function Goon_CanSourceSeeTarget(source, target, observer, sourcePosition, targetPosition)
+function Goon_CanSourceSeeTarget(ignoreDistance, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -2033,7 +2044,7 @@ function Goon_CanSourceSeeTarget(source, target, observer, sourcePosition, targe
 
     return (~HasStatus('SG_Invisible', target)  | Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPosition)) 
          & (~HasStatus('SNEAKING', target)      | Goon_CanSeeSneaking(source, target))
-         & (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(false, source, target, observer, sourcePosition, targetPosition))
+         & (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(ignoreDistance, source, target, observer, sourcePosition, targetPosition))
         --  TODO: The illusion check is going to need some other shit, probably worth referencing Necrobroker. 
 end
 
