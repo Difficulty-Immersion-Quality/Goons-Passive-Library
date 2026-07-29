@@ -387,7 +387,7 @@ function Goon_SneakAttackTargetConditions_Melee(target, source, sourcePosition, 
          & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, nil, sourcePosition, targetPosition)))
 end
 
-function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition)
+function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition, targetPosition)
     target = target or context.Target
 	source = source or context.Source
     sourcePosition = sourcePosition or context.SourcePosition
@@ -447,7 +447,7 @@ end
 
 -- DistanceToEntityHitBounds = 🐐📏✨
 
--- TODO: It can't handle when observer isn't either the source or target... Interrupt_Sentinel.
+-- TODO: It can't handle when observer isn't either the source or target... Interrupt_Sentinel for example.
 function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
@@ -480,7 +480,6 @@ function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targe
     return centerToCenter - edgeDistance
 end
 
--- Note: Call with exact values and no padding, unlike vanilla.
 function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
@@ -507,7 +506,7 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
 
     local paddedValue = value
 
-    if useHitBoxPadding ~= false then
+    if disableHitBoxPadding ~= true then
         paddedValue = value + Goon_GetSourceHitBox(false, source_, target_, sourcePosition_, targetPosition_)
     end
 
@@ -2085,7 +2084,7 @@ function Goon_CanIgnoreIllusions(source, target, observer, sourcePosition, targe
 
     return Tagged('BLINDSIGHT', source) 
          | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
-         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source)) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))) & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition))
+         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source)) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))) & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition))
          | HasPassive('WitchSight', source) -- TODO: Same/similar distance check as TRUESIGHT?
 end
 
@@ -2098,8 +2097,8 @@ function Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPo
 
     return Tagged('BLINDSIGHT', source)
          | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
-         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, source, target, observer, sourcePosition, targetPosition))
-         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source) | HasPassive('AllSeeingEye', source)) & Goon_DistanceCheck(18.5, false, false, source, target, observer, sourcePosition, targetPosition))
+         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
+         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source) | HasPassive('AllSeeingEye', source)) & Goon_DistanceCheck(18.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
          | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition))
 end
 
@@ -2227,7 +2226,7 @@ function Goon_IsPlant(target)
 end
 
 function Goon_IsMonstrosity(target)
-    enttargetity = target or context.Target
+    target = target or context.Target
     return Tagged('MONSTROSITY', target)
 end
 
