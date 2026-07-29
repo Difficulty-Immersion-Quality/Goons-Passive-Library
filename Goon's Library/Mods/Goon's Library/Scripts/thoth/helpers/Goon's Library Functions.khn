@@ -26,13 +26,14 @@ end
 -- TODO: I feel like this could be expanded some, I want to filter better. Saying no to a single status, or yes to a tag is pretty limited.
 -- Need to think a bit on how best to differentiate between dudes that actually pose a threat vs ones who don't. Incapacitated exclusions gets a good ways, but it's not everything.
 -- TODO: Overwrite the ally one too, give it the better distance check.
+-- TODO: Just make a custom version with padding added to custom values.
 
 function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, target, source)
-    -- distance = distance or 1.5
-    distance = distance or Goon_DistanceCheck(1.5, false, false, source, target)
-    NumberOfEnemy = NumberOfEnemy or 1
     target = target or context.Target
     source = source or context.Source
+    NumberOfEnemy = NumberOfEnemy or 1
+    -- distance = distance or 1.5
+    distance = distance or (1.5 + Goon_GetSourceHitBox(false, source, target))
 
     -- local errorTrue = {ConditionError("HasAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
     local errorTrue = {ConditionError("Goon_HasEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
@@ -368,7 +369,7 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
         | (HasPassive('SneakAttack_LLRuffian', source) & (IsMainHandAttack() | IsMonkWeaponAttack())))
         & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source)
         | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source))
-        & (~HasAllyWithinRange(nil,nil,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,nil,nil,2, observer,source)) & Goon_DistanceCheck(1.5, false, false, source, target, observer, sourcePosition, targetPosition)))
+        & (~HasAllyWithinRange(nil,nil,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,nil,nil,2, observer,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, observer, sourcePosition, targetPosition)))
 end
 
 -- Sneak Attack action "TargetConditions"
@@ -377,24 +378,26 @@ function Goon_SneakAttackTargetConditions_Melee(target, source, sourcePosition, 
     target = target or context.Target
 	source = source or context.Source
     sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
          & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, source, target, observer, sourcePosition, targetPosition)))
+         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, nil, sourcePosition, targetPosition)))
 end
 
 function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition)
     target = target or context.Target
 	source = source or context.Source
     sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
 
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.RangedWeaponAttack))
          & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, source, target, observer, sourcePosition, targetPosition)))
+         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, nil, sourcePosition, targetPosition)))
 end
 
 function Goon_SneakAttackTargetConditions_Unarmed(target, source)
@@ -478,7 +481,7 @@ function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targe
 end
 
 -- Note: Call with exact values and no padding, unlike vanilla.
-function Goon_DistanceCheck(value, greaterThan, swapContext, source, target, observer, sourcePosition, targetPosition)
+function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -502,8 +505,11 @@ function Goon_DistanceCheck(value, greaterThan, swapContext, source, target, obs
         targetPosition_ = sourcePosition
     end
 
-    local hitBoxPadding = Goon_GetSourceHitBox(false, source_, target_, sourcePosition_, targetPosition_)
-    local paddedValue = value + hitBoxPadding
+    local paddedValue = value
+
+    if useHitBoxPadding ~= false then
+        paddedValue = value + Goon_GetSourceHitBox(false, source_, target_, sourcePosition_, targetPosition_)
+    end
 
     local result = result
     local errorPrefix = errorPrefix
@@ -600,7 +606,7 @@ function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observ
         end
     end
 
-    return Goon_DistanceCheck(distance, false, false, source_, target_, observer, sourcePosition_, targetPosition_)
+    return Goon_DistanceCheck(distance, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
@@ -2067,7 +2073,7 @@ function Goon_CanIgnoreBlindness(ignoreDistance, source, target, observer, sourc
         return Conditions
     end
 
-    return Conditions & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition)
+    return Conditions & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition)
 end
 
 function Goon_CanIgnoreIllusions(source, target, observer, sourcePosition, targetPosition)
@@ -2078,7 +2084,7 @@ function Goon_CanIgnoreIllusions(source, target, observer, sourcePosition, targe
     targetPosition = targetPosition or context.TargetPosition
 
     return Tagged('BLINDSIGHT', source) 
-         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, source, target, observer, sourcePosition, targetPosition))
+         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
          | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source)) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))) & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition))
          | HasPassive('WitchSight', source) -- TODO: Same/similar distance check as TRUESIGHT?
 end
@@ -2094,7 +2100,7 @@ function Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPo
          | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
          | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, source, target, observer, sourcePosition, targetPosition))
          | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source) | HasPassive('AllSeeingEye', source)) & Goon_DistanceCheck(18.5, false, false, source, target, observer, sourcePosition, targetPosition))
-         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & Goon_DistanceCheck(3, false, false, source, target, observer, sourcePosition, targetPosition))
+         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition))
 end
 
 function Goon_CanSeeSneaking(source, target)
