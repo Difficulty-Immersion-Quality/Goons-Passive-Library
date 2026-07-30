@@ -266,7 +266,7 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
         targetPosition_ = sourcePosition
     end
 
-    return Goon_InterruptConditions(false, source_, target_, observer)
+    return Goon_InterruptConditions(source_, target_, observer)
          & ~Self(observer, target_) --  & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
          & ~Self(source_, target_)
          & ~Dead(target_)
@@ -2162,7 +2162,7 @@ end
 
 function Goon_DraconicAncestry_Fire(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Red', source)    | HasPassive('DraconicAncestry_Gold', source) | HasPassive('DraconicAncestry_Brass', source) 
+    return HasPassive('DraconicAncestry_Red', source)    | HasPassive('DraconicAncestry_Gold', source) | HasPassive('DraconicAncestry_Brass', source)
          | HasPassive('DraconicAncestry_Solar', source)  | HasPassive('DraconicAncestry_Iron', source) | HasPassive('DraconicAncestry_Purple', source) -- Draconic Bloodline Expanded
          | HasPassive('DraconicAncestry_Orange', source) | HasPassive('DraconicAncestry_Prismatic', source)
 end
