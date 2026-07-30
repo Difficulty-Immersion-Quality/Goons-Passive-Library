@@ -2135,6 +2135,81 @@ function Goon_IsInvisibleSeen(target)
          | HasStatus('GOON_EMPTY_BODY_SEEN', target)
 end
 
+-- ==================================== Draconic Bloodline Ancestries ====================================
+
+function Goon_DraconicAncestry_Acid(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Black', source)  | HasPassive('DraconicAncestry_Copper', source)
+         | HasPassive('DraconicAncestry_Nickel', source) | HasPassive('DraconicAncestry_Steel', source) | HasPassive('DraconicAncestry_Brown', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Cold(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Silver', source)   | HasPassive('DraconicAncestry_White', source)
+         | HasPassive('DraconicAncestry_Chromium', source) | HasPassive('DraconicAncestry_Lunar', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Fire(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Red', source)    | HasPassive('DraconicAncestry_Gold', source) | HasPassive('DraconicAncestry_Brass', source) 
+         | HasPassive('DraconicAncestry_Solar', source)  | HasPassive('DraconicAncestry_Iron', source) | HasPassive('DraconicAncestry_Purple', source) -- Draconic Bloodline Expanded
+         | HasPassive('DraconicAncestry_Orange', source) | HasPassive('DraconicAncestry_Prismatic', source)
+end
+
+function Goon_DraconicAncestry_Lightning(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Blue', source) | HasPassive('DraconicAncestry_Bronze', source)
+end
+
+function Goon_DraconicAncestry_Poison(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Green', source) 
+         | HasPassive('DraconicAncestry_Dracolich', source) -- Draconic Bloodline Expanded
+end
+
+-- Custom
+function Goon_DraconicAncestry_Force(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Amethyst', source) | HasPassive('DraconicAncestry_Force', source) | HasPassive('DraconicAncestry_Cobalt', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Radiant(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Crystal', source) | HasPassive('DraconicAncestry_Hallow', source) -- Draconic Bloodline Expanded
+         | HasPassive('DraconicAncestry_Moonstone', source) | HasPassive('DraconicAncestry_Mercury', source)
+         | HasPassive('DraconicAncestry_Platinum', source) -- Platinum Draconic Bloodline for Sorcerers
+end
+
+function Goon_DraconicAncestry_Psychic(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Emerald', source) | HasPassive('DraconicAncestry_Deep', source) | HasPassive('DraconicAncestry_Pink', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Thunder(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Sapphire', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Necrotic(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Topaz', source) | HasPassive('DraconicAncestry_Shadow', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Bludgeoning(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Yellow', source) | HasPassive('DraconicAncestry_Tungsten', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Piercing(source)
+    source = source or context.Source
+    return HasPassive('DraconicAncestry_Grey', source) -- Draconic Bloodline Expanded
+end
+
+function Goon_DraconicAncestry_Slashing(source)
+    source = source or context.Source
+    return HasPassive('xXxSKIBIDIxXxTOILETxXxSixtyNine', source) -- Placeholder
+end
+
 -- ==================================== Max Strength Conditions ====================================
 -- Hit Point checks
 function Goon_HasMaxHP(target)
