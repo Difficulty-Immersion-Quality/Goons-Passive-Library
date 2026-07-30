@@ -233,6 +233,15 @@ end
 -- ==================================== Interrupt conditions - "Conditions"
 -- Call as Goon_BasicHarmfulInterruptConditions(true) if the observer is the target.
 
+function Goon_InterruptConditions(source, target, observer)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+
+    return Goon_IsAbleToReact(observer, target)
+        & ~Goon_AnyEntityIsItem(source, target, observer)
+end
+
 function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
@@ -257,39 +266,41 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
         targetPosition_ = sourcePosition
     end
 
-    return Goon_IsAbleToReact(observer, target_)
+    return Goon_InterruptConditions(false, source_, target_, observer)
          & ~Self(observer, target_) --  & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
          & ~Self(source_, target_)
          & ~Dead(target_)
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
-         & ~Goon_AnyEntityIsItem(source_, target_, observer)
-         & Goon_CanSourceSeeTarget(false, source_, target_, observer, sourcePosition_, targetPosition_)
+         & Goon_CanSourceSeeTarget(false, false, source_, target_, observer, sourcePosition_, targetPosition_)
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
 -- ==================================== Interrupt conditions - "EnableCondition"
 -- data "EnableContext" "OnStatusApplied;OnStatusRemoved"
 
-function Goon_BasicHarmfulInterruptEnableConditions(allowRestrictedWildshapes, source)
+function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
 	source = source or context.Source
 
-    local unrestricted = allowRestrictedWildshapes
-    if unrestricted == nil then
-       unrestricted = false
+    local polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsUnrestrictedPolymorphStatus(source))
+    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(true, false, source))
+
+    if allowWildshapes then
+        polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsNonHostilePolymorphStatus(source))
     end
 
-    local Conditions = (~HasStatus('SG_Blinded', source) | Goon_CanIgnoreBlindness(true, source))
-
-    if unrestricted then
-        return Conditions & (~HasStatus('SG_Polymorph', source) 
-                          | Goon_IsUnrestrictedPolymorphStatus(source))
+    if requiresSight then
+        return polymorphConditions & blindnessConditions
     end
 
-    return Conditions & (~HasStatus('SG_Polymorph', source) 
-                      | Goon_IsNonHostilePolymorphStatus(source))
+    return polymorphConditions
 end
 
+function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, source)
+	source = source or context.Source
+
+    return Goon_InterruptEnableConditions(allowWildshapes, true, source)
+end
 -- ==================================== Interrupt conditions - Attack of Opportunity
 -- Note: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
 -- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange for swapContext. -- TODO: These are probably getting replaced with something better.
