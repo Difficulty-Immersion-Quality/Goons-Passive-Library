@@ -272,7 +272,7 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
          & ~Dead(target_)
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
-         & Goon_CanSourceSeeTarget(false, false, source_, target_, observer, sourcePosition_, targetPosition_)
+         & Goon_CanSourceSeeTarget(false, source_, target_, observer, sourcePosition_, targetPosition_)
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
@@ -283,7 +283,7 @@ function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
     source = source or context.Source
 
     local polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsUnrestrictedPolymorphStatus(source))
-    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(true, false, source))
+    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(true, source))
 
     if allowWildshapes then
         polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsNonHostilePolymorphStatus(source))
@@ -301,6 +301,7 @@ function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, source)
 
     return Goon_InterruptEnableConditions(allowWildshapes, true, source)
 end
+
 -- ==================================== Interrupt conditions - Attack of Opportunity
 -- Note: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
 -- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange for swapContext. -- TODO: These are probably getting replaced with something better.
@@ -1334,6 +1335,7 @@ end
 function Goon_IsConditionalDamageSpellEligible(source, target)
     source = source or context.Source
     target = target or context.Target
+
     return ~Goon_IsSpellWithoutDamageType() & IsSpell() & ~IsCantrip()
          & SpellId('BroWhereEvenAreTheConditionalDamageSpellsFR')
          | Goon_IsConditionalDamageCantripEligible(source, target)
@@ -1343,6 +1345,7 @@ end
 function Goon_IsConditionalDamageCantripEligible(source, target)
     source = source or context.Source
     target = target or context.Target
+
     return ~Goon_IsSpellWithoutDamageType() & IsCantrip()
          & (Goon_IsBoomingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
          | Goon_IsGreenFlameBladeSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
