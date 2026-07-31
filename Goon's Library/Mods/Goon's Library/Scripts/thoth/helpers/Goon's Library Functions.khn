@@ -272,7 +272,7 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
          & ~Dead(target_)
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
-         & Goon_CanSourceSeeTarget(false, source_, target_, observer, sourcePosition_, targetPosition_)
+         & Goon_CanSourceSeeTarget(false, false, source_, target_, observer, sourcePosition_, targetPosition_)
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
@@ -283,7 +283,7 @@ function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
     source = source or context.Source
 
     local polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsUnrestrictedPolymorphStatus(source))
-    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(true, source))
+    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(false, true, source))
 
     if allowWildshapes then
         polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsNonHostilePolymorphStatus(source))
@@ -2054,16 +2054,33 @@ end
 -- ==================================== Blindness, Darkness, Illusions, Invisibility & Sneaking ====================================
 -- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
-function Goon_CanSourceSeeTarget(ignoreDistance, source, target, observer, sourcePosition, targetPosition)
+function Goon_CanSourceSeeTarget(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    return (~HasStatus('SG_Invisible', target)  | Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPosition)) 
-         & (~HasStatus('SNEAKING', target)      | Goon_CanSeeSneaking(source, target))
-         & (~HasStatus('SG_Blinded', source)    | Goon_CanIgnoreBlindness(ignoreDistance, source, target, observer, sourcePosition, targetPosition))
+    local isSwapped = swapContext
+    if isSwapped == nil and observer.IsValid then
+       isSwapped = Self(observer, target).Result
+    end
+
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
+
+    return (~HasStatus('SG_Invisible', target_)  | Goon_CanSeeInvisible(false, false, source_, target_, observer, sourcePosition_, targetPosition_)) 
+         & (~HasStatus('SNEAKING', target_)      | Goon_CanSeeSneaking(source_, target_))
+         & (~HasStatus('SG_Blinded', source_)    | Goon_CanIgnoreBlindness(false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_))
         --  TODO: The illusion check is going to need some other shit, probably worth referencing Necrobroker. 
 end
 
@@ -2071,49 +2088,100 @@ end
 -- "Blindsense: Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you."
 -- This is not granting the ability to actually see or ignore anything, but in the context of BG3 it might as well?
 
-function Goon_CanIgnoreBlindness(ignoreDistance, source, target, observer, sourcePosition, targetPosition)
+function Goon_CanIgnoreBlindness(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    local Conditions = IsImmuneToStatus('SG_Blinded', source)
-                     | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
-                     | HasPassive('FightingStyle_BlindFighting', source))
+    local isSwapped = swapContext
+    if isSwapped == nil and observer.IsValid then
+       isSwapped = Self(observer, target).Result
+    end
+
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
+
+    local Conditions = IsImmuneToStatus('SG_Blinded', source_)
+                     | (HasPassive('Blindsense', source_) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_))
+                     | HasPassive('FightingStyle_BlindFighting', source_))
 
     if ignoreDistance then
         return Conditions
     end
 
-    return Conditions & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition)
+    return Conditions & Goon_DistanceCheck(3, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_)
 end
 
-function Goon_CanIgnoreIllusions(source, target, observer, sourcePosition, targetPosition)
+function Goon_CanIgnoreIllusions(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    return Tagged('BLINDSIGHT', source) 
-         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
-         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source)) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))) & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition))
-         | HasPassive('WitchSight', source) -- TODO: Same/similar distance check as TRUESIGHT?
+    local isSwapped = swapContext
+    if isSwapped == nil and observer.IsValid then
+       isSwapped = Self(observer, target).Result
+    end
+
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
+
+    return Tagged('BLINDSIGHT', source_) 
+         | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
+         | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_)) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_))) & Goon_DistanceCheck(3, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
+         | HasPassive('WitchSight', source_) -- TODO: Same/similar distance check as TRUESIGHT?
 end
 
-function Goon_CanSeeInvisible(source, target, observer, sourcePosition, targetPosition)
+function Goon_CanSeeInvisible(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    return Tagged('BLINDSIGHT', source)
-         | (HasStatus('MIND_SPIKE_OWNER', source) & HasStatus('MIND_SPIKE', target, source))
-         | (HasStatus('TRUESIGHT', source) & Goon_DistanceCheck(36.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
-         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source) | HasPassive('AllSeeingEye', source)) & Goon_DistanceCheck(18.5, false, false, false, source, target, observer, sourcePosition, targetPosition))
-         | ((HasPassive('FightingStyle_BlindFighting', source) | (HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source)))) & Goon_DistanceCheck(3, false, false, false, source, target, observer, sourcePosition, targetPosition))
+    local isSwapped = swapContext
+    if isSwapped == nil and observer.IsValid then
+       isSwapped = Self(observer, target).Result
+    end
+
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    end
+
+    return Tagged('BLINDSIGHT', source_)
+         | (HasStatus('MIND_SPIKE_OWNER', source_) & HasStatus('MIND_SPIKE', target_, source_))
+         | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
+         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source_) | HasPassive('AllSeeingEye', source_)) & Goon_DistanceCheck(18.5, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
+         | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_)))) & Goon_DistanceCheck(3, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
 end
 
 function Goon_CanSeeSneaking(source, target)
