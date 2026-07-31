@@ -2793,6 +2793,28 @@ function Goon_AttackAbility(ability)
     return IsAttack() & ConditionResult(context.HitDescription.AttackAbility == ability)
 end
 
+-- e.g. 8 + source.ProficiencyBonus + Goon_GetAttackAbilityModifier(source)
+function Goon_GetAttackAbilityModifier(source, attackAbility)
+    source = source or context.Source
+    attackAbility = attackAbility or context.HitDescription.AttackAbility
+
+    if attackAbility == Ability.Strength then
+        return GetModifier(source.Strength)
+    elseif attackAbility == Ability.Dexterity then
+        return GetModifier(source.Dexterity)
+    elseif attackAbility == Ability.Constitution then
+        return GetModifier(source.Constitution)
+    elseif attackAbility == Ability.Intelligence then
+        return GetModifier(source.Intelligence)
+    elseif attackAbility == Ability.Wisdom then
+        return GetModifier(source.Wisdom)
+    elseif attackAbility == Ability.Charisma then
+        return GetModifier(source.Charisma)
+    end
+
+    return nil
+end
+
 -- Check for magical weapon properties on attacking weapon
 function Goon_AttackWeaponIsMagical(source)
     source = source or context.Source
