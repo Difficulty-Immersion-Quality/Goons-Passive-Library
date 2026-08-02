@@ -177,3 +177,16 @@ data "Properties" "Highlighted"
 data "StatsFunctorContext" "OnAttack"
 data "Conditions" "IsAttack() and not IsMiss() and not Ally()"
 data "StatsFunctors" "ApplyStatus(SELF,PLA_FLINDITEM_BLESSING,100,1);IF(not HasStatus('PLA_FLINDITEM_HUNGER', context.Source)):ApplyStatus(SELF,PLA_FLINDITEM_HUNGER,100,6);RegainHitPoints(SELF,1d4)"
+
+// ==================================== Other ====================================
+
+new entry "Goon_SeeInvisibility_Unlock"
+type "PassiveData"
+// %%% Technical: gives see invisibility
+data "DisplayName" "h1359e947g0dbeg4026gb53dgefd2ed505d2b;1"
+// %%% EMPTY
+data "Description" "hbe3480c8g60eeg4795gbd8agb216be9c29a8;1"
+data "Properties" "IsHidden"
+data "StatsFunctorContext" "OnCreate;OnCombatStarted"
+data "Conditions" "not HasStatus('SEE_INVISIBILITY')"
+data "StatsFunctors" "ApplyStatus(SEE_INVISIBILITY,100,-1)"
