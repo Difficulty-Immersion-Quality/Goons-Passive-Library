@@ -641,6 +641,19 @@ end
 --     return ConditionResult(isMetalItem.Result or hasMetalWeapon.Result or hasMetalArmor.Result or isMetalCharacter.Result)
 -- end
 
+-- ==================================== Non-lethal
+
+function Goon_IsAbleToBeKnockedOut(target, source)
+    source = source or context.Source
+    target = target or context.Target
+
+    return Character(target) & ~Self(source, target) & ~Summon(source, target) 
+         & ~Tagged('UNDEAD', target) & ~Tagged('CONSTRUCT', target) & ~Tagged('CREATURE_SPORE_SERVANT', target)
+         & (~HasAnyStatus({ 'SG_Polymorph' }, {}, {}, target) | Goon_IsUnrestrictedPolymorphStatus(target)) 
+         & ~HasAnyStatus({ 'HAG_DISGUISE', 'HAG_DISGUISE_PIG', 'HAG_DISGUISE_SHEEP' }, {}, {}, target)
+         & ~IsImmuneToStatus('KNOCKED_OUT', target, source)
+end
+
 -- ==================================== Crowd Control
 -- SG_Restrained blocking loads of interrupts with IsAbleToReact is a bit silly.
 
@@ -690,7 +703,7 @@ function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
         local st = SavingThrow(ability, dc, advantage, disadvantage, target)
         return ConditionResult(st.Result, {}, {}, st.Chance)
     else
-        return true -- plain bool; if callers use | / & / .Result on this it would break; consider ConditionResult(true)
+        return ConditionResult(true)
     end
 end
 
@@ -1988,6 +2001,7 @@ end
 -- TODO: Maybe remove declaring entities and leave it blank like condition status checks above.
 -- TODO: Refactor, do functions for StatusId as well as HasStatus. Do status checks for Slayer and Myrmidons, instead of just tag.
 -- TODO: Support for that one druid class mod?
+-- 'HAG_DISGUISE','HAG_DISGUISE_PIG','HAG_DISGUISE_SHEEP'
 
 function Goon_IsDruidWildshapeOrStatus(source)
     source = source or context.Source
@@ -2861,6 +2875,7 @@ function Goon_AttackAbility(ability)
     return IsAttack() & ConditionResult(context.HitDescription.AttackAbility == ability)
 end
 
+-- TODO: Not sure we can dynamically return the attack ability like this SHILLELAGH
 -- e.g. 8 + source.ProficiencyBonus + Goon_GetAttackAbilityModifier(source)
 function Goon_GetAttackAbilityModifier(source, attackAbility)
     source = source or context.Source
@@ -2880,7 +2895,7 @@ function Goon_GetAttackAbilityModifier(source, attackAbility)
         return GetModifier(source.Charisma)
     end
 
-    return nil
+    return 0
 end
 
 -- Check for magical weapon properties on attacking weapon
