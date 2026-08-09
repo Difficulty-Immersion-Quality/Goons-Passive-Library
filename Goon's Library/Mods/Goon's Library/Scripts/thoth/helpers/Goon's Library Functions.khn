@@ -178,28 +178,28 @@ function Goon_TargetConditions_HarmfulProjectile(target, source)
     target = target or context.Target
     source = source or context.Source
     return Goon_IsPlayerInControl(source) & ~Self(source, target)
-         | Goon_IsAIInControl(source) & ~Self(source, target) & (Enemy(target) | Item(target) | Goon_IsSurface(target))
+         | Goon_IsAIInControl(source) & ~Self(source, target) & (Enemy(target) | Item(target) | Goon_IsSurface())
 end
 
 function Goon_TargetConditions_BeneficialProjectile(target, source)
     target = target or context.Target
     source = source or context.Source
     return Goon_IsPlayerInControl(source) & ~Self(source, target)
-         | Goon_IsAIInControl(source) & (Character(target) and Ally(target))
+         | Goon_IsAIInControl(source) & (Character(target) & Ally(target))
 end
 
 function Goon_TargetConditions_HarmfulTarget(target, source)
     target = target or context.Target
     source = source or context.Source
-    return Goon_IsPlayerInControl(source) & ~Self(source, target) & (Item(target) or Character(target) or Dead(target))
-         | Goon_IsAIInControl(source) & (Character(target) and Enemy(target))
+    return Goon_IsPlayerInControl(source) & ~Self(source, target) & (Item(target) | Character(target) | Dead(target))
+         | Goon_IsAIInControl(source) & (Character(target) & Enemy(target))
 end
 
 function Goon_TargetConditions_BeneficialTarget(target, source)
     target = target or context.Target
     source = source or context.Source
-    return Goon_IsPlayerInControl(source) & (Item(target) or Character(target) or Dead(target))
-         | Goon_IsAIInControl(source) & (Character(target) and Ally(target))
+    return Goon_IsPlayerInControl(source) & (Item(target) | Character(target) | Dead(target))
+         | Goon_IsAIInControl(source) & (Character(target) & Ally(target))
 end
 
 -- ==================================== Interrupt conditions ====================================
@@ -626,20 +626,14 @@ end
 
 function Goon_IsMetal(target)
     target = target or context.Target
-    return IsMetalItem(target) or HasMetalWeaponInAnyHand(target) or HasMetalArmor(target) or IsMetalCharacter(target)
+
+    if IsMetalItem(target).Result               then return ConditionResult(true) end
+    if HasMetalWeaponInAnyHand(target).Result   then return ConditionResult(true) end
+    if HasMetalArmor(target).Result             then return ConditionResult(true) end
+    if IsMetalCharacter(target).Result          then return ConditionResult(true) end
+
+    return ConditionResult(false)
 end
-
--- TODO: Unfuck this
--- function Goon_IsMetal(target)
---     target = target or context.Target
-
---     local isMetalItem = IsMetalItem(target)
---     local hasMetalWeapon = HasMetalWeaponInAnyHand(target)
---     local hasMetalArmor = HasMetalArmor(target)
---     local isMetalCharacter = IsMetalCharacter(target)
-
---     return ConditionResult(isMetalItem.Result or hasMetalWeapon.Result or hasMetalArmor.Result or isMetalCharacter.Result)
--- end
 
 -- ==================================== Non-lethal
 
@@ -690,16 +684,15 @@ end
 
 function Goon_HasDeafenedCondition(target)
     target = target or context.Target
-    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}, target) -- | HasPassive('Deafness', target)
+    return HasAnyStatus({ 'DEAFENED', 'DEAF', 'DEAFNESS', 'GOON_DEAFENED', 'GOON_REAL_INJURY_GRIT_GLORY_DEAFNESS', 'GOON_REAL_INJURY_GRIT_GLORY_PARTIAL_DEAFNESS' }, {}, {}, target) | HasPassive('Deafness', target)
 end
 
--- IsDeaf not an included function
-function SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
+function Goon_SavingThrow_SoundBased(ability, dc, advantage, disadvantage, target)
     advantage = advantage or false
     disadvantage = disadvantage or false
     target = target or context.Target
 
-    if not IsDeaf(target).Result then
+    if not Goon_HasDeafenedCondition(target).Result then
         local st = SavingThrow(ability, dc, advantage, disadvantage, target)
         return ConditionResult(st.Result, {}, {}, st.Chance)
     else
@@ -738,13 +731,13 @@ function Goon_IsSurface()
                  | Surface('SurfaceGrease')
                  | Surface('SurfaceWyvernPoison')
                  | Surface('SurfaceWeb')
-                 | Surface('SurfaceDeepwater')
+                 | Surface('SurfaceDeepWater')
                  | Surface('SurfaceVines')
                  | Surface('SurfaceFire')
                  | Surface('SurfaceAcid')
                  | Surface('SurfaceTrialFire')
-                 | Surface('SurfaceBlackpowder')
-                 | Surface('SurfaceAlienoil')
+                 | Surface('SurfaceBlackPowder')
+                 | Surface('SurfaceAlienOil')
                  | Surface('SurfaceMud')
                  | Surface('SurfaceAlcohol')
                  | Surface('SurfaceInvisibleWeb')
@@ -1787,19 +1780,19 @@ function Goon_IsCastingModifierGreaterThanDexterity_IsDexterityGreaterThanStreng
         & ConditionResult(source.Constitution >= source.Dexterity)
 
     if mainHandWeapon.IsValid then
-        IsSpellcastingModifierGreaterThanDexterity = Goon_IsSpellcastingModifierWeapon(mainHandWeapon, source)
+        IsSpellcastingModifierGreaterThanDexterity = Goon_IsSpellcastingModifierWeapon(source, mainHandWeapon)
             -- & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Strength)
             & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Dexterity)
 
-        IsIntelligenceGreaterThanDexterity = Goon_IsIntelligenceModifierWeapon(mainHandWeapon, source)
+        IsIntelligenceGreaterThanDexterity = Goon_IsIntelligenceModifierWeapon(source, mainHandWeapon)
             -- & ConditionResult(source.Intelligence >= source.Strength)
             & ConditionResult(source.Intelligence >= source.Dexterity)
 
-        IsWisdomGreaterThanDexterity = Goon_IsWisdomModifierWeapon(mainHandWeapon, source)
+        IsWisdomGreaterThanDexterity = Goon_IsWisdomModifierWeapon(source, mainHandWeapon)
             -- & ConditionResult(source.Wisdom >= source.Strength)
             & ConditionResult(source.Wisdom >= source.Dexterity)
 
-        IsCharismaGreaterThanDexterity = Goon_IsCharismaModifierWeapon(mainHandWeapon, source)
+        IsCharismaGreaterThanDexterity = Goon_IsCharismaModifierWeapon(source, mainHandWeapon)
             -- & ConditionResult(source.Charisma >= source.Strength)
             & ConditionResult(source.Charisma >= source.Dexterity)
     end
@@ -3045,6 +3038,23 @@ function Goon_GetHighestAbility(abilities, source)
     end
     return highestAbility
 end
+
+-- TODO: highestAbility = Ability[abilities[1]] — enum from the start, so the return type is always consistent no matter what happens in the loop.
+-- TODO: highestValue = -1 instead of 0 — so a fully-nullified set of abilities (all 0) still correctly resolves to the first ability in the list, rather than silently doing nothing.
+-- function Goon_GetHighestAbility(abilities, source)
+--     source = source or context.Source
+--     local highestValue = -1
+--     local highestAbility = Ability[abilities[1]]
+
+--     -- will return first ability if tie
+--     for _, ability in ipairs(abilities) do
+--         if source[ability] > highestValue then
+--             highestValue = source[ability]
+--             highestAbility = Ability[ability]
+--         end
+--     end
+--     return highestAbility
+-- end
 
 -- Similar check, but returning the actual number.
 function Goon_GetHighestAbilityValue(abilities, source)
