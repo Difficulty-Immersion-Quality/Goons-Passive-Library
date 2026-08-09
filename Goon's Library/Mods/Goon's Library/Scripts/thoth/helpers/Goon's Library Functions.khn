@@ -647,7 +647,7 @@ function Goon_IsAbleToBeKnockedOut(target, source)
     source = source or context.Source
     target = target or context.Target
 
-    return Character(target) & ~Self(source, target) & ~Summon(source, target) 
+    return Character(target) & ~Self(source, target) & ~Summon(target) 
          & ~Tagged('UNDEAD', target) & ~Tagged('CONSTRUCT', target) & ~Tagged('CREATURE_SPORE_SERVANT', target)
          & (~HasAnyStatus({ 'SG_Polymorph' }, {}, {}, target) | Goon_IsUnrestrictedPolymorphStatus(target)) 
          & ~HasAnyStatus({ 'HAG_DISGUISE', 'HAG_DISGUISE_PIG', 'HAG_DISGUISE_SHEEP' }, {}, {}, target)
