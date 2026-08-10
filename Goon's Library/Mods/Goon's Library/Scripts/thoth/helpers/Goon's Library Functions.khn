@@ -1684,7 +1684,9 @@ end
 
 function Goon_AttackingWithCharismaModifierWeapon(source)
     source = source or context.Source
-    return HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)) | HasStatus('PACT_BLADE', GetAttackWeapon(source))
+    return HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)) 
+         | HasStatus('PACT_BLADE', GetAttackWeapon(source)) 
+         | HasStatus('CAT_SCHOLAR_ARMAMENT', GetAttackWeapon(source))
 end
 
 -- ==================================== Weapon enchant checks - Trying something different
