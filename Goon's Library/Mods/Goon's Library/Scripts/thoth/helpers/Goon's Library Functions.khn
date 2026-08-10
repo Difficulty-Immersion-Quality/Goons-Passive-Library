@@ -1636,7 +1636,7 @@ end
 function Goon_IsCharismaModifierWeapon(source, weapon)
     source = source or context.Source
     weapon = weapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
-    return HasAnyStatus({ 'PACT_BLADE', 'HEXBLADE_BIND' }, {}, {}, weapon) | Tagged('PACT_OF_THE_BLADE', weapon)
+    return HasAnyStatus({ 'PACT_BLADE', 'HEXBLADE_BIND', 'CAT_SCHOLAR_ARMAMENT' }, {}, {}, weapon) | Tagged('PACT_OF_THE_BLADE', weapon)
 end
 
 function Goon_IsShadowBladeWeapon(source, weapon)
