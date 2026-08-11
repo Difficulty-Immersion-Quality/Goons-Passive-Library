@@ -33,7 +33,7 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
     source = source or context.Source
     NumberOfEnemy = NumberOfEnemy or 1
     -- distance = distance or 1.5
-    distance = distance or (1.5 + Goon_GetSourceHitBox(false, source, target))
+    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, source, target))
 
     -- local errorTrue = {ConditionError("HasAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
     local errorTrue = {ConditionError("Goon_HasEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
@@ -207,7 +207,7 @@ end
 function Goon_IsAbleToReact(observer, target)
     observer = observer or context.Observer
     target = target or context.Target
-    return ~Goon_IsCrowdControlled_Hard(observer) & ~Dead(observer) 
+    return ~Goon_IsCrowdControlled_Hard(observer) & ~Dead(observer)
          & ~(Self(target, observer) & (IsKillingBlow() | HasHPLessThan(1, target)))
 end
 
@@ -226,12 +226,22 @@ function Goon_AnyEntityIsItem(source, target, observer)
     target = target or context.Target
     observer = observer or context.Observer
 
-    return Item(source)           | Item(target)           | Item(observer) 
+    return Item(source)           | Item(target)           | Item(observer)
          | CrowdCharacter(source) | CrowdCharacter(target) | CrowdCharacter(observer)
 end
 
 -- ==================================== Interrupt conditions - "Conditions"
--- Call as Goon_BasicHarmfulInterruptConditions(true) if the observer is the target.
+-- AUTOMATED CONTEXT SWAPPING™ - swapContext: Two-party swap, only relevant when observer IS source or IS target.
+-- A. Leave (nil)   - to auto-detect via Self() - this is almost always what you want.
+-- B. Force (true)  - if the observer is always the target (i.e. target and observer are the same entity, being attacked by source).
+-- C. Force (false) - if the observer is always the source (i.e. source and observer are the same entity, attacking target).
+
+-- DYNAMIC CUCK CONTEXT™ - swapThirdParty: Third party swap, only relevant when observer is a third party (not source or target) - e.g. Sentinel reacting to an attack on an ally.
+-- A. (false)/(nil) - default. observer_ = observer, target_ stays as target. Distance/conditions measured observer <-> target (the ally being attacked).
+-- B. (true)        - observer_ = observer, target_ becomes the original source. Distance/conditions measured observer <-> attacker. Use this when you need to reach/see/hit the attacker instead of the ally.
+
+-- NOTE: Only allow the outermost function call to handle context swapping - declare (false, false) for swapContext/swapThirdParty on every internal function called downstream, so it doesn't re-swap already-resolved values.
+-- You can leave both nil at the outermost call and let it auto-resolve; it should just work™. However, you'll still need to add guard rails for the loose context to suit the use case.
 
 function Goon_InterruptConditions(source, target, observer)
     source = source or context.Source
@@ -242,16 +252,23 @@ function Goon_InterruptConditions(source, target, observer)
         & ~Goon_AnyEntityIsItem(source, target, observer)
 end
 
-function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, observer, sourcePosition, targetPosition)
+function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -266,13 +283,25 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, source, target, obser
         targetPosition_ = sourcePosition
     end
 
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
+    end
+
     return Goon_InterruptConditions(source_, target_, observer)
-         & ~Self(observer, target_) --  & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
+         & ~Self(observer, target_) -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
          & ~Self(source_, target_)
          & ~Dead(target_)
          & ~(IsKillingBlow() | HasHPLessThan(1, target_))
          & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
-         & Goon_CanSourceSeeTarget(false, false, source_, target_, observer, sourcePosition_, targetPosition_)
+         & Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
          & Goon_AISafeguardInterruptConditions(target_, observer)
 end
 
@@ -283,7 +312,7 @@ function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
     source = source or context.Source
 
     local polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsUnrestrictedPolymorphStatus(source))
-    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(false, true, source))
+    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(false, false, true, source))
 
     if allowWildshapes then
         polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsNonHostilePolymorphStatus(source))
@@ -306,16 +335,23 @@ end
 -- Note: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
 -- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange for swapContext. -- TODO: These are probably getting replaced with something better.
 
-function Goon_AttackOfOpportunityConditions(swapContext, source, target, observer, sourcePosition, targetPosition)
+function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -330,7 +366,19 @@ function Goon_AttackOfOpportunityConditions(swapContext, source, target, observe
         targetPosition_ = sourcePosition
     end
 
-    local Conditions = Goon_BasicHarmfulInterruptConditions(false, source_, target_, observer, sourcePosition_, targetPosition_)
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
+    end
+
+    local Conditions = Goon_BasicHarmfulInterruptConditions(false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
                      -- & ~WieldingWeapon('Ammunition', false, false, source_)
                      & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
                      & ~Tagged('OCS_ObjectCharacter', target_)
@@ -359,14 +407,15 @@ end
 -- Note: Rakish stuff is 5e RAW, not whatever vanilla was trying and failing to do.
 -- TODO: Custom HasAdvantage and HasDisadvantage functions with context in args.
 
-function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePosition, targetPosition)
+function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
-    return Goon_BasicHarmfulInterruptConditions(false, source, target, observer, sourcePosition, targetPosition)
+    return Goon_BasicHarmfulInterruptConditions(false, false, source, target, observer, sourcePosition, targetPosition, observerPosition)
         & Self(observer, source)
         & ~Tagged('INANIMATE', target)
         & IsHit()
@@ -381,7 +430,7 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
         | (HasPassive('SneakAttack_LLRuffian', source) & (IsMainHandAttack() | IsMonkWeaponAttack())))
         & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source)
         | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source))
-        & (~HasAllyWithinRange(nil,nil,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,nil,nil,2, observer,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, observer, sourcePosition, targetPosition)))
+        & (~HasAllyWithinRange(nil,nil,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,nil,nil,2, observer,source)) & Goon_DistanceCheck(1.5, false, false, false, false, source, target, observer, sourcePosition, targetPosition, observerPosition)))
 end
 
 -- Sneak Attack action "TargetConditions"
@@ -396,7 +445,7 @@ function Goon_SneakAttackTargetConditions_Melee(target, source, sourcePosition, 
          & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
          & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, nil, sourcePosition, targetPosition)))
+         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, false, source, target, nil, sourcePosition, targetPosition, nil)))
 end
 
 function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition, targetPosition)
@@ -409,7 +458,7 @@ function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition,
          & (~HasDisadvantage(AttackType.RangedWeaponAttack))
          & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
          | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, source, target, nil, sourcePosition, targetPosition)))
+         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, false, source, target, nil, sourcePosition, targetPosition, nil)))
 end
 
 function Goon_SneakAttackTargetConditions_Unarmed(target, source)
@@ -459,16 +508,23 @@ end
 
 -- DistanceToEntityHitBounds = 🐐📏✨
 
--- TODO: It can't handle when observer isn't either the source or target... Interrupt_Sentinel for example.
-function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targetPosition)
+function Goon_GetSourceHitBox(swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
+    observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
-    if isSwapped == nil then
-       isSwapped = false
+
+    if isSwapped == nil and observer.IsValid then
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -481,6 +537,18 @@ function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targe
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
+    end
+
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
     end
 
     if not source_.IsValid then
@@ -492,16 +560,23 @@ function Goon_GetSourceHitBox(swapContext, source, target, sourcePosition, targe
     return centerToCenter - edgeDistance
 end
 
-function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, source, target, observer, sourcePosition, targetPosition)
+function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -516,10 +591,22 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
         targetPosition_ = sourcePosition
     end
 
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
+    end
+
     local paddedValue = value
 
     if disableHitBoxPadding ~= true then
-        paddedValue = value + Goon_GetSourceHitBox(false, source_, target_, sourcePosition_, targetPosition_)
+        paddedValue = value + Goon_GetSourceHitBox(false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
     end
 
     local result = result
@@ -544,16 +631,23 @@ end
 -- EXAMPLE usage in interrupt conditions:
 -- "(Goon_AttackOfOpportunityConditions(false) or (Goon_AttackOfOpportunityConditions(true) and Goon_InAttackRange(false,true))"
 
-function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observer, sourcePosition, targetPosition, distance)
+function Goon_InAttackRange(ranged, offhand, swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, distance, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -566,6 +660,18 @@ function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observ
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
+    end
+
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
     end
 
     local weapon = weapon
@@ -617,7 +723,7 @@ function Goon_InAttackRange(ranged, offhand, swapContext, source, target, observ
         end
     end
 
-    return Goon_DistanceCheck(distance, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_)
+    return Goon_DistanceCheck(distance, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
@@ -2063,16 +2169,23 @@ end
 -- ==================================== Blindness, Darkness, Illusions, Invisibility & Sneaking ====================================
 -- Credit to DrKekyll, Celes and Sumradagnoth for all messing with this craziness before I did.
 
-function Goon_CanSourceSeeTarget(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
+function Goon_CanSourceSeeTarget(swapContext, swapThirdParty, ignoreDistance, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -2087,26 +2200,45 @@ function Goon_CanSourceSeeTarget(swapContext, ignoreDistance, source, target, ob
         targetPosition_ = sourcePosition
     end
 
-    return (~HasStatus('SG_Invisible', target_)  | Goon_CanSeeInvisible(false, false, source_, target_, observer, sourcePosition_, targetPosition_)) 
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
+    end
+
+    return (~HasStatus('SG_Invisible', target_)  | Goon_CanSeeInvisible(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)) 
          & (~HasStatus('SNEAKING', target_)      | Goon_CanSeeSneaking(source_, target_))
-         & (~HasStatus('SG_Blinded', source_)    | Goon_CanIgnoreBlindness(false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_))
-        --  TODO: The illusion check is going to need some other shit, probably worth referencing Necrobroker. 
+         & (~HasStatus('SG_Blinded', source_)    | Goon_CanIgnoreBlindness(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
+        --  TODO: Goon_CanIgnoreIllusions() is going to need some other shit, probably worth referencing Necrobroker. 
 end
 
 -- ==================================== 
 -- "Blindsense: Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you."
 -- This is not granting the ability to actually see or ignore anything, but in the context of BG3 it might as well?
 
-function Goon_CanIgnoreBlindness(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
+function Goon_CanIgnoreBlindness(swapContext, swapThirdParty, ignoreDistance, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -2119,6 +2251,18 @@ function Goon_CanIgnoreBlindness(swapContext, ignoreDistance, source, target, ob
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
+    end
+
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
     end
 
     local Conditions = IsImmuneToStatus('SG_Blinded', source_)
@@ -2129,19 +2273,26 @@ function Goon_CanIgnoreBlindness(swapContext, ignoreDistance, source, target, ob
         return Conditions
     end
 
-    return Conditions & Goon_DistanceCheck(3, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_)
+    return Conditions & Goon_DistanceCheck(3, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
 end
 
-function Goon_CanIgnoreIllusions(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
+function Goon_CanIgnoreIllusions(swapContext, swapThirdParty, ignoreDistance, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -2154,24 +2305,43 @@ function Goon_CanIgnoreIllusions(swapContext, ignoreDistance, source, target, ob
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
+    end
+
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
     end
 
     return Tagged('BLINDSIGHT', source_) 
-         | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
-         | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_)) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_))) & Goon_DistanceCheck(3, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
+         | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
+         | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_)) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_))) & Goon_DistanceCheck(3, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
          | HasPassive('WitchSight', source_) -- TODO: Same/similar distance check as TRUESIGHT?
 end
 
-function Goon_CanSeeInvisible(swapContext, ignoreDistance, source, target, observer, sourcePosition, targetPosition)
+function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
 
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+
     if isSwapped == nil and observer.IsValid then
-       isSwapped = Self(observer, target).Result
+        if observer == source and observer ~= target then
+            isSwapped = Self(observer, source).Result
+        elseif observer == target and observer ~= source then
+            isSwapped = Self(observer, target).Result
+        end
     end
 
     local source_ = source
@@ -2184,13 +2354,25 @@ function Goon_CanSeeInvisible(swapContext, ignoreDistance, source, target, obser
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
+    end
+
+    if isThirdParty then
+        if swapThirdParty == true then
+            source_ = observer
+            target_ = source
+            sourcePosition_ = observerPosition
+            targetPosition_ = sourcePosition
+        else
+            source_ = observer
+            sourcePosition_ = observerPosition
+        end
     end
 
     return Tagged('BLINDSIGHT', source_)
          | (HasStatus('MIND_SPIKE_OWNER', source_) & HasStatus('MIND_SPIKE', target_, source_))
-         | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
-         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source_) | HasPassive('AllSeeingEye', source_)) & Goon_DistanceCheck(18.5, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
-         | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_)))) & Goon_DistanceCheck(3, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_))
+         | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
+         | ((HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source_) | HasPassive('AllSeeingEye', source_)) & Goon_DistanceCheck(18.5, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
+         | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_)))) & Goon_DistanceCheck(3, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
 end
 
 function Goon_CanSeeSneaking(source, target)
