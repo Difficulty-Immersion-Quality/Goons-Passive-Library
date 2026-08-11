@@ -2319,7 +2319,14 @@ function Goon_CanIgnoreIllusions(swapContext, swapThirdParty, ignoreDistance, so
         end
     end
 
-    return Tagged('BLINDSIGHT', source_) 
+    if ignoreDistance then
+        return Tagged('BLINDSIGHT', source_)
+             | HasStatus('TRUESIGHT', source_)
+             | HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_)))
+             | HasPassive('WitchSight', source_)
+    end
+
+    return Tagged('BLINDSIGHT', source_)
          | (HasStatus('TRUESIGHT', source_) & Goon_DistanceCheck(36.5, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
          | ((HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_)) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_))) & Goon_DistanceCheck(3, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
          | HasPassive('WitchSight', source_) -- TODO: Same/similar distance check as TRUESIGHT?
@@ -2366,6 +2373,14 @@ function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, sourc
             source_ = observer
             sourcePosition_ = observerPosition
         end
+    end
+
+    if ignoreDistance then
+        return Tagged('BLINDSIGHT', source_)
+             | (HasStatus('MIND_SPIKE_OWNER', source_) & HasStatus('MIND_SPIKE', target_, source_))
+             | HasStatus('TRUESIGHT', source_)
+             | HasAnyStatus({ 'SEE_INVISIBILITY', 'MAG_SEE_INVISIBILITY_HIDDEN_IGNORE_RESTING', 'TRUESIGHT_BOON_OF_THE_NIGHT_SPIRIT' }, {}, {}, source_) | HasPassive('AllSeeingEye', source_)
+             | HasPassive('FightingStyle_BlindFighting', source_) | (HasPassive('Blindsense', source_) & ~(HasPassive('Deafness', source_) | HasStatus('SG_Deafened', source_)))
     end
 
     return Tagged('BLINDSIGHT', source_)
