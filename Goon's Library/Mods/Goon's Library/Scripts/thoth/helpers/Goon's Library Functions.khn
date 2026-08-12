@@ -728,6 +728,22 @@ end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================
 
+-- ==================================== CanAttack
+
+-- Mirrors CanAttack with ActionPoint.
+function Goon_CanAttack_Offhand(target)
+    local target = target or context.Target
+    local result = HasActionResource('BonusActionPoint', 1, 0, false, false, target)
+    return ConditionResult(result.Result,{ConditionError("IsCanNotAttack")})
+end
+
+-- ==================================== Encumbered
+
+function Goon_IsEncumbered(target)
+    local target = target or context.Target
+    return HasAnyStatus({ 'ENCUMBERED_LIGHT', 'ENCUMBERED_HEAVY', 'ENCUMBERED_MAX' }, {}, {}, target)
+end
+
 -- ==================================== Metal
 
 function Goon_IsMetal(target)
