@@ -149,23 +149,23 @@ function Goon_IsWeaponActionWithoutAttackRoll_Melee()
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_Ranged()
-    return IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot')                            | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')                        | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot')                       | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate')              | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand')
+    return IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot')                | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')            | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')       | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot')           | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand')
+         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate')  | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand')
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_MeleeSpell()
-    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee')                            | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand')
+    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee') | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand')
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_RangedSpell()
-    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged')                           | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')                              | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves')         | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_LightningArrow')                            | IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')                   | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
+    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged')                   | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')                      | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves') | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_LightningArrow')                    | IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand')
+         | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')           | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
 end
 
 -- ==================================== Spell Target conditions ====================================
@@ -226,8 +226,8 @@ function Goon_AnyEntityIsItem(source, target, observer)
     target = target or context.Target
     observer = observer or context.Observer
 
-    return Item(source)           | Item(target)           | Item(observer)
-         | CrowdCharacter(source) | CrowdCharacter(target) | CrowdCharacter(observer)
+    return Item(source)             | Item(target)           | Item(observer)
+         | CrowdCharacter(source)   | CrowdCharacter(target) | CrowdCharacter(observer)
 end
 
 -- ==================================== Interrupt conditions - "Conditions"
@@ -252,7 +252,7 @@ function Goon_InterruptConditions(source, target, observer)
         & ~Goon_AnyEntityIsItem(source, target, observer)
 end
 
-function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
+function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, interruptAttackInProgress, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -295,14 +295,19 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, sourc
         end
     end
 
-    return Goon_InterruptConditions(source_, target_, observer)
-         & ~Self(observer, target_) -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
-         & ~Self(source_, target_)
-         & ~Dead(target_)
-         & ~(IsKillingBlow() | HasHPLessThan(1, target_))
-         & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
-         & Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
-         & Goon_AISafeguardInterruptConditions(target_, observer)
+    local conditions = Goon_InterruptConditions(source_, target_, observer)
+                     & ~Self(observer, target_) -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
+                     & ~Self(source_, target_)
+                     & ~Dead(target_)
+                     & ~(IsKillingBlow() | HasHPLessThan(1, target_))
+                     & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
+                     & Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
+                     & Goon_AISafeguardInterruptConditions(target_, observer)
+
+    if interruptAttackInProgress == true then
+        return conditions
+    end
+    return conditions & (~IsAttack() | HasLastAttackTriggered())
 end
 
 -- ==================================== Interrupt conditions - "EnableCondition"
@@ -335,7 +340,7 @@ end
 -- Note: Enemy(observer, target) in this function instead of Enemy(source, target) breaks the UI warnings for exiting melee range. Don't really get it.
 -- Note: Use with Goon_InMeleeAttackRange and Goon_InRangedAttackRange for swapContext. -- TODO: These are probably getting replaced with something better.
 
-function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
+function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interruptAttackInProgress, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -378,7 +383,7 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, source,
         end
     end
 
-    local Conditions = Goon_BasicHarmfulInterruptConditions(false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
+    local Conditions = Goon_BasicHarmfulInterruptConditions(false, false, interruptAttackInProgress, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
                      -- & ~WieldingWeapon('Ammunition', false, false, source_)
                      & ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
                      & ~Tagged('OCS_ObjectCharacter', target_)
@@ -393,7 +398,7 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, source,
         -- TODO: It would be cool to react to shoves on a skill crit fail... & HasSpellFlag(SpellFlags.Harmful)
         return Conditions & Self(observer, source_)
                           & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
-                          & IsAttack() & HasLastAttackTriggered()
+                          & IsAttack()
                           & IsCriticalMiss()
     end
 
@@ -415,7 +420,7 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    return Goon_BasicHarmfulInterruptConditions(false, false, source, target, observer, sourcePosition, targetPosition, observerPosition)
+    return Goon_BasicHarmfulInterruptConditions(false, false, true, source, target, observer, sourcePosition, targetPosition, observerPosition)
         & Self(observer, source)
         & ~Tagged('INANIMATE', target)
         & IsHit()
@@ -464,7 +469,7 @@ end
 function Goon_SneakAttackTargetConditions_Unarmed(target, source)
     target = target or context.Target
     source = source or context.Source
-    
+
     return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
          & (~HasDisadvantage(AttackType.MeleeUnarmedAttack))
          & (HasAdvantage(AttackType.MeleeUnarmedAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
@@ -1377,7 +1382,7 @@ end
 
 -- One says condition the other says status gonna kms no cap
 -- TODO: Psuedo status group for Disengage specifically?
--- TODO: Give them all SG_Ignore_AOO
+-- TODO: Give them all SG_Ignore_AOO?
 function Goon_HasDisengageCondition()
     return HasAnyStatus({ 'SG_Disengage', 'DISENGAGE', 'DRUNKEN_TECHNIQUE', 'CLICK_HEELS', 'HALF_MOVEMENT', 'SHADOW_STEALTH' }, {}, {})
 end
@@ -1483,16 +1488,16 @@ function Goon_IsConditionalDamageCantripEligible(source, target)
     target = target or context.Target
 
     return ~Goon_IsSpellWithoutDamageType(source, target) & IsCantrip()
-         & (Goon_IsBoomingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsGreenFlameBladeSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsSparkingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsBloodlettingBiteSpell()      & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, target)
-         | Goon_IsMisfortunesMarkSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsRimeStrikeSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsRighteousIncitementSpell()   & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsSpellShatteringStrikeSpell() & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsVortexDartSpell()            & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsWardensRebukeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5(source))
+         & (Goon_IsBoomingBladeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsGreenFlameBladeSpell()        & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsSparkingBladeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsBloodlettingBiteSpell()       & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, target)
+         | Goon_IsMisfortunesMarkSpell()        & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsRimeStrikeSpell()             & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsRighteousIncitementSpell()    & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsSpellShatteringStrikeSpell()  & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsVortexDartSpell()             & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
+         | Goon_IsWardensRebukeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5(source))
 end
 
 function Goon_IsConditionalDamageSpell()
@@ -2269,9 +2274,9 @@ function Goon_CanSourceSeeTarget(swapContext, swapThirdParty, ignoreDistance, so
         end
     end
 
-    return (~HasStatus('SG_Invisible', target_)  | Goon_CanSeeInvisible(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)) 
-         & (~HasStatus('SNEAKING', target_)      | Goon_CanSeeSneaking(source_, target_))
-         & (~HasStatus('SG_Blinded', source_)    | Goon_CanIgnoreBlindness(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
+    return (~HasStatus('SG_Invisible', target_) | Goon_CanSeeInvisible(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)) 
+         & (~HasStatus('SNEAKING', target_)     | Goon_CanSeeSneaking(source_, target_))
+         & (~HasStatus('SG_Blinded', source_)   | Goon_CanIgnoreBlindness(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition))
         --  TODO: Goon_CanIgnoreIllusions() is going to need some other shit, probably worth referencing Necrobroker. 
 end
 
@@ -2520,7 +2525,7 @@ end
 
 function Goon_DraconicAncestry_Radiant(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Crystal', source) | HasPassive('DraconicAncestry_Hallow', source) -- Draconic Bloodline Expanded
+    return HasPassive('DraconicAncestry_Crystal', source)   | HasPassive('DraconicAncestry_Hallow', source) -- Draconic Bloodline Expanded
          | HasPassive('DraconicAncestry_Moonstone', source) | HasPassive('DraconicAncestry_Mercury', source)
          | HasPassive('DraconicAncestry_Platinum', source) -- Platinum Draconic Bloodline for Sorcerers
 end
@@ -3304,9 +3309,9 @@ end
 
 --     -- will return first ability if tie
 --     for _, ability in ipairs(abilities) do
---         if source[ability] > highestValue then
---             highestValue = source[ability]
---             highestAbility = Ability[ability]
+--     if source[ability] > highestValue then
+--         highestValue = source[ability]
+--         highestAbility = Ability[ability]
 --         end
 --     end
 --     return highestAbility
