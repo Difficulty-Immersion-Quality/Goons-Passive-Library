@@ -1453,28 +1453,36 @@ end
 -- TODO: Allow statuses from spells such as Booming Blades conditional explosion damage to function? (case by case basis and circumstantially really annoying to implement I imagine.)
 -- TODO: Replace every instance of "HasFunctor(StatsFunctorType.DealDamage)" with this function, and include it wherever "SpellDamageTypeIs" is called, barring exceptions. (Is this really necessary? What am I on about here...)
 
-function Goon_IsSpellDealingFunctorDamage(source, target)
+function Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return HasFunctor(StatsFunctorType.DealDamage) 
-        & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target))
+
+    if ignoreFunctorCheck and ignoreConditionalCheck then
+        return true
+    elseif ignoreFunctorCheck then
+        return ~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target)
+    elseif ignoreConditionalCheck then
+        return HasFunctor(StatsFunctorType.DealDamage)
+    else
+        return HasFunctor(StatsFunctorType.DealDamage)
+             & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target))
+    end
 end
 
 function Goon_IsConditionalDamageSpellEligible(source, target)
     source = source or context.Source
     target = target or context.Target
 
-    return ~Goon_IsSpellWithoutDamageType() & IsSpell() & ~IsCantrip()
+    return ~Goon_IsSpellWithoutDamageType(source, target) & IsSpell() & ~IsCantrip()
          & SpellId('BroWhereEvenAreTheConditionalDamageSpellsFR')
          | Goon_IsConditionalDamageCantripEligible(source, target)
 end
 
--- This is the main function, the above functions can be worked on later for adjacent purposes if needed.
 function Goon_IsConditionalDamageCantripEligible(source, target)
     source = source or context.Source
     target = target or context.Target
 
-    return ~Goon_IsSpellWithoutDamageType() & IsCantrip()
+    return ~Goon_IsSpellWithoutDamageType(source, target) & IsCantrip()
          & (Goon_IsBoomingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
          | Goon_IsGreenFlameBladeSpell()       & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
          | Goon_IsSparkingBladeSpell()         & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
@@ -1579,86 +1587,119 @@ end
 -- Functions for "SpellDamageTypeIs" "DamageTypes" checks, not to be confused with damage dealt.
 -- TODO: Support spell damage type transmutation.
 
-function Goon_IsSpellWithoutDamageType()
-    return ~Goon_IsSpellDamageTypeAcid()
-         & ~Goon_IsSpellDamageTypeCold()
-         & ~Goon_IsSpellDamageTypeFire()
-         & ~Goon_IsSpellDamageTypeLightning()
-         & ~Goon_IsSpellDamageTypeThunder()
-         & ~Goon_IsSpellDamageTypeRadiant()
-         & ~Goon_IsSpellDamageTypePoison()
-         & ~Goon_IsSpellDamageTypePsychic()
-         & ~Goon_IsSpellDamageTypeNecrotic()
-         & ~Goon_IsSpellDamageTypeForce()
-         & ~Goon_IsSpellDamageTypeSlashing()
-         & ~Goon_IsSpellDamageTypePiercing()
-         & ~Goon_IsSpellDamageTypeBludgeoning()
+function Goon_IsSpellWithoutDamageType(source, target)
+    source = source or context.Source
+    target = target or context.Target
+    return ~Goon_IsSpellDamageTypeAcid(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeCold(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeFire(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeLightning(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeThunder(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeRadiant(source, target, true, true)
+         & ~Goon_IsSpellDamageTypePoison(source, target, true, true)
+         & ~Goon_IsSpellDamageTypePsychic(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeNecrotic(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeForce(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeSlashing(source, target, true, true)
+         & ~Goon_IsSpellDamageTypePiercing(source, target, true, true)
+         & ~Goon_IsSpellDamageTypeBludgeoning(source, target, true, true)
 end
 
-function Goon_IsSpellDamageTypePhysical()
-    return Goon_IsSpellDamageTypeSlashing()
-         | Goon_IsSpellDamageTypePiercing()
-         | Goon_IsSpellDamageTypeBludgeoning()
+-- These remain gated, and remain the public API with the two ignore flags.
+function Goon_IsSpellDamageTypePhysical(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return Goon_IsSpellDamageTypeSlashing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+         | Goon_IsSpellDamageTypePiercing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+         | Goon_IsSpellDamageTypeBludgeoning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeElemental()
-    return Goon_IsSpellDamageTypeAcid()
-         | Goon_IsSpellDamageTypeCold()
-         | Goon_IsSpellDamageTypeFire()
-         | Goon_IsSpellDamageTypeLightning()
-         | Goon_IsSpellDamageTypeThunder()
+function Goon_IsSpellDamageTypeElemental(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return Goon_IsSpellDamageTypeAcid(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+         | Goon_IsSpellDamageTypeCold(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+         | Goon_IsSpellDamageTypeFire(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+         | Goon_IsSpellDamageTypeLightning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+         | Goon_IsSpellDamageTypeThunder(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeAcid()
-    return SpellDamageTypeIs(DamageType.Acid)
+function Goon_IsSpellDamageTypeAcid(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Acid) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeCold()
-    return SpellDamageTypeIs(DamageType.Cold)
+function Goon_IsSpellDamageTypeCold(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Cold) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeFire()
-    return SpellDamageTypeIs(DamageType.Fire)
+function Goon_IsSpellDamageTypeFire(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Fire) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeLightning()
-    return SpellDamageTypeIs(DamageType.Lightning)
+function Goon_IsSpellDamageTypeLightning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Lightning) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeThunder()
-    return SpellDamageTypeIs(DamageType.Thunder)
+function Goon_IsSpellDamageTypeThunder(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Thunder) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeRadiant()
-    return SpellDamageTypeIs(DamageType.Radiant)
+function Goon_IsSpellDamageTypeRadiant(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Radiant) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypePoison()
-    return SpellDamageTypeIs(DamageType.Poison)
+function Goon_IsSpellDamageTypePoison(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Poison) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypePsychic()
-    return SpellDamageTypeIs(DamageType.Psychic)
+function Goon_IsSpellDamageTypePsychic(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Psychic) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeNecrotic()
-    return SpellDamageTypeIs(DamageType.Necrotic)
+function Goon_IsSpellDamageTypeNecrotic(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Necrotic) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeForce()
-    return SpellDamageTypeIs(DamageType.Force)
+function Goon_IsSpellDamageTypeForce(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Force) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeSlashing()
-    return SpellDamageTypeIs(DamageType.Slashing)
+function Goon_IsSpellDamageTypeSlashing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Slashing) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypePiercing()
-    return SpellDamageTypeIs(DamageType.Piercing)
+function Goon_IsSpellDamageTypePiercing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Piercing) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
-function Goon_IsSpellDamageTypeBludgeoning()
-    return SpellDamageTypeIs(DamageType.Bludgeoning)
+function Goon_IsSpellDamageTypeBludgeoning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+    source = source or context.Source
+    target = target or context.Target
+    return SpellDamageTypeIs(DamageType.Bludgeoning) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 -- ==================================== Weapon/armour equipped checks ====================================
