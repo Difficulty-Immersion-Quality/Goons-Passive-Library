@@ -231,17 +231,24 @@ function Goon_AnyEntityIsItem(source, target, observer)
 end
 
 -- ==================================== Interrupt conditions - "Conditions"
--- AUTOMATED CONTEXT SWAPPING™ - swapContext: Two-party swap, only relevant when observer IS source or IS target.
--- A. Leave (nil)   - to auto-detect via Self() - this is almost always what you want.
--- B. Force (true)  - if the observer is always the target (i.e. target and observer are the same entity, being attacked by source).
--- C. Force (false) - if the observer is always the source (i.e. source and observer are the same entity, attacking target).
+-- AUTOMATED CONTEXT SWAPPING™  - swapContext: Two-party swap, only relevant when observer IS source or IS target.
+-- A. Leave (nil)               - auto-detect.
+-- B. Force (true)              - force source/target swap, regardless of validity.
+-- C. Force (false)             - disable, preserve source/target.
 
--- DYNAMIC CUCK CONTEXT™ - swapThirdParty: Third party swap, only relevant when observer is a third party (not source or target) - e.g. Sentinel reacting to an attack on an ally.
--- A. (false)/(nil) - default. observer_ = observer, target_ stays as target. Distance/conditions measured observer <-> target (the ally being attacked).
--- B. (true)        - observer_ = observer, target_ becomes the original source. Distance/conditions measured observer <-> attacker. Use this when you need to reach/see/hit the attacker instead of the ally.
+-- DYNAMIC CUCK CONTEXT™        - swapThirdParty: Third-party swap, only relevant when observer is a third party (not source or target) - e.g. Sentinel reacting to an attack on an ally.
+-- A. Leave (nil)               - auto-detect; if target is invalid, observer becomes target.
+-- B. Force (false)             - disable, preserve source/target.
+-- C. Force (true)              - force observer -> source, source -> target swap, regardless of validity or third-party status.
+
+-- CONTEXT WATERFALL™           - Explicit swaps take priority; nil allows automatic resolution where applicable.
+-- 1. swapContext == true/false - explicit two-party swap or disable; nil auto-detects via Self().
+-- 2. swapThirdParty == true    - explicit third-party swap.
+-- 3. swapThirdParty == nil     - fallback for loose third-party context; if target is invalid, observer becomes target.
+-- 4. Context resolved          - Positions follow the final resolved entities.
 
 -- NOTE: Only allow the outermost function call to handle context swapping - declare (false, false) for swapContext/swapThirdParty on every internal function called downstream, so it doesn't re-swap already-resolved values.
--- You can leave both nil at the outermost call and let it auto-resolve; it should just work™. However, you'll still need to add guard rails for the loose context to suit the use case.
+-- You can leave both nil at the outermost call and let them auto-resolve; it should just work™. However, you'll still need to add guard rails for loose context to suit the use case.
 
 function Goon_InterruptConditions(source, target, observer)
     source = source or context.Source
@@ -260,15 +267,12 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, inter
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -276,37 +280,40 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, inter
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     local conditions = Goon_InterruptConditions(source_, target_, observer)
-                     & ~Self(observer, target_) -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
-                     & ~Self(source_, target_)
                      & ~Dead(target_)
                      & ~(IsKillingBlow() | HasHPLessThan(1, target_))
                      & (Goon_IsPlayerInControl(observer) | Enemy(source_, target_))
                      & Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
                      & Goon_AISafeguardInterruptConditions(target_, observer)
 
+    if source_ ~= target_ then
+        conditions = conditions & ~Self(source_, target_)
+    end
+
+    if not isThirdPartyFallback then
+        conditions = conditions & ~Self(observer, target_) -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
+    end
+
     if interruptAttackInProgress == true then
         return conditions
     end
+
     return conditions & (~IsAttack() | HasLastAttackTriggered())
 end
 
@@ -348,15 +355,12 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -364,23 +368,19 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     local Conditions = Goon_BasicHarmfulInterruptConditions(false, false, interruptAttackInProgress, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
@@ -521,15 +521,12 @@ function Goon_GetSourceHitBox(swapContext, swapThirdParty, source, target, obser
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -537,23 +534,19 @@ function Goon_GetSourceHitBox(swapContext, swapThirdParty, source, target, obser
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     if not source_.IsValid then
@@ -573,15 +566,12 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -589,23 +579,19 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     local paddedValue = value
@@ -644,15 +630,12 @@ function Goon_InAttackRange(ranged, offhand, swapContext, swapThirdParty, source
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -660,23 +643,19 @@ function Goon_InAttackRange(ranged, offhand, swapContext, swapThirdParty, source
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     local weapon = weapon
@@ -695,26 +674,27 @@ function Goon_InAttackRange(ranged, offhand, swapContext, swapThirdParty, source
             distance = defaultWeaponRange
         end
 
-        if offhand ~= nil then
-            local slot
+        local slot = slot
 
-            if ranged then
-                if offhand then
-                    slot = EquipmentSlot.RangedOffHand
-                else
-                    slot = EquipmentSlot.RangedMainHand
-                end
+        if ranged then
+            if offhand then
+                slot = EquipmentSlot.RangedOffHand
             else
-                if offhand then
-                    slot = EquipmentSlot.MeleeOffHand
-                else
-                    slot = EquipmentSlot.MeleeMainHand
-                end
+                slot = EquipmentSlot.RangedMainHand
             end
+        else
+            if offhand then
+                slot = EquipmentSlot.MeleeOffHand
+            else
+                slot = EquipmentSlot.MeleeMainHand
+            end
+        end
 
-            weapon = GetItemInEquipmentSlot(slot, source_)
-            isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
-            isReachWeapon = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+        weapon = GetItemInEquipmentSlot(slot, source_)
+
+        if weapon.IsValid then
+            isHandCrossbow = Tagged('WPN_HAND_CROSSBOW', weapon).Result
+            isReachWeapon = HasWeaponProperty(WeaponProperties.Reach, weapon).Result
 
             if ranged then
                 if isHandCrossbow then
@@ -2239,15 +2219,12 @@ function Goon_CanSourceSeeTarget(swapContext, swapThirdParty, ignoreDistance, so
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -2255,23 +2232,19 @@ function Goon_CanSourceSeeTarget(swapContext, swapThirdParty, ignoreDistance, so
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     return (~HasStatus('SG_Invisible', target_) | Goon_CanSeeInvisible(false, false, ignoreDistance, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)) 
@@ -2292,15 +2265,12 @@ function Goon_CanIgnoreBlindness(swapContext, swapThirdParty, ignoreDistance, so
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -2308,23 +2278,19 @@ function Goon_CanIgnoreBlindness(swapContext, swapThirdParty, ignoreDistance, so
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     local Conditions = IsImmuneToStatus('SG_Blinded', source_)
@@ -2346,15 +2312,12 @@ function Goon_CanIgnoreIllusions(swapContext, swapThirdParty, ignoreDistance, so
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -2362,23 +2325,19 @@ function Goon_CanIgnoreIllusions(swapContext, swapThirdParty, ignoreDistance, so
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     if ignoreDistance then
@@ -2402,15 +2361,12 @@ function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, sourc
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
     local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
 
-    if isSwapped == nil and observer.IsValid then
-        if observer == source and observer ~= target then
-            isSwapped = Self(observer, source).Result
-        elseif observer == target and observer ~= source then
-            isSwapped = Self(observer, target).Result
-        end
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
     end
 
     local source_ = source
@@ -2418,23 +2374,19 @@ function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, sourc
     local sourcePosition_ = sourcePosition
     local targetPosition_ = targetPosition
 
-    if isSwapped then
+    if isSwapped == true then
         source_ = target
         target_ = source
         sourcePosition_ = targetPosition
         targetPosition_ = sourcePosition
-    end
-
-    if isThirdParty then
-        if swapThirdParty == true then
-            source_ = observer
-            target_ = source
-            sourcePosition_ = observerPosition
-            targetPosition_ = sourcePosition
-        else
-            source_ = observer
-            sourcePosition_ = observerPosition
-        end
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
     end
 
     if ignoreDistance then
