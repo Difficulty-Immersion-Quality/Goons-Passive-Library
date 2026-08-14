@@ -1962,10 +1962,10 @@ end
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
 -- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game.
 
--- isMeleeWeapon:   true = melee,   false = ranged,     nil = either
+-- isMeleeWeapon:   true = melee,   false = ranged,     nil = either (True/False filters out shields, unless isShield == true)
 -- isOffhand:       true = offhand, false = main hand,  nil = either
--- isMartialWeapon: true = martial, false = simple,     nil = either
--- isShield:        true = shield,  false = weapon,     nil = either (Note: isMeleeWeapon must be nil for isShield nil to allow shields.)
+-- isMartialWeapon: true = martial, false = simple,     nil = either (True/False filters out shields, unless isShield == true)
+-- isShield:        true = shield,  false = weapon,     nil = either (True overwrites weapons)
 function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShield, source)
     source = source or context.Source
 
