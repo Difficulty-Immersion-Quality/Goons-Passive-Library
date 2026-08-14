@@ -1962,31 +1962,87 @@ end
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
 -- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game.
 
-function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
+-- isMeleeWeapon:   true = melee,   false = ranged,     nil = either
+-- isOffhand:       true = offhand, false = main hand,  nil = either
+-- isMartialWeapon: true = martial, false = simple,     nil = either
+-- isShield:        true = shield,  false = weapon,     nil = either
+function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShield, source)
     source = source or context.Source
 
-    local slot = slot
-    if isRanged then
-        if isOffhand then
-            slot = EquipmentSlot.RangedOffHand
+    local proficiencyGroup = proficiencyGroup
+    if isMartialWeapon == true then
+        proficiencyGroup = 'MartialWeapons'
+    elseif isMartialWeapon == false then
+        proficiencyGroup = 'SimpleWeapons'
+    end
+
+    local meleeMainHand     = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
+    local meleeOffHand      = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, source)
+    local rangedMainHand    = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, source)
+    local rangedOffHand     = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, source)
+
+    local meleeMainHandCheck    = meleeMainHand.IsValid and HasWeaponProperty(WeaponProperties.Melee, meleeMainHand).Result
+    local meleeOffHandCheck     = meleeOffHand.IsValid and HasWeaponProperty(WeaponProperties.Melee, meleeOffHand).Result
+    local rangedMainHandCheck   = rangedMainHand.IsValid and HasWeaponProperty(WeaponProperties.Ammunition, rangedMainHand).Result
+    local rangedOffHandCheck    = rangedOffHand.IsValid and HasWeaponProperty(WeaponProperties.Ammunition, rangedOffHand).Result
+
+    local meleeMainHandShield   = meleeMainHand.IsValid and IsOfProficiencyGroup('Shields', meleeMainHand).Result
+    local meleeOffHandShield    = meleeOffHand.IsValid and IsOfProficiencyGroup('Shields', meleeOffHand).Result
+    local rangedMainHandShield  = rangedMainHand.IsValid and IsOfProficiencyGroup('Shields', rangedMainHand).Result
+    local rangedOffHandShield   = rangedOffHand.IsValid and IsOfProficiencyGroup('Shields', rangedOffHand).Result
+
+    if isShield == true then
+        meleeMainHandCheck  = meleeMainHandShield
+        meleeOffHandCheck   = meleeOffHandShield
+        rangedMainHandCheck = rangedMainHandShield
+        rangedOffHandCheck  = rangedOffHandShield
+    elseif isShield == false then
+        meleeMainHandCheck  = meleeMainHandCheck and not meleeMainHandShield
+        meleeOffHandCheck   = meleeOffHandCheck and not meleeOffHandShield
+        rangedMainHandCheck = rangedMainHandCheck and not rangedMainHandShield
+        rangedOffHandCheck  = rangedOffHandCheck and not rangedOffHandShield
+    elseif isMeleeWeapon == nil then
+        meleeMainHandCheck  = meleeMainHandCheck or meleeMainHandShield
+        meleeOffHandCheck   = meleeOffHandCheck or meleeOffHandShield
+        rangedMainHandCheck = rangedMainHandCheck or rangedMainHandShield
+        rangedOffHandCheck  = rangedOffHandCheck or rangedOffHandShield
+    end
+
+    if proficiencyGroup then
+        meleeMainHandCheck  = meleeMainHandCheck and IsOfProficiencyGroup(proficiencyGroup, meleeMainHand).Result
+        meleeOffHandCheck   = meleeOffHandCheck and IsOfProficiencyGroup(proficiencyGroup, meleeOffHand).Result
+        rangedMainHandCheck = rangedMainHandCheck and IsOfProficiencyGroup(proficiencyGroup, rangedMainHand).Result
+        rangedOffHandCheck  = rangedOffHandCheck and IsOfProficiencyGroup(proficiencyGroup, rangedOffHand).Result
+    end
+
+    local mainHandCheck = meleeMainHandCheck or rangedMainHandCheck
+    local offHandCheck  = meleeOffHandCheck or rangedOffHandCheck
+    local meleeCheck    = meleeMainHandCheck or meleeOffHandCheck
+    local rangedCheck   = rangedMainHandCheck or rangedOffHandCheck
+
+    if isMeleeWeapon == true then
+        if isOffhand == true then
+            return ConditionResult(meleeOffHandCheck)
+        elseif isOffhand == false then
+            return ConditionResult(meleeMainHandCheck)
         else
-            slot = EquipmentSlot.RangedMainHand
+            return ConditionResult(meleeCheck)
         end
+    elseif isMeleeWeapon == false then
+        if isOffhand == true then
+            return ConditionResult(rangedOffHandCheck)
+        elseif isOffhand == false then
+            return ConditionResult(rangedMainHandCheck)
+        else
+            return ConditionResult(rangedCheck)
+        end
+    elseif isOffhand == true then
+        return ConditionResult(offHandCheck)
+    elseif isOffhand == false then
+        return ConditionResult(mainHandCheck)
     else
-        if isOffhand then
-            slot = EquipmentSlot.MeleeOffHand
-        else
-            slot = EquipmentSlot.MeleeMainHand
-        end
+        return ConditionResult(mainHandCheck or offHandCheck)
     end
-
-    local weapon = GetItemInEquipmentSlot(slot, source)
-    local property = WeaponProperties.Melee
-    if isRanged then
-        property = WeaponProperties.Ammunition
-    end
-
-    return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
 end
 
 -- TODO: What context do I want?
@@ -3281,74 +3337,3 @@ function Goon_GetHighestAbilityValue(abilities, source)
     end
     return highestValue
 end
-
--- ==================================== Junk ====================================
--- Trying to check the source of a passive for use in boost conditions.
--- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
--- TODO: GetActiveWeapon?
-
--- function Goon_IsPassiveSourceWeapon()
---     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
--- end
-
--- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
---     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
-
---     if not IsValid(weapon) then
---         return ConditionResult(false)
---     end
-
---     return IsPassiveSource(context.Passive, weapon, context.Source)
---          | IsPassiveSource(context.Passive, weapon, weapon)
---          | IsPassiveOwner(context.Passive, weapon, context.Source)
---          | IsPassiveOwner(context.Passive, weapon, weapon)
--- end
-
--- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
---     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
-
---     if not IsValid(weapon) then
---         return ConditionResult(false)
---     end
-
---     return IsPassiveSource(context.Passive, weapon, context.Source)
---          | IsPassiveSource(context.Passive, weapon, weapon)
---          | IsPassiveOwner(context.Passive, weapon, context.Source)
---          | IsPassiveOwner(context.Passive, weapon, weapon)
--- end
-
--- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
---     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
-
---     if MeleeMainHand.IsValid then
---         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
-
--- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
---     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
-
---     if MeleeOffHand.IsValid then
---         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
-
--- function Goon_IsPassiveSourceWeapon_RangedMainHand()
---     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
-
---     if RangedMainHand.IsValid then
---         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
-
--- function Goon_IsPassiveSourceWeapon_RangedOffHand()
---     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
-
---     if RangedOffHand.IsValid then
---         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
---     end
---     return ConditionResult(false)
--- end

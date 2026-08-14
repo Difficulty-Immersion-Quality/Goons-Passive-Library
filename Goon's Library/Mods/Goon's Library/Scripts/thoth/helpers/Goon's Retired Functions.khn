@@ -117,3 +117,103 @@ function Goon_CanIgnoreBlindness_Ranged(source)
     return IsImmuneToStatus('SG_Blinded', source)
          | HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
 end
+
+-- ==================================== Weapon tag piles ====================================
+
+function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
+    source = source or context.Source
+
+    local slot = slot
+    if isRanged then
+        if isOffhand then
+            slot = EquipmentSlot.RangedOffHand
+        else
+            slot = EquipmentSlot.RangedMainHand
+        end
+    else
+        if isOffhand then
+            slot = EquipmentSlot.MeleeOffHand
+        else
+            slot = EquipmentSlot.MeleeMainHand
+        end
+    end
+
+    local weapon = GetItemInEquipmentSlot(slot, source)
+    local property = WeaponProperties.Melee
+    if isRanged then
+        property = WeaponProperties.Ammunition
+    end
+
+    return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
+end
+
+-- ==================================== Junk ====================================
+-- Trying to check the source of a passive for use in boost conditions.
+-- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
+-- TODO: GetActiveWeapon?
+
+-- function Goon_IsPassiveSourceWeapon()
+--     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
+
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
+
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if MeleeMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if MeleeOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedMainHand()
+--     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
+
+--     if RangedMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedOffHand()
+--     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+
+--     if RangedOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
