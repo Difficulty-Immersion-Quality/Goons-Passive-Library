@@ -1965,7 +1965,7 @@ end
 -- isMeleeWeapon:   true = melee,   false = ranged,     nil = either
 -- isOffhand:       true = offhand, false = main hand,  nil = either
 -- isMartialWeapon: true = martial, false = simple,     nil = either
--- isShield:        true = shield,  false = weapon,     nil = either
+-- isShield:        true = shield,  false = weapon,     nil = either (Note: isMeleeWeapon must be nil for isShield nil to allow shields.)
 function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShield, source)
     source = source or context.Source
 
@@ -2008,7 +2008,7 @@ function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShi
         rangedOffHandCheck  = rangedOffHandCheck or rangedOffHandShield
     end
 
-    if proficiencyGroup then
+    if proficiencyGroup and isShield ~= true then
         meleeMainHandCheck  = meleeMainHandCheck and IsOfProficiencyGroup(proficiencyGroup, meleeMainHand).Result
         meleeOffHandCheck   = meleeOffHandCheck and IsOfProficiencyGroup(proficiencyGroup, meleeOffHand).Result
         rangedMainHandCheck = rangedMainHandCheck and IsOfProficiencyGroup(proficiencyGroup, rangedMainHand).Result
