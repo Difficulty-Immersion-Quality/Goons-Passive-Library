@@ -33,7 +33,7 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
     source = source or context.Source
     NumberOfEnemy = NumberOfEnemy or 1
     -- distance = distance or 1.5
-    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, source, target))
+    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, nil, nil, source, target))
 
     -- local errorTrue = {ConditionError("HasAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
     local errorTrue = {ConditionError("Goon_HasEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
@@ -1179,6 +1179,12 @@ end
 
 -- ==================================== Sneak Attacks
 
+function Goon_HasUniqueSneakAttack(source)
+    source = source or context.Source
+    return HasPassive('RakishAudacity', source)
+         | HasPassive('SneakAttack_LLRuffian', source)
+end
+
 function Goon_IsSneakAttack()
     return HasUseCosts('SneakAttack_Charge')
          | Goon_IsSneakAttackSpell()
@@ -1197,6 +1203,7 @@ function Goon_IsSneakAttackSpell()
          | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike')
          | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike')
          | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
+        --  GFB Sneak Attack and others?
 end
 
 function Goon_IsSneakAttackInterrupt()
@@ -1208,7 +1215,8 @@ function Goon_IsSneakAttackInterrupt()
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
-    return ConditionResult(string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack') ~= nil)
+    return ConditionResult(string.match(context.InterruptId, '^Goon_Interrupt_DWE_SneakAttack') ~= nil)
+         | ConditionResult(string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack') ~= nil)
            -- _Less1, _Less2, _Less3, _Less6, _Disarm, _Poison, Goon_ _Poison, _Trip, _Withdraw, _Daze, _KnockOut, _Obscure
          | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike') ~= nil)
 end
@@ -2114,6 +2122,15 @@ function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShi
     else
         return ConditionResult(mainHandCheck or offHandCheck)
     end
+end
+
+-- TODO: Disarm shields?
+function Goon_WieldingWeapon(target)
+	target = target or context.Target
+	return WieldingWeapon('Melee', true, false, target)
+		 | WieldingWeapon('Melee', false, false, target)
+		 | WieldingWeapon('Ammunition', true, false, target)
+		 | WieldingWeapon('Ammunition', false, false, target)
 end
 
 -- TODO: What context do I want?
