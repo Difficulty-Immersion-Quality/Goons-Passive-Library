@@ -83,10 +83,28 @@ end
 -- No such thing as unarmed offhand attacks mechanically(?), even with stuff like Flurry of Blows animations saying otherwise.
 -- Some actions and spells use weapon damage but don't have an attack roll, needing to be manually listed or caught another way.
 
--- Intentionally loose as it's just for use in CharacterWeaponDamage conditions, where ranged weapon attacks are being excluded but throwing melee weapons or using blade spells should be accepted.
--- TODO: Make more robust because I want to use it with shit like Withering Cut... GetAttackWeapon?
-function IsAttackUsingMeleeWeapon()
-    return IsMeleeAttack() | Goon_IsThrownWeaponAttack()
+-- Allows any type of attack with a weapon involved, params provided for disabling thrown and spell attacks.
+function Goon_IsAttackUsingMeleeWeapon(ignoreThrown, ignoreSpells, source)
+    source = source or context.Source
+    local weapon = GetAttackWeapon(source)
+
+    if IsMeleeUnarmedAttack().Result then
+        return ConditionResult(false)
+    end
+    if not ignoreThrown and Goon_IsThrownWeaponAttack().Result then
+        return ConditionResult(true)
+    end
+    if ignoreSpells and IsMeleeSpellAttack().Result then
+        return ConditionResult(false)
+    end
+    if not weapon.IsValid then
+        return ConditionResult(false)
+    end
+    if not HasWeaponProperty(WeaponProperties.Melee, weapon).Result then
+        return ConditionResult(false)
+    end
+
+    return IsMeleeAttack()
 end
 
 -- function IsAttackUsingRangedWeapon()
@@ -564,7 +582,7 @@ end
 
 -- TODO: Elevation offset can kinda fuck with the tight values, but I don't know where to begin with that shit...
 -- Note: Can be made less expensive by handing down values from outer functions instead of redoing math.
-function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCentre, precomputedSourceCentreToEdge, source, target, observer, sourcePosition, targetPosition, observerPosition)
+function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCentre, precomputedTargetCentreToSourceEdge, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -605,9 +623,9 @@ function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCe
     end
 
     local centreToCentre = precomputedCentreToCentre or Distance(sourcePosition_, targetPosition_)
-    local sourceCentreToEdge = precomputedCentreToEdge or DistanceToEntityHitBounds(targetPosition_, source_)
+    local targetCentreToSourceEdge = precomputedTargetCentreToSourceEdge or DistanceToEntityHitBounds(targetPosition_, source_)
 
-    return centreToCentre - sourceCentreToEdge
+    return centreToCentre - targetCentreToSourceEdge
 end
 
 function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
@@ -647,7 +665,7 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
     end
 
     local centreToCentre = Distance(sourcePosition_, targetPosition_)
-    local targetCentreToEdge = DistanceToEntityHitBounds(sourcePosition_, target_)
+    local sourceCentreToTargetEdge = DistanceToEntityHitBounds(sourcePosition_, target_)
     local paddedValue = value
 
     if disableHitBoxPadding ~= true then
@@ -658,10 +676,10 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
     local errorPrefix = errorPrefix
 
     if greaterThan then
-        result = targetCentreToEdge >= paddedValue or centreToCentre >= paddedValue
+        result = sourceCentreToTargetEdge >= paddedValue or centreToCentre >= paddedValue
         errorPrefix = "Goon_DistanceEqualOGreaterThan"
     else
-        result = targetCentreToEdge <= paddedValue or centreToCentre <= paddedValue
+        result = sourceCentreToTargetEdge <= paddedValue or centreToCentre <= paddedValue
         errorPrefix = "Goon_DistanceEqualOrLessThan"
     end
 
@@ -1449,6 +1467,7 @@ function Goon_HasSlowStatus()
 end
 
 -- ==================================== Spells that aren't spells
+-- HasFunctor(StatsFunctorType.RegainHitPoints)
 
 function Goon_IsHealingActionGrantedBySpell()
     return Goon_IsAuraOfVitality()
@@ -1938,7 +1957,7 @@ end
 function Goon_IsFlameBladeSpellAttack_Mainhand(source)
     source = source or context.Source
     return IsMeleeSpellAttack()
-         & HasStatus('FLAME_BLADE', GetActiveWeapon(source, true))
+         & (HasStatus('FLAME_BLADE', GetActiveWeapon(source, true))
          | HasStatus('FLAME_BLADE_3', GetActiveWeapon(source, true))
          | HasStatus('FLAME_BLADE_4', GetActiveWeapon(source, true))
          | HasStatus('FLAME_BLADE_5', GetActiveWeapon(source, true))
@@ -1946,13 +1965,13 @@ function Goon_IsFlameBladeSpellAttack_Mainhand(source)
          | HasStatus('FLAME_BLADE_7', GetActiveWeapon(source, true))
          | HasStatus('FLAME_BLADE_8', GetActiveWeapon(source, true))
          | HasStatus('FLAME_BLADE_9', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, true))
+         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, true)))
 end
 
 function Goon_IsFlameBladeSpellAttack_Offhand(source)
     source = source or context.Source
     return IsMeleeSpellAttack()
-         & HasStatus('FLAME_BLADE', GetActiveWeapon(source, false))
+         & (HasStatus('FLAME_BLADE', GetActiveWeapon(source, false))
          | HasStatus('FLAME_BLADE_3', GetActiveWeapon(source, false))
          | HasStatus('FLAME_BLADE_4', GetActiveWeapon(source, false))
          | HasStatus('FLAME_BLADE_5', GetActiveWeapon(source, false))
@@ -1960,7 +1979,7 @@ function Goon_IsFlameBladeSpellAttack_Offhand(source)
          | HasStatus('FLAME_BLADE_7', GetActiveWeapon(source, false))
          | HasStatus('FLAME_BLADE_8', GetActiveWeapon(source, false))
          | HasStatus('FLAME_BLADE_9', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, false))
+         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, false)))
 end
 
 -- ==================================== Weapon enchant checks - IsDexterityGreaterThanStrength()
