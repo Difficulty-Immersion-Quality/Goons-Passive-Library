@@ -17,7 +17,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_FightingStyle_Archery_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_ARCHERY_APPLIER)"
 
@@ -38,7 +38,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_FightingStyle_Defense_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_DEFENSE_APPLIER)"
 
@@ -59,7 +59,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_FightingStyle_Dueling_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_DUELING_APPLIER)"
 
@@ -80,7 +80,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_FightingStyle_GreatWeaponFighting_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_GREATWEAPONFIGHTING_APPLIER)"
 
@@ -101,7 +101,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_FightingStyle_Protection_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_PROTECTION_APPLIER)"
 
@@ -122,7 +122,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_FightingStyle_TwoWeaponFighting_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FIGHTINGSTYLE_TWOWEAPONFIGHTING_APPLIER)"
 
@@ -146,7 +146,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_CrossbowExpert_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_CROSSBOWEXPERT_APPLIER)"
 
@@ -167,7 +167,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_CrossbowExpert_Remover_CHT"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_CROSSBOWEXPERT_APPLIER_CHT)"
 
@@ -188,7 +188,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_DefensiveDuelist_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_DEFENSIVEDUELIST_APPLIER)"
 
@@ -210,7 +210,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_DualWielder_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_DUALWIELDER_APPLIER)"
 
@@ -231,7 +231,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_DualWielder_Remover_CHT"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_DUALWIELDER_APPLIER_CHT)"
 
@@ -252,7 +252,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_GreatWeaponMaster_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_GREATWEAPONMASTER_APPLIER)"
 
@@ -273,7 +273,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_PolearmMaster_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_POLEARMMASTER_APPLIER)"
 
@@ -294,7 +294,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_Sharpshooter_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_SHARPSHOOTER_APPLIER)"
 
@@ -316,7 +316,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_ShieldMaster_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_SHIELDMASTER_APPLIER)"
 
@@ -337,7 +337,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_ShieldMaster_Remover_CHT"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_SHIELDMASTER_APPLIER_CHT,context.Target)"
 
@@ -358,7 +358,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_MediumArmorMaster_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_MEDIUMARMORMASTER_APPLIER)"
 
@@ -379,7 +379,7 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_HeavyArmorMaster_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_HEAVYARMOURMASTER_APPLIER)"
 
@@ -400,6 +400,6 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 new entry "Goon_Feat_LightArmorMaster_Remover"
 type "PassiveData"
 data "Properties" "IsHidden"
-data "StatsFunctorContext" "OnStatusApply"
+data "StatsFunctorContext" "OnStatusApplied"
 data "Conditions" "StatusId('ABSOLUTES_LAB_UNDO_MUTATION_MARKER')"
 data "StatsFunctors" "RemoveStatus(GOON_FEAT_LIGHTARMOURMASTER_APPLIER)"
