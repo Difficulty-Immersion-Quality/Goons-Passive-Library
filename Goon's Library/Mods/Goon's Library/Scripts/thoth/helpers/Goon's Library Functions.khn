@@ -1422,6 +1422,40 @@ function Goon_IsSmiteSpells()
          | IsSpellChildOrVariantFromContext('TARGET_SMITE_VAMPIRIC')                            -- Vampiric
 end
 
+-- ==================================== Way of Four Elements Monk
+
+function Goon_IsWayOfFourElementsSpell()
+    return IsSpellChildOrVariantFromContext('Projectile_BladeOfTheRime')
+         | IsSpellChildOrVariantFromContext('Projectile_RayOfFrost_Monk')
+         | IsSpellChildOrVariantFromContext('Target_HoldPerson_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ScorchingRay_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_FangsOfTheFireSnake')
+         | IsSpellChildOrVariantFromContext('Zone_Thunderwave_Monk')
+         | IsSpellChildOrVariantFromContext('Target_FistOfUnbrokenAir')
+         | IsSpellChildOrVariantFromContext('Projectile_Fireball_Monk')
+         | IsSpellChildOrVariantFromContext('Target_Shatter_Monk')
+         | IsSpellChildOrVariantFromContext('Shout_GaseousForm_Monk')
+         | IsSpellChildOrVariantFromContext('Shout_Fly_Monk')
+         | IsSpellChildOrVariantFromContext('Zone_GustOfWind_Monk')
+         | IsSpellChildOrVariantFromContext('Target_ShapeTheFlowingRiver_IceBlock') -- Doesn't grant MARTIAL_ARTS_BONUS_UNARMED_STRIKE in vanilla.
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Acid_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Cold_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Fire_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Lightning_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Poison_Monk')
+         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Thunder_Monk')
+         | IsSpellChildOrVariantFromContext('Zone_BurningHands_Monk')
+         | IsSpellChildOrVariantFromContext('Target_ShockingGrasp_Monk')
+         | IsSpellChildOrVariantFromContext('Target_WaterWhip')
+         | IsSpellChildOrVariantFromContext('Target_WaterWhip_Pull')
+         | IsSpellChildOrVariantFromContext('Target_WaterWhip_Prone')
+         | IsSpellChildOrVariantFromContext('Zone_ConeOfCold_Monk') -- Expansion
+         | IsSpellChildOrVariantFromContext('Target_Stoneskin_Monk')
+         | IsSpellChildOrVariantFromContext('Wall_WallOfFire_Monk')
+         | IsSpellChildOrVariantFromContext('Wall_WallOfStone_Monk')
+end
+
 -- ==================================== Common Actions
 
 function Goon_IsDisengageSpell()
