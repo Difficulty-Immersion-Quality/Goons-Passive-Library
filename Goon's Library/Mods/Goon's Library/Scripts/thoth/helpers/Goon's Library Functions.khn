@@ -395,10 +395,14 @@ function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
     return polymorphConditions
 end
 
-function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, source)
+function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, requiresSight, source)
     source = source or context.Source
 
-    return Goon_InterruptEnableConditions(allowWildshapes, true, source)
+    if requiresSight == nil then
+        requiresSight = true
+    end
+
+    return Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
@@ -469,8 +473,11 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
         return Conditions & Goon_InAttackRange(isRanged, isOffhand, false, false, nil, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
     end
 
-    return Conditions & Enemy(source_, target_)
-                      & ~Goon_IsAction()
+    if not Enemy(source_, target_).Result then
+        return ConditionResult(false)
+    end
+
+    return Conditions & ((~Goon_IsAction() | IsMovementSpell()) & ~(IsHit() | IsMiss()))
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
@@ -1118,17 +1125,18 @@ end
 -- "I think context.InterruptId is only for the interrupt RollConditions" - Joow
 
 function Goon_IsAction()
-    return IsAttack()
-         | IsSpell()
-         | SpellTypeIs(SpellType.Zone)
+    return SpellTypeIs(SpellType.Zone)
+         | SpellTypeIs(SpellType.Multistrike)
          | SpellTypeIs(SpellType.Projectile)
          | SpellTypeIs(SpellType.ProjectileStrike)
          | SpellTypeIs(SpellType.Rush)
          | SpellTypeIs(SpellType.Shout)
+         | SpellTypeIs(SpellType.Storm)
          | SpellTypeIs(SpellType.Target)
          | SpellTypeIs(SpellType.Teleportation)
          | SpellTypeIs(SpellType.Wall)
          | SpellTypeIs(SpellType.Throw)
+         | SpellTypeIs(SpellType.None)
 end
 
 -- ==================================== Sanctuary
@@ -1493,6 +1501,12 @@ end
 
 function Goon_IsJumpSpellCategory()
     return SpellCategoryIs(SpellCategory.Jump)
+end
+
+function Goon_IsHelpSpell()
+    return IsSpellChildOrVariantFromContext('Target_Help')
+         | IsSpellChildOrVariantFromContext('Target_Help_BonusAction')
+         | IsSpellChildOrVariantFromContext('Target_SavingGrace')
 end
 
 -- ==================================== Debuffs
