@@ -477,7 +477,7 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
         return ConditionResult(false)
     end
 
-    return Conditions & ((~Goon_IsAction() | IsMovementSpell()) & ~(IsHit() | IsMiss()))
+    return Conditions & (~Goon_IsAction() | Goon_IsJumpSpellCategory()) -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
