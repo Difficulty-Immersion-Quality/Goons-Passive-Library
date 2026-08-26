@@ -84,23 +84,31 @@ end
 -- Some actions and spells use weapon damage but don't have an attack roll, needing to be manually listed or caught another way.
 
 -- Allows any type of attack with a weapon involved, params provided for disabling thrown and spell attacks.
+-- If I excluded ranged attacks it would be good optimisation, but it wouldn't support stuff like Zerd's RAW using ranged attacks.
 function Goon_IsAttackUsingMeleeWeapon(ignoreThrown, ignoreSpells, source)
     source = source or context.Source
-    local weapon = GetAttackWeapon(source)
+
+    if IsMeleeWeaponAttack().Result then
+        return ConditionResult(true)
+    end
 
     if IsMeleeUnarmedAttack().Result then
         return ConditionResult(false)
     end
-    if not ignoreThrown and Goon_IsThrownWeaponAttack().Result then
+
+    if Goon_IsThrownWeaponAttack().Result then
+        if ignoreThrown then
+            return ConditionResult(false)
+        end
         return ConditionResult(true)
     end
+
     if ignoreSpells and IsMeleeSpellAttack().Result then
         return ConditionResult(false)
     end
-    if not weapon.IsValid then
-        return ConditionResult(false)
-    end
-    if not HasWeaponProperty(WeaponProperties.Melee, weapon).Result then
+
+    local weapon = GetAttackWeapon(source)
+    if not weapon.IsValid or not HasWeaponProperty(WeaponProperties.Melee, weapon).Result then
         return ConditionResult(false)
     end
 
@@ -2505,7 +2513,7 @@ function Goon_CanIgnoreBlindness(swapContext, swapThirdParty, ignoreDistance, so
 
     if not IsImmuneToStatus('SG_Blinded', source_).Result then
         if not (HasPassive('Blindsense', source_).Result and not
-               (HasPassive('Deafness', source_).Result or HasStatus('SG_Deafened', source_).Result)) then
+               (HasStatus('SG_Deafened', source_).Result or Goon_HasDeafenedCondition(source_).Result)) then
             if not HasPassive('FightingStyle_BlindFighting', source_).Result then
                 return ConditionResult(false)
             end
@@ -2569,7 +2577,7 @@ function Goon_CanIgnoreIllusions(swapContext, swapThirdParty, ignoreDistance, so
 
     if HasPassive('FightingStyle_BlindFighting', source_).Result or
        (HasPassive('Blindsense', source_).Result and not
-       (HasPassive('Deafness', source_).Result or HasStatus('SG_Deafened', source_).Result)) then
+       (HasStatus('SG_Deafened', source_).Result or Goon_HasDeafenedCondition(source_).Result)) then
         if ignoreDistance then
             return ConditionResult(true)
         end
@@ -2648,7 +2656,7 @@ function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, sourc
 
     if HasPassive('FightingStyle_BlindFighting', source_).Result or
        (HasPassive('Blindsense', source_).Result and not
-       (HasPassive('Deafness', source_).Result or HasStatus('SG_Deafened', source_).Result)) then
+       (HasStatus('SG_Deafened', source_).Result or Goon_HasDeafenedCondition(source_).Result)) then
         if ignoreDistance then
             return ConditionResult(true)
         end
@@ -2657,12 +2665,25 @@ function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, sourc
         end
     end
 
+    if HasPassive('FeralSenses', source_).Result and not
+       (HasStatus('SG_Deafened', source_).Result or Goon_HasDeafenedCondition(source_).Result or HasStatus('SG_Blinded', source_).Result) then
+        if ignoreDistance then
+            return ConditionResult(true)
+        end
+        if Goon_DistanceCheck(18.5, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition).Result then
+            return ConditionResult(true)
+        end
+    end
     return ConditionResult(false)
 end
 
 function Goon_CanSeeSneaking(source, target)
     source = source or context.Source
     target = target or context.Target
+
+    if not HasStatus('SNEAKING', target).Result then
+        return ConditionResult(false)
+    end
 
     if HasStatus('MIND_SPIKE_OWNER', source).Result and
        HasStatus('MIND_SPIKE', target, source).Result then
@@ -2673,6 +2694,8 @@ function Goon_CanSeeSneaking(source, target)
 end
 
 -- ==================================== 
+-- TODO: Check Expansion and stuff for more reveal/seen shit.
+-- Add found shit to Condition and Surface Overhaul as needed.
 
 function Goon_IsInvisibleSeen(target)
     target = target or context.Target
