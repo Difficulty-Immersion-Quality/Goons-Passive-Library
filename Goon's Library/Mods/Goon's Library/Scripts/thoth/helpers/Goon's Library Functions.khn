@@ -368,7 +368,7 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, inter
                      & Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
                      & Goon_AISafeguardInterruptConditions(true, source_, target_, observer)
 
-    if source_ ~= target_ then
+    if source_ ~= target_ then -- Test removing apparent redundancy, because I'm looking at it wondering what I was smoking when I double guarded this shit in 4.20.3.0...
         conditions = conditions & ~Self(source_, target_)
     end
 
@@ -502,13 +502,17 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    return Goon_BasicHarmfulInterruptConditions(false, false, true, source, target, observer, sourcePosition, targetPosition, observerPosition)
-        & Self(observer, source)
-        & ~Tagged('INANIMATE', target)
-        & IsHit()
-        & ~HasDamageEffectFlag(DamageFlags.AttackDisadvantage)
-        & ~Goon_IsSneakAttack()
-        & ((WieldingFinesseWeaponInSpecificHand(observer,false) & IsMainHandWeaponAttack())
+    if not Self(observer, source).Result                            then return ConditionResult(false) end
+    if Tagged('INANIMATE', target).Result                           then return ConditionResult(false) end
+    if not IsHit().Result                                           then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.AttackDisadvantage).Result   then return ConditionResult(false) end
+    if Goon_IsSneakAttack().Result                                  then return ConditionResult(false) end
+
+    if not Goon_BasicHarmfulInterruptConditions(false, false, true, source, target, observer, sourcePosition, targetPosition, observerPosition).Result then
+        return ConditionResult(false)
+    end
+
+    return ((WieldingFinesseWeaponInSpecificHand(observer,false) & IsMainHandWeaponAttack())
         | (WieldingFinesseWeaponInSpecificHand(observer,true) & IsOffHandAttack())
         | (SpellTypeIs(SpellType.Throw) & (HasWeaponProperty(WeaponProperties.Finesse, context.HitDescription.ThrownObject)
         | HasPassive('SneakAttack_LLRuffian', source) & ~HasWeaponProperty(WeaponProperties.Twohanded, context.HitDescription.ThrownObject) & HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject))) -- IsThrowAttackRoll()
@@ -1133,18 +1137,19 @@ end
 -- "I think context.InterruptId is only for the interrupt RollConditions" - Joow
 
 function Goon_IsAction()
-    return SpellTypeIs(SpellType.Zone)
-         | SpellTypeIs(SpellType.Multistrike)
-         | SpellTypeIs(SpellType.Projectile)
-         | SpellTypeIs(SpellType.ProjectileStrike)
-         | SpellTypeIs(SpellType.Rush)
-         | SpellTypeIs(SpellType.Shout)
-         | SpellTypeIs(SpellType.Storm)
-         | SpellTypeIs(SpellType.Target)
-         | SpellTypeIs(SpellType.Teleportation)
-         | SpellTypeIs(SpellType.Wall)
-         | SpellTypeIs(SpellType.Throw)
-         | SpellTypeIs(SpellType.None)
+    if SpellTypeIs(SpellType.Target).Result           then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Projectile).Result       then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Shout).Result            then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Zone).Result             then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Throw).Result            then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Rush).Result             then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Teleportation).Result    then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Wall).Result             then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.ProjectileStrike).Result then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Multistrike).Result      then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.Storm).Result            then return ConditionResult(true) end
+    if SpellTypeIs(SpellType.None).Result             then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Sanctuary
@@ -1155,114 +1160,120 @@ end
 -- Does "DealDamage(SWAP" not get counted for OnDamage?
 
 function Goon_IsSanctuarySpecificSpell()
-    return IsSpellChildOrVariantFromContext('Wall_BladeBarrier')
-         | IsSpellChildOrVariantFromContext('Target_Polymorph')
-         | IsSpellChildOrVariantFromContext('Target_HungerOfHadar')
-         | IsSpellChildOrVariantFromContext('Target_Banishment')
-         | IsSpellChildOrVariantFromContext('Zone_Fear')
-         | IsSpellChildOrVariantFromContext('Target_FleshToStone')
-         | IsSpellChildOrVariantFromContext('Target_HypnoticPattern')
-         | IsSpellChildOrVariantFromContext('Target_Slow')
-         | IsSpellChildOrVariantFromContext('Target_StinkingCloud')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Acid')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Cold')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Fire')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Lightning')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Thunder')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Detonation')
-         | IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Sleep')
-         | IsSpellChildOrVariantFromContext('Target_Moonbeam')
-         | IsSpellChildOrVariantFromContext('Target_Moonbeam_Move')
-        --  | IsSpellChildOrVariantFromContext('Target_CreateWater')
-        --  | IsSpellChildOrVariantFromContext('Target_CreateWater_StaffOfRain')
-        --  | IsSpellChildOrVariantFromContext('Target_CreateWater_NPC')
-        --  | IsSpellChildOrVariantFromContext('Target_CreateWater_MinorConjuration')
-        --  | IsSpellChildOrVariantFromContext('Target_MAG_Umberlee_CreateWater')
-        --  | IsSpellChildOrVariantFromContext('Target_CreateDestroyWater')
-        --  | IsSpellChildOrVariantFromContext('Target_MAG_Umberlee_CreateDestroyWater')
-         | IsSpellChildOrVariantFromContext('Target_SleetStorm')
+    if IsSpellChildOrVariantFromContext('Wall_BladeBarrier').Result                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Polymorph').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_HungerOfHadar').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Banishment').Result                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_Fear').Result                              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_FleshToStone').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_HypnoticPattern').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Slow').Result                            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_StinkingCloud').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Acid').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Cold').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Fire').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Lightning').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Thunder').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Detonation').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GlyphOfWarding_Sleep').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Moonbeam').Result                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Moonbeam_Move').Result                   then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_CreateWater').Result                     then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_CreateWater_StaffOfRain').Result         then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_CreateWater_NPC').Result                 then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_CreateWater_MinorConjuration').Result    then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_MAG_Umberlee_CreateWater').Result        then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_CreateDestroyWater').Result              then return ConditionResult(true) end
+    -- if IsSpellChildOrVariantFromContext('Target_MAG_Umberlee_CreateDestroyWater').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SleetStorm').Result                      then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Revivify
 
 function Goon_IsRevivifySpell()
-    return IsSpellChildOrVariantFromContext('Teleportation_Revivify')
-         | IsSpellChildOrVariantFromContext('Teleportation_Revivify_Scroll')
-         | IsSpellChildOrVariantFromContext('Teleportation_TrueResurection_Scroll')
-         | IsSpellChildOrVariantFromContext('Teleportation_Revivify_Deva')
-         | IsSpellChildOrVariantFromContext('Teleportation_MAG_Revivify') 
+    if IsSpellChildOrVariantFromContext('Teleportation_Revivify').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Teleportation_Revivify_Scroll').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Teleportation_TrueResurection_Scroll').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Teleportation_Revivify_Deva').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Teleportation_MAG_Revivify').Result           then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Sneak Attacks
 
 function Goon_HasUniqueSneakAttack(source)
     source = source or context.Source
-    return HasPassive('RakishAudacity', source)
-         | HasPassive('SneakAttack_LLRuffian', source)
+    if HasPassive('RakishAudacity', source).Result        then return ConditionResult(true) end
+    if HasPassive('SneakAttack_LLRuffian', source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSneakAttack()
-    return HasUseCosts('SneakAttack_Charge')
-         | Goon_IsSneakAttackSpell()
-         | Goon_IsSneakAttackInterrupt()
+    if HasUseCosts('SneakAttack_Charge').Result then return ConditionResult(true) end
+    if Goon_IsSneakAttackSpell().Result         then return ConditionResult(true) end
+    if Goon_IsSneakAttackInterrupt().Result     then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSneakAttackSpell()
-    return IsSpellChildOrVariantFromContext('Target_SneakAttack')
-         | IsSpellChildOrVariantFromContext('Projectile_SneakAttack')
-         | IsSpellChildOrVariantFromContext('Target_SneakAttack_Rakish')
-         | IsSpellChildOrVariantFromContext('Projectile_SneakAttack_Rakish')
-         | IsSpellChildOrVariantFromContext('Target_SneakAttack_Swarm')
-         | IsSpellChildOrVariantFromContext('Target_SneakAttack_Ruffian')
-         | IsSpellChildOrVariantFromContext('Projectile_SneakAttack_Ruffian')
-         | IsSpellChildOrVariantFromContext('Target_LLRuffian_SneakAttack_Unarmed')
-         | IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike')
-         | IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
-        --  GFB Sneak Attack and others?
+    if IsSpellChildOrVariantFromContext('Target_SneakAttack').Result                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_SneakAttack').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SneakAttack_Rakish').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_SneakAttack_Rakish').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SneakAttack_Swarm').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SneakAttack_Ruffian').Result                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_SneakAttack_Ruffian').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_LLRuffian_SneakAttack_Unarmed').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_LHB_Justicar_ConsecratedStrike').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_LHB_Justicar_ConsecratedStrike').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack').Result           then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSneakAttackInterrupt()
-    return Goon_IsUACunningStrikeSneakAttack()
-           -- _Critical, _Rakish, _Rakish_Critical, _Ruffian, _Ruffian_Critical
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_SneakAttack') ~= nil)
-           -- _2 .. _9 and _Critical, _Critical_2 .. _9
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_LHB_Justicar_ConsecratedStrike') ~= nil)
+    if Goon_IsUACunningStrikeSneakAttack().Result                                            then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_SneakAttack') ~= nil                    then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_LHB_Justicar_ConsecratedStrike') ~= nil then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsUACunningStrikeSneakAttack()
-    return ConditionResult(string.match(context.InterruptId, '^Goon_Interrupt_DWE_SneakAttack') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack') ~= nil)
-           -- _Less1, _Less2, _Less3, _Less6, _Disarm, _Poison, Goon_ _Poison, _Trip, _Withdraw, _Daze, _KnockOut, _Obscure
-         | ConditionResult(string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike') ~= nil)
+    if string.match(context.InterruptId, '^Goon_Interrupt_DWE_SneakAttack') ~= nil then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_DWE_SneakAttack') ~= nil      then return ConditionResult(true) end
+    if string.match(context.InterruptId, 'Interrupt_DWE_CunningStrike') ~= nil     then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Flourishes
 
 -- TODO: Fill this out with the custom reactions and temporary spells!
 function Goon_IsFlourish()
-    return Goon_IsFlourishSpell()
-         | Goon_IsFlourishTemporarySpell()
-         | Goon_IsFlourishInterrupt()
+    if Goon_IsFlourishSpell().Result          then return ConditionResult(true) end
+    if Goon_IsFlourishTemporarySpell().Result then return ConditionResult(true) end
+    if Goon_IsFlourishInterrupt().Result      then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsFlourishSpell()
-    return IsSpellChildOrVariantFromContext('Target_BladeFlourish_Defensive')
-         | IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Defensive')
-         | IsSpellChildOrVariantFromContext('Target_BladeFlourish_Mobile')
-         | IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Mobile')
-         | IsSpellChildOrVariantFromContext('Zone_BladeFlourish_Slashing')
-         | IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Slashing')
+    if IsSpellChildOrVariantFromContext('Target_BladeFlourish_Defensive').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Defensive').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BladeFlourish_Mobile').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Mobile').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_BladeFlourish_Slashing').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_BladeFlourish_Slashing').Result  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsFlourishTemporarySpell()
-    return IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Defensive_Temporary')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Defensive_Temporary')
-         | IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Mobile_Temporary')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Mobile_Temporary')
-         | IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Slashing_Temporary')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Slashing_Temporary')
-         | IsSpellChildOrVariantFromContext('Goon_Throw_BladeFlourish_Slashing_Temporary')
+    if IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Defensive_Temporary').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Defensive_Temporary').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Mobile_Temporary').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Mobile_Temporary').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_BladeFlourish_Slashing_Temporary').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_BladeFlourish_Slashing_Temporary').Result  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Throw_BladeFlourish_Slashing_Temporary').Result       then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsFlourishInterrupt()
@@ -1273,223 +1284,229 @@ end
 -- ==================================== Bardic Inspiration
 
 function Goon_IsBardicInspirationSpell()
-    return IsSpellChildOrVariantFromContext('Target_BardicInspiration')
-         | IsSpellChildOrVariantFromContext('Target_BardicInspiration_2')
-         | IsSpellChildOrVariantFromContext('Target_BardicInspiration_Combat')
-         | IsSpellChildOrVariantFromContext('Target_BardicInspiration_Combat_2')
-         | IsSpellChildOrVariantFromContext('Target_MantleOfInspiration')
-         | IsSpellChildOrVariantFromContext('Target_MantleOfInspiration_2')
-         | IsSpellChildOrVariantFromContext('Target_MantleOfInspiration_3')
-         | IsSpellChildOrVariantFromContext('Shout_BardicInspiration_PeerlessSkill')
+    if IsSpellChildOrVariantFromContext('Target_BardicInspiration').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BardicInspiration_2').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BardicInspiration_Combat').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BardicInspiration_Combat_2').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MantleOfInspiration').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MantleOfInspiration_2').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MantleOfInspiration_3').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_BardicInspiration_PeerlessSkill').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Sorcerer stuff
 
 function Goon_IsCreateSorceryPoints()
-    return IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_1')
-         | IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_2')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_1')
-         | IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_2')
+    if IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints').Result                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_1').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_CreateSorceryPoints_2').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_1').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Shout_CreateSorceryPoints_Warlock_2').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Smites
 
 function Goon_IsDivineSmite()
-    return IsSpellChildOrVariantFromContext('Target_Smite_Divine')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unlock')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Critical_Unlock')
-        -- Paladin and Oaths DnD 5R PHB2024 by ChizFreak
-         | IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free')
-         | IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free_Melee')
-         | IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free_Unarmed')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Unarmed') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed_Unlock')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed_Critical_Unlock')
-         | IsSpellChildOrVariantFromContext('Target_RWI_Smite_Divine') -- I dunno, it's there in the khn anyway
-        --  Unholy Smite for Oathbreakers by ChizFreak
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_CHIZ_Unholy_Smite') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unlock')
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unlock_Critical')
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unarmed_Unlock')
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unarmed_Unlock_Critical')
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Free')
-         | IsSpellChildOrVariantFromContext('Target_CHIZ_TEST_SMITE')
-         | IsSpellChildOrVariantFromContext('Target_RWI_CHIZ_Unholy_Smite')
-        -- Unholy Smite - Empowering Oathbreakers (And Other Paladin Subclasses) by GraphicFade  
-         | IsSpellChildOrVariantFromContext('Target_Smite_Unholy_Oathbreaker')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Unholy_Oathbreaker') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Unholy_Oathbreaker_Unlock')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Unholy_OB_Reaction')
-        -- Beyond Divine Smite by GraphicFade
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Acid')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Acid') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Acid') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Chaos')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Chaos') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Chaos') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Cold')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Cold') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Cold') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Fire')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Fire') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Fire') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Force')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Force') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Force') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Lightning')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Lightning') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Lightning') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Necro')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Necro') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Necro') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Poison')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Poison') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Poison') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Psychic')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Psychic') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Psychic') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_Thunder')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Thunder') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Thunder') ~= nil)
-         | IsSpellChildOrVariantFromContext('Target_Smite_Divine_War')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_War') ~= nil)
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_War') ~= nil)
-        -- Blackguard smites by Xarara
-        -- TODO: Add support for Hell Knight and Death Knight subclass variants if they get released.
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_PROFANE') 
-         | ConditionResult(string.match(context.InterruptId, '^INTERRUPT_SMITE_PROFANE') ~= nil)
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_PROFANE_BLOOD') 
-         | ConditionResult(string.match(context.InterruptId, '^INTERRUPT_SMITE_PROFANE_BLOOD') ~= nil)
-        -- Mizora's Rewards by malonkey1
-         | IsSpellChildOrVariantFromContext('Target_Smite_Eldritch')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Eldritch') ~= nil)
-        -- Oathbreaker Reborn by K_Constantine and faceplug
-         | IsSpellChildOrVariantFromContext('Target_Smite_Malicious')
-         | ConditionResult(string.match(context.InterruptId, '^Interrupt_Smite_Malicious') ~= nil)
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine').Result                              then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine') ~= nil                         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unlock').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Critical_Unlock').Result              then return ConditionResult(true) end
+    -- Paladin and Oaths DnD 5R PHB2024 by ChizFreak
+    if IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free').Result                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free_Melee').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_PPHB2024_Smite_Divine_Free_Unarmed').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed').Result                      then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Unarmed') ~= nil                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed_Unlock').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Unarmed_Critical_Unlock').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_RWI_Smite_Divine').Result                          then return ConditionResult(true) end  -- I dunno, it's there in the khn anyway
+    --  Unholy Smite for Oathbreakers by ChizFreak
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite').Result                         then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_CHIZ_Unholy_Smite') ~= nil                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unlock').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unlock_Critical').Result         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unarmed_Unlock').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Unarmed_Unlock_Critical').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_Unholy_Smite_Free').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_CHIZ_TEST_SMITE').Result                           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_RWI_CHIZ_Unholy_Smite').Result                     then return ConditionResult(true) end
+    -- Unholy Smite - Empowering Oathbreakers (And Other Paladin Subclasses) by GraphicFade
+    if IsSpellChildOrVariantFromContext('Target_Smite_Unholy_Oathbreaker').Result                  then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Unholy_Oathbreaker') ~= nil             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Unholy_Oathbreaker_Unlock').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Unholy_OB_Reaction').Result                  then return ConditionResult(true) end
+    -- Beyond Divine Smite by GraphicFade
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Acid').Result                         then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Acid') ~= nil                    then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Acid') ~= nil           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Chaos').Result                        then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Chaos') ~= nil                   then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Chaos') ~= nil          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Cold').Result                         then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Cold') ~= nil                    then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Cold') ~= nil           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Fire').Result                         then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Fire') ~= nil                    then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Fire') ~= nil           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Force').Result                        then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Force') ~= nil                   then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Force') ~= nil          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Lightning').Result                    then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Lightning') ~= nil               then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Lightning') ~= nil      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Necro').Result                        then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Necro') ~= nil                   then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Necro') ~= nil          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Poison').Result                       then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Poison') ~= nil                  then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Poison') ~= nil         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Psychic').Result                      then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Psychic') ~= nil                 then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Psychic') ~= nil        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_Thunder').Result                      then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Thunder') ~= nil                 then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_Thunder') ~= nil        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Divine_War').Result                          then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_War') ~= nil                     then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Divine_Critical_War') ~= nil            then return ConditionResult(true) end
+    -- Blackguard smites by Xarara
+    -- TODO: Add support for Hell Knight and Death Knight subclass variants if they get released.
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_PROFANE').Result                             then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^INTERRUPT_SMITE_PROFANE') ~= nil                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_PROFANE_BLOOD').Result                       then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^INTERRUPT_SMITE_PROFANE_BLOOD') ~= nil                  then return ConditionResult(true) end
+    -- Mizora's Rewards by malonkey1
+    if IsSpellChildOrVariantFromContext('Target_Smite_Eldritch').Result                            then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Eldritch') ~= nil                       then return ConditionResult(true) end
+    -- Oathbreaker Reborn by K_Constantine and faceplug
+    if IsSpellChildOrVariantFromContext('Target_Smite_Malicious').Result                           then return ConditionResult(true) end
+    if string.match(context.InterruptId, '^Interrupt_Smite_Malicious') ~= nil                      then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSmiteSpells()
-    return Goon_IsDivineSmite()
-        -- Banishing Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
-         | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
-        -- Blinding Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Blinding')
-        -- Branding Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Branding')
-         | IsSpellChildOrVariantFromContext('Projectile_Smite_Branding')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Branding_ZarielTiefling')
-         | IsSpellChildOrVariantFromContext('Projectile_Smite_Branding_ZarielTiefling')
-        -- Searing Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Searing')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Searing_ZarielTiefling')
-         | IsSpellChildOrVariantFromContext('Target_FOR_Smite_Searing_DeathOfATrueSoul')
-         | IsSpellChildOrVariantFromContext('Target_UND_Smite_Searing_DuergarBlacksmithHammer')
-         | IsSpellChildOrVariantFromContext('Goon_Target_UND_Smite_Searing_DuergarBlacksmithHammer_Offhand')
-        -- Staggering Smite
-         | IsSpellChildOrVariantFromContext('Target_StaggeringSmite')
-        -- Thunderous Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Thunderous')
-         | IsSpellChildOrVariantFromContext('Target_MAG_ThunderousSmite')
-        -- Wrathful Smite
-         | IsSpellChildOrVariantFromContext('Target_Smite_Wrathful')
-         | IsSpellChildOrVariantFromContext('Target_MAG_Smite_Wrathful')
-        -- Lunar Smite - Vanilla and Xarara's Lunar Smite mod
-         | IsSpellChildOrVariantFromContext('Target_LunarSmite')
-         | IsSpellChildOrVariantFromContext('Target_MOO_Nightsong_SearingSmite')
-         | IsSpellChildOrVariantFromContext('Target_LOW_RamazithsTower_Nightsong_Smite')
-        -- Veenab stuff
-         | IsSpellChildOrVariantFromContext('VBT_Spell_0_SappingBlade')
-         | IsSpellChildOrVariantFromContext('VBT_Spell_2_DrainingSmite_Container')
-         | IsSpellChildOrVariantFromContext('VBT_Target_LifeDrain')
-         | IsSpellChildOrVariantFromContext('VBT_Projectile_LifeDrain')
-        -- Some dude's homebrew
-         | IsSpellChildOrVariantFromContext('Target_Smite_Pitiless')
-        -- Blackguard smites by Xarara
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_ENDARKENING')                         -- Endarkening (Subclass unique)
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_ENDARKENING_TRUE')
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_VENOMOUS')                            -- Venomous
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_VENOMOUS_BLOOD')
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CHILLING')                            -- Chilling
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CHILLING_BLOOD')
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_SILENCING')                           -- Silencing
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_SILENCING_BLOOD')
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CAUSTIC')                             -- Caustic
-         | IsSpellChildOrVariantFromContext('PROJECTILE_SMITE_CAUSTIC')
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_CAUSTIC_BLOOD')
-         | IsSpellChildOrVariantFromContext('PROJECTILE_SMITE_CAUSTIC_BLOOD')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLINDING_SICKNESS')       -- Necrotising
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_FILTH_FEVER')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_FLESH_ROT')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_MINDFIRE')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_SEIZURE')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_SLIMY_DOOM')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_BLINDING_SICKNESS')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_FILTH_FEVER')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_FLESH_ROT')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_MINDFIRE')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_SEIZURE')
-         | IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_SLIMY_DOOM')
-         | IsSpellChildOrVariantFromContext('TARGET_SMITE_VAMPIRIC')                            -- Vampiric
+    if Goon_IsDivineSmite().Result                                                                              then return ConditionResult(true) end
+    -- Banishing Smite
+    if IsSpellChildOrVariantFromContext('Target_Smite_Banishing').Result                                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing').Result                                    then return ConditionResult(true) end
+    -- Blinding Smite
+    if IsSpellChildOrVariantFromContext('Target_Smite_Blinding').Result                                         then return ConditionResult(true) end
+    -- Branding Smite
+    if IsSpellChildOrVariantFromContext('Target_Smite_Branding').Result                                         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_Smite_Branding').Result                                     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Branding_ZarielTiefling').Result                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_Smite_Branding_ZarielTiefling').Result                      then return ConditionResult(true) end
+    -- Searing Smite
+    if IsSpellChildOrVariantFromContext('Target_Smite_Searing').Result                                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Searing_ZarielTiefling').Result                           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_FOR_Smite_Searing_DeathOfATrueSoul').Result                     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_UND_Smite_Searing_DuergarBlacksmithHammer').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_UND_Smite_Searing_DuergarBlacksmithHammer_Offhand').Result then return ConditionResult(true) end
+    -- Staggering Smite
+    if IsSpellChildOrVariantFromContext('Target_StaggeringSmite').Result                                        then return ConditionResult(true) end
+    -- Thunderous Smite
+    if IsSpellChildOrVariantFromContext('Target_Smite_Thunderous').Result                                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MAG_ThunderousSmite').Result                                    then return ConditionResult(true) end
+    -- Wrathful Smite
+    if IsSpellChildOrVariantFromContext('Target_Smite_Wrathful').Result                                         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MAG_Smite_Wrathful').Result                                     then return ConditionResult(true) end
+    -- Lunar Smite - Vanilla and Xarara's Lunar Smite mod
+    if IsSpellChildOrVariantFromContext('Target_LunarSmite').Result                                             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MOO_Nightsong_SearingSmite').Result                             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_LOW_RamazithsTower_Nightsong_Smite').Result                     then return ConditionResult(true) end
+    -- Veenab stuff
+    if IsSpellChildOrVariantFromContext('VBT_Spell_0_SappingBlade').Result                                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('VBT_Spell_2_DrainingSmite_Container').Result                           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('VBT_Target_LifeDrain').Result                                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('VBT_Projectile_LifeDrain').Result                                      then return ConditionResult(true) end
+    -- Some dude's homebrew
+    if IsSpellChildOrVariantFromContext('Target_Smite_Pitiless').Result                                         then return ConditionResult(true) end
+    -- Blackguard smites by Xarara
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_ENDARKENING').Result                                      then return ConditionResult(true) end  -- Endarkening (Subclass unique)
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_ENDARKENING_TRUE').Result                                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_VENOMOUS').Result                                         then return ConditionResult(true) end  -- Venomous
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_VENOMOUS_BLOOD').Result                                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_CHILLING').Result                                         then return ConditionResult(true) end  -- Chilling
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_CHILLING_BLOOD').Result                                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_SILENCING').Result                                        then return ConditionResult(true) end  -- Silencing
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_SILENCING_BLOOD').Result                                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_CAUSTIC').Result                                          then return ConditionResult(true) end  -- Caustic
+    if IsSpellChildOrVariantFromContext('PROJECTILE_SMITE_CAUSTIC').Result                                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_CAUSTIC_BLOOD').Result                                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('PROJECTILE_SMITE_CAUSTIC_BLOOD').Result                                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLINDING_SICKNESS').Result                    then return ConditionResult(true) end  -- Necrotising
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_FILTH_FEVER').Result                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_FLESH_ROT').Result                            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_MINDFIRE').Result                             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_SEIZURE').Result                              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_SLIMY_DOOM').Result                           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_BLINDING_SICKNESS').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_FILTH_FEVER').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_FLESH_ROT').Result                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_MINDFIRE').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_SEIZURE').Result                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_NECROTIZING_SMITE_BLOOD_SLIMY_DOOM').Result                     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('TARGET_SMITE_VAMPIRIC').Result                                         then return ConditionResult(true) end  -- Vampiric
+    return ConditionResult(false)
 end
 
 -- ==================================== Way of Four Elements Monk
 
 function Goon_IsWayOfFourElementsSpell()
-    return IsSpellChildOrVariantFromContext('Projectile_BladeOfTheRime')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Acid_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Cold_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Fire_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Lightning_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Poison_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Thunder_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_FangsOfTheFireSnake')
-         | IsSpellChildOrVariantFromContext('Projectile_Fireball_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_RayOfFrost_Monk')
-         | IsSpellChildOrVariantFromContext('Projectile_ScorchingRay_Monk')
-         | IsSpellChildOrVariantFromContext('Shout_Fly_Monk')
-         | IsSpellChildOrVariantFromContext('Shout_GaseousForm_Monk')
-         | IsSpellChildOrVariantFromContext('Shout_PassWithoutTrace_Monk')
-         | IsSpellChildOrVariantFromContext('Target_Darkness_Monk')
-         | IsSpellChildOrVariantFromContext('Target_Darkvision_Monk')
-         | IsSpellChildOrVariantFromContext('Target_FistOfUnbrokenAir')
-         | IsSpellChildOrVariantFromContext('Target_HoldPerson_Monk')
-         | IsSpellChildOrVariantFromContext('Target_Shatter_Monk')
-         | IsSpellChildOrVariantFromContext('Target_ShockingGrasp_Monk')
-         | IsSpellChildOrVariantFromContext('Target_ShapeTheFlowingRiver_IceBlock') -- Doesn't grant MARTIAL_ARTS_BONUS_UNARMED_STRIKE in vanilla.
-         | IsSpellChildOrVariantFromContext('Target_Silence_Monk')
-         | IsSpellChildOrVariantFromContext('Target_WaterWhip')
-         | IsSpellChildOrVariantFromContext('Target_WaterWhip_Pull')
-         | IsSpellChildOrVariantFromContext('Target_WaterWhip_Prone')
-         | IsSpellChildOrVariantFromContext('Zone_BurningHands_Monk')
-         | IsSpellChildOrVariantFromContext('Zone_GustOfWind_Monk')
-         | IsSpellChildOrVariantFromContext('Zone_Thunderwave_Monk')
-         | IsSpellChildOrVariantFromContext('Zone_ConeOfCold_Monk') -- Expansion
-         | IsSpellChildOrVariantFromContext('Target_Stoneskin_Monk')
-         | IsSpellChildOrVariantFromContext('Wall_WallOfFire_Monk')
-         | IsSpellChildOrVariantFromContext('Wall_WallOfStone_Monk')
+    if IsSpellChildOrVariantFromContext('Projectile_BladeOfTheRime').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Monk').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Acid_Monk').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Cold_Monk').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Fire_Monk').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Lightning_Monk').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Poison_Monk').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ChromaticOrb_Thunder_Monk').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_FangsOfTheFireSnake').Result         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_Fireball_Monk').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_RayOfFrost_Monk').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ScorchingRay_Monk').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_Fly_Monk').Result                         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_GaseousForm_Monk').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_PassWithoutTrace_Monk').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Darkness_Monk').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Darkvision_Monk').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_FistOfUnbrokenAir').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_HoldPerson_Monk').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Shatter_Monk').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_ShockingGrasp_Monk').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_ShapeTheFlowingRiver_IceBlock').Result   then return ConditionResult(true) end  -- Doesn't grant MARTIAL_ARTS_BONUS_UNARMED_STRIKE in vanilla.
+    if IsSpellChildOrVariantFromContext('Target_Silence_Monk').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_WaterWhip').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_WaterWhip_Pull').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_WaterWhip_Prone').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_BurningHands_Monk').Result                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_GustOfWind_Monk').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_Thunderwave_Monk').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_ConeOfCold_Monk').Result                   then return ConditionResult(true) end  -- Expansion
+    if IsSpellChildOrVariantFromContext('Target_Stoneskin_Monk').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Wall_WallOfFire_Monk').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Wall_WallOfStone_Monk').Result                  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Common Actions
 
 function Goon_IsDisengageSpell()
-    return IsSpellChildOrVariantFromContext('Shout_Disengage')
-         | IsSpellChildOrVariantFromContext('Shout_Disengage_BonusAction')
-         | IsSpellChildOrVariantFromContext('Shout_Disengage_CunningAction')
-         | IsSpellChildOrVariantFromContext('Shout_Disengage_StepOfTheWind')
-         | IsSpellChildOrVariantFromContext('Shout_BootsOfSpeed')
-         | IsSpellChildOrVariantFromContext('Target_DrunkenTechnique')
-         | IsSpellChildOrVariantFromContext('Shout_LOW_Dolor_Disengage')
-         | IsSpellChildOrVariantFromContext('Shout_Disengage_Goblin')
-         | IsSpellChildOrVariantFromContext('Shout_GOB_WolfPens_Disengage_GoblinKid')
-         | IsSpellChildOrVariantFromContext('Shout_ShadowStealth_Meazel')
-         | IsSpellChildOrVariantFromContext('SYR_Shout_Disengage_BonusAction_DruidQoL')
+    if IsSpellChildOrVariantFromContext('Shout_Disengage').Result                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_Disengage_BonusAction').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_Disengage_CunningAction').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_Disengage_StepOfTheWind').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_BootsOfSpeed').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_DrunkenTechnique').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_LOW_Dolor_Disengage').Result                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_Disengage_Goblin').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_GOB_WolfPens_Disengage_GoblinKid').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_ShadowStealth_Meazel').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('SYR_Shout_Disengage_BonusAction_DruidQoL').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- One says condition the other says status gonna kms no cap
@@ -1512,21 +1529,23 @@ function Goon_IsJumpSpellCategory()
 end
 
 function Goon_IsHelpSpell()
-    return IsSpellChildOrVariantFromContext('Target_Help')
-         | IsSpellChildOrVariantFromContext('Target_Help_BonusAction')
-         | IsSpellChildOrVariantFromContext('Target_SavingGrace')
+    if IsSpellChildOrVariantFromContext('Target_Help').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Help_BonusAction').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SavingGrace').Result      then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Debuffs
 
 function Goon_IsBanishSpell()
-    return IsSpellChildOrVariantFromContext('Target_Banishment')
-         | IsSpellChildOrVariantFromContext('Target_Smite_Banishing')
-         | IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing')
-         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_BanishingArrow')
-         | IsSpellChildOrVariantFromContext('Target_DispelEvilAndGood_Dismissal')
-         | IsSpellChildOrVariantFromContext('Shout_WildMagic_Banish')
-         | IsSpellChildOrVariantFromContext('OO_Shout_BanishUnholy')
+    if IsSpellChildOrVariantFromContext('Target_Banishment').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_Smite_Banishing').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_Smite_Banishing').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_BanishingArrow').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_DispelEvilAndGood_Dismissal').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_WildMagic_Banish').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('OO_Shout_BanishUnholy').Result                then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- TODO: Pseudo status group.
@@ -1542,32 +1561,34 @@ function Goon_IsHealingActionGrantedBySpell()
 end
 
 function Goon_IsAuraOfVitality()
-    return IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8')
-         | IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8')
-         | IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9')
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_4').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_5').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_6').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_7').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_8').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_AuraOfVitality_Activate_9').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_4').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_5').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_6').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_7').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_8').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_AuraOfVitality_Activate_9').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- War Caster not included. You cast a spell instead of taking an AoO, the spell cast is not an AoO inherently.
 function Goon_IsAttackOfOpportunity()
-    return IsSpellChildOrVariantFromContext('Target_Sentinel_AttackOfOpportunity')
-         | IsSpellChildOrVariantFromContext('Goon_Target_MainHandAttack_AoO')
-         | IsSpellChildOrVariantFromContext('Goon_Target_OffhandAttack_AoO')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_MainHandAttack_AoO')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_OffhandAttack_AoO')
-         | IsSpellChildOrVariantFromContext('Goon_Target_UnarmedAttack_AoO')
-         | IsSpellChildOrVariantFromContext('Goon_Target_Shove_AoO')
-         | IsSpellChildOrVariantFromContext('Goon_Target_Grapple_AoO')
+    if IsSpellChildOrVariantFromContext('Target_Sentinel_AttackOfOpportunity').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_MainHandAttack_AoO').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_OffhandAttack_AoO').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_MainHandAttack_AoO').Result  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_OffhandAttack_AoO').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_UnarmedAttack_AoO').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_Shove_AoO').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_Grapple_AoO').Result             then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Conditional damage cantrips and spells
@@ -1582,41 +1603,63 @@ function Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ig
     target = target or context.Target
 
     if ignoreFunctorCheck and ignoreConditionalCheck then
-        return true
-    elseif ignoreFunctorCheck then
-        return ~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target)
-    elseif ignoreConditionalCheck then
-        return HasFunctor(StatsFunctorType.DealDamage)
-    else
-        return HasFunctor(StatsFunctorType.DealDamage)
-             & (~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target))
+        return ConditionResult(true)
     end
+    if ignoreFunctorCheck then
+        return ~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target)
+    end
+    if ignoreConditionalCheck then
+        return HasFunctor(StatsFunctorType.DealDamage)
+    end
+
+    if not HasFunctor(StatsFunctorType.DealDamage).Result then
+        return ConditionResult(false)
+    end
+
+    return ~Goon_IsConditionalDamageSpell() | Goon_IsConditionalDamageSpellEligible(source, target)
 end
 
 function Goon_IsConditionalDamageSpellEligible(source, target)
     source = source or context.Source
     target = target or context.Target
 
-    return ~Goon_IsSpellWithoutDamageType(source, target) & IsSpell() & ~IsCantrip()
-         & SpellId('BroWhereEvenAreTheConditionalDamageSpellsFR')
-         | Goon_IsConditionalDamageCantripEligible(source, target)
+    if Goon_IsConditionalDamageCantripEligible(source, target).Result then
+        return ConditionResult(true)
+    end
+
+    if not IsSpell().Result or IsCantrip().Result then
+        return ConditionResult(false)
+    end
+    if Goon_IsSpellWithoutDamageType(source, target).Result then
+        return ConditionResult(false)
+    end
+
+    return SpellId('BroWhereEvenAreTheConditionalDamageSpellsFR')
 end
 
 function Goon_IsConditionalDamageCantripEligible(source, target)
     source = source or context.Source
     target = target or context.Target
 
-    return ~Goon_IsSpellWithoutDamageType(source, target) & IsCantrip()
-         & (Goon_IsBoomingBladeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsGreenFlameBladeSpell()        & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsSparkingBladeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsBloodlettingBiteSpell()       & HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, target)
-         | Goon_IsMisfortunesMarkSpell()        & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsRimeStrikeSpell()             & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsRighteousIncitementSpell()    & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsSpellShatteringStrikeSpell()  & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsVortexDartSpell()             & Goon_CharacterLevelEqualToOrGreaterThan_5(source)
-         | Goon_IsWardensRebukeSpell()          & Goon_CharacterLevelEqualToOrGreaterThan_5(source))
+    if not IsCantrip().Result then
+        return ConditionResult(false)
+    end
+    if Goon_IsSpellWithoutDamageType(source, target).Result then
+        return ConditionResult(false)
+    end
+
+    if Goon_IsBoomingBladeSpell().Result then          return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsGreenFlameBladeSpell().Result then       return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsSparkingBladeSpell().Result then         return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsBloodlettingBiteSpell().Result then      return HasHPPercentageWithoutTemporaryHPEqualOrLessThan(50, target) end
+    if Goon_IsMisfortunesMarkSpell().Result then       return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsRimeStrikeSpell().Result then            return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsRighteousIncitementSpell().Result then   return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsSpellShatteringStrikeSpell().Result then return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsVortexDartSpell().Result then            return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+    if Goon_IsWardensRebukeSpell().Result then         return Goon_CharacterLevelEqualToOrGreaterThan_5(source) end
+
+    return ConditionResult(false)
 end
 
 function Goon_IsConditionalDamageSpell()
@@ -1624,49 +1667,52 @@ function Goon_IsConditionalDamageSpell()
 end
 
 function Goon_IsConditionalDamageCantrip()
-    return Goon_IsBoomingBladeSpell()
-         | Goon_IsGreenFlameBladeSpell()
-         | Goon_IsSparkingBladeSpell()
-         | Goon_IsBloodlettingBiteSpell()
-         | Goon_IsMisfortunesMarkSpell()
-         | Goon_IsRimeStrikeSpell()
-         | Goon_IsRighteousIncitementSpell()
-         | Goon_IsSpellShatteringStrikeSpell()
-         | Goon_IsVortexDartSpell()
-         | Goon_IsWardensRebukeSpell()
+    if Goon_IsBoomingBladeSpell().Result          then return ConditionResult(true) end
+    if Goon_IsGreenFlameBladeSpell().Result       then return ConditionResult(true) end
+    if Goon_IsSparkingBladeSpell().Result         then return ConditionResult(true) end
+    if Goon_IsBloodlettingBiteSpell().Result      then return ConditionResult(true) end
+    if Goon_IsMisfortunesMarkSpell().Result       then return ConditionResult(true) end
+    if Goon_IsRimeStrikeSpell().Result            then return ConditionResult(true) end
+    if Goon_IsRighteousIncitementSpell().Result   then return ConditionResult(true) end
+    if Goon_IsSpellShatteringStrikeSpell().Result then return ConditionResult(true) end
+    if Goon_IsVortexDartSpell().Result            then return ConditionResult(true) end
+    if Goon_IsWardensRebukeSpell().Result         then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsBoomingBladeSpell()
-    return IsSpellChildOrVariantFromContext('Target_BoomingBlade')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_Default')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Life')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Cold')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Fire')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Lightning')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Thunder')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Poison')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_MeleeWeapon')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Necrotic')
-         | IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Psychic')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_BoomingBlade')
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade').Result                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_ClassSpell').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_5e').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_Default').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_SneakAttack').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Life').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Cold').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Fire').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Lightning').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Thunder').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Poison').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_MeleeWeapon').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Necrotic').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_BoomingBlade_DivineStrike_Psychic').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SVMagus_BoomingBlade').Result                  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsGreenFlameBladeSpell()
-    return IsSpellChildOrVariantFromContext('Target_GreenFlameBlade') 
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_Default')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_SneakAttack')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Life')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Cold')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Fire')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Lightning')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Thunder')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Poison')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_MeleeWeapon')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Necrotic')
-         | IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic')
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade').Result                          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_Default').Result                  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_SneakAttack').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Life').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Cold').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Fire').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Lightning').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Thunder').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Poison').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_MeleeWeapon').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Necrotic').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_GreenFlameBlade_DivineStrike_Psychic').Result     then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- TODO: why do some of Celes' variants not do _Large?
@@ -1678,9 +1724,10 @@ function Goon_IsSparkingBladeSpell()
 end
 
 function Goon_IsBloodlettingBiteSpell()
-    return IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite')
-         | IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite_Melee')
-         | IsSpellChildOrVariantFromContext('Projectile_SVMagus_BloodlettingBite')
+    if IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_SVMagus_BloodlettingBite_Melee').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_SVMagus_BloodlettingBite').Result   then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsMisfortunesMarkSpell()
@@ -2186,11 +2233,11 @@ end
 
 -- TODO: Disarm shields?
 function Goon_WieldingWeapon(target)
-	target = target or context.Target
-	return WieldingWeapon('Melee', true, false, target)
-		 | WieldingWeapon('Melee', false, false, target)
-		 | WieldingWeapon('Ammunition', true, false, target)
-		 | WieldingWeapon('Ammunition', false, false, target)
+    target = target or context.Target
+    return WieldingWeapon('Melee', true, false, target)
+         | WieldingWeapon('Melee', false, false, target)
+         | WieldingWeapon('Ammunition', true, false, target)
+         | WieldingWeapon('Ammunition', false, false, target)
 end
 
 -- TODO: What context do I want?
