@@ -123,76 +123,100 @@ function Goon_IsThrownWeaponAttack()
 end
 
 function Goon_IsMeleeMainhandWeaponAttack()
-    return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeWeaponAttack)
-         | IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam') -- Actions
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave')
-         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee') -- Spells
-         | Goon_IsFlameBladeSpellAttack_Mainhand()
+    if ConditionResult(context.HitDescription.AttackType == AttackType.MeleeWeaponAttack).Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam').Result                    then return ConditionResult(true) end  -- Actions
+    if IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee').Result                            then return ConditionResult(true) end  -- Spells
+    if Goon_IsFlameBladeSpellAttack_Mainhand().Result                                                  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsMeleeOffhandWeaponAttack()
-    return ConditionResult(context.HitDescription.AttackType == AttackType.MeleeOffHandWeaponAttack)
-         | IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand') -- Actions
-         | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand')
-         | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand') -- Spells
-         | Goon_IsFlameBladeSpellAttack_Offhand()
+    if ConditionResult(context.HitDescription.AttackType == AttackType.MeleeOffHandWeaponAttack).Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand').Result                    then return ConditionResult(true) end  -- Actions
+    if IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand').Result                            then return ConditionResult(true) end  -- Spells
+    if Goon_IsFlameBladeSpellAttack_Offhand().Result                                                                then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsRangedMainhandWeaponAttack()
-    return ConditionResult(context.HitDescription.AttackType == AttackType.RangedWeaponAttack)
-         | IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot') -- Actions
-         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')
-         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')
-         | IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged') -- Spells
-         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')
-         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves')
+    if ConditionResult(context.HitDescription.AttackType == AttackType.RangedWeaponAttack).Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot').Result                       then return ConditionResult(true) end  -- Actions
+    if IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged').Result                      then return ConditionResult(true) end  -- Spells
+    if IsSpellChildOrVariantFromContext('Projectile_HailOfThorns').Result                         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves').Result    then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsRangedOffhandWeaponAttack()
-    return ConditionResult(context.HitDescription.AttackType == AttackType.RangedOffHandWeaponAttack)
-         | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand') -- Actions
-         | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand') -- Spells
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
-         | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
+    if ConditionResult(context.HitDescription.AttackType == AttackType.RangedOffHandWeaponAttack).Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand').Result                    then return ConditionResult(true) end  -- Actions
+    if IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand').Result                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand').Result                   then return ConditionResult(true) end  -- Spells
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand').Result                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== AttackedWithPassiveSourceWeapon() edge cases
 -- TODO: IsAttack SpellFlags?
 
 function Goon_IsWeaponActionWithoutAttackRoll()
-    return Goon_IsWeaponActionWithoutAttackRoll_Melee()
-         | Goon_IsWeaponActionWithoutAttackRoll_Ranged()
-         | Goon_IsWeaponActionWithoutAttackRoll_MeleeSpell()
-         | Goon_IsWeaponActionWithoutAttackRoll_RangedSpell()
+    if Goon_IsWeaponActionWithoutAttackRoll_Melee().Result       then return ConditionResult(true) end
+    if Goon_IsWeaponActionWithoutAttackRoll_Ranged().Result      then return ConditionResult(true) end
+    if Goon_IsWeaponActionWithoutAttackRoll_MeleeSpell().Result  then return ConditionResult(true) end
+    if Goon_IsWeaponActionWithoutAttackRoll_RangedSpell().Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_Melee()
-    return IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam')                    | IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave') | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_ZephyrBreak')                                 | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_ZephyrBreak_Offhand')
-         | IsSpellChildOrVariantFromContext('Rush_MAG_ZephyrFlash')                                 | IsSpellChildOrVariantFromContext('Goon_Rush_MAG_ZephyrFlash_Offhand')
+    if IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam').Result                                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_MAG_ZephyrBreak').Result                                              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_MAG_ZephyrBreak_Offhand').Result                                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Rush_MAG_ZephyrFlash').Result                                              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Rush_MAG_ZephyrFlash_Offhand').Result                                 then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_Ranged()
-    return IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot')                | IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow')            | IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow')       | IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot')           | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand')
-         | IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate')  | IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand')
+    if IsSpellChildOrVariantFromContext('Target_MAG_RetrievingShot').Result                            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Target_MAG_RetrievingShot_Offhand').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_ArcaneShot_PiercingArrow').Result                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_ArcaneShot_PiercingArrow_Offhand').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_ArcaneShot_SeekingArrow').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_ArcaneShot_SeekingArrow_Offhand').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot').Result                       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Offhand').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_SunbeamShot_Recreate').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_SunbeamShot_Recreate_Offhand').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_MeleeSpell()
-    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee') | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand')
+    if IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsWeaponActionWithoutAttackRoll_RangedSpell()
-    return IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged')                   | IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_HailOfThorns')                      | IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves') | IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_LightningArrow')                    | IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand')
-         | IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot')           | IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand')
+    if IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Ranged').Result                                then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Ranged_Offhand').Result                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_HailOfThorns').Result                                   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_HailOfThorns_Offhand').Result                      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_PLA_HailOfThorns_ZhentCave_Gloves').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_PLA_HailOfThorns_ZhentCave_Gloves_Offhand').Result then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_LightningArrow').Result                                 then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_LightningArrow_Offhand').Result                    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Projectile_MAG_LightningArrow_Shot').Result                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Goon_Projectile_MAG_LightningArrow_Shot_Offhand').Result           then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Spell Target conditions ====================================
@@ -204,29 +228,81 @@ end
 function Goon_TargetConditions_HarmfulProjectile(target, source)
     target = target or context.Target
     source = source or context.Source
-    return Goon_IsPlayerInControl(source) & ~Self(source, target)
-         | Goon_IsAIInControl(source) & ~Self(source, target) & (Enemy(target) | Item(target) | Goon_IsSurface())
+
+    if Goon_IsPlayerInControl(source).Result then
+        if not Self(source, target).Result then
+            return ConditionResult(true)
+        end
+    end
+
+    if Goon_IsAIInControl(source).Result then
+        if not Self(source, target).Result then
+            if Enemy(target).Result or Item(target).Result or Goon_IsSurface().Result then
+                return ConditionResult(true)
+            end
+        end
+    end
+
+    return ConditionResult(false)
 end
 
 function Goon_TargetConditions_BeneficialProjectile(target, source)
     target = target or context.Target
     source = source or context.Source
-    return Goon_IsPlayerInControl(source) & ~Self(source, target)
-         | Goon_IsAIInControl(source) & (Character(target) & Ally(target))
+
+    if Goon_IsPlayerInControl(source).Result then
+        if not Self(source, target).Result then
+            return ConditionResult(true)
+        end
+    end
+
+    if Goon_IsAIInControl(source).Result then
+        if Character(target).Result and Ally(target).Result then
+            return ConditionResult(true)
+        end
+    end
+
+    return ConditionResult(false)
 end
 
 function Goon_TargetConditions_HarmfulTarget(target, source)
     target = target or context.Target
     source = source or context.Source
-    return Goon_IsPlayerInControl(source) & ~Self(source, target) & (Item(target) | Character(target) | Dead(target))
-         | Goon_IsAIInControl(source) & (Character(target) & Enemy(target))
+
+    if Goon_IsPlayerInControl(source).Result then
+        if not Self(source, target).Result then
+            if Item(target).Result or Character(target).Result or Dead(target).Result then
+                return ConditionResult(true)
+            end
+        end
+    end
+
+    if Goon_IsAIInControl(source).Result then
+        if Character(target).Result and Enemy(target).Result then
+            return ConditionResult(true)
+        end
+    end
+
+    return ConditionResult(false)
 end
 
 function Goon_TargetConditions_BeneficialTarget(target, source)
     target = target or context.Target
     source = source or context.Source
-    return Goon_IsPlayerInControl(source) & (Item(target) | Character(target) | Dead(target))
-         | Goon_IsAIInControl(source) & (Character(target) & Ally(target))
+
+    if Goon_IsPlayerInControl(source).Result then
+        if Item(target).Result or Character(target).Result or Dead(target).Result then
+            return ConditionResult(true)
+        end
+    end
+
+    if Goon_IsAIInControl(source).Result then
+        if Character(target).Result and Ally(target).Result then
+            return ConditionResult(true)
+        end
+    end
+
+    return ConditionResult(false)
 end
 
 -- ==================================== Interrupt conditions ====================================
@@ -359,28 +435,30 @@ function Goon_BasicHarmfulInterruptConditions(swapContext, swapThirdParty, inter
         targetPosition_ = observerPosition
     end
 
-    if not Goon_InterruptConditions(source_, target_, observer).Result then
-        return ConditionResult(false)
-    end
-
-    local conditions = ~Dead(target_)
-                     & ~(IsKillingBlow() | HasHPLessThan(1, target_))
-                     & Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
-                     & Goon_AISafeguardInterruptConditions(true, source_, target_, observer)
+    if Dead(target_).Result                                       then return ConditionResult(false) end
+    if IsKillingBlow().Result or HasHPLessThan(1, target_).Result then return ConditionResult(false) end
 
     if source_ ~= target_ then -- Test removing apparent redundancy, because I'm looking at it wondering what I was smoking when I double guarded this shit in 4.20.3.0...
-        conditions = conditions & ~Self(source_, target_)
+        if Self(source_, target_).Result then return ConditionResult(false) end
     end
 
     if not isThirdPartyFallback then
-        conditions = conditions & ~Self(observer, target_) -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
+        if Self(observer, target_).Result then return ConditionResult(false) end -- & Self(observer, source_) - Cooks UI feedback for OnLeaveAttackRange, somehow?
     end
+
+    if not Goon_CanSourceSeeTarget(false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition).Result then return ConditionResult(false) end
+    if not Goon_AISafeguardInterruptConditions(true, source_, target_, observer).Result                                                        then return ConditionResult(false) end
+    if not Goon_InterruptConditions(source_, target_, observer).Result                                                                         then return ConditionResult(false) end
 
     if interruptAttackInProgress == true then
-        return conditions
+        return ConditionResult(true)
     end
 
-    return conditions & (~IsAttack() | HasLastAttackTriggered())
+    if IsAttack().Result and not HasLastAttackTriggered().Result then
+        return ConditionResult(false)
+    end
+
+    return ConditionResult(true)
 end
 
 -- ==================================== Interrupt conditions - "EnableCondition"
@@ -453,19 +531,19 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
         targetPosition_ = observerPosition
     end
 
+    -- & ~WieldingWeapon('Ammunition', false, false, source_)
+    if HasSpellFlag(SpellFlags.IgnoreAoO, target_).Result                                                       then return ConditionResult(false) end
+    if Tagged('OCS_ObjectCharacter', target_).Result                                                            then return ConditionResult(false) end
+    if HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source_).Result                           then return ConditionResult(false) end
+    if HasAnyStatus({ 'SHOCKWAVE', 'SG_Ignore_AOO' }, {}, {}, target_).Result                                   then return ConditionResult(false) end
+    if Goon_HasFlamingSphereAuraCondition(target_).Result                                                       then return ConditionResult(false) end
+    if HasStatus('MOBILE_NO_AOO', source_).Result and HasStatus('MOBILE_NO_AOO_SOURCE', target_).Result         then return ConditionResult(false) end
+    if HasStatus('FANCYFOOTWORK', source_, target_).Result and HasStatus('FANCYFOOTWORK_OWNER', target_).Result then return ConditionResult(false) end
+    if HasStatus('PANACHE', source_).Result and not HasStatus('PANACHE_OWNER', target_).Result                  then return ConditionResult(false) end
+
     if not Goon_BasicHarmfulInterruptConditions(false, false, interruptAttackInProgress, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition).Result then
         return ConditionResult(false)
     end
-
-    local Conditions = -- & ~WieldingWeapon('Ammunition', false, false, source_)
-                       ~HasSpellFlag(SpellFlags.IgnoreAoO, target_)
-                     & ~Tagged('OCS_ObjectCharacter', target_)
-                     & ~HasAnyStatus({ 'SG_Incapacitated', 'SG_Unconscious' }, {}, {}, source_)
-                     & ~HasAnyStatus({ 'SHOCKWAVE', 'SG_Ignore_AOO' }, {}, {}, target_)
-                     & ~Goon_HasFlamingSphereAuraCondition(target_)
-                     & ~(HasStatus('MOBILE_NO_AOO', source_) & HasStatus('MOBILE_NO_AOO_SOURCE', target_))
-                     & ~(HasStatus('FANCYFOOTWORK', source_, target_) & HasStatus('FANCYFOOTWORK_OWNER', target_))
-                     & ((~HasStatus('PANACHE', source_)) | (HasStatus('PANACHE', source_) & HasStatus('PANACHE_OWNER', target_)))
 
     if isSwapped then
         if not Self(observer, source_).Result then
@@ -478,14 +556,15 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
             return ConditionResult(false)
         end
 
-        return Conditions & Goon_InAttackRange(isRanged, isOffhand, false, false, nil, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
+        return Goon_InAttackRange(isRanged, isOffhand, false, false, nil, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
     end
 
     if not Enemy(source_, target_).Result then
         return ConditionResult(false)
     end
 
-    return Conditions & (~Goon_IsAction() | Goon_IsJumpSpellCategory()) -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
+    if not Goon_IsAction().Result then return ConditionResult(true) end
+    return Goon_IsJumpSpellCategory() -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
@@ -502,26 +581,57 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
     targetPosition = targetPosition or context.TargetPosition
     observerPosition = observerPosition or context.ObserverPosition
 
-    if not Self(observer, source).Result                            then return ConditionResult(false) end
-    if Tagged('INANIMATE', target).Result                           then return ConditionResult(false) end
-    if not IsHit().Result                                           then return ConditionResult(false) end
-    if HasDamageEffectFlag(DamageFlags.AttackDisadvantage).Result   then return ConditionResult(false) end
-    if Goon_IsSneakAttack().Result                                  then return ConditionResult(false) end
+    if not Self(observer, source).Result                          then return ConditionResult(false) end
+    if Tagged('INANIMATE', target).Result                         then return ConditionResult(false) end
+    if not IsHit().Result                                         then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.AttackDisadvantage).Result then return ConditionResult(false) end
+    if Goon_IsSneakAttack().Result                                then return ConditionResult(false) end
 
     if not Goon_BasicHarmfulInterruptConditions(false, false, true, source, target, observer, sourcePosition, targetPosition, observerPosition).Result then
         return ConditionResult(false)
     end
 
-    return ((WieldingFinesseWeaponInSpecificHand(observer,false) & IsMainHandWeaponAttack())
-        | (WieldingFinesseWeaponInSpecificHand(observer,true) & IsOffHandAttack())
-        | (SpellTypeIs(SpellType.Throw) & (HasWeaponProperty(WeaponProperties.Finesse, context.HitDescription.ThrownObject)
-        | HasPassive('SneakAttack_LLRuffian', source) & ~HasWeaponProperty(WeaponProperties.Twohanded, context.HitDescription.ThrownObject) & HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject))) -- IsThrowAttackRoll()
-        | (WieldingWeapon('Ammunition', false, true, observer) & IsRangedWeaponAttack())
-        | (Goon_IsDruidWildshape(observer) & (IsMeleeAttack() | IsRangedAttack()) & (IsDamageTypePiercing() | IsDamageTypeSlashing() | IsDamageTypeBludgeoning()))
-        | (HasPassive('SneakAttack_LLRuffian', source) & (IsMainHandAttack() | IsMonkWeaponAttack())))
-        & (HasDamageEffectFlag(DamageFlags.AttackAdvantage) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source)
-        | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source))
-        & (~HasAllyWithinRange(nil,nil,nil,nil, observer,source) & ~HasEnemyWithinRange(nil,nil,nil,2, observer,source)) & Goon_DistanceCheck(1.5, false, false, false, false, source, target, observer, sourcePosition, targetPosition, observerPosition)))
+    local isAttackAllowedToSneakAttack = false
+
+    if WieldingFinesseWeaponInSpecificHand(observer, false).Result and IsMainHandWeaponAttack().Result then
+        isAttackAllowedToSneakAttack = true
+    end
+
+    if WieldingFinesseWeaponInSpecificHand(observer, true).Result and IsOffHandAttack().Result then
+        isAttackAllowedToSneakAttack = true
+    end
+
+    if WieldingWeapon('Ammunition', false, true, observer).Result and IsRangedWeaponAttack().Result then
+        isAttackAllowedToSneakAttack = true
+    end
+
+    if SpellTypeIs(SpellType.Throw).Result and (HasWeaponProperty(WeaponProperties.Finesse, context.HitDescription.ThrownObject).Result or -- IsThrowAttackRoll()
+        (HasPassive('SneakAttack_LLRuffian', source).Result and not 
+         HasWeaponProperty(WeaponProperties.Twohanded, context.HitDescription.ThrownObject).Result and
+         HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject).Result)) then
+        isAttackAllowedToSneakAttack = true
+    end
+
+    if Goon_IsDruidWildshape(observer).Result and
+       (IsMeleeAttack().Result or IsRangedAttack().Result) and
+       (IsDamageTypePiercing().Result or IsDamageTypeSlashing().Result or IsDamageTypeBludgeoning().Result) then
+        isAttackAllowedToSneakAttack = true
+    end
+
+    if HasPassive('SneakAttack_LLRuffian', source).Result and (IsMainHandAttack().Result or IsMonkWeaponAttack().Result) then
+        isAttackAllowedToSneakAttack = true
+    end
+
+    if not isAttackAllowedToSneakAttack then return ConditionResult(false) end
+
+    if HasDamageEffectFlag(DamageFlags.AttackAdvantage).Result                                              then return ConditionResult(true) end
+    if HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source).Result                             then return ConditionResult(true) end
+
+    if not (HasPassive('RakishAudacity', source).Result or HasPassive('DWE_RakishAudacity', source).Result) then return ConditionResult(false) end
+    if HasAllyWithinRange(nil,nil,nil,nil, observer,source).Result                                          then return ConditionResult(false) end
+    if HasEnemyWithinRange(nil,nil,nil,2, observer,source).Result                                           then return ConditionResult(false) end
+
+    return Goon_DistanceCheck(1.5, false, false, false, false, source, target, observer, sourcePosition, targetPosition, observerPosition)
 end
 
 -- Sneak Attack action "TargetConditions"
@@ -532,11 +642,20 @@ function Goon_SneakAttackTargetConditions_Melee(target, source, sourcePosition, 
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
-         & (~HasDisadvantage(AttackType.MeleeWeaponAttack))
-         & ((HasAdvantage(AttackType.MeleeWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
-         | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, false, source, target, nil, sourcePosition, targetPosition, nil)))
+    if not Character(target).Result                         then return ConditionResult(false) end
+    if Self(source, target).Result                          then return ConditionResult(false) end
+    if Dead(target).Result                                  then return ConditionResult(false) end
+    if Tagged('INANIMATE', target).Result                   then return ConditionResult(false) end
+    if HasDisadvantage(AttackType.MeleeWeaponAttack).Result then return ConditionResult(false) end
+
+    if HasAdvantage(AttackType.MeleeWeaponAttack).Result                        then return ConditionResult(true) end
+    if HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source).Result then return ConditionResult(true) end
+
+    if not (HasPassive('RakishAudacity', source).Result or HasPassive('DWE_RakishAudacity', source).Result) then return ConditionResult(false) end
+    if HasAllyWithinRange(nil,nil,nil,nil, source,source).Result                                            then return ConditionResult(false) end
+    if HasEnemyWithinRange(nil,nil,nil,2, source,source).Result                                             then return ConditionResult(false) end
+
+    return Goon_DistanceCheck(1.5, false, false, false, false, source, target, nil, sourcePosition, targetPosition, nil)
 end
 
 function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition, targetPosition)
@@ -545,20 +664,34 @@ function Goon_SneakAttackTargetConditions_Ranged(target, source, sourcePosition,
     sourcePosition = sourcePosition or context.SourcePosition
     targetPosition = targetPosition or context.TargetPosition
 
-    return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
-         & (~HasDisadvantage(AttackType.RangedWeaponAttack))
-         & ((HasAdvantage(AttackType.RangedWeaponAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
-         | ((HasPassive('RakishAudacity', source) | HasPassive('DWE_RakishAudacity', source)) 
-         & (~HasAllyWithinRange(nil,nil,nil,nil, source,source) & ~HasEnemyWithinRange(nil,nil,nil,2, source,source)) & Goon_DistanceCheck(1.5, false, false, false, false, source, target, nil, sourcePosition, targetPosition, nil)))
+    if not Character(target).Result                          then return ConditionResult(false) end
+    if Self(source, target).Result                           then return ConditionResult(false) end
+    if Dead(target).Result                                   then return ConditionResult(false) end
+    if Tagged('INANIMATE', target).Result                    then return ConditionResult(false) end
+    if HasDisadvantage(AttackType.RangedWeaponAttack).Result then return ConditionResult(false) end
+
+    if HasAdvantage(AttackType.RangedWeaponAttack).Result                       then return ConditionResult(true) end
+    if HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source).Result then return ConditionResult(true) end
+
+    if not (HasPassive('RakishAudacity', source).Result or HasPassive('DWE_RakishAudacity', source).Result) then return ConditionResult(false) end
+    if HasAllyWithinRange(nil,nil,nil,nil, source,source).Result                                            then return ConditionResult(false) end
+    if HasEnemyWithinRange(nil,nil,nil,2, source,source).Result                                             then return ConditionResult(false) end
+
+    return Goon_DistanceCheck(1.5, false, false, false, false, source, target, nil, sourcePosition, targetPosition, nil)
 end
 
 function Goon_SneakAttackTargetConditions_Unarmed(target, source)
     target = target or context.Target
     source = source or context.Source
 
-    return Character(target) & ~Self(source, target) & ~Dead(target) & ~Tagged('INANIMATE', target)
-         & (~HasDisadvantage(AttackType.MeleeUnarmedAttack))
-         & (HasAdvantage(AttackType.MeleeUnarmedAttack) | HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source))
+    if not Character(target).Result                          then return ConditionResult(false) end
+    if Self(source, target).Result                           then return ConditionResult(false) end
+    if Dead(target).Result                                   then return ConditionResult(false) end
+    if Tagged('INANIMATE', target).Result                    then return ConditionResult(false) end
+    if HasDisadvantage(AttackType.MeleeUnarmedAttack).Result then return ConditionResult(false) end
+
+    if HasAdvantage(AttackType.MeleeUnarmedAttack).Result    then return ConditionResult(true) end
+    return HasAllyWithinRange('SG_Incapacitated',nil,nil,nil, target,source)
 end
 
 -- ==================================== Player vs NPC checks + in control vs not in control ====================================
@@ -807,8 +940,9 @@ end
 -- Mirrors CanAttack with ActionPoint.
 function Goon_CanAttack_Offhand(target)
     local target = target or context.Target
-    local result = HasActionResource('BonusActionPoint', 1, 0, false, false, target)
-    return ConditionResult(result.Result,{ConditionError("IsCanNotAttack")})
+
+    if HasActionResource('BonusActionPoint', 1, 0, false, false, target).Result then return ConditionResult(true) end
+    return ConditionResult(false,{ConditionError("IsCanNotAttack")})
 end
 
 -- ==================================== Encumbered
@@ -837,11 +971,16 @@ function Goon_IsAbleToBeKnockedOut(target, source)
     source = source or context.Source
     target = target or context.Target
 
-    return Character(target) & ~Self(source, target) & ~Summon(target) 
-         & ~Tagged('UNDEAD', target) & ~Tagged('CONSTRUCT', target) & ~Tagged('CREATURE_SPORE_SERVANT', target)
-         & (~HasAnyStatus({ 'SG_Polymorph' }, {}, {}, target) | Goon_IsUnrestrictedPolymorphStatus(target)) 
-         & ~HasAnyStatus({ 'HAG_DISGUISE', 'HAG_DISGUISE_PIG', 'HAG_DISGUISE_SHEEP' }, {}, {}, target)
-         & ~IsImmuneToStatus('KNOCKED_OUT', target, source)
+    if not Character(target).Result                                                                                      then return ConditionResult(false) end
+    if Self(source, target).Result                                                                                       then return ConditionResult(false) end
+    if Summon(target).Result                                                                                             then return ConditionResult(false) end
+    if Tagged('UNDEAD', target).Result                                                                                   then return ConditionResult(false) end
+    if Tagged('CONSTRUCT', target).Result                                                                                then return ConditionResult(false) end
+    if Tagged('CREATURE_SPORE_SERVANT', target).Result                                                                   then return ConditionResult(false) end
+    if HasAnyStatus({ 'SG_Polymorph' }, {}, {}, target).Result and not Goon_IsUnrestrictedPolymorphStatus(target).Result then return ConditionResult(false) end
+    if HasAnyStatus({ 'HAG_DISGUISE', 'HAG_DISGUISE_PIG', 'HAG_DISGUISE_SHEEP' }, {}, {}, target).Result                 then return ConditionResult(false) end
+    if IsImmuneToStatus('KNOCKED_OUT', target, source).Result                                                            then return ConditionResult(false) end
+    return ConditionResult(true)
 end
 
 -- ==================================== Crowd Control
@@ -854,8 +993,10 @@ end
 
 function Goon_IsCrowdControlled_Hard(target)
     local target = target or context.Target
-    return HasAnyStatus({ 'SG_Fleeing', 'SG_Incapacitated', 'SG_Stunned', 'SG_Unconscious', 'SG_Petrified' }, {}, {}, target)
-         | ~Goon_IsNonHostilePolymorphStatus(target)
+
+    if HasAnyStatus({ 'SG_Fleeing', 'SG_Incapacitated', 'SG_Stunned', 'SG_Unconscious', 'SG_Petrified' }, {}, {}, target).Result then return ConditionResult(true) end
+    if not Goon_IsNonHostilePolymorphStatus(target).Result                                                                       then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsCrowdControlled_Soft(target)
@@ -914,93 +1055,93 @@ end
 -- TODO: Break into groups and call them all in the main function.
 
 function Goon_IsSurface()
-    local result = Surface('SurfaceNone')
-                 | Surface('SurfaceWater')
-                 | Surface('SurfaceWaterElectrified')
-                 | Surface('SurfaceWaterFrozen')
-                 | Surface('SurfaceBlood')
-                 | Surface('SurfaceBloodElectrified')
-                 | Surface('SurfaceBloodFrozen')
-                 | Surface('SurfacePoison')
-                 | Surface('SurfaceOil')
-                 | Surface('SurfaceLava')
-                 | Surface('SurfaceGrease')
-                 | Surface('SurfaceWyvernPoison')
-                 | Surface('SurfaceWeb')
-                 | Surface('SurfaceDeepWater')
-                 | Surface('SurfaceVines')
-                 | Surface('SurfaceFire')
-                 | Surface('SurfaceAcid')
-                 | Surface('SurfaceTrialFire')
-                 | Surface('SurfaceBlackPowder')
-                 | Surface('SurfaceAlienOil')
-                 | Surface('SurfaceMud')
-                 | Surface('SurfaceAlcohol')
-                 | Surface('SurfaceInvisibleWeb')
-                 | Surface('SurfaceBloodSilver')
-                 | Surface('SurfaceChasm')
-                 | Surface('SurfaceHellfire')
-                 | Surface('SurfaceCausticBrine')
-                 | Surface('SurfaceBloodExploding')
-                 | Surface('SurfaceAsh')
-                 | Surface('SurfaceSpikeGrowth')
-                 | Surface('SurfaceHolyFire')
-                 | Surface('SurfaceBlackTentacles')
-                 | Surface('SurfaceOvergrowth')
-                 | Surface('SurfacePurpleWormPoison')
-                 | Surface('SurfaceSerpentVenom')
-                 | Surface('SurfaceInvisibleGithAcid')
-                 | Surface('SurfaceBladeBarrier')
-                 | Surface('SurfaceSewer')
-                 | Surface('SurfaceWaterCloud')
-                 | Surface('SurfaceWaterCloudElectrified')
-                 | Surface('SurfacePoisonCloud')
-                 | Surface('SurfaceExplosionCloud')
-                 | Surface('SurfaceShockwaveCloud')
-                 | Surface('SurfaceCloudkillCloud')
-                 | Surface('SurfaceMaliceCloud')
-                 | Surface('SurfaceBloodCloud')
-                 | Surface('SurfaceStinkingCloud')
-                 | Surface('SurfaceDarknessCloud')
-                 | Surface('SurfaceFogCloud')
-                 | Surface('SurfaceGithPheromoneGasCloud')
-                 | Surface('SurfaceSporeWhiteCloud')
-                 | Surface('SurfaceSporeGreenCloud')
-                 | Surface('SurfaceSporeBlackCloud')
-                 | Surface('SurfaceDrowPoisonCloud')
-                 | Surface('SurfaceIceCloud')
-                 | Surface('SurfacePotionHealingCloud')
-                 | Surface('SurfacePotionHealingGreaterCloud')
-                 | Surface('SurfacePotionHealingSuperiorCloud')
-                 | Surface('SurfacePotionHealingSupremeCloud')
-                 | Surface('SurfacePotionInvisibilityCloud')
-                 | Surface('SurfacePotionSpeedCloud')
-                 | Surface('SurfacePotionVitalityCloud')
-                 | Surface('SurfacePotionAntitoxinCloud')
-                 | Surface('SurfacePotionResistanceAcidCloud')
-                 | Surface('SurfacePotionResistanceColdCloud')
-                 | Surface('SurfacePotionResistanceFireCloud')
-                 | Surface('SurfacePotionResistanceForceCloud')
-                 | Surface('SurfacePotionResistanceLightningCloud')
-                 | Surface('SurfacePotionResistancePoisonCloud')
-                 | Surface('SurfaceSporePinkCloud')
-                 | Surface('SurfaceBlackPowderDetonationCloud')
-                 | Surface('SurfaceVoidCloud')
-                 | Surface('SurfaceCrawlerMucusCloud')
-                 | Surface('SurfaceCloudkill6Cloud')
-                 | Surface('SurfaceSentinel')
-    return ConditionResult(result.Result, { ConditionError("Goon_IsNotSurface") })
+    if Surface('SurfaceNone').Result                           then return ConditionResult(true) end
+    if Surface('SurfaceWater').Result                          then return ConditionResult(true) end
+    if Surface('SurfaceWaterElectrified').Result               then return ConditionResult(true) end
+    if Surface('SurfaceWaterFrozen').Result                    then return ConditionResult(true) end
+    if Surface('SurfaceBlood').Result                          then return ConditionResult(true) end
+    if Surface('SurfaceBloodElectrified').Result               then return ConditionResult(true) end
+    if Surface('SurfaceBloodFrozen').Result                    then return ConditionResult(true) end
+    if Surface('SurfacePoison').Result                         then return ConditionResult(true) end
+    if Surface('SurfaceOil').Result                            then return ConditionResult(true) end
+    if Surface('SurfaceLava').Result                           then return ConditionResult(true) end
+    if Surface('SurfaceGrease').Result                         then return ConditionResult(true) end
+    if Surface('SurfaceWyvernPoison').Result                   then return ConditionResult(true) end
+    if Surface('SurfaceWeb').Result                            then return ConditionResult(true) end
+    if Surface('SurfaceDeepWater').Result                      then return ConditionResult(true) end
+    if Surface('SurfaceVines').Result                          then return ConditionResult(true) end
+    if Surface('SurfaceFire').Result                           then return ConditionResult(true) end
+    if Surface('SurfaceAcid').Result                           then return ConditionResult(true) end
+    if Surface('SurfaceTrialFire').Result                      then return ConditionResult(true) end
+    if Surface('SurfaceBlackPowder').Result                    then return ConditionResult(true) end
+    if Surface('SurfaceAlienOil').Result                       then return ConditionResult(true) end
+    if Surface('SurfaceMud').Result                            then return ConditionResult(true) end
+    if Surface('SurfaceAlcohol').Result                        then return ConditionResult(true) end
+    if Surface('SurfaceInvisibleWeb').Result                   then return ConditionResult(true) end
+    if Surface('SurfaceBloodSilver').Result                    then return ConditionResult(true) end
+    if Surface('SurfaceChasm').Result                          then return ConditionResult(true) end
+    if Surface('SurfaceHellfire').Result                       then return ConditionResult(true) end
+    if Surface('SurfaceCausticBrine').Result                   then return ConditionResult(true) end
+    if Surface('SurfaceBloodExploding').Result                 then return ConditionResult(true) end
+    if Surface('SurfaceAsh').Result                            then return ConditionResult(true) end
+    if Surface('SurfaceSpikeGrowth').Result                    then return ConditionResult(true) end
+    if Surface('SurfaceHolyFire').Result                       then return ConditionResult(true) end
+    if Surface('SurfaceBlackTentacles').Result                 then return ConditionResult(true) end
+    if Surface('SurfaceOvergrowth').Result                     then return ConditionResult(true) end
+    if Surface('SurfacePurpleWormPoison').Result               then return ConditionResult(true) end
+    if Surface('SurfaceSerpentVenom').Result                   then return ConditionResult(true) end
+    if Surface('SurfaceInvisibleGithAcid').Result              then return ConditionResult(true) end
+    if Surface('SurfaceBladeBarrier').Result                   then return ConditionResult(true) end
+    if Surface('SurfaceSewer').Result                          then return ConditionResult(true) end
+    if Surface('SurfaceWaterCloud').Result                     then return ConditionResult(true) end
+    if Surface('SurfaceWaterCloudElectrified').Result          then return ConditionResult(true) end
+    if Surface('SurfacePoisonCloud').Result                    then return ConditionResult(true) end
+    if Surface('SurfaceExplosionCloud').Result                 then return ConditionResult(true) end
+    if Surface('SurfaceShockwaveCloud').Result                 then return ConditionResult(true) end
+    if Surface('SurfaceCloudkillCloud').Result                 then return ConditionResult(true) end
+    if Surface('SurfaceMaliceCloud').Result                    then return ConditionResult(true) end
+    if Surface('SurfaceBloodCloud').Result                     then return ConditionResult(true) end
+    if Surface('SurfaceStinkingCloud').Result                  then return ConditionResult(true) end
+    if Surface('SurfaceDarknessCloud').Result                  then return ConditionResult(true) end
+    if Surface('SurfaceFogCloud').Result                       then return ConditionResult(true) end
+    if Surface('SurfaceGithPheromoneGasCloud').Result          then return ConditionResult(true) end
+    if Surface('SurfaceSporeWhiteCloud').Result                then return ConditionResult(true) end
+    if Surface('SurfaceSporeGreenCloud').Result                then return ConditionResult(true) end
+    if Surface('SurfaceSporeBlackCloud').Result                then return ConditionResult(true) end
+    if Surface('SurfaceDrowPoisonCloud').Result                then return ConditionResult(true) end
+    if Surface('SurfaceIceCloud').Result                       then return ConditionResult(true) end
+    if Surface('SurfacePotionHealingCloud').Result             then return ConditionResult(true) end
+    if Surface('SurfacePotionHealingGreaterCloud').Result      then return ConditionResult(true) end
+    if Surface('SurfacePotionHealingSuperiorCloud').Result     then return ConditionResult(true) end
+    if Surface('SurfacePotionHealingSupremeCloud').Result      then return ConditionResult(true) end
+    if Surface('SurfacePotionInvisibilityCloud').Result        then return ConditionResult(true) end
+    if Surface('SurfacePotionSpeedCloud').Result               then return ConditionResult(true) end
+    if Surface('SurfacePotionVitalityCloud').Result            then return ConditionResult(true) end
+    if Surface('SurfacePotionAntitoxinCloud').Result           then return ConditionResult(true) end
+    if Surface('SurfacePotionResistanceAcidCloud').Result      then return ConditionResult(true) end
+    if Surface('SurfacePotionResistanceColdCloud').Result      then return ConditionResult(true) end
+    if Surface('SurfacePotionResistanceFireCloud').Result      then return ConditionResult(true) end
+    if Surface('SurfacePotionResistanceForceCloud').Result     then return ConditionResult(true) end
+    if Surface('SurfacePotionResistanceLightningCloud').Result then return ConditionResult(true) end
+    if Surface('SurfacePotionResistancePoisonCloud').Result    then return ConditionResult(true) end
+    if Surface('SurfaceSporePinkCloud').Result                 then return ConditionResult(true) end
+    if Surface('SurfaceBlackPowderDetonationCloud').Result     then return ConditionResult(true) end
+    if Surface('SurfaceVoidCloud').Result                      then return ConditionResult(true) end
+    if Surface('SurfaceCrawlerMucusCloud').Result              then return ConditionResult(true) end
+    if Surface('SurfaceCloudkill6Cloud').Result                then return ConditionResult(true) end
+    if Surface('SurfaceSentinel').Result                       then return ConditionResult(true) end
+    return ConditionResult(false, { ConditionError("Goon_IsNotSurface") })
 end
 
 function Goon_IsDippableSurface()
-    local result = Surface('SurfaceFire')
-                 | Surface('SurfaceHellfire')
-                 | Surface('SurfacePoison')
-                 | Surface('SurfaceWater')
-                 | Surface('SurfaceSerpentVenom')
-                 | Surface('SurfaceWyvernPoison')
-                 | Surface('SurfacePurpleWormPoison')
-    return ConditionResult(result.Result, { ConditionError("Goon_IsNotDippableSurfaceOrEntity") })
+    if Surface('SurfaceFire').Result             then return ConditionResult(true) end
+    if Surface('SurfaceHellfire').Result         then return ConditionResult(true) end
+    if Surface('SurfacePoison').Result           then return ConditionResult(true) end
+    if Surface('SurfaceWater').Result            then return ConditionResult(true) end
+    if Surface('SurfaceSerpentVenom').Result     then return ConditionResult(true) end
+    if Surface('SurfaceWyvernPoison').Result     then return ConditionResult(true) end
+    if Surface('SurfacePurpleWormPoison').Result then return ConditionResult(true) end
+    return ConditionResult(false, { ConditionError("Goon_IsNotDippableSurfaceOrEntity") })
 end
 
 -- ==================================== Fire shit - Is Karlach cooking?
@@ -1761,138 +1902,233 @@ end
 function Goon_IsSpellWithoutDamageType(source, target)
     source = source or context.Source
     target = target or context.Target
-    return ~Goon_IsSpellDamageTypeAcid(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeCold(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeFire(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeLightning(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeThunder(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeRadiant(source, target, true, true)
-         & ~Goon_IsSpellDamageTypePoison(source, target, true, true)
-         & ~Goon_IsSpellDamageTypePsychic(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeNecrotic(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeForce(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeSlashing(source, target, true, true)
-         & ~Goon_IsSpellDamageTypePiercing(source, target, true, true)
-         & ~Goon_IsSpellDamageTypeBludgeoning(source, target, true, true)
+
+    if Goon_IsSpellDamageTypeAcid(source, target, true, true).Result        then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeCold(source, target, true, true).Result        then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeFire(source, target, true, true).Result        then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeLightning(source, target, true, true).Result   then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeThunder(source, target, true, true).Result     then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeRadiant(source, target, true, true).Result     then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypePoison(source, target, true, true).Result      then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypePsychic(source, target, true, true).Result     then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeNecrotic(source, target, true, true).Result    then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeForce(source, target, true, true).Result       then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeSlashing(source, target, true, true).Result    then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypePiercing(source, target, true, true).Result    then return ConditionResult(false) end
+    if Goon_IsSpellDamageTypeBludgeoning(source, target, true, true).Result then return ConditionResult(false) end
+    return ConditionResult(true)
 end
 
 -- These remain gated, and remain the public API with the two ignore flags.
 function Goon_IsSpellDamageTypePhysical(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return Goon_IsSpellDamageTypeSlashing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
-         | Goon_IsSpellDamageTypePiercing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
-         | Goon_IsSpellDamageTypeBludgeoning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if Goon_IsSpellDamageTypeSlashing(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result    then return ConditionResult(true) end
+    if Goon_IsSpellDamageTypePiercing(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result    then return ConditionResult(true) end
+    if Goon_IsSpellDamageTypeBludgeoning(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSpellDamageTypeElemental(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return Goon_IsSpellDamageTypeAcid(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
-         | Goon_IsSpellDamageTypeCold(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
-         | Goon_IsSpellDamageTypeFire(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
-         | Goon_IsSpellDamageTypeLightning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
-         | Goon_IsSpellDamageTypeThunder(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if Goon_IsSpellDamageTypeAcid(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result      then return ConditionResult(true) end
+    if Goon_IsSpellDamageTypeCold(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result      then return ConditionResult(true) end
+    if Goon_IsSpellDamageTypeFire(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result      then return ConditionResult(true) end
+    if Goon_IsSpellDamageTypeLightning(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result then return ConditionResult(true) end
+    if Goon_IsSpellDamageTypeThunder(source, target, ignoreFunctorCheck, ignoreConditionalCheck).Result   then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSpellDamageTypeAcid(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Acid) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Acid).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeCold(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Cold) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Cold).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeFire(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Fire) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Fire).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeLightning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Lightning) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Lightning).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeThunder(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Thunder) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Thunder).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeRadiant(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Radiant) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Radiant).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypePoison(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Poison) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Poison).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypePsychic(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Psychic) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Psychic).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeNecrotic(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Necrotic) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Necrotic).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeForce(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Force) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Force).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeSlashing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Slashing) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Slashing).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypePiercing(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Piercing) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Piercing).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 function Goon_IsSpellDamageTypeBludgeoning(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
     source = source or context.Source
     target = target or context.Target
-    return SpellDamageTypeIs(DamageType.Bludgeoning) & Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
+
+    if not SpellDamageTypeIs(DamageType.Bludgeoning).Result then
+        return ConditionResult(false)
+    end
+
+    return Goon_IsSpellDealingFunctorDamage(source, target, ignoreFunctorCheck, ignoreConditionalCheck)
 end
 
 -- ==================================== Weapon/armour equipped checks ====================================
 
 function Goon_Dueling_Check(target)
     target = target or context.Target
-    local hasNonVersatileWeapon = WieldingWeapon('Melee', false, true, target) & ~WieldingWeapon('Versatile', false, true, target) & ~WieldingWeapon('Twohanded', false, true, target) & ~WieldingWeapon('Melee', true, true, target)
-    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, target) & WieldingWeapon('Melee', false, true, target) & HasShieldEquipped(target)
-    return hasNonVersatileWeapon | hasVersatileWeapon
+
+    if WieldingWeapon('Melee', false, true, target).Result
+        and not WieldingWeapon('Versatile', false, true, target).Result
+        and not WieldingWeapon('Twohanded', false, true, target).Result
+        and not WieldingWeapon('Melee', true, true, target).Result then
+        return ConditionResult(true)
+    end
+
+    if WieldingWeapon('Versatile', false, true, target).Result
+        and WieldingWeapon('Melee', false, true, target).Result
+        and HasShieldEquipped(target).Result then
+        return ConditionResult(true)
+    end
+
+    return ConditionResult(false)
 end
 
 -- This is exact same as the vanilla DualWielder() khn function but putting this here for completeness
 function Goon_DualWielding_Check(target)
     target = target or context.Target
-    return WieldingWeapon('Melee', false, true, target) & WieldingWeapon('Melee', true, true, target)
+
+    if not WieldingWeapon('Melee', false, true, target).Result then return ConditionResult(false) end
+    return WieldingWeapon('Melee', true, true, target)
 end
 
 function Goon_GreatWeapon_Check(target)
     target = target or context.Target
-    local hasTwohandedWeapon = WieldingWeapon('Twohanded', false, true, target) & WieldingWeapon('Melee', false, true, target)
-    local hasVersatileWeapon = WieldingWeapon('Versatile', false, true, target) & ~WieldingWeapon('Melee', true, true, target) & ~HasShieldEquipped(target)
-    return hasTwohandedWeapon | hasVersatileWeapon
+
+    if WieldingWeapon('Twohanded', false, true, target).Result
+        and WieldingWeapon('Melee', false, true, target).Result then
+        return ConditionResult(true)
+    end
+
+    if WieldingWeapon('Versatile', false, true, target).Result
+        and not WieldingWeapon('Melee', true, true, target).Result
+        and not HasShieldEquipped(target).Result then
+        return ConditionResult(true)
+    end
+
+    return ConditionResult(false)
 end
 
 -- Use in conjunction with Goon_IsPolearm() check (which only checks the active weapon) to reasonably cover all polearm-wielding possibilities for NPCs at least
@@ -1980,31 +2216,34 @@ function Goon_IsShadowBladeWeapon(source, weapon)
 end
 
 -- ==================================== Weapon enchant checks - Cahoot's revision
+-- TODO: HasAnyStatus.
 
 function Goon_AttackingWithSpellcastingModifierWeapon(source)
     source = source or context.Source
-    return HasStatus('SHILLELAGH', GetAttackWeapon(source))
-         | HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(source))
-         | HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(source))
-         | HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(source))
-         | HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(source))
-         | HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(source))
-         | HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(source))
+
+    if HasStatus('SHILLELAGH', GetAttackWeapon(source)).Result                                  then return ConditionResult(true) end
+    if HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(source)).Result                       then return ConditionResult(true) end
+    if HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(source)).Result then return ConditionResult(true) end
+    if HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(source)).Result                then return ConditionResult(true) end
+    if HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(source)).Result             then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(source)).Result             then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -2018,9 +2257,11 @@ end
 
 function Goon_AttackingWithCharismaModifierWeapon(source)
     source = source or context.Source
-    return HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)) 
-         | HasStatus('PACT_BLADE', GetAttackWeapon(source)) 
-         | HasStatus('CAT_SCHOLAR_ARMAMENT', GetAttackWeapon(source))
+
+    if HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)).Result        then return ConditionResult(true) end
+    if HasStatus('PACT_BLADE', GetAttackWeapon(source)).Result           then return ConditionResult(true) end
+    if HasStatus('CAT_SCHOLAR_ARMAMENT', GetAttackWeapon(source)).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Weapon enchant checks - Trying something different
@@ -2055,9 +2296,11 @@ end
 
 function Goon_AttackingWithBoundWeapon(source)
     source = source or context.Source
-    return HasStatus('WEAPON_BOND', GetAttackWeapon(source))
-         | HasStatus('PACT_BLADE', GetAttackWeapon(source))
-         | HasStatus('HEXBLADE_BIND', GetAttackWeapon(source))
+
+    if HasStatus('WEAPON_BOND', GetAttackWeapon(source)).Result   then return ConditionResult(true) end
+    if HasStatus('PACT_BLADE', GetAttackWeapon(source)).Result    then return ConditionResult(true) end
+    if HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Weapon enchant checks - Vanilla Flame Blade
@@ -2066,35 +2309,48 @@ end
 
 function Goon_IsFlameBladeSpellAttack(source)
     source = source or context.Source
-    return Goon_IsFlameBladeSpellAttack_Mainhand(source) | Goon_IsFlameBladeSpellAttack_Offhand(source)
+
+    if Goon_IsFlameBladeSpellAttack_Mainhand(source).Result then return ConditionResult(true) end
+    if Goon_IsFlameBladeSpellAttack_Offhand(source).Result  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsFlameBladeSpellAttack_Mainhand(source)
     source = source or context.Source
-    return IsMeleeSpellAttack()
-         & (HasStatus('FLAME_BLADE', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(source, true))
-         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, true)))
+
+    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
+
+    local weapon = GetActiveWeapon(source, true)
+
+    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsFlameBladeSpellAttack_Offhand(source)
     source = source or context.Source
-    return IsMeleeSpellAttack()
-         & (HasStatus('FLAME_BLADE', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_3', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_4', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_5', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_6', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_7', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_8', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_9', GetActiveWeapon(source, false))
-         | HasStatus('FLAME_BLADE_MEPHISTOPHELES', GetActiveWeapon(source, false)))
+
+    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
+
+    local weapon = GetActiveWeapon(source, false)
+
+    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Weapon enchant checks - IsDexterityGreaterThanStrength()
@@ -2105,42 +2361,42 @@ function Goon_IsCastingModifierGreaterThanDexterity_IsDexterityGreaterThanStreng
     source = source or context.Source
     mainHandWeapon = mainHandWeapon or GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, source)
 
-    local IsConstitutionGreaterThanDexterity            = ConditionResult(false)
-    local IsSpellcastingModifierGreaterThanDexterity    = ConditionResult(false)
-    local IsIntelligenceGreaterThanDexterity            = ConditionResult(false)
-    local IsWisdomGreaterThanDexterity                  = ConditionResult(false)
-    local IsCharismaGreaterThanDexterity                = ConditionResult(false)
+    if Tagged('VESSEL', source).Result                         then return ConditionResult(false) end
+    if HasStatus('ASTRALSELF_EMPOWERED_WISDOM', source).Result then return ConditionResult(false) end
 
-    IsConstitutionGreaterThanDexterity = (HasPassive('LLBoulder_DextrousUnarmedAttacks', source) | Tagged('BOULDER', source))
+    if (HasPassive('LLBoulder_DextrousUnarmedAttacks', source).Result or Tagged('BOULDER', source).Result)
         -- & ConditionResult(source.Constitution >= source.Strength)
-        & ConditionResult(source.Constitution >= source.Dexterity)
+        and source.Constitution >= source.Dexterity then
+        return ConditionResult(false)
+    end
 
     if mainHandWeapon.IsValid then
-        IsSpellcastingModifierGreaterThanDexterity = Goon_IsSpellcastingModifierWeapon(source, mainHandWeapon)
+        if Goon_IsSpellcastingModifierWeapon(source, mainHandWeapon).Result
             -- & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Strength)
-            & ConditionResult(Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Dexterity)
+            and Goon_GetHighestAbilityValue({'Intelligence','Wisdom','Charisma'}, source) >= source.Dexterity then
+            return ConditionResult(false)
+        end
 
-        IsIntelligenceGreaterThanDexterity = Goon_IsIntelligenceModifierWeapon(source, mainHandWeapon)
+        if Goon_IsIntelligenceModifierWeapon(source, mainHandWeapon).Result
             -- & ConditionResult(source.Intelligence >= source.Strength)
-            & ConditionResult(source.Intelligence >= source.Dexterity)
+            and source.Intelligence >= source.Dexterity then
+            return ConditionResult(false)
+        end
 
-        IsWisdomGreaterThanDexterity = Goon_IsWisdomModifierWeapon(source, mainHandWeapon)
+        if Goon_IsWisdomModifierWeapon(source, mainHandWeapon).Result
             -- & ConditionResult(source.Wisdom >= source.Strength)
-            & ConditionResult(source.Wisdom >= source.Dexterity)
+            and source.Wisdom >= source.Dexterity then
+            return ConditionResult(false)
+        end
 
-        IsCharismaGreaterThanDexterity = Goon_IsCharismaModifierWeapon(source, mainHandWeapon)
+        if Goon_IsCharismaModifierWeapon(source, mainHandWeapon).Result
             -- & ConditionResult(source.Charisma >= source.Strength)
-            & ConditionResult(source.Charisma >= source.Dexterity)
+            and source.Charisma >= source.Dexterity then
+            return ConditionResult(false)
+        end
     end
 
     return IsDexterityGreaterThanStrength()
-        & ~Tagged('VESSEL', source)
-        & ~HasStatus('ASTRALSELF_EMPOWERED_WISDOM', source)
-        & ~IsConstitutionGreaterThanDexterity
-        & ~IsSpellcastingModifierGreaterThanDexterity
-        & ~IsIntelligenceGreaterThanDexterity
-        & ~IsWisdomGreaterThanDexterity
-        & ~IsCharismaGreaterThanDexterity
 end
 
 -- ==================================== Tag piles ====================================
@@ -2234,57 +2490,62 @@ end
 -- TODO: Disarm shields?
 function Goon_WieldingWeapon(target)
     target = target or context.Target
-    return WieldingWeapon('Melee', true, false, target)
-         | WieldingWeapon('Melee', false, false, target)
-         | WieldingWeapon('Ammunition', true, false, target)
-         | WieldingWeapon('Ammunition', false, false, target)
+
+    if WieldingWeapon('Melee', true, false, target).Result       then return ConditionResult(true) end
+    if WieldingWeapon('Melee', false, false, target).Result      then return ConditionResult(true) end
+    if WieldingWeapon('Ammunition', true, false, target).Result  then return ConditionResult(true) end
+    if WieldingWeapon('Ammunition', false, false, target).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- TODO: What context do I want?
 function Goon_IsWeapon()
-    return Goon_IsMeleeWeapon()
-         | Goon_IsRangedWeapon()
+    if Goon_IsMeleeWeapon().Result  then return ConditionResult(true) end
+    if Goon_IsRangedWeapon().Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- Just use HasWeaponProperty(WeaponProperties.Melee, context.HitDescription.ThrownObject) instead
 function Goon_IsMeleeWeapon()
-    return Tagged('WPN_BATTLEAXE')
-         | Tagged('WPN_CLUB')
-         | Tagged('WPN_DAGGER')
-         | Tagged('WPN_DART')
-         | Tagged('WPN_FLAIL')
-         | Tagged('WPN_GLAIVE')
-         | Tagged('WPN_GREATAXE')
-         | Tagged('WPN_GREATSWORD')
-         | Tagged('WPN_HALBERD')
-         | Tagged('WPN_HANDAXE')
-         | Tagged('WPN_JAVELIN')
-         | Tagged('WPN_LIGHT_HAMMER')
-         | Tagged('WPN_LONGSWORD')
-         | Tagged('WPN_MACE')
-         | Tagged('WPN_MAUL')
-         | Tagged('WPN_MORNINGSTAR')
-         | Tagged('WPN_PIKE')
-         | Tagged('WPN_STAVE')
-         | Tagged('WPN_RAPIER')
-         | Tagged('WPN_SCIMITAR')
-         | Tagged('WPN_SHORTSWORD')
-         | Tagged('WPN_SICKLE')
-         | Tagged('WPN_SPEAR')
-         | Tagged('WPN_TRIDENT')
-         | Tagged('WPN_WAR_PICK')
-         | Tagged('WPN_WARHAMMER')
+    if Tagged('WPN_BATTLEAXE').Result    then return ConditionResult(true) end
+    if Tagged('WPN_CLUB').Result         then return ConditionResult(true) end
+    if Tagged('WPN_DAGGER').Result       then return ConditionResult(true) end
+    if Tagged('WPN_DART').Result         then return ConditionResult(true) end
+    if Tagged('WPN_FLAIL').Result        then return ConditionResult(true) end
+    if Tagged('WPN_GLAIVE').Result       then return ConditionResult(true) end
+    if Tagged('WPN_GREATAXE').Result     then return ConditionResult(true) end
+    if Tagged('WPN_GREATSWORD').Result   then return ConditionResult(true) end
+    if Tagged('WPN_HALBERD').Result      then return ConditionResult(true) end
+    if Tagged('WPN_HANDAXE').Result      then return ConditionResult(true) end
+    if Tagged('WPN_JAVELIN').Result      then return ConditionResult(true) end
+    if Tagged('WPN_LIGHT_HAMMER').Result then return ConditionResult(true) end
+    if Tagged('WPN_LONGSWORD').Result    then return ConditionResult(true) end
+    if Tagged('WPN_MACE').Result         then return ConditionResult(true) end
+    if Tagged('WPN_MAUL').Result         then return ConditionResult(true) end
+    if Tagged('WPN_MORNINGSTAR').Result  then return ConditionResult(true) end
+    if Tagged('WPN_PIKE').Result         then return ConditionResult(true) end
+    if Tagged('WPN_STAVE').Result        then return ConditionResult(true) end
+    if Tagged('WPN_RAPIER').Result       then return ConditionResult(true) end
+    if Tagged('WPN_SCIMITAR').Result     then return ConditionResult(true) end
+    if Tagged('WPN_SHORTSWORD').Result   then return ConditionResult(true) end
+    if Tagged('WPN_SICKLE').Result       then return ConditionResult(true) end
+    if Tagged('WPN_SPEAR').Result        then return ConditionResult(true) end
+    if Tagged('WPN_TRIDENT').Result      then return ConditionResult(true) end
+    if Tagged('WPN_WAR_PICK').Result     then return ConditionResult(true) end
+    if Tagged('WPN_WARHAMMER').Result    then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- Just use HasWeaponProperty(WeaponProperties.Ammunition, context.HitDescription.ThrownObject) instead
 function Goon_IsRangedWeapon()
-    return Tagged('WPN_HAND_CROSSBOW')
-         | Tagged('WPN_HEAVY_CROSSBOW')
-         | Tagged('WPN_LIGHT_CROSSBOW')
-         | Tagged('WPN_LONGBOW')
-         | Tagged('WPN_SHORTBOW')
-         | Tagged('WPN_SLING')
-         | Tagged('FIREARM_MOD')
+    if Tagged('WPN_HAND_CROSSBOW').Result  then return ConditionResult(true) end
+    if Tagged('WPN_HEAVY_CROSSBOW').Result then return ConditionResult(true) end
+    if Tagged('WPN_LIGHT_CROSSBOW').Result then return ConditionResult(true) end
+    if Tagged('WPN_LONGBOW').Result        then return ConditionResult(true) end
+    if Tagged('WPN_SHORTBOW').Result       then return ConditionResult(true) end
+    if Tagged('WPN_SLING').Result          then return ConditionResult(true) end
+    if Tagged('FIREARM_MOD').Result        then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsThrownWeapon()
@@ -2306,33 +2567,37 @@ function Goon_IsMeleeNotThrownWeaponThrow(weapon)
 end
 
 function Goon_IsAxe()
-    return Tagged('WPN_BATTLEAXE')
-         | Tagged('WPN_GREATAXE')
-         | Tagged('WPN_HANDAXE')
+    if Tagged('WPN_BATTLEAXE').Result then return ConditionResult(true) end
+    if Tagged('WPN_GREATAXE').Result  then return ConditionResult(true) end
+    if Tagged('WPN_HANDAXE').Result   then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsPolearm()
-    return Tagged('WPN_GLAIVE')
-         | Tagged('WPN_HALBERD')
-         | Tagged('WPN_JAVELIN')
-         | Tagged('WPN_PIKE')
-         | Tagged('WPN_STAVE')
-         | Tagged('WPN_SPEAR')
-         | Tagged('WPN_TRIDENT')
+    if Tagged('WPN_GLAIVE').Result  then return ConditionResult(true) end
+    if Tagged('WPN_HALBERD').Result then return ConditionResult(true) end
+    if Tagged('WPN_JAVELIN').Result then return ConditionResult(true) end
+    if Tagged('WPN_PIKE').Result    then return ConditionResult(true) end
+    if Tagged('WPN_STAVE').Result   then return ConditionResult(true) end
+    if Tagged('WPN_SPEAR').Result   then return ConditionResult(true) end
+    if Tagged('WPN_TRIDENT').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsSword()
-    return Tagged('WPN_GREATSWORD')
-         | Tagged('WPN_LONGSWORD')
-         | Tagged('WPN_RAPIER')
-         | Tagged('WPN_SCIMITAR')
-         | Tagged('WPN_SHORTSWORD')
+    if Tagged('WPN_GREATSWORD').Result then return ConditionResult(true) end
+    if Tagged('WPN_LONGSWORD').Result  then return ConditionResult(true) end
+    if Tagged('WPN_RAPIER').Result     then return ConditionResult(true) end
+    if Tagged('WPN_SCIMITAR').Result   then return ConditionResult(true) end
+    if Tagged('WPN_SHORTSWORD').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsHammer()
-    return Tagged('WPN_LIGHT_HAMMER')
-         | Tagged('WPN_MAUL')
-         | Tagged('WPN_WARHAMMER')
+    if Tagged('WPN_LIGHT_HAMMER').Result then return ConditionResult(true) end
+    if Tagged('WPN_MAUL').Result         then return ConditionResult(true) end
+    if Tagged('WPN_WARHAMMER').Result    then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Magical unarmed ====================================
@@ -2343,35 +2608,43 @@ end
 
 function Goon_HasMagicalUnarmed(source)
     source = source or context.Source
-    return Goon_IsWildshapeDruidPolymorph(source) & HasPassive('PrimalStrike', source)
-         | HasPassive('KiEmpoweredStrikes', source)
-         | Goon_HasMagicalUnarmed_Expansion(source)
-         | Goon_HasMagicalUnarmed_BloodHunter(source)
-         | Goon_HasMagicalUnarmed_Veenab(source)
-         | HasPassive('InvestmentOfTheChainMaster_Familiar', source)
-         | HasPassive('SVZephyr_TapestryTatteringArms', source)
-         | HasPassive('Passive_Mystic_FlawlessTechnique', source)
-         | HasPassive('MightySummonMagicalUnarmed', source)
-         | HasAnyStatus({ 'DREADOVERLORD_NECROTICBLADE_UNARMED' }, {}, {}, source)
+
+    if Goon_IsWildshapeDruidPolymorph(source).Result and HasPassive('PrimalStrike', source).Result then return ConditionResult(true) end
+    if HasPassive('KiEmpoweredStrikes', source).Result                                             then return ConditionResult(true) end
+    if Goon_HasMagicalUnarmed_Expansion(source).Result                                             then return ConditionResult(true) end
+    if Goon_HasMagicalUnarmed_BloodHunter(source).Result                                           then return ConditionResult(true) end
+    if Goon_HasMagicalUnarmed_Veenab(source).Result                                                then return ConditionResult(true) end
+    if HasPassive('InvestmentOfTheChainMaster_Familiar', source).Result                            then return ConditionResult(true) end
+    if HasPassive('SVZephyr_TapestryTatteringArms', source).Result                                 then return ConditionResult(true) end
+    if HasPassive('Passive_Mystic_FlawlessTechnique', source).Result                               then return ConditionResult(true) end
+    if HasPassive('MightySummonMagicalUnarmed', source).Result                                     then return ConditionResult(true) end
+    if HasAnyStatus({ 'DREADOVERLORD_NECROTICBLADE_UNARMED' }, {}, {}, source).Result              then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_HasMagicalUnarmed_Expansion(source)
     source = source or context.Source
-    return HasPassive('ExceptionalTraining_EXP', source)
-         | HasAnyStatus({ 'ALTER_SELF_BLUDGEONING_WEAPON', 'ALTER_SELF_SLASHING_WEAPON', 'ALTER_SELF_PIERCING_WEAPON' }, {}, {}, source)
+
+    if HasPassive('ExceptionalTraining_EXP', source).Result                                                                                 then return ConditionResult(true) end
+    if HasAnyStatus({ 'ALTER_SELF_BLUDGEONING_WEAPON', 'ALTER_SELF_SLASHING_WEAPON', 'ALTER_SELF_PIERCING_WEAPON' }, {}, {}, source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_HasMagicalUnarmed_BloodHunter(source)
     source = source or context.Source
-    return HasPassive('ImprovedPredatoryStrikes', source)
-         | HasPassive('ImprovedPredatoryStrikes11', source)
+
+    if HasPassive('ImprovedPredatoryStrikes', source).Result   then return ConditionResult(true) end
+    if HasPassive('ImprovedPredatoryStrikes11', source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_HasMagicalUnarmed_Veenab(source)
     source = source or context.Source
-    return HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_1', source)
-         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_2', source)
-         | HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_3', source)
+
+    if HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_1', source).Result then return ConditionResult(true) end
+    if HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_2', source).Result then return ConditionResult(true) end
+    if HasPassive('VBT_ARM_UnarmedProwessWraps_MagicalStrikes_3', source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Condition errors ====================================
@@ -2399,22 +2672,42 @@ end
 
 function Goon_IsDruidWildshapeOrStatus(source)
     source = source or context.Source
-    return Goon_IsWildshapeDruidPolymorph(source) | Goon_IsMyrmidonDruidPolymorph(source) | Goon_IsHumanoidDruidPolymorph(source)
+
+    if Goon_IsWildshapeDruidPolymorph(source).Result then return ConditionResult(true) end
+    if Goon_IsMyrmidonDruidPolymorph(source).Result  then return ConditionResult(true) end
+    if Goon_IsHumanoidDruidPolymorph(source).Result  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsDruidWildshape(source)
     source = source or context.Source
-    return Goon_IsWildshapeDruidPolymorph(source) | Goon_IsMyrmidonDruidPolymorph(source)
+
+    if Goon_IsWildshapeDruidPolymorph(source).Result then return ConditionResult(true) end
+    if Goon_IsMyrmidonDruidPolymorph(source).Result  then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsRestrictedPolymorphStatus(source)
     source = source or context.Source
-    return Goon_IsWildshapeDruidPolymorph(source) | Goon_IsMyrmidonDruidPolymorph(source) | Tagged('SLAYER', source)
+
+    if Goon_IsWildshapeDruidPolymorph(source).Result then return ConditionResult(true) end
+    if Goon_IsMyrmidonDruidPolymorph(source).Result  then return ConditionResult(true) end
+    if Tagged('SLAYER', source).Result               then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsUnrestrictedPolymorphStatus(source)
     source = source or context.Source
-    return (Goon_IsHumanoidDruidPolymorph(source) | Goon_IsOtherPolymorph(source)) & (~Goon_IsRestrictedPolymorphStatus(source) & Goon_IsNonHostilePolymorphStatus(source))
+
+    if Goon_IsHumanoidDruidPolymorph(source).Result or Goon_IsOtherPolymorph(source).Result then
+        if not Goon_IsRestrictedPolymorphStatus(source).Result then
+            if Goon_IsNonHostilePolymorphStatus(source).Result then
+                return ConditionResult(true)
+            end
+        end
+    end
+
+    return ConditionResult(false)
 end
 
 -- TODO: How would I go about filtering sources of unwilling polymorphs for a custom ImmutableForm? Pseudo status group?
@@ -2432,7 +2725,12 @@ end
 
 function Goon_IsMyrmidonDruidPolymorph(source)
     source = source or context.Source
-    return Tagged('MYRMIDON_AIR', source) | Tagged('MYRMIDON_EARTH', source) | Tagged('MYRMIDON_FIRE', source) | Tagged('MYRMIDON_WATER', source)
+
+    if Tagged('MYRMIDON_AIR', source).Result   then return ConditionResult(true) end
+    if Tagged('MYRMIDON_EARTH', source).Result then return ConditionResult(true) end
+    if Tagged('MYRMIDON_FIRE', source).Result  then return ConditionResult(true) end
+    if Tagged('MYRMIDON_WATER', source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- TODO: 'SYMBIOTIC_ENTITY' doesn't really fit the bill, but I feel like it would be fitting for BG3.
@@ -2444,7 +2742,10 @@ end
 
 function Goon_IsOtherPolymorph(source)
     source = source or context.Source
-    return HasAnyStatus({ 'SG_Disguise', 'SG_Doppelganger', 'WYR_GORTASH_GORTANE' }, {}, {}, source) | Tagged('MINDFLAYER', source)
+
+    if HasAnyStatus({ 'SG_Disguise', 'SG_Doppelganger', 'WYR_GORTASH_GORTANE' }, {}, {}, source).Result then return ConditionResult(true) end
+    if Tagged('MINDFLAYER', source).Result                                                              then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Surface check stuff ====================================
@@ -2746,76 +3047,111 @@ end
 
 function Goon_IsInvisibleSeen(target)
     target = target or context.Target
-    return HasStatus('GOON_INVISIBLE_SEEN', target)
-         | HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', target)
-         | HasStatus('GOON_INVISIBILITY_SEEN', target)
-         | HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', target)
-         | HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', target)
-         | HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', target)
-         | HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', target)
-         | HasStatus('GOON_UMBRAL_CLOAK_SEEN', target)
-         | HasStatus('GOON_GREATER_INVISIBILITY_SEEN', target)
-         | HasStatus('GOON_SHADOWBLEND_SEEN', target)
-         | HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', target)
-         | HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', target)
-         | HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', target)
-         | HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', target)
-         | HasStatus('GOON_SHROUD_SELF_SEEN', target)
-         | HasStatus('GOON_SUPREME_SNEAK_SEEN', target)
-         | HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', target)
-         | HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', target)
-         | HasStatus('GOON_SHADOW_WALKER_SEEN', target)
-         | HasStatus('GOON_EMPTY_BODY_SEEN', target)
+
+    if HasStatus('GOON_INVISIBLE_SEEN', target).Result                          then return ConditionResult(true) end
+    if HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', target).Result                 then return ConditionResult(true) end
+    if HasStatus('GOON_INVISIBILITY_SEEN', target).Result                       then return ConditionResult(true) end
+    if HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', target).Result                   then return ConditionResult(true) end
+    if HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', target).Result             then return ConditionResult(true) end
+    if HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', target).Result                   then return ConditionResult(true) end
+    if HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', target).Result              then return ConditionResult(true) end
+    if HasStatus('GOON_UMBRAL_CLOAK_SEEN', target).Result                       then return ConditionResult(true) end
+    if HasStatus('GOON_GREATER_INVISIBILITY_SEEN', target).Result               then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOWBLEND_SEEN', target).Result                        then return ConditionResult(true) end
+    if HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', target).Result then return ConditionResult(true) end
+    if HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', target).Result                then return ConditionResult(true) end
+    if HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', target).Result             then return ConditionResult(true) end
+    if HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', target).Result               then return ConditionResult(true) end
+    if HasStatus('GOON_SHROUD_SELF_SEEN', target).Result                        then return ConditionResult(true) end
+    if HasStatus('GOON_SUPREME_SNEAK_SEEN', target).Result                      then return ConditionResult(true) end
+    if HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', target).Result               then return ConditionResult(true) end
+    if HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', target).Result          then return ConditionResult(true) end
+    if HasStatus('GOON_SHADOW_WALKER_SEEN', target).Result                      then return ConditionResult(true) end
+    if HasStatus('GOON_EMPTY_BODY_SEEN', target).Result                         then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== Draconic Bloodline Ancestries ====================================
 
 function Goon_DraconicAncestry_Acid(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Black', source)  | HasPassive('DraconicAncestry_Copper', source)
-         | HasPassive('DraconicAncestry_Nickel', source) | HasPassive('DraconicAncestry_Steel', source) | HasPassive('DraconicAncestry_Brown', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Black', source).Result  then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Copper', source).Result then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Nickel', source).Result then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Steel', source).Result  then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Brown', source).Result  then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Cold(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Silver', source)   | HasPassive('DraconicAncestry_White', source)
-         | HasPassive('DraconicAncestry_Chromium', source) | HasPassive('DraconicAncestry_Lunar', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Silver', source).Result   then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_White', source).Result    then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Chromium', source).Result then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Lunar', source).Result    then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Fire(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Red', source)    | HasPassive('DraconicAncestry_Gold', source) | HasPassive('DraconicAncestry_Brass', source)
-         | HasPassive('DraconicAncestry_Solar', source)  | HasPassive('DraconicAncestry_Iron', source) | HasPassive('DraconicAncestry_Purple', source) -- Draconic Bloodline Expanded
-         | HasPassive('DraconicAncestry_Orange', source) | HasPassive('DraconicAncestry_Prismatic', source)
+
+    if HasPassive('DraconicAncestry_Red', source).Result       then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Gold', source).Result      then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Brass', source).Result     then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Solar', source).Result     then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Iron', source).Result      then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Purple', source).Result    then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    if HasPassive('DraconicAncestry_Orange', source).Result    then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Prismatic', source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Lightning(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Blue', source) | HasPassive('DraconicAncestry_Bronze', source)
+
+    if HasPassive('DraconicAncestry_Blue', source).Result   then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Bronze', source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Poison(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Green', source) 
-         | HasPassive('DraconicAncestry_Dracolich', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Green', source).Result     then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Dracolich', source).Result then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 -- Custom
 function Goon_DraconicAncestry_Force(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Amethyst', source) | HasPassive('DraconicAncestry_Force', source) | HasPassive('DraconicAncestry_Cobalt', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Amethyst', source).Result then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Force', source).Result    then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Cobalt', source).Result   then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Radiant(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Crystal', source)   | HasPassive('DraconicAncestry_Hallow', source) -- Draconic Bloodline Expanded
-         | HasPassive('DraconicAncestry_Moonstone', source) | HasPassive('DraconicAncestry_Mercury', source)
-         | HasPassive('DraconicAncestry_Platinum', source) -- Platinum Draconic Bloodline for Sorcerers
+
+    if HasPassive('DraconicAncestry_Crystal', source).Result   then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Hallow', source).Result    then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    if HasPassive('DraconicAncestry_Moonstone', source).Result then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Mercury', source).Result   then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Platinum', source).Result  then return ConditionResult(true) end  -- Platinum Draconic Bloodline for Sorcerers
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Psychic(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Emerald', source) | HasPassive('DraconicAncestry_Deep', source) | HasPassive('DraconicAncestry_Pink', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Emerald', source).Result then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Deep', source).Result    then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Pink', source).Result    then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Thunder(source)
@@ -2825,12 +3161,18 @@ end
 
 function Goon_DraconicAncestry_Necrotic(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Topaz', source) | HasPassive('DraconicAncestry_Shadow', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Topaz', source).Result  then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Shadow', source).Result then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Bludgeoning(source)
     source = source or context.Source
-    return HasPassive('DraconicAncestry_Yellow', source) | HasPassive('DraconicAncestry_Tungsten', source) -- Draconic Bloodline Expanded
+
+    if HasPassive('DraconicAncestry_Yellow', source).Result   then return ConditionResult(true) end
+    if HasPassive('DraconicAncestry_Tungsten', source).Result then return ConditionResult(true) end  -- Draconic Bloodline Expanded
+    return ConditionResult(false)
 end
 
 function Goon_DraconicAncestry_Piercing(source)
@@ -2858,28 +3200,32 @@ end
 -- Spellcaster resource checks
 function Goon_HasPactMagic(source)
     source = source or context.Source
-    return HasActionResource('WarlockSpellSlot', 1, 1, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 2, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 3, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 4, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 5, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 6, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 7, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 8, false, false, source)
-         | HasActionResource('WarlockSpellSlot', 1, 9, false, false, source)
+
+    if HasActionResource('WarlockSpellSlot', 1, 1, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 2, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 3, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 4, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 5, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 6, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 7, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 8, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('WarlockSpellSlot', 1, 9, false, false, source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_HasSpellSlots(source)
     source = source or context.Source
-    return HasActionResource('SpellSlot', 1, 1, false, false, source)
-         | HasActionResource('SpellSlot', 1, 2, false, false, source)
-         | HasActionResource('SpellSlot', 1, 3, false, false, source)
-         | HasActionResource('SpellSlot', 1, 4, false, false, source)
-         | HasActionResource('SpellSlot', 1, 5, false, false, source)
-         | HasActionResource('SpellSlot', 1, 6, false, false, source)
-         | HasActionResource('SpellSlot', 1, 7, false, false, source)
-         | HasActionResource('SpellSlot', 1, 8, false, false, source)
-         | HasActionResource('SpellSlot', 1, 9, false, false, source)
+
+    if HasActionResource('SpellSlot', 1, 1, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 2, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 3, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 4, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 5, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 6, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 7, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 8, false, false, source).Result then return ConditionResult(true) end
+    if HasActionResource('SpellSlot', 1, 9, false, false, source).Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- Character tag checks
@@ -3443,85 +3789,93 @@ end
 
 -- Disguise Self check
 function Goon_IsDisguiseSelfSpell()
-    return IsSpellChildOrVariantFromContext('Shout_DisguiseSelf')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Male')  
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Githyanki_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Githyanki_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dwarf_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dwarf_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Halfling_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Halfling_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dragonborn_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dragonborn_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfOrc_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfOrc_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Gnome_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Gnome_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Strong_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Strong_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Strong_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Strong_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Strong_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Strong_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Strong_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Strong_Female')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Strong_Male')
-         | IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Strong_Female')
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf').Result                        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Male').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Female').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Male').Result              then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Female').Result            then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Male').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Female').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Githyanki_Male').Result         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Githyanki_Female').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dwarf_Male').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dwarf_Female').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Male').Result               then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Female').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Male').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Female').Result         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Halfling_Male').Result          then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Halfling_Female').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dragonborn_Male').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Dragonborn_Female').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfOrc_Male').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfOrc_Female').Result         then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Gnome_Male').Result             then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Gnome_Female').Result           then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Strong_Male').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Human_Strong_Female').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Strong_Male').Result       then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Drow_Strong_Female').Result     then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Strong_Male').Result        then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Elf_Strong_Female').Result      then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Strong_Male').Result    then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_HalfElf_Strong_Female').Result  then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Strong_Male').Result   then return ConditionResult(true) end
+    if IsSpellChildOrVariantFromContext('Shout_DisguiseSelf_Tiefling_Strong_Female').Result then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- Surface checks
 function Goon_IsInWaterSurface(target)
     target = target or context.Target
-    return InSurface('SurfaceBlood', target)
-         | InSurface('SurfaceBloodElectrified', target)
-         | InSurface('SurfaceBloodFrozen', target)
-         | InSurface('SurfaceWater', target)
-         | InSurface('SurfaceWaterElectrified', target)
-         | InSurface('SurfaceWaterFrozen', target)
-         | InSurface('SurfaceDeepWater', target)
-         | InSurface('SurfaceDeepWaterRunning', target)
-         | InSurface('Sewer', target)
+
+    if InSurface('SurfaceBlood', target).Result            then return ConditionResult(true) end
+    if InSurface('SurfaceBloodElectrified', target).Result then return ConditionResult(true) end
+    if InSurface('SurfaceBloodFrozen', target).Result      then return ConditionResult(true) end
+    if InSurface('SurfaceWater', target).Result            then return ConditionResult(true) end
+    if InSurface('SurfaceWaterElectrified', target).Result then return ConditionResult(true) end
+    if InSurface('SurfaceWaterFrozen', target).Result      then return ConditionResult(true) end
+    if InSurface('SurfaceDeepWater', target).Result        then return ConditionResult(true) end
+    if InSurface('SurfaceDeepWaterRunning', target).Result then return ConditionResult(true) end
+    if InSurface('Sewer', target).Result                   then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsInFreezableSurface(target)
     target = target or context.Target
-    return InSurface('SurfaceWater', target)
-         | InSurface('SurfaceWaterElectrified', target)
-         | InSurface('SurfaceBlood', target)
-         | InSurface('SurfaceAlcohol', target)
-         | InSurface('SurfaceAcid', target)
+
+    if InSurface('SurfaceWater', target).Result            then return ConditionResult(true) end
+    if InSurface('SurfaceWaterElectrified', target).Result then return ConditionResult(true) end
+    if InSurface('SurfaceBlood', target).Result            then return ConditionResult(true) end
+    if InSurface('SurfaceAlcohol', target).Result          then return ConditionResult(true) end
+    if InSurface('SurfaceAcid', target).Result             then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsInSlipperySurface(target)
     target = target or context.Target
-    return InSurface('SurfaceWaterFrozen', target)
-         | InSurface('SurfaceGreaseFrozen', target)
-         | InSurface('SurfaceBloodFrozen', target)
-         | InSurface('SurfaceGrease', target)
+
+    if InSurface('SurfaceWaterFrozen', target).Result  then return ConditionResult(true) end
+    if InSurface('SurfaceGreaseFrozen', target).Result then return ConditionResult(true) end
+    if InSurface('SurfaceBloodFrozen', target).Result  then return ConditionResult(true) end
+    if InSurface('SurfaceGrease', target).Result       then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 function Goon_IsInLiquidSurface(target)
     target = target or context.Target
-    return InSurface('SurfaceBlood', target)
-         | InSurface('SurfaceBloodElectrified', target)
-         | InSurface('SurfaceBloodFrozen', target)
-         | InSurface('SurfaceWater', target)
-         | InSurface('SurfaceWaterElectrified', target)
-         | InSurface('SurfaceWaterFrozen', target)
-         | InSurface('SurfaceDeepWater', target)
-         | InSurface('SurfaceDeepWaterRunning', target)
-         | InSurface('Sewer', target)
-         | InSurface('SurfaceAlcohol', target)
-         | InSurface('SurfaceOil', target)
+    if InSurface('SurfaceBlood', target).Result            then return ConditionResult(true) end
+    if InSurface('SurfaceBloodElectrified', target).Result then return ConditionResult(true) end
+    if InSurface('SurfaceBloodFrozen', target).Result      then return ConditionResult(true) end
+    if InSurface('SurfaceWater', target).Result            then return ConditionResult(true) end
+    if InSurface('SurfaceWaterElectrified', target).Result then return ConditionResult(true) end
+    if InSurface('SurfaceWaterFrozen', target).Result      then return ConditionResult(true) end
+    if InSurface('SurfaceDeepWater', target).Result        then return ConditionResult(true) end
+    if InSurface('SurfaceDeepWaterRunning', target).Result then return ConditionResult(true) end
+    if InSurface('Sewer', target).Result                   then return ConditionResult(true) end
+    if InSurface('SurfaceAlcohol', target).Result          then return ConditionResult(true) end
+    if InSurface('SurfaceOil', target).Result              then return ConditionResult(true) end
+    return ConditionResult(false)
 end
 
 -- ==================================== BIG BRAIN FUNCTIONS ====================================
