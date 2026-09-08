@@ -573,7 +573,7 @@ end
 -- Note: Rakish stuff is 5e RAW, not whatever vanilla was trying and failing to do.
 -- TODO: Custom HasAdvantage and HasDisadvantage functions with context in args.
 
-function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePosition, targetPosition, observerPosition)
+function Goon_SneakAttackInterruptConditions(allowTriggerOnMiss, allowTriggerOnSneakAttackSpell, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -583,9 +583,15 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
 
     if not Self(observer, source).Result                          then return ConditionResult(false) end
     if Tagged('INANIMATE', target).Result                         then return ConditionResult(false) end
-    if not IsHit().Result                                         then return ConditionResult(false) end
     if HasDamageEffectFlag(DamageFlags.AttackDisadvantage).Result then return ConditionResult(false) end
-    if Goon_IsSneakAttack().Result                                then return ConditionResult(false) end
+
+    if not allowTriggerOnMiss then
+        if not IsHit().Result then return ConditionResult(false) end
+    end
+
+    if not allowTriggerOnSneakAttackSpell then
+        if Goon_IsSneakAttack().Result then return ConditionResult(false) end
+    end
 
     if not Goon_BasicHarmfulInterruptConditions(false, false, true, source, target, observer, sourcePosition, targetPosition, observerPosition).Result then
         return ConditionResult(false)
@@ -618,8 +624,18 @@ function Goon_SneakAttackInterruptConditions(source, target, observer, sourcePos
         isAttackAllowedToSneakAttack = true
     end
 
-    if HasPassive('SneakAttack_LLRuffian', source).Result and (IsMainHandAttack().Result or IsMonkWeaponAttack().Result) then
-        isAttackAllowedToSneakAttack = true
+    if HasPassive('SneakAttack_LLRuffian', source).Result then
+        local attackWeapon = GetAttackWeapon(source)
+
+        if attackWeapon.IsValid then
+            if not HasWeaponProperty(WeaponProperties.Twohanded, attackWeapon).Result and IsProficientWith(source, attackWeapon).Result then
+                isAttackAllowedToSneakAttack = true
+            end
+        else
+            if IsUnarmedAttack().Result then
+                isAttackAllowedToSneakAttack = true
+            end
+        end
     end
 
     if not isAttackAllowedToSneakAttack then return ConditionResult(false) end
@@ -931,6 +947,45 @@ function Goon_InAttackRange(isRanged, offhand, swapContext, swapThirdParty, dist
     end
 
     return Goon_DistanceCheck(distance, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
+end
+
+function Goon_InUnarmedRange(swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
+    source = source or context.Source
+    target = target or context.Target
+    observer = observer or context.Observer
+    sourcePosition = sourcePosition or context.SourcePosition
+    targetPosition = targetPosition or context.TargetPosition
+    observerPosition = observerPosition or context.ObserverPosition
+
+    local isSwapped = swapContext
+    local isThirdParty = observer.IsValid and observer ~= source and observer ~= target
+    local isThirdPartyFallback = isThirdParty and swapThirdParty == nil and not target.IsValid
+
+    if isSwapped == nil and observer.IsValid and observer == target and observer ~= source then
+        isSwapped = Self(observer, target).Result
+    end
+
+    local source_ = source
+    local target_ = target
+    local sourcePosition_ = sourcePosition
+    local targetPosition_ = targetPosition
+
+    if isSwapped == true then
+        source_ = target
+        target_ = source
+        sourcePosition_ = targetPosition
+        targetPosition_ = sourcePosition
+    elseif swapThirdParty == true then
+        source_ = observer
+        target_ = source
+        sourcePosition_ = observerPosition
+        targetPosition_ = sourcePosition
+    elseif isThirdPartyFallback then
+        target_ = observer
+        targetPosition_ = observerPosition
+    end
+
+    return Goon_DistanceCheck(1.5, false, false, false, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
 end
 
 -- ==================================== STATUS GROUPINGS ETC. ====================================

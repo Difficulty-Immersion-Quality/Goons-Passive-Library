@@ -1,3 +1,4 @@
+// new treasuretable "DIQ_OBJ_Clothing_Container_TT"
 // ==================================== Container ====================================
 // using "Goon_Container_Cosmetic_Template"
 
