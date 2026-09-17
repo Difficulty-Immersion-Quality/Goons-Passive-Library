@@ -1,0 +1,219 @@
+-- ==================================== HELPERS ====================================
+-- Didn't really have a purpose by the end.
+
+function Goon_Helper_ContextSwap(swapContext, source, observer)
+    source = source or context.Source
+    observer = observer or context.Observer
+
+    if swapContext ~= nil then
+        return swapContext
+    end
+
+    return observer.IsValid and source.IsValid and Self(observer, source)
+end
+
+
+-- ==================================== AoO ====================================
+-- Goon_AttackOfOpportunityConditions now dynamically swaps based on context of truthy.
+
+function Goon_AttackOfOpportunityConditions_CriticalMiss()
+    return Goon_AttackOfOpportunityConditions()
+end
+
+-- ==================================== Range Checks ====================================
+-- Integrated with Goon_InAttackRange.
+
+function Goon_InMeleeAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
+    target = target or context.Target
+    source = source or context.Source
+    observer = observer or context.Observer
+
+    if observerIsSourcePosition == nil then
+        observerIsSourcePosition = false
+    end
+
+    local position = context.SourcePosition
+    if observerIsSourcePosition then
+        position = context.ObserverPosition
+    end
+
+    if range == nil then
+        local mainWeaponRange = 2
+        local reachWeaponRange = 3
+
+        range = mainWeaponRange
+        if offhand ~= nil then
+            local weapon = weapon
+            if offhand then
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, observer)
+            else
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, observer)
+            end
+            local hasReach = weapon.IsValid and HasWeaponProperty(WeaponProperties.Reach, weapon).Result
+            if hasReach then
+                range = reachWeaponRange
+            end
+        end
+    end
+
+    return ~DistanceToEntityGreaterThan(range, position, target)
+end
+
+-- ==================================== Range checks - Ranged
+
+function Goon_InRangedAttackRange(offhand, observerIsSourcePosition, target, source, observer, range)
+	target = target or context.Target
+	source = source or context.Source
+	observer = observer or context.Observer
+
+    if observerIsSourcePosition == nil then
+        observerIsSourcePosition = false
+    end
+
+    local position = context.SourcePosition
+    if observerIsSourcePosition then
+        position = context.ObserverPosition
+    end
+
+    if range == nil then
+        local mainWeaponRange = 18.5
+        local handCrossbowRange = 15.5
+
+        range = mainWeaponRange
+        if offhand ~= nil then
+            local weapon = weapon
+            if offhand then
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, observer)
+            else
+                weapon = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, observer)
+            end
+            local isHandCrossbow = weapon.IsValid and Tagged('WPN_HAND_CROSSBOW', weapon).Result
+            if isHandCrossbow then
+                range = handCrossbowRange
+            end
+        end
+    end
+
+    return ~DistanceToEntityGreaterThan(range, position, target)
+end
+
+-- ==================================== Blindness ====================================
+-- Goon_CanIgnoreBlindness now uses truthy for the distance check
+
+function Goon_CanIgnoreBlindness_Melee(source, sourcePosition, targetPosition)
+    source = source or context.Source
+    sourcePosition = context.SourcePosition
+    targetPosition = context.TargetPosition
+
+    return IsImmuneToStatus('SG_Blinded', source)
+         | HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
+         | HasPassive('FightingStyle_BlindFighting', source) & ~DistanceToGreaterThan(sourcePosition, targetPosition, 3)
+
+end
+
+function Goon_CanIgnoreBlindness_Ranged(source)
+    source = source or context.Source
+
+    return IsImmuneToStatus('SG_Blinded', source)
+         | HasPassive('Blindsense', source) & ~(HasPassive('Deafness', source) | HasStatus('SG_Deafened', source))
+end
+
+-- ==================================== Weapon tag piles ====================================
+
+function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
+    source = source or context.Source
+
+    local slot = slot
+    if isRanged then
+        if isOffhand then
+            slot = EquipmentSlot.RangedOffHand
+        else
+            slot = EquipmentSlot.RangedMainHand
+        end
+    else
+        if isOffhand then
+            slot = EquipmentSlot.MeleeOffHand
+        else
+            slot = EquipmentSlot.MeleeMainHand
+        end
+    end
+
+    local weapon = GetItemInEquipmentSlot(slot, source)
+    local property = WeaponProperties.Melee
+    if isRanged then
+        property = WeaponProperties.Ammunition
+    end
+
+    return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
+end
+
+-- ==================================== Junk ====================================
+-- Trying to check the source of a passive for use in boost conditions.
+-- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
+-- TODO: GetActiveWeapon?
+
+-- function Goon_IsPassiveSourceWeapon()
+--     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
+
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
+
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if MeleeMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if MeleeOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedMainHand()
+--     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
+
+--     if RangedMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedOffHand()
+--     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+
+--     if RangedOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end

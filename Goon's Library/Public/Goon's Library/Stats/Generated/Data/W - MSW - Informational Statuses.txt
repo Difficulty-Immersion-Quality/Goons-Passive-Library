@@ -1,0 +1,8 @@
+// ==================================== Bloodied ====================================
+
+// TODO: Fill out with more details
+new entry "GOON_BLOODIED"
+type "StatusData"
+data "StatusType" "BOOST"
+data "Icon" "PassiveFeature_Generic_Blood"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"

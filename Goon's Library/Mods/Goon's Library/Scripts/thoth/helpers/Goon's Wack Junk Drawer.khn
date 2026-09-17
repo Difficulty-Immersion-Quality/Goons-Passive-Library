@@ -1,0 +1,288 @@
+-- ==================================== Individual weapon-type slot checks ====================================
+-- function Goon_HasBattleaxeInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Battleaxes', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasClubInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Clubs', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasDaggerInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Daggers', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasDartInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Darts', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasFlailInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Flails', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasGreataxeInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Greataxes', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasGreatclubInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Greatclubs', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasGreatswordInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Greatswords', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasGlaiveInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Glaives', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasHalberdInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Halberds', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasHandaxeInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Handaxes', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasHandCrossbowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('HandCrossbows', true, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasHeavyCrossbowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('HeavyCrossbows', true, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasJavelinInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Javelins', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasLightCrossbowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('LightCrossbows', true, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasLightHammerInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('LightHammers', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasLongbowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Longbows', true, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasLongswordInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Longswords', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasMaceInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Maces', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasMaulInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Mauls', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasMorningstarInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Morningstars', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasPikeInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Pikes', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasQuarterstaffInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Quarterstaffs', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasRapierInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Rapiers', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasScimitarInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Scimitars', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasShortbowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Shortbows', true, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasShortswordInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Shortswords', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasSlingInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Slings', true, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasSickleInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Sickles', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasSpearInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Spears', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasTridentInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Tridents', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasWarPickInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('WarPicks', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasWarhammerInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasWeaponEquipped('Warhammers', false, isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasShieldInSlot(isOffhand, source)
+--     return Goon_HasWeaponEquipped('Shields', false, isOffhand, false, source)
+-- end
+
+-- -- Weapon-family slot checks
+-- function Goon_HasAxeInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasBattleaxeInSlot(isOffhand, allowShields, source)
+--          | Goon_HasGreataxeInSlot(isOffhand, allowShields, source)
+--          | Goon_HasHandaxeInSlot(isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasPolearmInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasGlaiveInSlot(isOffhand, allowShields, source)
+--          | Goon_HasHalberdInSlot(isOffhand, allowShields, source)
+--          | Goon_HasJavelinInSlot(isOffhand, allowShields, source)
+--          | Goon_HasPikeInSlot(isOffhand, allowShields, source)
+--          | Goon_HasQuarterstaffInSlot(isOffhand, allowShields, source)
+--          | Goon_HasSpearInSlot(isOffhand, allowShields, source)
+--          | Goon_HasTridentInSlot(isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasSwordInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasGreatswordInSlot(isOffhand, allowShields, source)
+--          | Goon_HasLongswordInSlot(isOffhand, allowShields, source)
+--          | Goon_HasRapierInSlot(isOffhand, allowShields, source)
+--          | Goon_HasScimitarInSlot(isOffhand, allowShields, source)
+--          | Goon_HasShortswordInSlot(isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasHammerInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasLightHammerInSlot(isOffhand, allowShields, source)
+--          | Goon_HasMaulInSlot(isOffhand, allowShields, source)
+--          | Goon_HasWarhammerInSlot(isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasCrossbowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasHandCrossbowInSlot(isOffhand, allowShields, source)
+--          | Goon_HasHeavyCrossbowInSlot(isOffhand, allowShields, source)
+--          | Goon_HasLightCrossbowInSlot(isOffhand, allowShields, source)
+-- end
+
+-- function Goon_HasBowInSlot(isOffhand, allowShields, source)
+--     source = source or context.Source
+--     return Goon_HasLongbowInSlot(isOffhand, allowShields, source)
+--          | Goon_HasShortbowInSlot(isOffhand, allowShields, source)
+-- end
+
+-- ==================================== Junk ====================================
+-- Trying to check the source of a passive for use in boost conditions.
+-- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
+-- TODO: GetActiveWeapon?
+
+-- function Goon_IsPassiveSourceWeapon()
+--     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
+
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if not IsValid(weapon) then
+--         return ConditionResult(false)
+--     end
+
+--     return IsPassiveSource(context.Passive, weapon, context.Source)
+--          | IsPassiveSource(context.Passive, weapon, weapon)
+--          | IsPassiveOwner(context.Passive, weapon, context.Source)
+--          | IsPassiveOwner(context.Passive, weapon, weapon)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
+--     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+
+--     if MeleeMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
+--     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+
+--     if MeleeOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedMainHand()
+--     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
+
+--     if RangedMainHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end
+
+-- function Goon_IsPassiveSourceWeapon_RangedOffHand()
+--     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
+
+--     if RangedOffHand.IsValid then
+--         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
+--     end
+--     return ConditionResult(false)
+-- end

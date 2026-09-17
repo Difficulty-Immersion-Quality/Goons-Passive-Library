@@ -1,0 +1,39 @@
+// ==================================== FX ====================================
+// Intended to be applied for a short duration, as an alternative to having packaged VFX on for the whole duration of mechanical effects.
+// For sweeping modifications of this sort, Toggle FX - MCM from wtfbengt should be used instead.
+
+// new entry "GUIDANCE"
+new entry "GOON_FX_GUIDANCE"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog"
+data "SoundLoop" "Spell_Status_Guidance_MO"
+data "SoundStop" "Spell_Status_Guidance_MO_Stop"
+data "ManagedStatusEffectType" "Positive"
+data "ManagedStatusEffectGroup" "6435c10a-c67d-4f79-8813-b84b0762f92b"
+
+// "RESISTANCE"
+new entry "GOON_FX_RESISTANCE"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog"
+data "StatusEffect" "95231805-3d66-4061-9cf6-8cbbc48d6732"
+data "ManagedStatusEffectType" "Positive"
+data "ManagedStatusEffectGroup" "6435c10a-c67d-4f79-8813-b84b0762f92b"
+
+// "LONGSTRIDER"
+new entry "GOON_FX_LONGSTRIDER"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog"
+data "SoundLoop" "Spell_Status_Longstrider_MO"
+data "SoundStop" "Spell_Status_Longstrider_MO_Stop"
+data "StatusEffect" "e14337a2-55b0-495a-8294-02f7de8d0209"
+
+// Bug: Pretty sure this effect is broke
+// "FREEDOM_OF_MOVEMENT"
+new entry "GOON_FX_FREEDOM_OF_MOVEMENT"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableCombatlog"
+data "StatusEffect" "ac4aaa41-0e86-4bb9-b8b7-34cb619ea86c"
