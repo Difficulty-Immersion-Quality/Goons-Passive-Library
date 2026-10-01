@@ -1401,6 +1401,7 @@ end
 function Goon_HasUniqueSneakAttack(source)
     source = source or context.Source
     if HasPassive('RakishAudacity', source).Result        then return ConditionResult(true) end
+    if HasPassive('SneakAttackSwitch', source).Result     then return ConditionResult(true) end
     if HasPassive('SneakAttack_LLRuffian', source).Result then return ConditionResult(true) end
     return ConditionResult(false)
 end
@@ -3096,34 +3097,106 @@ function Goon_CanSeeSneaking(source, target)
     return ConditionResult(false)
 end
 
--- ==================================== 
+-- ==================================== Invisibility conditions
 -- TODO: Check Expansion and stuff for more reveal/seen shit.
 -- Add found shit to Condition and Surface Overhaul as needed.
 
-function Goon_IsInvisibleSeen(target)
+function Goon_IsInvisibleSeen(checkReveal, target)
     target = target or context.Target
 
-    if HasStatus('GOON_INVISIBLE_SEEN', target).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', target).Result                 then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBILITY_SEEN', target).Result                       then return ConditionResult(true) end
-    if HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', target).Result                   then return ConditionResult(true) end
-    if HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', target).Result             then return ConditionResult(true) end
-    if HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', target).Result                   then return ConditionResult(true) end
-    if HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', target).Result              then return ConditionResult(true) end
-    if HasStatus('GOON_UMBRAL_CLOAK_SEEN', target).Result                       then return ConditionResult(true) end
-    if HasStatus('GOON_GREATER_INVISIBILITY_SEEN', target).Result               then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOWBLEND_SEEN', target).Result                        then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', target).Result then return ConditionResult(true) end
-    if HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', target).Result                then return ConditionResult(true) end
-    if HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', target).Result             then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', target).Result               then return ConditionResult(true) end
-    if HasStatus('GOON_SHROUD_SELF_SEEN', target).Result                        then return ConditionResult(true) end
-    if HasStatus('GOON_SUPREME_SNEAK_SEEN', target).Result                      then return ConditionResult(true) end
-    if HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', target).Result               then return ConditionResult(true) end
-    if HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', target).Result          then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_WALKER_SEEN', target).Result                      then return ConditionResult(true) end
-    if HasStatus('GOON_EMPTY_BODY_SEEN', target).Result                         then return ConditionResult(true) end
+    if checkReveal and HasStatus('SEE_INVISIBILITY_REVEAL', target).Result then
+        return ConditionResult(false)
+    end
+
+    local statuses = { 'GOON_INVISIBLE_SEEN',
+                       'GOON_INVISIBLE_MAGEHAND_SEEN',
+                       'GOON_INVISIBILITY_SEEN',
+                       'GOON_ONE_WITH_SHADOWS_SEEN',
+                       'GOON_POTION_OF_INVISIBILITY_SEEN',
+                       'GOON_CLOAK_OF_SHADOWS_SEEN',
+                       'GOON_CLOAK_OF_SHADOWS_MONK_SEEN',
+                       'GOON_UMBRAL_CLOAK_SEEN',
+                       'GOON_GREATER_INVISIBILITY_SEEN',
+                       'GOON_SHADOWBLEND_SEEN',
+                       'GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN',
+                       'GOON_HIDE_IN_PLAIN_SIGHT_SEEN',
+                       'GOON_MISTY_ESCAPE_INVISIBLE_SEEN',
+                       'GOON_INVISIBILITY_PANTHER_SEEN',
+                       'GOON_SHROUD_SELF_SEEN',
+                       'GOON_SUPREME_SNEAK_SEEN',
+                       'GOON_MAG_INVISIBLE_WEAPON_SEEN',
+                       'GOON_LOW_POLTERGEIST_INVISIBLE_SEEN',
+                       'GOON_EMPTY_BODY_SEEN' }
+
+    return HasAnyStatus(statuses, {}, {}, target)
+end
+
+-- ==================================== Removal/reveal functions
+
+function Goon_CanObserverRevealTarget(revealPolymorphs, requiresFacing, source, target, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    targetPosition = targetPosition or context.TargetPosition
+
+    if Ally(target, source).Result                                                                 then return ConditionResult(false) end
+    if HasAnyStatus({ 'SG_Unconscious', 'SG_Incapacitated', 'SG_Blinded' }, {}, {}, source).Result then return ConditionResult(false) end
+    if not IsInSightPyramid(source, targetPosition).Result                                         then return ConditionResult(false) end
+
+    if requiresFacing and not FacingMe(source, target).Result                                      then return ConditionResult(false) end
+
+    if revealPolymorphs then
+        return HasStatus('SG_Polymorph', target)
+    end
+
+    return HasStatus('SG_Invisible', target)
+end
+
+function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, target)
+    target = target or context.Target
+
+    if IsStatusEvent(StatusEvent.OnAttack).Result or IsStatusEvent(StatusEvent.OnSpellCast).Result then
+        if strictRules then
+            return ConditionResult(true)
+        end
+        if HasSpellFlag(SpellFlags.Invisible).Result or HasSpellFlag(SpellFlags.Stealth).Result then
+            return ConditionResult(false)
+        end
+        return ConditionResult(true)
+    end
+
+    if strictRules and (IsStatusEvent(StatusEvent.OnEntityPickUp).Result
+                     or IsStatusEvent(StatusEvent.OnEntityDrop).Result
+                     or IsStatusEvent(StatusEvent.OnEntityDrag).Result
+                     or IsStatusEvent(StatusEvent.OnMove).Result) then
+        return ConditionResult(true)
+    end
+
+    if obscurityRules and IsStatusEvent(StatusEvent.OnObscurityChanged).Result then
+        return HasObscuredState(ObscuredState.Clear, context.Source)
+    end
+
     return ConditionResult(false)
+end
+
+function Goon_InvisibilityOnRemoveFunctors(checkReveal, requiresConcentration, source, target)
+    source = source or context.Source
+    target = target or context.Target
+
+    if not RemoveCause(StatusRemoveCause.External).Result then
+        return ConditionResult(false)
+    end
+
+    if requiresConcentration and not IsConcentrating(source).Result then
+        return ConditionResult(false)
+    end
+
+    local revealStatuses = { 'SEE_INVISIBILITY_REVEAL', 'GOON_GREATER_INVISIBILITY_REVEAL' }
+
+    if checkReveal then
+        return HasAnyStatus(revealStatuses, {}, {}, target)
+    end
+
+    return ~HasAnyStatus(revealStatuses, {}, {}, target)
 end
 
 -- ==================================== Draconic Bloodline Ancestries ====================================

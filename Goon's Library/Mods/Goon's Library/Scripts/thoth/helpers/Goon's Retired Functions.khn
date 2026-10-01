@@ -147,6 +147,22 @@ function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
     return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
 end
 
+-- ==================================== Greater Invisibility functions
+
+function Goon_GreaterInvisibilityTechnicalRevealConditions(source)
+    source = source or context.Source
+
+    if context.HasContextFlag(StatsFunctorContext.OnCast).Result and not HasSpellFlag(SpellFlags.Invisible).Result then
+        return ConditionResult(true)
+    end
+
+    if context.HasContextFlag(StatsFunctorContext.OnAttack).Result and not HasSpellFlag(SpellFlags.Stealth).Result then
+        return ConditionResult(true)
+    end
+
+    return ConditionResult(false)
+end
+
 -- ==================================== Junk ====================================
 -- Trying to check the source of a passive for use in boost conditions.
 -- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.

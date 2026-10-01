@@ -574,6 +574,19 @@
 	<!-- "af675b0e-50b9-4451-b006-29bded4a4280" --> 
 	<content contentuid="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1">&lt;LSTag Type="Image" Info="TutorialRedWarning"/&gt; Does not function while under the effects of &lt;LSTag Type="Status" Tooltip="POLYMORPH_SHEEP"&gt;Polymorphs&lt;/LSTag&gt;, including &lt;LSTag Type="Spell" Tooltip="Shout_WildShape"&gt;Wild Shape&lt;/LSTag&gt;.</content>
 
+	<!-- ==================================== Tooltippermanentwarning - Invisbility conditions -->
+
+	<!-- "3541c8b9-688f-459d-842f-5d7760b89424" -->
+	<content contentuid="h930aa3f4g8bb3g42cfga734g47d3180582f7" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity attacks or casts a spell.</content>
+    <!-- "e8a02313-10cb-41b1-904d-0818f5eb1979" -->
+	<content contentuid="h2c3aecbagfe1fg40c3gbc45g5e7621d9b98d" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity takes an action, takes damage, or moves.</content>
+    <!-- "4a842ac9-b6c5-4241-8923-d526265b89fe" -->
+	<content contentuid="hb01b0fc6gff49g4183gb294g8594157ea640" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity attacks, casts a spell, or is no longer obscured.</content>
+    <!-- "16a8ec13-3d5d-454f-92f0-5d9f3c348d07" -->
+	<content contentuid="he4f45f54ge8cdg4758gb6b3ga5236d0a476c" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity takes an action, takes damage, moves, or is no longer obscured.</content>
+    <!-- "f7728ebc-eb2d-427e-afbf-8d55c9676965" -->
+	<content contentuid="hffa917efgb8d3g420dga65eg2db7957ada9d" version="1">&lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition can only be removed through magical means.</content>
+
 <!-- ==================================== Error descriptions ==================================== -->
 
 <!-- ==================================== Error descriptions - Distance -->
