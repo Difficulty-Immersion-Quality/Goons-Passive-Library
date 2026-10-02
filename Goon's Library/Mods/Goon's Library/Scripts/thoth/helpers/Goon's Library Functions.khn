@@ -33,7 +33,7 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
     source = source or context.Source
     NumberOfEnemy = NumberOfEnemy or 1
     -- distance = distance or 1.5
-    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, nil, nil, source, target))
+    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, nil, nil, false, source, target))
 
     -- local errorTrue = {ConditionError("HasAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
     local errorTrue = {ConditionError("Goon_HasEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
@@ -748,9 +748,8 @@ end
 
 -- DistanceToEntityHitBounds = 🐐📏✨
 
--- TODO: Elevation offset can kinda fuck with the tight values, but I don't know where to begin with that shit...
 -- Note: Can be made less expensive by handing down values from outer functions instead of redoing math.
-function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCentre, precomputedTargetCentreToSourceEdge, source, target, observer, sourcePosition, targetPosition, observerPosition)
+function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCentre, precomputedTargetCentreToSourceEdge, check3DDistance, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -793,7 +792,20 @@ function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCe
     local centreToCentre = precomputedCentreToCentre or Distance(sourcePosition_, targetPosition_)
     local targetCentreToSourceEdge = precomputedTargetCentreToSourceEdge or DistanceToEntityHitBounds(targetPosition_, source_)
 
-    return centreToCentre - targetCentreToSourceEdge
+    if check3DDistance then
+        return centreToCentre - targetCentreToSourceEdge
+    end
+
+    -- DistanceToEntityHitBounds is 3d but Distance should be 2d, like spells.
+    local distanceX = targetPosition_.X - sourcePosition_.X
+    local distanceZ = targetPosition_.Z - sourcePosition_.Z
+    local elevationPadding = centreToCentre - ((distanceX * distanceX + distanceZ * distanceZ) ^ 0.5)
+
+    if elevationPadding < 0 then
+        elevationPadding = 0
+    end
+
+    return (centreToCentre - targetCentreToSourceEdge) + elevationPadding
 end
 
 function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
@@ -837,7 +849,7 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
     local paddedValue = value
 
     if disableHitBoxPadding ~= true then
-        paddedValue = value + Goon_GetSourceHitBox(false, false, centreToCentre, nil, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
+        paddedValue = value + Goon_GetSourceHitBox(false, false, centreToCentre, nil, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
     end
 
     local result = result
