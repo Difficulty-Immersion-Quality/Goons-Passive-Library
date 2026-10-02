@@ -30,16 +30,11 @@
 
 local RESET_STATUS = "GOON_ONCEPERACTION_CASTER_TECHNICAL"
 
-local function ResetOncePerActionCooldown(spellCast)
+Ext.Entity.OnCreateDeferred("SpellCastFinishedEvent", function(spellCast)
 	local casterUuid = Ext.Entity.HandleToUuid(spellCast.SpellCastState.Caster)
-    ---@cast casterUuid string
+	---@cast casterUuid string
 	Osi.ApplyStatus(casterUuid, RESET_STATUS, 0, 1)
-end
-
-Ext.Entity.OnCreateDeferred(
-	"SpellCastFinishedEvent",
-	ResetOncePerActionCooldown
-)
+end)
 
 -- In case the one above doesn't work, comment the block out an try this one below
 --[[
