@@ -32,11 +32,11 @@ local lastCaster = nil
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
     local previousCaster = lastCaster
-    local castTime = Ext.Utils.MonotonicTime()
+    local castTime = Ext.Timer.MonotonicTime()
     -- print("[OncePerAction] cast:", caster:sub(-36), "| previous:", tostring(previousCaster))
     if previousCaster then
         Ext.Timer.WaitFor(200, function()
-            -- print("[OncePerAction]", Ext.Utils.MonotonicTime(), "apply to:", previousCaster, "| scheduled:", castTime)
+            -- print("[OncePerAction]", Ext.Timer.MonotonicTime(), "apply to:", previousCaster, "| scheduled:", castTime)
             Osi.ApplyStatus(previousCaster, "GOON_ONCEPERACTION_CASTER_TECHNICAL", 0, 1)
         end)
     end
