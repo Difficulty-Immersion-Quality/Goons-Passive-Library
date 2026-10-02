@@ -28,6 +28,30 @@
 -- ==================================== Once per action cooldown stuff ====================================
 -- Credit to Nzx for making this cleaner than I would have by a mile.
 
+local RESET_STATUS = "GOON_ONCEPERACTION_CASTER_TECHNICAL"
+
+local function ResetOncePerActionCooldown(spellCast)
+	local casterUuid = Ext.Entity.HandleToUuid(spellCast.SpellCastState.Caster)
+    ---@cast casterUuid string
+	Osi.ApplyStatus(casterUuid, RESET_STATUS, 0, 1)
+end
+
+Ext.Entity.OnCreateDeferred(
+	"SpellCastFinishedEvent",
+	ResetOncePerActionCooldown
+)
+
+-- In case the one above doesn't work, comment the block out an try this one below
+--[[
+local function ResetCaster(caster)
+	Osi.ApplyStatus(caster, RESET_STATUS, 0, 1)
+end
+
+Ext.Osiris.RegisterListener("CastedSpell", 5, "after", ResetCaster)
+Ext.Osiris.RegisterListener("CastSpellFailed", 5, "after", ResetCaster)
+]]
+
+--[[
 local lastCaster = nil
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
@@ -42,6 +66,7 @@ Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
     end
     lastCaster = caster:sub(-36)
 end)
+]]
 
 -- ==================================== Oldge
 
