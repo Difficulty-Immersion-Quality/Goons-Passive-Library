@@ -28,20 +28,40 @@
 -- ==================================== Once per action cooldown stuff ====================================
 -- Credit to Nzx for making this cleaner than I would have by a mile.
 
+local RESET_STATUS = "GOON_ONCEPERACTION_CASTER_TECHNICAL"
+
+Ext.Entity.OnCreateDeferred("SpellCastFinishedEvent", function(spellCast)
+	local casterUuid = Ext.Entity.HandleToUuid(spellCast.SpellCastState.Caster)
+	---@cast casterUuid string
+	Osi.ApplyStatus(casterUuid, RESET_STATUS, 0, 1)
+end)
+
+-- In case the one above doesn't work, comment the block out an try this one below
+--[[
+local function ResetCaster(caster)
+	Osi.ApplyStatus(caster, RESET_STATUS, 0, 1)
+end
+
+Ext.Osiris.RegisterListener("CastedSpell", 5, "after", ResetCaster)
+Ext.Osiris.RegisterListener("CastSpellFailed", 5, "after", ResetCaster)
+]]
+
+--[[
 local lastCaster = nil
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
     local previousCaster = lastCaster
-    local castTime = Ext.Utils.MonotonicTime()
+    local castTime = Ext.Timer.MonotonicTime()
     -- print("[OncePerAction] cast:", caster:sub(-36), "| previous:", tostring(previousCaster))
     if previousCaster then
         Ext.Timer.WaitFor(200, function()
-            -- print("[OncePerAction]", Ext.Utils.MonotonicTime(), "apply to:", previousCaster, "| scheduled:", castTime)
+            -- print("[OncePerAction]", Ext.Timer.MonotonicTime(), "apply to:", previousCaster, "| scheduled:", castTime)
             Osi.ApplyStatus(previousCaster, "GOON_ONCEPERACTION_CASTER_TECHNICAL", 0, 1)
         end)
     end
     lastCaster = caster:sub(-36)
 end)
+]]
 
 -- ==================================== Oldge
 

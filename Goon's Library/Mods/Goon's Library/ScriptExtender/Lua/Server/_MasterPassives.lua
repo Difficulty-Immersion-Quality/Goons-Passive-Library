@@ -1,62 +1,111 @@
-local function ApplyMasterPassives(entityID)
-    if type(entityID) ~= "string" then return end
-    local modVars = Ext.Vars.GetModVariables(ModuleUUID)
-    modVars.HasGoonLibraryPassives = modVars.HasGoonLibraryPassives or {}
-    local assigned = modVars.HasGoonLibraryPassives
-    assigned[entityID] = assigned[entityID] or {}
+local MASTER_PASSIVES = {
+	"Goon_Finesse_Throwing_Master_Passive",
+	"Goon_DamageReroll_Throwing_Master_Passive",
+	"Goon_Advantage_Throwing_Master_Passive",
+	"Goon_IgnoreResistance_Throwing_Master_Passive",
+	"Goon_Remove_Shillelagh_Passive",
+	-- "Goon_Disenchant_Master_Passive"
+	-- TODO: Replace Shillelagh stuff with universal implementation
+}
 
-    local MasterPassives = {
-        "Goon_Finesse_Throwing_Master_Passive",
-        "Goon_DamageReroll_Throwing_Master_Passive",
-        "Goon_Advantage_Throwing_Master_Passive",
-        "Goon_IgnoreResistance_Throwing_Master_Passive",
-        "Goon_Remove_Shillelagh_Passive"
-        -- "Goon_Disenchant_Master_Passive"
-        -- TODO: Replace Shillelagh stuff with universal implementation
-    }
-
-    -- lookup table for cleanup
-    local MasterLookup = {}
-    for _, p in ipairs(MasterPassives) do MasterLookup[p] = true end
-
-    -- STEP 1: Remove passives no longer in MasterPassives, but still exist in the game
-    for savedPassive, _ in pairs(assigned[entityID]) do
-        if not MasterLookup[savedPassive] then
-            if Osi.HasPassive(entityID, savedPassive) == 1 then
-                Osi.RemovePassive(entityID, savedPassive)
-                -- print(string.format("[Goon's Library] Removed outdated passive %s from %s", savedPassive, entityID))
-            end
-            assigned[entityID][savedPassive] = nil
-        end
-    end
-
-    -- STEP 2 — Validate and add passives
-    for _, passive in ipairs(MasterPassives) do
-        local stat = Ext.Stats.Get(passive, nil, false)
-        if stat ~= nil then -- inverted; else branch was only a commented-out warning
-            if not assigned[entityID][passive] then
-                if Osi.HasPassive(entityID, passive) == 0 then
-                    Osi.AddPassive(entityID, passive)
-                    -- print(string.format("[Goon's Library] Added new passive %s to %s", passive, entityID))
-                end
-                assigned[entityID][passive] = true
-            end
-        end
-    end
+local MASTER_LOOKUP = {}
+for _, passive in ipairs(MASTER_PASSIVES) do
+	MASTER_LOOKUP[passive] = true
 end
 
--- LevelGameplayStarted listener - Apply to all party members and ServerCharacters (NPCs)
-Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function(_, _) -- level param was never used inside the function
-    for _, row in ipairs(Osi.DB_PartyMembers:Get(nil) or {}) do
-        ApplyMasterPassives(row[1])
-    end
+local availableMasterPassives
+local legacyEntriesMigrated = false
 
-    for _, entity in ipairs(Ext.Entity.GetAllEntitiesWithComponent("ServerCharacter") or {}) do
-        ApplyMasterPassives(entity.Uuid.EntityUuid) -- Uuid always present on ServerCharacter entities
-    end
+local function getAvailableMasterPassives()
+	if availableMasterPassives then return availableMasterPassives end
+
+	availableMasterPassives = {}
+	for _, passive in ipairs(MASTER_PASSIVES) do
+		if Ext.Stats.Get(passive, nil, false) then
+			table.insert(availableMasterPassives, passive)
+		end
+	end
+
+	return availableMasterPassives
+end
+
+local function migrateLegacyEntries(assignedPassives)
+	if legacyEntriesMigrated then return end
+
+	local legacyEntityIDs = {}
+	for entityID in pairs(assignedPassives) do
+		if entityID ~= entityID:sub(-36) then
+			table.insert(legacyEntityIDs, entityID)
+		end
+	end
+
+	for _, legacyEntityID in ipairs(legacyEntityIDs) do
+		local legacyPassives = assignedPassives[legacyEntityID]
+		local entityID = legacyEntityID:sub(-36)
+
+		if next(legacyPassives) then
+			local entityPassives = assignedPassives[entityID] or {}
+			for passive in pairs(legacyPassives) do
+				entityPassives[passive] = true
+			end
+			assignedPassives[entityID] = entityPassives
+		end
+
+		assignedPassives[legacyEntityID] = nil
+	end
+
+	legacyEntriesMigrated = true
+end
+
+local function ApplyMasterPassives(entityID)
+	entityID = entityID:sub(-36)
+
+	local modVars = Ext.Vars.GetModVariables(ModuleUUID)
+	modVars.HasGoonLibraryPassives = modVars.HasGoonLibraryPassives or {}
+	local assignedPassives = modVars.HasGoonLibraryPassives
+	migrateLegacyEntries(assignedPassives)
+
+	local entityPassives = assignedPassives[entityID] or {}
+	assignedPassives[entityID] = entityPassives
+
+	for savedPassive in pairs(entityPassives) do
+		if not MASTER_LOOKUP[savedPassive] then
+			if Osi.HasPassive(entityID, savedPassive) == 1 then
+				Osi.RemovePassive(entityID, savedPassive)
+			end
+			entityPassives[savedPassive] = nil
+		end
+	end
+
+	for _, passive in ipairs(getAvailableMasterPassives()) do
+		if not entityPassives[passive] then
+			if Osi.HasPassive(entityID, passive) == 0 then
+				Osi.AddPassive(entityID, passive)
+			end
+			entityPassives[passive] = true
+		end
+	end
+
+	if not next(entityPassives) then
+		assignedPassives[entityID] = nil
+	end
+end
+
+Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", function()
+	local processed = {}
+
+	for _, row in ipairs(Osi.DB_PartyMembers:Get(nil)) do
+		local entityID = row[1]:sub(-36)
+		processed[entityID] = true
+		ApplyMasterPassives(entityID)
+	end
+
+	for _, entity in ipairs(Ext.Entity.GetAllEntitiesWithComponent("ServerCharacter")) do
+		local entityID = entity.Uuid.EntityUuid:sub(-36)
+		if not processed[entityID] then
+			ApplyMasterPassives(entityID)
+		end
+	end
 end)
 
--- CharacterJoinedParty listener (for edge cases and insurance on player characters)
-Ext.Osiris.RegisterListener("CharacterJoinedParty", 1, "after", function(charID)
-    ApplyMasterPassives(charID)
-end)
+Ext.Osiris.RegisterListener("CharacterJoinedParty", 1, "after", ApplyMasterPassives)
