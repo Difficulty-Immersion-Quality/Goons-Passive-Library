@@ -27,16 +27,19 @@
 
 -- ==================================== Once per action cooldown stuff ====================================
 -- Credit to Nzx for making this cleaner than I would have by a mile.
+-- BUG: AI controlled NPC ally gets stuck repeating an attack. Seems to be a vanilla bug, view mod page.
 
 local RESET_STATUS = "GOON_ONCEPERACTION_CASTER_TECHNICAL"
 
+-- A
 Ext.Entity.OnCreateDeferred("SpellCastFinishedEvent", function(spellCast)
 	local casterUuid = Ext.Entity.HandleToUuid(spellCast.SpellCastState.Caster)
 	---@cast casterUuid string
 	Osi.ApplyStatus(casterUuid, RESET_STATUS, 0, 1)
 end)
 
--- In case the one above doesn't work, comment the block out an try this one below
+
+-- B
 --[[
 local function ResetCaster(caster)
 	Osi.ApplyStatus(caster, RESET_STATUS, 0, 1)
@@ -46,6 +49,7 @@ Ext.Osiris.RegisterListener("CastedSpell", 5, "after", ResetCaster)
 Ext.Osiris.RegisterListener("CastSpellFailed", 5, "after", ResetCaster)
 ]]
 
+-- C
 --[[
 local lastCaster = nil
 
