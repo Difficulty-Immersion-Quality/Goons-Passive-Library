@@ -2,19 +2,19 @@
 <contentList>
 <!-- ==================================== E - MagicAllergy.txt ==================================== -->
 
-	<!-- "" -->
+	<!-- "Goon_MagicAllergy_InRange", "GOON_MAGICALLERGY_AURA" -->
 	<content contentuid="hcbd0a4a3g5b20g46f8g9c35g5733c101d779" version="1">Magic Allergy</content>
-	<content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of an creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
-	<!-- "" -->
+	<!-- "Goon_MagicAllergy_InRange" -->
+	<content contentuid="he3bf11f1g2496g4777g934egc010fac6266a" version="1">Within the range of a creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
+	<!-- "GOON_UNSTABLE", "Goon_Projectile_MagicAllergy_Unstable" -->
 	<content contentuid="h50d7d89dg8e08g4fbag9efbgdcd0baaaef51" version="1">Unstable</content>
 	<content contentuid="h63f6f5c7g7d96g4383g98f3g30609492a1e4" version="1">The creature is reacting to nearby magic and has become unstable. At the start of its next turn, it will trigger a random effect.</content>
-	<!-- "" -->
-	<content contentuid="he3ff7e25gd139g4d13g9cb9gb21f0850697e" version="1">Magic Allergy</content>
-	<content contentuid="h0bd9ac32g0b3fg4e30gb4ceg1c7377f29761" version="1">Allergic to magic. If a spell or &lt;LSTag Tooltip="Cantrip"&gt;cantrip&lt;/LSTag&gt; is cast close to the creature, it might react to the magic and trigger a random effect.</content>
-	<!-- "" -->
+	<!-- "GOON_MAGICALLERGY_AURA" -->
+	<content contentuid="h0bd9ac32g0b3fg4e30gb4ceg1c7377f29761" version="1">Allergic to magic. If a spell is cast close to the creature, it might react to the magic and trigger a random effect.</content>
+	<!-- "GOON_MAGICALLERGY_INAURARANGE" -->
 	<content contentuid="hfba73be3g0036g42f3g986fgde2bd5e15afc" version="1">Magic Allergy Range</content>
 	<content contentuid="h1606d37ag2c99g4925g9c56gde699a8a6b9f" version="1">Close to a creature with a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
-	<!-- "" -->
+	<!-- "Goon_Magic_Allergy_Unlock" -->
 	<content contentuid="hb3a26f07g52dfg4d55g9620gfa00fdd39a99" version="1">Magic Allergy</content>
 	<content contentuid="hf677acbfgb2e1g401agb55dg5accaf8f69d5" version="1">This entity has a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.</content>
 
