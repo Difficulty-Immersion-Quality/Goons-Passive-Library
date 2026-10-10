@@ -3163,10 +3163,11 @@ function Goon_CanObserverRevealTarget(revealPolymorphs, requiresFacing, source, 
     return HasStatus('SG_Invisible', target)
 end
 
+-- TODO: Probably shouldn't be treating Invisible and Stealth as being equal, but there's so much overlap that it won't be complained about for now.
 function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, target)
     target = target or context.Target
 
-    if IsStatusEvent(StatusEvent.OnAttack).Result or IsStatusEvent(StatusEvent.OnSpellCast).Result then
+    if IsStatusEvent(StatusEvent.OnSpellCast).Result then
         if strictRules then
             return ConditionResult(true)
         end
