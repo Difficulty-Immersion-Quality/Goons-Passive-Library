@@ -28,29 +28,27 @@
 -- ==================================== Once per action cooldown stuff ====================================
 -- Credit to Nzx for making this cleaner than I would have by a mile.
 -- BUG: AI controlled NPC ally gets stuck repeating an attack. Seems to be a vanilla bug, view mod page.
+-- TODO: Properly test methods A and B.
 
-local RESET_STATUS = "GOON_ONCEPERACTION_CASTER_TECHNICAL"
+-- local RESET_STATUS = "GOON_ONCEPERACTION_CASTER_TECHNICAL"
 
 -- A
-Ext.Entity.OnCreateDeferred("SpellCastFinishedEvent", function(spellCast)
-	local casterUuid = Ext.Entity.HandleToUuid(spellCast.SpellCastState.Caster)
-	---@cast casterUuid string
-	Osi.ApplyStatus(casterUuid, RESET_STATUS, 0, 1)
-end)
+-- Ext.Entity.OnCreateDeferred("SpellCastFinishedEvent", function(spellCast)
+-- 	local casterUuid = Ext.Entity.HandleToUuid(spellCast.SpellCastState.Caster)
+-- 	---@cast casterUuid string
+-- 	Osi.ApplyStatus(casterUuid, RESET_STATUS, 0, 1)
+-- end)
 
 
 -- B
---[[
-local function ResetCaster(caster)
-	Osi.ApplyStatus(caster, RESET_STATUS, 0, 1)
-end
+-- local function ResetCaster(caster)
+-- 	Osi.ApplyStatus(caster, RESET_STATUS, 0, 1)
+-- end
 
-Ext.Osiris.RegisterListener("CastedSpell", 5, "after", ResetCaster)
-Ext.Osiris.RegisterListener("CastSpellFailed", 5, "after", ResetCaster)
-]]
+-- Ext.Osiris.RegisterListener("CastedSpell", 5, "after", ResetCaster)
+-- Ext.Osiris.RegisterListener("CastSpellFailed", 5, "after", ResetCaster)
 
 -- C
---[[
 local lastCaster = nil
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
@@ -65,7 +63,6 @@ Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function(caster)
     end
     lastCaster = caster:sub(-36)
 end)
-]]
 
 -- ==================================== Oldge
 
