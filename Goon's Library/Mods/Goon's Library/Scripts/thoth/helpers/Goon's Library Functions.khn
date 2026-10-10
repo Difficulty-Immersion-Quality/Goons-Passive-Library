@@ -733,6 +733,35 @@ function Goon_IsEntityDominated(source)
     return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {}, source)
 end
 
+-- ==================================== NPC autocasting ====================================
+
+function Goon_CanAutoCast(onWeapon, concentration, statusA, statusB, statusC, target)
+    target = target or context.Target
+
+    local wielder = target
+    if onWeapon then
+        wielder = GetActiveWeapon(target, true)
+    end
+
+    if HasAnyStatus({ statusA, statusB, statusC }, {}, {}, wielder).Result then return ConditionResult(false) end
+    if concentration and IsConcentrating(target).Result                    then return ConditionResult(false) end
+
+    local statuses = { 'SG_Incapacitated', 'SG_Sleeping', 'SG_Stunned', 'SG_Paralyzed', 'SG_Polymorph', 'SG_Polymorph_BeastShape' }
+
+    if HasAnyStatus(statuses, {}, {}, target).Result then return ConditionResult(false) end
+    if HasSpellCastBlocked(target).Result            then return ConditionResult(false) end
+    return ConditionResult(true)
+end
+
+-- Could probably check for more things.
+function Goon_CanAutoCast_MageArmour(target)
+    target = target or context.Target
+
+    if HasPassive('DraconicResilience', target).Result then return ConditionResult(false) end
+    if WearingArmor(target).Result                     then return ConditionResult(false) end
+    return Goon_CanAutoCast(false, false, 'MAGE_ARMOR', 'LOW_ROLAN_MAGE_ARMOR', nil, target)
+end
+
 -- ==================================== Range/Distance checks ====================================
 -- 🚨📏⚠️ CHAT DO NOT SELL DistanceToEntityHitBounds ⚠️📏🚨
 -- 🗣️ "yo can i hit this mf?"
