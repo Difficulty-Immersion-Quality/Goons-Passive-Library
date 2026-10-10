@@ -414,44 +414,48 @@
 	<!-- "Goon_Sanctuary_Auto_Cast_End_Turn" -->
 	<content contentuid="hcdf47849g0d0bg418dg82b5g7b5063a8e5a8" version="1">Entity receives &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.</content>
 
-<!-- ==================================== XXXXX ==================================== -->
+<!-- ==================================== ActionResourceDefinitions.lsx ==================================== -->
 
-	<!-- "" -->
+	<!-- "GoonCustomInvisibilityResource" -->
 	<content contentuid="hab61f9ffg8d8eg433eg9c35gc4ec76ddb823" version="1">Spooder Invisibility Point</content>
 	<content contentuid="hb023f549g9e93g4be0gb917g8e2287c9be1c" version="1">The Spider Queen Matriarch certainly got the gyatt.</content>
 
-	<!-- "" -->
-	<content contentuid="hbf3fe4abg837bg4fdega4b7geae392d58088" version="1">Improved Invisibility Resource</content>
-	<content contentuid="hd5c3a80fga55eg46f4gab29gae6414389e4e" version="1">Improved Invisibility Resource description</content>
-
-	<!-- "" -->
-	<content contentuid="h9c55a246g3ec2g4801ga638gb1218ae4bdf1" version="1">Defensive Resource</content>
-	<content contentuid="h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b" version="1">A shared resource pool for defensive abilities.</content>
+	<!-- "GoonDefensiveResource", "Goon_Defensive_Resource" -->
+	<content contentuid="h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b" version="1">Defensive Resource</content>
+	<!-- "GoonDefensiveResource" -->
+	<content contentuid="h9c55a246g3ec2g4801ga638gb1218ae4bdf1" version="1">A shared resource pool for defensive abilities.</content>
+	<!-- "Goon_Defensive_Resource" -->
 	<content contentuid="h0bb2e2a5g96f9g4837ga6dag327a624dc220" version="1">Entity has [1] charge(s) of a resource pool for defensive abilities.</content>
-	<!-- "" -->
+	<!-- "GOON_DEFENSIVE_COOLDOWN" -->
 	<content contentuid="h884b69b7g6d88g4e67g8960gc43a28215432" version="1">Defensive Cooldown</content>
 	<content contentuid="hbdcb5ddcg267ag4bdcg849eg05d910b5b326" version="1">This entity has used a defensive ability and must wait to do so again.</content>
 
-	<!-- "" -->
-	<content contentuid="hd6c95b32g15cbg4504g8dcagad787be50b71" version="1">Offensive Resource</content>
-	<content contentuid="h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2" version="1">A shared resource pool for offensive abilities.</content>
+	<!-- "GoonOffensiveResource", "Goon_Offensive_Resource" -->
+	<content contentuid="h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2" version="1">Offensive Resource</content>
+    <!-- "GoonOffensiveResource" -->
+	<content contentuid="hd6c95b32g15cbg4504g8dcagad787be50b71" version="1">A shared resource pool for offensive abilities.</content>
+    <!-- "Goon_Offensive_Resource" -->
 	<content contentuid="h17f52459gaa47g4ed4ga76ega934de9ef495" version="1">Entity has [1] charge(s) of a resource pool for offensive abilities.</content>
-	<!-- "" -->
+	<!-- "GOON_OFFENSIVE_COOLDOWN" -->
 	<content contentuid="h3d91d484g4518g4ab2gb9dbgc9521eecfb59" version="1">Offensive Cooldown</content>
 	<content contentuid="hb7623d93ga17ag4ae6ga580g21da55b23118" version="1">This Entity has used an offensive ability and must wait to do so again.</content>
 
-	<!-- "" -->
-	<content contentuid="hc6e8707eg803fg4bb7g844dg0a1ea832d0da" version="1">Utility Resource</content>
-	<content contentuid="hbffada51gf11fg4a10g90acg0b6ccd231a61" version="1">A shared resource pool for utility abilities.</content>
+	<!-- "GoonUtilityResource", "Goon_Utility_Resource" -->
+	<content contentuid="hbffada51gf11fg4a10g90acg0b6ccd231a61" version="1">Utility Resource</content>
+    <!-- "GoonUtilityResource" -->
+	<content contentuid="hc6e8707eg803fg4bb7g844dg0a1ea832d0da" version="1">A shared resource pool for utility abilities.</content>
+    <!-- "Goon_Utility_Resource" -->
 	<content contentuid="h4243c4d9g08c3g4ee7g8cc7ga55004ef61c8" version="1">Entity has [1] charge(s) of a resource pool for utility abilities.</content>
-	<!-- "" -->
+	<!-- "GOON_UTILITY_COOLDOWN" -->
 	<content contentuid="he55c0e0agf730g4695gaff8g4045ec0e7b4a" version="1">Utility Cooldown</content>
 	<content contentuid="hb9e29f08gd0b4g479fg8cf7g7ac3b5936083" version="1">This entity has used a utility ability and must wait to do so again.</content>
 
-	<!-- "" -->
+<!-- ==================================== E - MagicDevourer.txt ==================================== -->
+
+	<!-- "Goon_Weave_Devourer_Unlock", "GOON_WEAVE_DEVOURING_AURA" -->
 	<content contentuid="h66a15410gabfcg45acg9b7bgbeab059e8ae1" version="1">Weave Devouring Aura</content>
 	<content contentuid="h9d620501g1951g4ceegab51gee0020322cbe" version="1">This creature devoures the magical energy of the weave from all other entities around them.</content>
-	<!-- "" -->
+	<!-- "GOON_WEAVE_DEVOURING_INAURARANGE" -->
 	<content contentuid="h02124374g23f7g48b1gb73dgce128b2b83ff" version="1">Devoured Magic</content>
 	<content contentuid="h2900144dg8afdg48d6ga41fgfeac4c706774" version="1">A presence is draining the entity of its magical energy, preventing it from casting spells.</content>
 

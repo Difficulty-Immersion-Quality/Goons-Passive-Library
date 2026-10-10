@@ -6,9 +6,9 @@
 
 new entry "Goon_Sanctuary_Auto_Cast_Start_Combat"
 type "PassiveData"
-// Automatic Sanctuary
+// // Automatic Sanctuary
 data "DisplayName" "h441396f0g2826g49efgbe51gcbcbabde0f12"
-// An omnipotent force provides this creature with Santuary at the start of combat.
+// // Entity receives &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the start of combat.
 data "Description" "hd7db620dg26c9g4a4fgb530ge7b997be5ba5"
 data "DescriptionParams" ""
 data "Icon" "Spell_Abjuration_Sanctuary"
@@ -17,16 +17,16 @@ data "StatsFunctorContext" "OnCombatStarted"
 data "Conditions" "not HasStatus('GOON_SANCTUARY_AUTO_CAST_COOLDOWN',context.Source)"
 data "StatsFunctors" "ApplyStatus(SANCTUARY,100,10);ApplyStatus(GOON_SANCTUARY_AUTO_CAST_COOLDOWN,100,2)"
 
-// Santuary for Isobel in Last Light Inn fight
+// Sanctuary for Isobel in Last Light Inn fight
 new entry "Goon_SANCTUARY_Auto_Cast"
 type "PassiveData"
 using "Goon_Sanctuary_Auto_Cast_Start_Combat"
 
 new entry "Goon_Sanctuary_Auto_Cast_End_Turn"
 type "PassiveData"
-// Automatic Sanctuary
+// // Automatic Sanctuary
 data "DisplayName" "h441396f0g2826g49efgbe51gcbcbabde0f12"
-// An omnipotent force provides this creature with Santuary at the end of their turn. Santuary can reapply this way at the end of every second turn.
+// // Entity receives &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; at the end of their turn. &lt;LSTag Type="Status" Tooltip="SANCTUARY"&gt;Sanctuary&lt;/LSTag&gt; can reapply this way at the end of every second turn.
 data "Description" "hcdf47849g0d0bg418dg82b5g7b5063a8e5a8"
 data "DescriptionParams" ""
 data "Icon" "Spell_Abjuration_Sanctuary"
@@ -191,6 +191,7 @@ data "TickType" "StartTurn"
 
 // ==================================== Custom Invisibility status ====================================
 
+// Garbo lol
 new entry "GOON_CUSTOM_INVISIBILITY"
 type "StatusData"
 data "StatusType" "INVISIBLE"

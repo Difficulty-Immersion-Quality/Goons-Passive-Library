@@ -3,10 +3,10 @@
 new entry "GOON_DEFENSIVE_COOLDOWN"
 type "StatusData"
 data "StatusType" "BOOST"
-// Defensive Cooldown
-data "DisplayName" "h884b69b7g6d88g4e67g8960gc43a28215432"
-// This creature has used a defensive ability and must wait to do so again.
-data "Description" "hbdcb5ddcg267ag4bdcg849eg05d910b5b326"
+// // Defensive Cooldown
+data "DisplayName" "h884b69b7g6d88g4e67g8960gc43a28215432;1"
+// // This entity has used a defensive ability and must wait to do so again.
+data "Description" "hbdcb5ddcg267ag4bdcg849eg05d910b5b326;1"
 data "Icon" "GenericIcon_Intent_Buff"
 data "StackId" "GOON_DEFENSIVE_COOLDOWN"
 data "StackType" "Ignore"
@@ -17,10 +17,10 @@ data "TickType" "StartTurn"
 new entry "GOON_OFFENSIVE_COOLDOWN"
 type "StatusData"
 data "StatusType" "BOOST"
-// Offensive Cooldown
-data "DisplayName" "h3d91d484g4518g4ab2gb9dbgc9521eecfb59"
-// This creature has used an offensive ability and must wait to do so again.
-data "Description" "hb7623d93ga17ag4ae6ga580g21da55b23118"
+// // Offensive Cooldown
+data "DisplayName" "h3d91d484g4518g4ab2gb9dbgc9521eecfb59;1"
+// // This Entity has used an offensive ability and must wait to do so again.
+data "Description" "hb7623d93ga17ag4ae6ga580g21da55b23118;1"
 data "Icon" "GenericIcon_Intent_Damage"
 data "StackId" "GOON_OFFENSIVE_COOLDOWN"
 data "StackType" "Ignore"
@@ -31,10 +31,10 @@ data "TickType" "StartTurn"
 new entry "GOON_UTILITY_COOLDOWN"
 type "StatusData"
 data "StatusType" "BOOST"
-// Utility Cooldown
-data "DisplayName" "he55c0e0agf730g4695gaff8g4045ec0e7b4a"
-// This creature has used a utility ability and must wait to do so again.
-data "Description" "hb9e29f08gd0b4g479fg8cf7g7ac3b5936083"
+// // Utility Cooldown
+data "DisplayName" "he55c0e0agf730g4695gaff8g4045ec0e7b4a;1"
+// // This entity has used a utility ability and must wait to do so again.
+data "Description" "hb9e29f08gd0b4g479fg8cf7g7ac3b5936083;1"
 data "Icon" "GenericIcon_Intent_Utility"
 data "StackId" "GOON_UTILITY_COOLDOWN"
 data "StackType" "Ignore"
@@ -47,10 +47,10 @@ data "TickType" "StartTurn"
 new entry "Goon_Defensive_Resource"
 type "PassiveData"
 data "Properties" "Highlighted"
-// Defensive Resource
-data "DisplayName" "h9c55a246g3ec2g4801ga638gb1218ae4bdf1"
-// An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for defensive abilities.
-data "Description" "h0bb2e2a5g96f9g4837ga6dag327a624dc220"
+// // Defensive Resource
+data "DisplayName" "h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b;1"
+// // Entity has [1] charge(s) of a resource pool for defensive abilities.
+data "Description" "h0bb2e2a5g96f9g4837ga6dag327a624dc220;1"
 data "Icon" "GenericIcon_Intent_Buff"
 
 new entry "Goon_Defensive_Resource_1"
@@ -118,10 +118,10 @@ data "Boosts" "ActionResource(GoonDefensiveResource,10,0)"
 new entry "Goon_Offensive_Resource"
 type "PassiveData"
 data "Properties" "Highlighted"
-// Offensive Resource
-data "DisplayName" "hd6c95b32g15cbg4504g8dcagad787be50b71"
-// An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for offensive abilities.
-data "Description" "h17f52459gaa47g4ed4ga76ega934de9ef495"
+// // Offensive Resource
+data "DisplayName" "h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2;1"
+// // Entity has [1] charge(s) of a resource pool for offensive abilities.
+data "Description" "h17f52459gaa47g4ed4ga76ega934de9ef495;1"
 data "Icon" "GenericIcon_Intent_Damage"
 
 new entry "Goon_Offensive_Resource_1"
@@ -189,10 +189,10 @@ data "Boosts" "ActionResource(GoonOffensiveResource,10,0)"
 new entry "Goon_Utility_Resource"
 type "PassiveData"
 data "Properties" "Highlighted"
-// Utility Resource
-data "DisplayName" "hc6e8707eg803fg4bb7g844dg0a1ea832d0da"
-// An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for utility abilities.
-data "Description" "h4243c4d9g08c3g4ee7g8cc7ga55004ef61c8"
+// // Utility Resource
+data "DisplayName" "hbffada51gf11fg4a10g90acg0b6ccd231a61;1"
+// // An omnipotent force has gifted this creature with [1] charge(s) of a resource pool for utility abilities.
+data "Description" "h4243c4d9g08c3g4ee7g8cc7ga55004ef61c8;1"
 data "Icon" "GenericIcon_Intent_Utility"
 
 new entry "Goon_Utility_Resource_1"

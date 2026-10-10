@@ -1,5 +1,5 @@
 // ==================================== Increased Weight and Size ====================================
-
+// TODO: Comments.
 
 new entry "Goon_Increased_Weight_Size_Scale_1"
 type "PassiveData"

@@ -5,41 +5,49 @@
     <node id="root">
       <children>
         <node id="ActionResourceDefinition">
-                    <attribute id="Description" type="TranslatedString" handle="hb023f549g9e93g4be0gb917g8e2287c9be1c" version="1" />
-                    <attribute id="DisplayName" type="TranslatedString" handle="hab61f9ffg8d8eg433eg9c35gc4ec76ddb823" version="1" />
-                    <attribute id="MaxLevel" type="uint32" value="0" />
-                    <attribute id="Name" type="FixedString" value="GoonCustomInvisibilityResource" />
-                    <attribute id="ReplenishType" type="FixedString" value="Rest" />
-                    <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
-                    <attribute id="UUID" type="guid" value="dc152ac7-dbe8-4662-8500-d98ea31301c1" />
-                </node>
+            <!-- The Spider Queen Matriarch certainly got the gyatt. -->
+            <attribute id="Description" type="TranslatedString" handle="hb023f549g9e93g4be0gb917g8e2287c9be1c" version="1" />
+            <!-- Spooder Invisibility Point -->
+            <attribute id="DisplayName" type="TranslatedString" handle="hab61f9ffg8d8eg433eg9c35gc4ec76ddb823" version="1" />
+            <attribute id="MaxLevel" type="uint32" value="0" />
+            <attribute id="Name" type="FixedString" value="GoonCustomInvisibilityResource" />
+            <attribute id="ReplenishType" type="FixedString" value="Rest" />
+            <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
+            <attribute id="UUID" type="guid" value="dc152ac7-dbe8-4662-8500-d98ea31301c1" />
+        </node>
         <node id="ActionResourceDefinition">
-                    <attribute id="Description" type="TranslatedString" handle="h9c55a246g3ec2g4801ga638gb1218ae4bdf1" version="1" />
-                    <attribute id="DisplayName" type="TranslatedString" handle="h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b" version="1" />
-                    <attribute id="MaxLevel" type="uint32" value="0" />
-                    <attribute id="Name" type="FixedString" value="GoonDefensiveResource" />
-                    <attribute id="ReplenishType" type="FixedString" value="Rest" />
-                    <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
-                    <attribute id="UUID" type="guid" value="c4690478-3be4-4ea3-a5d8-2404391a7e68" />
-                </node>
+            <!-- A shared resource pool for defensive abilities. -->
+            <attribute id="Description" type="TranslatedString" handle="h9c55a246g3ec2g4801ga638gb1218ae4bdf1" version="1" />
+            <!-- Defensive Resource -->
+            <attribute id="DisplayName" type="TranslatedString" handle="h1a9c0933g5e71g45bfg9f6ag3bd91a2daa8b" version="1" />
+            <attribute id="MaxLevel" type="uint32" value="0" />
+            <attribute id="Name" type="FixedString" value="GoonDefensiveResource" />
+            <attribute id="ReplenishType" type="FixedString" value="Rest" />
+            <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
+            <attribute id="UUID" type="guid" value="c4690478-3be4-4ea3-a5d8-2404391a7e68" />
+        </node>
         <node id="ActionResourceDefinition">
-                    <attribute id="Description" type="TranslatedString" handle="hd6c95b32g15cbg4504g8dcagad787be50b71" version="1" />
-                    <attribute id="DisplayName" type="TranslatedString" handle="h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2" version="1" />
-                    <attribute id="MaxLevel" type="uint32" value="0" />
-                    <attribute id="Name" type="FixedString" value="GoonOffensiveResource" />
-                    <attribute id="ReplenishType" type="FixedString" value="Rest" />
-                    <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
-                    <attribute id="UUID" type="guid" value="25422aab-2721-4ff3-9418-0d5555570e2f" />
-                </node>
+            <!-- A shared resource pool for offensive abilities. -->
+            <attribute id="Description" type="TranslatedString" handle="hd6c95b32g15cbg4504g8dcagad787be50b71" version="1" />
+            <!-- Offensive Resource -->
+            <attribute id="DisplayName" type="TranslatedString" handle="h78b6d0c8g34c2g4f6bg9701gfe5a6549b2a2" version="1" />
+            <attribute id="MaxLevel" type="uint32" value="0" />
+            <attribute id="Name" type="FixedString" value="GoonOffensiveResource" />
+            <attribute id="ReplenishType" type="FixedString" value="Rest" />
+            <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
+            <attribute id="UUID" type="guid" value="25422aab-2721-4ff3-9418-0d5555570e2f" />
+        </node>
         <node id="ActionResourceDefinition">
-                    <attribute id="Description" type="TranslatedString" handle="hc6e8707eg803fg4bb7g844dg0a1ea832d0da" version="1" />
-                    <attribute id="DisplayName" type="TranslatedString" handle="hbffada51gf11fg4a10g90acg0b6ccd231a61" version="1" />
-                    <attribute id="MaxLevel" type="uint32" value="0" />
-                    <attribute id="Name" type="FixedString" value="GoonUtilityResource" />
-                    <attribute id="ReplenishType" type="FixedString" value="Rest" />
-                    <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
-                    <attribute id="UUID" type="guid" value="9b367785-13dd-4ad9-b6f2-e074b98fe8c2" />
-                </node>
+            <!-- A shared resource pool for utility abilities. -->
+            <attribute id="Description" type="TranslatedString" handle="hc6e8707eg803fg4bb7g844dg0a1ea832d0da" version="1" />
+            <!-- Utility Resource -->
+            <attribute id="DisplayName" type="TranslatedString" handle="hbffada51gf11fg4a10g90acg0b6ccd231a61" version="1" />
+            <attribute id="MaxLevel" type="uint32" value="0" />
+            <attribute id="Name" type="FixedString" value="GoonUtilityResource" />
+            <attribute id="ReplenishType" type="FixedString" value="Rest" />
+            <attribute id="ShowOnActionResourcePanel" type="bool" value="true" />
+            <attribute id="UUID" type="guid" value="9b367785-13dd-4ad9-b6f2-e074b98fe8c2" />
+        </node>
       </children>
     </node>
   </region>

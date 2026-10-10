@@ -2,9 +2,9 @@
 
 new entry "Goon_Fall_Damage_Vulnerability"
 type "PassiveData"
-// Fall Damage Vulnerability
+// // Fall Damage Vulnerability
 data "DisplayName" "h6822e288ga459g4837gac9cg29836b5858fb;1"
-// An omnipotent force has doubled the fall damage this creature receives.
+// // Entity receives double fall damage.
 data "Description" "h24211675g665eg43f4ga3cfg327548af17b1;1"
 data "Icon" "Spell_Transmutation_FeatherFall"
 data "Properties" "Highlighted"
@@ -12,9 +12,9 @@ data "Boosts" "FallDamageMultiplier(2.0)"
 
 new entry "Goon_Fall_Damage_Resistance"
 type "PassiveData"
-// Fall Damage Resistance
+// // Fall Damage Resistance
 data "DisplayName" "h7aa3001bgeeceg4610g83d1g868e961d212f;1"
-// An omnipotent force has halved the fall damage this creature receives.
+// // Entity receives half fall damage.
 data "Description" "hea8f3b54gd0cbg46a8ga748gdf97c08b108b;1"
 data "Icon" "Spell_Transmutation_FeatherFall"
 data "Properties" "Highlighted"
@@ -24,7 +24,7 @@ new entry "Goon_Fall_Damage_Immunity"
 type "PassiveData"
 // Fall Damage Immunity
 data "DisplayName" "hc8b5d5fcg7767g4f14gbeb4g11a2b8597936;1"
-// An omnipotent force has granted this creature &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.
+// // Entity has &lt;LSTag Tooltip="Immunity"&gt;Immunity&lt;/LSTag&gt; to fall damage.
 data "Description" "hd1bf669eg5186g468fga5c5g627632e63b4a;1"
 data "Icon" "Spell_Transmutation_FeatherFall"
 data "Properties" "Highlighted"

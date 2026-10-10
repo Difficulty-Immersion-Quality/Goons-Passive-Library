@@ -1,12 +1,14 @@
+// TODO: CharacterWeaponDamage etc. as DamageBonus is asshole.
+
 // ==================================== Acid ====================================
 
 // ==================================== Acid - Attacks
 
 new entry "Goon_Damage_Acid_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -15,9 +17,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Acid_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -26,9 +28,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Acid_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -37,9 +39,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Acid_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -48,9 +50,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Acid_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -59,9 +61,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Acid_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -72,9 +74,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Acid_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -83,9 +85,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Acid_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -94,9 +96,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Acid_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -105,9 +107,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Acid_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -116,9 +118,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Acid_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -127,9 +129,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Acid_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -140,9 +142,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Acid_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -160,9 +162,9 @@ data "StatusPropertyFlags" "DisableOverhead;DisablePortraitIndicator;DisableComb
 
 new entry "Goon_Damage_Acid_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -171,9 +173,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Acid)"
 
 new entry "Goon_Damage_Acid_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -182,9 +184,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Acid)"
 
 new entry "Goon_Damage_Acid_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -193,9 +195,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Acid)"
 
 new entry "Goon_Damage_Acid_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -204,9 +206,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Acid)"
 
 new entry "Goon_Damage_Acid_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Acid)"
 data "Icon" "GenericIcon_DamageType_Acid"
@@ -219,9 +221,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Acid)"
 
 new entry "Goon_Damage_Bludgeoning_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -230,9 +232,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Bludgeoning_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -241,9 +243,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Bludgeoning_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -252,9 +254,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Bludgeoning_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -263,9 +265,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Bludgeoning_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -274,9 +276,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Bludgeoning_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -287,9 +289,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Bludgeoning_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -298,9 +300,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Bludgeoning_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -309,9 +311,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Bludgeoning_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -320,9 +322,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Bludgeoning_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -331,9 +333,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Bludgeoning_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -342,9 +344,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Bludgeoning_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -355,9 +357,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Bludgeoning_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -366,9 +368,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Bludgeoning)"
 
 new entry "Goon_Damage_Bludgeoning_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -377,9 +379,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Bludgeoning)"
 
 new entry "Goon_Damage_Bludgeoning_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -388,9 +390,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Bludgeoning)"
 
 new entry "Goon_Damage_Bludgeoning_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -399,9 +401,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Bludgeoning)"
 
 new entry "Goon_Damage_Bludgeoning_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -410,9 +412,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Bludgeoning)"
 
 new entry "Goon_Damage_Bludgeoning_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Bludgeoning)"
 data "Icon" "GenericIcon_DamageType_Bludgeoning"
@@ -425,9 +427,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Bludgeoning)"
 
 new entry "Goon_Damage_Cold_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -436,9 +438,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Cold_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -447,9 +449,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Cold_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -458,9 +460,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Cold_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -469,9 +471,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Cold_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -480,9 +482,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Cold_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -493,9 +495,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Cold_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -504,9 +506,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Cold_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -515,9 +517,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Cold_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -526,9 +528,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Cold_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -537,9 +539,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Cold_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -548,9 +550,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Cold_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -561,9 +563,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Cold_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -572,9 +574,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Cold)"
 
 new entry "Goon_Damage_Cold_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -583,9 +585,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Cold)"
 
 new entry "Goon_Damage_Cold_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -594,9 +596,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Cold)"
 
 new entry "Goon_Damage_Cold_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -605,9 +607,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Cold)"
 
 new entry "Goon_Damage_Cold_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -616,9 +618,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Cold)"
 
 new entry "Goon_Damage_Cold_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Cold)"
 data "Icon" "GenericIcon_DamageType_Cold"
@@ -631,9 +633,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Cold)"
 
 new entry "Goon_Damage_Fire_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -642,9 +644,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Fire_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -653,9 +655,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Fire_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -664,9 +666,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Fire_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -675,9 +677,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Fire_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -686,9 +688,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Fire_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -699,9 +701,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Fire_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -710,9 +712,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Fire_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -721,9 +723,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Fire_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -732,9 +734,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Fire_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -743,9 +745,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Fire_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -754,9 +756,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Fire_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -767,9 +769,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Fire_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -778,9 +780,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Fire)"
 
 new entry "Goon_Damage_Fire_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -789,9 +791,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Fire)"
 
 new entry "Goon_Damage_Fire_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -800,9 +802,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Fire)"
 
 new entry "Goon_Damage_Fire_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -811,9 +813,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Fire)"
 
 new entry "Goon_Damage_Fire_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -822,9 +824,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Fire)"
 
 new entry "Goon_Damage_Fire_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Fire)"
 data "Icon" "GenericIcon_DamageType_Fire"
@@ -837,9 +839,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Fire)"
 
 new entry "Goon_Damage_Force_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -848,9 +850,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Force_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -859,9 +861,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Force_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -870,9 +872,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Force_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -881,9 +883,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Force_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -892,9 +894,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Force_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -905,9 +907,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Force_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -916,9 +918,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Force_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -927,9 +929,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Force_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -938,9 +940,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Force_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -949,9 +951,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Force_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -960,9 +962,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Force_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -973,9 +975,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Force_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -984,9 +986,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Force)"
 
 new entry "Goon_Damage_Force_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -995,9 +997,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Force)"
 
 new entry "Goon_Damage_Force_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -1006,9 +1008,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Force)"
 
 new entry "Goon_Damage_Force_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -1017,9 +1019,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Force)"
 
 new entry "Goon_Damage_Force_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -1028,9 +1030,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Force)"
 
 new entry "Goon_Damage_Force_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Force)"
 data "Icon" "GenericIcon_DamageType_Force"
@@ -1043,9 +1045,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Force)"
 
 new entry "Goon_Damage_Lightning_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1054,9 +1056,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Lightning_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1065,9 +1067,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Lightning_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1076,9 +1078,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Lightning_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1087,9 +1089,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Lightning_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1098,9 +1100,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Lightning_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1111,9 +1113,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Lightning_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1122,9 +1124,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Lightning_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1133,9 +1135,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Lightning_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1144,9 +1146,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Lightning_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1155,9 +1157,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Lightning_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1166,9 +1168,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Lightning_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1179,9 +1181,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Lightning_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1190,9 +1192,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Lightning)"
 
 new entry "Goon_Damage_Lightning_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1201,9 +1203,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Lightning)"
 
 new entry "Goon_Damage_Lightning_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1212,9 +1214,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Lightning)"
 
 new entry "Goon_Damage_Lightning_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1223,9 +1225,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Lightning)"
 
 new entry "Goon_Damage_Lightning_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1234,9 +1236,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Lightning)"
 
 new entry "Goon_Damage_Lightning_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Lightning)"
 data "Icon" "GenericIcon_DamageType_Lightning"
@@ -1249,9 +1251,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Lightning)"
 
 new entry "Goon_Damage_Necrotic_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1260,9 +1262,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Necrotic_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1271,9 +1273,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Necrotic_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1282,9 +1284,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Necrotic_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1293,9 +1295,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Necrotic_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1304,9 +1306,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Necrotic_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1317,9 +1319,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Necrotic_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1328,9 +1330,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Necrotic_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1339,9 +1341,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Necrotic_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1350,9 +1352,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Necrotic_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1361,9 +1363,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Necrotic_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1372,9 +1374,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Necrotic_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1385,9 +1387,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Necrotic_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1396,9 +1398,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Necrotic)"
 
 new entry "Goon_Damage_Necrotic_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1407,9 +1409,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Necrotic)"
 
 new entry "Goon_Damage_Necrotic_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1418,9 +1420,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Necrotic)"
 
 new entry "Goon_Damage_Necrotic_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1429,9 +1431,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Necrotic)"
 
 new entry "Goon_Damage_Necrotic_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1440,9 +1442,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Necrotic)"
 
 new entry "Goon_Damage_Necrotic_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Necrotic)"
 data "Icon" "GenericIcon_DamageType_Necrotic"
@@ -1455,9 +1457,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Necrotic)"
 
 new entry "Goon_Damage_Poison_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1466,9 +1468,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Poison_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1477,9 +1479,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Poison_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1488,9 +1490,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Poison_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1499,9 +1501,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Poison_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1510,9 +1512,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Poison_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1523,9 +1525,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Poison_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1534,9 +1536,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Poison_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1545,9 +1547,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Poison_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1556,9 +1558,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Poison_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1567,9 +1569,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Poison_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1578,9 +1580,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Poison_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1591,9 +1593,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Poison_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1602,9 +1604,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Poison)"
 
 new entry "Goon_Damage_Poison_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1613,9 +1615,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Poison)"
 
 new entry "Goon_Damage_Poison_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1624,9 +1626,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Poison)"
 
 new entry "Goon_Damage_Poison_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1635,9 +1637,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Poison)"
 
 new entry "Goon_Damage_Poison_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1646,9 +1648,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Poison)"
 
 new entry "Goon_Damage_Poison_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Poison)"
 data "Icon" "GenericIcon_DamageType_Poison"
@@ -1661,9 +1663,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Poison)"
 
 new entry "Goon_Damage_Piercing_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1672,9 +1674,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Piercing_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1683,9 +1685,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Piercing_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1694,9 +1696,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Piercing_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1705,9 +1707,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Piercing_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1716,9 +1718,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Piercing_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1729,9 +1731,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Piercing_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1740,9 +1742,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Piercing_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1751,9 +1753,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Piercing_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1762,9 +1764,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Piercing_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1773,9 +1775,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Piercing_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1784,9 +1786,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Piercing_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1797,9 +1799,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Piercing_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1808,9 +1810,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Piercing)"
 
 new entry "Goon_Damage_Piercing_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1819,9 +1821,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Piercing)"
 
 new entry "Goon_Damage_Piercing_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1830,9 +1832,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Piercing)"
 
 new entry "Goon_Damage_Piercing_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1841,9 +1843,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Piercing)"
 
 new entry "Goon_Damage_Piercing_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1852,9 +1854,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Piercing)"
 
 new entry "Goon_Damage_Piercing_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Piercing)"
 data "Icon" "GenericIcon_DamageType_Piercing"
@@ -1867,9 +1869,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Piercing)"
 
 new entry "Goon_Damage_Psychic_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1878,9 +1880,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Psychic_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1889,9 +1891,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Psychic_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1900,9 +1902,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Psychic_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1911,9 +1913,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Psychic_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1922,9 +1924,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Psychic_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1935,9 +1937,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Psychic_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1946,9 +1948,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Psychic_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1957,9 +1959,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Psychic_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1968,9 +1970,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Psychic_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1979,9 +1981,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Psychic_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -1990,9 +1992,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Psychic_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2003,9 +2005,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Psychic_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2014,9 +2016,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Psychic)"
 
 new entry "Goon_Damage_Psychic_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2025,9 +2027,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Psychic)"
 
 new entry "Goon_Damage_Psychic_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2036,9 +2038,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Psychic)"
 
 new entry "Goon_Damage_Psychic_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2047,9 +2049,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Psychic)"
 
 new entry "Goon_Damage_Psychic_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2058,9 +2060,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Psychic)"
 
 new entry "Goon_Damage_Psychic_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Psychic)"
 data "Icon" "GenericIcon_DamageType_Psychic"
@@ -2073,9 +2075,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Psychic)"
 
 new entry "Goon_Damage_Radiant_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2084,9 +2086,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Radiant_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2095,9 +2097,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Radiant_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2106,9 +2108,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Radiant_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2117,9 +2119,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Radiant_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2128,9 +2130,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Radiant_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2141,9 +2143,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Radiant_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2152,9 +2154,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Radiant_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2163,9 +2165,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Radiant_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2174,9 +2176,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Radiant_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2185,9 +2187,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Radiant_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2196,9 +2198,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Radiant_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2209,9 +2211,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Radiant_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2220,9 +2222,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Radiant)"
 
 new entry "Goon_Damage_Radiant_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2231,9 +2233,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Radiant)"
 
 new entry "Goon_Damage_Radiant_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2242,9 +2244,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Radiant)"
 
 new entry "Goon_Damage_Radiant_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2253,9 +2255,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Radiant)"
 
 new entry "Goon_Damage_Radiant_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2264,9 +2266,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Radiant)"
 
 new entry "Goon_Damage_Radiant_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Radiant)"
 data "Icon" "GenericIcon_DamageType_Radiant"
@@ -2279,9 +2281,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Radiant)"
 
 new entry "Goon_Damage_Slashing_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2290,9 +2292,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Slashing_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2301,9 +2303,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Slashing_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2312,9 +2314,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Slashing_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2323,9 +2325,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Slashing_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2334,9 +2336,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Slashing_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2347,9 +2349,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Slashing_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2358,9 +2360,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Slashing_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2369,9 +2371,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Slashing_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2380,9 +2382,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Slashing_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2391,9 +2393,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Slashing_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2402,9 +2404,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Slashing_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2415,9 +2417,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Slashing_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2426,9 +2428,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Slashing)"
 
 new entry "Goon_Damage_Slashing_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2437,9 +2439,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Slashing)"
 
 new entry "Goon_Damage_Slashing_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2448,9 +2450,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Slashing)"
 
 new entry "Goon_Damage_Slashing_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2459,9 +2461,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Slashing)"
 
 new entry "Goon_Damage_Slashing_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2470,9 +2472,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Slashing)"
 
 new entry "Goon_Damage_Slashing_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Slashing)"
 data "Icon" "GenericIcon_DamageType_Slashing"
@@ -2485,9 +2487,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d20,Slashing)"
 
 new entry "Goon_Damage_Thunder_d4_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d4,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2496,9 +2498,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Thunder_d6_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d6,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2507,9 +2509,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Thunder_d8_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d8,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2518,9 +2520,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Thunder_d10_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d10,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2529,9 +2531,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Thunder_d12_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d12,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2540,9 +2542,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Thunder_d20_Attacks"
 type "PassiveData"
-// Attack Damage Bonus
+// // Attack Damage Bonus
 data "DisplayName" "h3025cc0egeb05g4ae3gb20fg46161d9f527b;1"
-// An omnipotent force allows this creature's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's weapon and unarmed &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "h45bdc878g3c3bg45c7g88bfg04af046e6c23;1"
 data "DescriptionParams" "DealDamage(1d20,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2553,9 +2555,9 @@ data "Boosts" "IF(IsMeleeWeaponAttack() or IsRangedWeaponAttack() or IsMeleeUnar
 
 new entry "Goon_Damage_Thunder_d4_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d4,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2564,9 +2566,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d4
 
 new entry "Goon_Damage_Thunder_d6_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d6,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2575,9 +2577,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d6
 
 new entry "Goon_Damage_Thunder_d8_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d8,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2586,9 +2588,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d8
 
 new entry "Goon_Damage_Thunder_d10_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d10,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2597,9 +2599,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Thunder_d12_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d12,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2608,9 +2610,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d1
 
 new entry "Goon_Damage_Thunder_d20_SpellAttacks"
 type "PassiveData"
-// Spell Attack Damage Bonus
+// // Spell Attack Damage Bonus
 data "DisplayName" "hc21050e9g5d73g4dbbgab10gc907411bc1d1;1"
-// An omnipotent force allows this creature's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; to deal an additional [1].
+// // Entity's melee and ranged spell &lt;LSTag Tooltip="AttackRoll"&gt;attacks&lt;/LSTag&gt; deal an additional [1].
 data "Description" "hc4c65557ge9bag4a3bg9aa8gcada0f972dbd;1"
 data "DescriptionParams" "DealDamage(1d20,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2621,9 +2623,9 @@ data "Boosts" "IF(IsMeleeSpellAttack() or IsRangedSpellAttack()):DamageBonus(1d2
 
 new entry "Goon_Damage_Thunder_d4_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d4,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2632,9 +2634,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d4,Thunder)"
 
 new entry "Goon_Damage_Thunder_d6_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d6,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2643,9 +2645,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d6,Thunder)"
 
 new entry "Goon_Damage_Thunder_d8_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d8,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2654,9 +2656,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d8,Thunder)"
 
 new entry "Goon_Damage_Thunder_d10_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d10,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2665,9 +2667,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d10,Thunder)"
 
 new entry "Goon_Damage_Thunder_d12_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d12,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"
@@ -2676,9 +2678,9 @@ data "Boosts" "IF(IsSpell()):DamageBonus(1d12,Thunder)"
 
 new entry "Goon_Damage_Thunder_d20_Spells"
 type "PassiveData"
-// Spells Damage Bonus
+// // Spells Damage Bonus
 data "DisplayName" "hb075868dg6954g48b7gb23cg3a2c93d39a66;1"
-// An omnipotent force allows this creature's spells to deal an additional [1].
+// // Entity's spells deal an additional [1].
 data "Description" "h71b79740gd23dg4d1dgb6b3gcb6f1d0b083f;1"
 data "DescriptionParams" "DealDamage(1d20,Thunder)"
 data "Icon" "GenericIcon_DamageType_Thunder"

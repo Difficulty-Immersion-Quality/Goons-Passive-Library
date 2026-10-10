@@ -1,15 +1,15 @@
 // ==================================== Stuff ====================================
-// TODO: Revisit the "StatsFunctorContext", gotta try and stop any duplication and player looting.
+// // TODO: Revisit the "StatsFunctorContext", gotta try and stop any duplication and player looting.
 
-//new entry "KNOCKED_OUT_SUMMON_DISMISS"
-//type "StatusData"
-//data "StatusType" "BOOST"
-// %%% EMPTY
-//data "DisplayName" "h6f2fbf73g1962g47f2g8af0g3c80ffb2fb32;1"
-//data "RemoveConditions" "HasStatus('SG_Incapacitated',context.Source)"
-//data "RemoveEvents" "OnSourceStatusApplied"
-//data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
-//data "OnRemoveFunctors" "Unsummon()"
+// new entry "KNOCKED_OUT_SUMMON_DISMISS"
+// type "StatusData"
+// data "StatusType" "BOOST"
+// // %%% EMPTY
+// data "DisplayName" "h6f2fbf73g1962g47f2g8af0g3c80ffb2fb32;1"
+// data "RemoveConditions" "HasStatus('SG_Incapacitated',context.Source)"
+// data "RemoveEvents" "OnSourceStatusApplied"
+// data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead"
+// data "OnRemoveFunctors" "Unsummon()"
 
 new entry "GOON_KNOCKED_OUT_CONSUMABLE_SUMMON_DISMISS"
 type "StatusData"
@@ -20,20 +20,20 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 data "OnRemoveFunctors" "Unsummon()"
 //data "Passives" "fuck_fuck_fuck_innit_m8"
 
-//new entry "fuck_fuck_fuck_innit_m8"
-//type "PassiveData"
-//data "DisplayName" ""
-//data "Description" ""
-//data "DescriptionParams" "1"
-//data "Icon" ""
-//data "Properties" "Highlighted"
-//data "StatsFunctorContext" "OnDamaged;OnAttacked"
-//data "StatsFunctors" "IF(HasStatus('KNOCKED_OUT',context.Source) or HasStatus('KNOCKED_OUT_PERMANENTLY',context.Source) or HasStatus('KNOCKED_OUT_TEMPORARILY',context.Source) or IsStatusEvent(StatusEvent.OnSourceDeath) or LethalHP()):Unsummon()"
+// new entry "fuck_fuck_fuck_innit_m8"
+// type "PassiveData"
+// data "DisplayName" ""
+// data "Description" ""
+// data "DescriptionParams" "1"
+// data "Icon" ""
+// data "Properties" "Highlighted"
+// data "StatsFunctorContext" "OnDamaged;OnAttacked"
+// data "StatsFunctors" "IF(HasStatus('KNOCKED_OUT',context.Source) or HasStatus('KNOCKED_OUT_PERMANENTLY',context.Source) or HasStatus('KNOCKED_OUT_TEMPORARILY',context.Source) or IsStatusEvent(StatusEvent.OnSourceDeath) or LethalHP()):Unsummon()"
 
-//SummonInInventory
-//SpawnInInventory
-//data "Properties" "ExecuteOnce"
-//Kill()
+// SummonInInventory
+// SpawnInInventory
+// data "Properties" "ExecuteOnce"
+// Kill()
 
 // ==================================== Healing Potions ====================================
 
@@ -41,9 +41,9 @@ data "OnRemoveFunctors" "Unsummon()"
 
 new entry "Goon_Summon_Potion_Healing_x1"
 type "PassiveData"
-// Potions of Healing
+// // Potions of Healing
 data "DisplayName" "hd701ed72gc3e9g4162g957fg513c16f91234;1"
-// An omnipotent force has gifted this creature x[1] Potion of Healing.
+// // Entity has x[1] Potion of Healing.
 data "Description" "h49522c5cg0c15g45a8gb648g2cab00a813a3;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A"
@@ -104,9 +104,9 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 
 new entry "Goon_Summon_Potion_Healing_Greater_x1"
 type "PassiveData"
-// Potions of Greater Healing
+// // Potions of Greater Healing
 data "DisplayName" "h5f6f84ddgab0eg462aga71cg74fa0cee209d;1"
-// An omnipotent force has gifted this creature x[1] Potion of Greater Healing.
+// // Entity has x[1] Potion of Greater Healing.
 data "Description" "hc68acbd6ga803g4f4fg913ag6cb0ed2f9e32;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A_Greater"
@@ -167,9 +167,9 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 
 new entry "Goon_Summon_Potion_Healing_Superior_x1"
 type "PassiveData"
-// Potions of Superior Healing
+// // Potions of Superior Healing
 data "DisplayName" "h6d4610aeg4ff8g4687g9439ga8217a3c2c4b;1"
-// An omnipotent force has gifted this creature x[1] Potion of Superior Healing.
+// // Entity has x[1] Potion of Superior Healing.
 data "Description" "hbd2ffcffg7d23g4942g8575g61252df9f720;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A_Superior"
@@ -230,9 +230,9 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 
 new entry "Goon_Summon_Potion_Healing_Supreme_x1"
 type "PassiveData"
-// Potions of Supreme Healing
+// // Potions of Supreme Healing
 data "DisplayName" "h5fa64594g2ab8g4566gaf61gd57160515a1e;1"
-// An omnipotent force has gifted this creature x[1] Potion of Supreme Healing.
+// // Entity has x[1] Potion of Supreme Healing.
 data "Description" "ha44ab676gf43eg493ag9b38g27b45ecfba2e;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Potion_Healing_A_Supreme"
@@ -333,9 +333,9 @@ data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndi
 
 new entry "Goon_Summon_Drugs_Dream_Mist_x1"
 type "PassiveData"
-// Dream Mist
+// // Dream Mist
 data "DisplayName" "h4379027bga5afg4a91g9f63gdf2721a953eb;1"
-// An omnipotent force has gifted this creature x[1] Dream Mist.
+// // Entity has x[1] Dream Mist.
 data "Description" "h25f6ae9dg10c3g4502gaa76ge35fbedb87d6;1"
 data "DescriptionParams" "1"
 data "Icon" "Item_CONS_Drug_Dreammist_A"
