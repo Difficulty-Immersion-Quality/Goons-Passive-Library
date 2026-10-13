@@ -163,6 +163,46 @@ function Goon_GreaterInvisibilityTechnicalRevealConditions(source)
     return ConditionResult(false)
 end
 
+-- ==================================== Weapon enchant checks - Vanilla Flame Blade
+
+function Goon_IsFlameBladeSpellAttack_Mainhand(source)
+    source = source or context.Source
+
+    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
+
+    local weapon = GetActiveWeapon(source, true)
+
+    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    return ConditionResult(false)
+end
+
+function Goon_IsFlameBladeSpellAttack_Offhand(source)
+    source = source or context.Source
+
+    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
+
+    local weapon = GetActiveWeapon(source, false)
+
+    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    return ConditionResult(false)
+end
+
 -- ==================================== Junk ====================================
 -- Trying to check the source of a passive for use in boost conditions.
 -- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
