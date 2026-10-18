@@ -464,34 +464,63 @@ end
 -- ==================================== Interrupt conditions - "EnableCondition"
 -- data "EnableContext" "OnStatusApplied;OnStatusRemoved"
 
-function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
+-- isPlayerCharacter: true for player, false for NPC. Dominated, mad, etc. characters still count as player characters.
+function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, isPlayerCharacter, isPlayerControlled, source)
     source = source or context.Source
 
-    local isPolymorphed = HasStatus('SG_Polymorph', source)
-    local polymorphConditions = polymorphConditions
-
-    if allowWildshapes then
-        polymorphConditions = (~isPolymorphed | Goon_IsNonHostilePolymorphStatus(source))
-    else
-        polymorphConditions = (~isPolymorphed | Goon_IsUnrestrictedPolymorphStatus(source))
+    if isPlayerCharacter ~= nil and Player(source).Result ~= isPlayerCharacter then
+        return ConditionResult(false)
     end
 
-    if requiresSight then
-        local blindnessConditions = (~HasStatus('SG_Blinded', source) | Goon_CanIgnoreBlindness(false, false, true, source))
-        return polymorphConditions & blindnessConditions
+    if isPlayerControlled == true and not Goon_IsPlayerInControl(source).Result then
+        return ConditionResult(false)
+    elseif isPlayerControlled == false and not Goon_IsAIInControl(source).Result then
+        return ConditionResult(false)
     end
 
-    return polymorphConditions
+    if HasStatus('SG_Polymorph', source).Result then
+        if allowWildshapes then
+            if not Goon_IsNonHostilePolymorphStatus(source).Result then
+                return ConditionResult(false)
+            end
+        elseif not Goon_IsUnrestrictedPolymorphStatus(source).Result then
+            return ConditionResult(false)
+        end
+    end
+
+    if requiresSight and HasStatus('SG_Blinded', source).Result then
+        if not Goon_CanIgnoreBlindness(false, false, true, source).Result then
+            return ConditionResult(false)
+        end
+    end
+
+    return ConditionResult(true)
 end
 
-function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, requiresSight, source)
+-- checkEquippedWeapons: donut forgetti the OnEquip EnableContext, in addition to OnStatusApplied;OnStatusRemoved. The function isn't checking the active weapon, so no issues with F weapon set swapping not triggering the OnEquip event.
+-- checkPlayerControlledWeaponsOnly: true for player controlled and false for AI controlled.
+function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, requiresSight, isPlayerCharacter, isPlayerControlled, checkEquippedWeapons, isMeleeWeapon, isOffhand, isMartialWeapon, isShield, checkPlayerControlledWeaponsOnly, source)
     source = source or context.Source
 
     if requiresSight == nil then
         requiresSight = true
     end
 
-    return Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
+    if not Goon_InterruptEnableConditions(allowWildshapes, requiresSight, isPlayerCharacter, isPlayerControlled, source).Result then
+        return ConditionResult(false)
+    end
+
+    if checkEquippedWeapons ~= nil then
+        if checkPlayerControlledWeaponsOnly ~= nil and Goon_IsPlayerInControl(source).Result ~= checkPlayerControlledWeaponsOnly then
+            return ConditionResult(true)
+        end
+
+        if Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShield, source).Result ~= checkEquippedWeapons then
+            return ConditionResult(false)
+        end
+    end
+
+    return ConditionResult(true)
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
@@ -2439,8 +2468,10 @@ end
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
--- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game.
+-- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game. -- TODO: Confirm old comment regarding Tagged.
 
+-- For checking if a character has no weapons equipped, but allowing shields: ~Goon_HasWeaponEquipped(nil, nil, nil, false, source)
+-- However, ~Goon_WieldingWeapon(target) is more performant.
 -- isMeleeWeapon:   true = melee,   false = ranged,     nil = either (True/False filters out shields, unless isShield == true)
 -- isOffhand:       true = offhand, false = main hand,  nil = either
 -- isMartialWeapon: true = martial, false = simple,     nil = either (True/False filters out shields, unless isShield == true)
@@ -2525,13 +2556,19 @@ function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShi
 end
 
 -- TODO: Disarm shields?
-function Goon_WieldingWeapon(target)
+function Goon_WieldingWeapon(isMeleeWeapon, target)
     target = target or context.Target
 
-    if WieldingWeapon('Melee', true, false, target).Result       then return ConditionResult(true) end
-    if WieldingWeapon('Melee', false, false, target).Result      then return ConditionResult(true) end
-    if WieldingWeapon('Ammunition', true, false, target).Result  then return ConditionResult(true) end
-    if WieldingWeapon('Ammunition', false, false, target).Result then return ConditionResult(true) end
+    if isMeleeWeapon ~= false then
+        if WieldingWeapon('Melee', true, false, target).Result       then return ConditionResult(true) end
+        if WieldingWeapon('Melee', false, false, target).Result      then return ConditionResult(true) end
+    end
+
+    if isMeleeWeapon ~= true then
+        if WieldingWeapon('Ammunition', true, false, target).Result  then return ConditionResult(true) end
+        if WieldingWeapon('Ammunition', false, false, target).Result then return ConditionResult(true) end
+    end
+
     return ConditionResult(false)
 end
 
