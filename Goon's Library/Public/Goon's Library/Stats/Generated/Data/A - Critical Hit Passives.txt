@@ -6,9 +6,9 @@
 
 new entry "Goon_Critical_Hit_Immunity"
 type "PassiveData"
-// Critical Hit Immunity
+// // Critical Hit Immunity
 data "DisplayName" "he547088cg3538g477dg8019gd30052e44f34;1"
-// Entity is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+// // Entity is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
 data "Description" "h7da4d760g695eg4090g965fg1039b73cf76e;1"
 data "Icon" "PassiveFeature_ShieldMaster_Block"
 data "Properties" "Highlighted"
@@ -17,7 +17,7 @@ data "Boosts" "CriticalHit(AttackTarget,Success,Never)"
 new entry "Goon_Critical_Hit_Immunity_Gear"
 type "PassiveData"
 using "Goon_Critical_Hit_Immunity"
-// The wearer is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+// // The wearer is &lt;LSTag Tooltip="Immune"&gt;Immune&lt;/LSTag&gt; to &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
 data "Description" "ha01f4791ge931g4546gad77g4e20d6ebec4d;1"
 data "Icon" ""
 
@@ -31,9 +31,9 @@ data "TooltipPermanentWarnings" "28186bf3-e19b-43a9-8395-7dc31a6a211d"
 
 new entry "Goon_Critical_Hit_Resistance"
 type "PassiveData"
-// Critical Hit Resistance
+// // Critical Hit Resistance
 data "DisplayName" "h4e558d13g9001g4543g8e18g661852a597ec;1"
-// Entity takes half damage from &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
+// // Entity takes half damage from &lt;LSTag Tooltip="CriticalHit"&gt;Critical Hits&lt;/LSTag&gt;.
 data "Description" "h20cfc2e4g1428g4151gb6a7g8bcd2d5b170b;1"
 data "DescriptionParams" "1"
 data "Icon" "PassiveFeature_ShieldMaster_Block"
