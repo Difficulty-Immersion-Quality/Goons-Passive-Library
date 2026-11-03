@@ -595,8 +595,14 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
         return ConditionResult(false)
     end
 
-    if not Goon_IsAction().Result then return ConditionResult(true) end
-    return Goon_IsJumpSpellCategory() -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
+    -- OnCastHit cuckening for OnLeaveAttackRange maxxing.
+    if HasDamageEffectFlag(DamageFlags.Hit).Result         then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.Miss).Result        then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.SavingThrow).Result then return ConditionResult(false) end
+
+    -- if not Goon_IsAction().Result then return ConditionResult(true) end
+    -- return Goon_IsJumpSpellCategory() -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
+    return ConditionResult(true)
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
