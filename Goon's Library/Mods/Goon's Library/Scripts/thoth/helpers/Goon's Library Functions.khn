@@ -1117,6 +1117,19 @@ function Goon_IsAbleToBeKnockedOut(target, source)
     return ConditionResult(true)
 end
 
+-- ==================================== Obscured
+-- By default it just checks LightlyObscured and HeavilyObscured, ez.
+
+function Goon_HasObscuredState(clear, lightly, heavily, target)
+    target = target or context.Target
+
+    if clear == true    and HasObscuredState(ObscuredState.Clear, target).Result            then return ConditionResult(true) end
+    if lightly ~= false and HasObscuredState(ObscuredState.LightlyObscured, target).Result  then return ConditionResult(true) end
+    if heavily ~= false and HasObscuredState(ObscuredState.HeavilyObscured, target).Result  then return ConditionResult(true) end
+
+    return ConditionResult(false)
+end
+
 -- ==================================== Crowd Control
 -- SG_Restrained blocking loads of interrupts with IsAbleToReact is a bit silly.
 
@@ -3195,8 +3208,8 @@ function Goon_CanObserverRevealTarget(revealPolymorphs, requiresFacing, source, 
 end
 
 -- TODO: Probably shouldn't be treating Invisible and Stealth as being equal, but there's so much overlap that it won't be complained about for now.
-function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, target)
-    target = target or context.Target
+function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, source)
+    source = source or context.Source
 
     if IsStatusEvent(StatusEvent.OnSpellCast).Result then
         if strictRules then
@@ -3208,6 +3221,13 @@ function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, target)
         return ConditionResult(true)
     end
 
+    -- Shadowblend safeguard so it doesn't flicker like crazy while a dude be moving while obscured.
+    if IsStatusEvent(StatusEvent.OnMove).Result
+        and HasPassive('ShadowyRetreat', source).Result
+        and HasAnyStatus({ 'SHADOWBLEND', 'GOON_SHADOWBLEND_SEEN' }, {}, {}, source).Result then
+        return Goon_HasObscuredState(true, false, false, source)
+    end
+
     if strictRules and (IsStatusEvent(StatusEvent.OnEntityPickUp).Result
                      or IsStatusEvent(StatusEvent.OnEntityDrop).Result
                      or IsStatusEvent(StatusEvent.OnEntityDrag).Result
@@ -3216,7 +3236,7 @@ function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, target)
     end
 
     if obscurityRules and IsStatusEvent(StatusEvent.OnObscurityChanged).Result then
-        return HasObscuredState(ObscuredState.Clear, context.Source)
+        return Goon_HasObscuredState(true, false, false, source)
     end
 
     return ConditionResult(false)
@@ -3241,6 +3261,24 @@ function Goon_InvisibilityOnRemoveFunctors(checkReveal, requiresConcentration, s
     end
 
     return ~HasAnyStatus(revealStatuses, {}, {}, target)
+end
+
+-- More Shadowblend junk but for the passive itself.
+function Goon_ShadowblendPassiveCanApply(source)
+    source = source or context.Source
+
+    if not Combat(source).Result                                    then return ConditionResult(false) end
+    if not Goon_HasObscuredState(nil, nil, nil, source).Result      then return ConditionResult(false) end
+
+    if HasAnyStatus({ 'SHADOWBLEND', 'GOON_SHADOWBLEND_SEEN' }, {}, {}, source).Result then
+        return ConditionResult(false)
+    end
+
+    if IsImmuneToStatus('SG_Invisible', source).Result then
+        return ConditionResult(false)
+    end
+
+    return ConditionResult(true)
 end
 
 -- ==================================== Draconic Bloodline Ancestries ====================================
