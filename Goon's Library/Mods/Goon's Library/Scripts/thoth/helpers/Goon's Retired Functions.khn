@@ -12,7 +12,6 @@ function Goon_Helper_ContextSwap(swapContext, source, observer)
     return observer.IsValid and source.IsValid and Self(observer, source)
 end
 
-
 -- ==================================== AoO ====================================
 -- Goon_AttackOfOpportunityConditions now dynamically swaps based on context of truthy.
 
@@ -147,73 +146,58 @@ function Goon_HasWeaponTypeInSlot(isRanged, isOffhand, source)
     return ConditionResult(weapon.IsValid and HasWeaponProperty(property, weapon).Result)
 end
 
--- ==================================== Junk ====================================
--- Trying to check the source of a passive for use in boost conditions.
--- Still no work, not sure it can really be done this way. Next best thing is just checking for statuses or tags on the weapons, but in some cases that has to be custom.
--- TODO: GetActiveWeapon?
+-- ==================================== Greater Invisibility functions
 
--- function Goon_IsPassiveSourceWeapon()
---     return ConditionResult((Goon_IsPassiveSourceWeapon_MeleeMainHand() | Goon_IsPassiveSourceWeapon_MeleeOffHand() | Goon_IsPassiveSourceWeapon_RangedMainHand() | Goon_IsPassiveSourceWeapon_RangedOffHand()).Result, { ConditionError("XXXXXXXXX") })
--- end
+function Goon_GreaterInvisibilityTechnicalRevealConditions(source)
+    source = source or context.Source
 
--- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
---     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+    if context.HasContextFlag(StatsFunctorContext.OnCast).Result and not HasSpellFlag(SpellFlags.Invisible).Result then
+        return ConditionResult(true)
+    end
 
---     if not IsValid(weapon) then
---         return ConditionResult(false)
---     end
+    if context.HasContextFlag(StatsFunctorContext.OnAttack).Result and not HasSpellFlag(SpellFlags.Stealth).Result then
+        return ConditionResult(true)
+    end
 
---     return IsPassiveSource(context.Passive, weapon, context.Source)
---          | IsPassiveSource(context.Passive, weapon, weapon)
---          | IsPassiveOwner(context.Passive, weapon, context.Source)
---          | IsPassiveOwner(context.Passive, weapon, weapon)
--- end
+    return ConditionResult(false)
+end
 
--- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
---     local weapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+-- ==================================== Weapon enchant checks - Vanilla Flame Blade
 
---     if not IsValid(weapon) then
---         return ConditionResult(false)
---     end
+function Goon_IsFlameBladeSpellAttack_Mainhand(source)
+    source = source or context.Source
 
---     return IsPassiveSource(context.Passive, weapon, context.Source)
---          | IsPassiveSource(context.Passive, weapon, weapon)
---          | IsPassiveOwner(context.Passive, weapon, context.Source)
---          | IsPassiveOwner(context.Passive, weapon, weapon)
--- end
+    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
 
--- function Goon_IsPassiveSourceWeapon_MeleeMainHand()
---     local MeleeMainHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand)
+    local weapon = GetActiveWeapon(source, true)
 
---     if MeleeMainHand.IsValid then
---         return IsPassiveSource(context.Passive, MeleeMainHand, context.Source) | IsPassiveOwner(context.Passive, MeleeMainHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
+    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    return ConditionResult(false)
+end
 
--- function Goon_IsPassiveSourceWeapon_MeleeOffHand()
---     local MeleeOffHand = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand)
+function Goon_IsFlameBladeSpellAttack_Offhand(source)
+    source = source or context.Source
 
---     if MeleeOffHand.IsValid then
---         return IsPassiveSource(context.Passive, MeleeOffHand, context.Source) | IsPassiveOwner(context.Passive, MeleeOffHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
+    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
 
--- function Goon_IsPassiveSourceWeapon_RangedMainHand()
---     local RangedMainHand = GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand)
+    local weapon = GetActiveWeapon(source, false)
 
---     if RangedMainHand.IsValid then
---         return IsPassiveSource(context.Passive, RangedMainHand, context.Source) | IsPassiveOwner(context.Passive, RangedMainHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
-
--- function Goon_IsPassiveSourceWeapon_RangedOffHand()
---     local RangedOffHand = GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand)
-
---     if RangedOffHand.IsValid then
---         return IsPassiveSource(context.Passive, RangedOffHand, context.Source) | IsPassiveOwner(context.Passive, RangedOffHand, context.Source)
---     end
---     return ConditionResult(false)
--- end
+    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
+    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    return ConditionResult(false)
+end

@@ -97,6 +97,37 @@
                     <attribute id="Text" type="TranslatedString" handle="he3f14eecg4233g49fag8b36g49ec015f4f54" version="1"/>
                     <attribute id="UUID" type="guid" value="af675b0e-50b9-4451-b006-29bded4a4280"/>
                 </node>
+            <!-- ==================================== Invisbility conditions ==================================== -->
+                <!-- Regular rules -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity attacks or casts a spell. -->
+                    <attribute id="Text" type="TranslatedString" handle="h930aa3f4g8bb3g42cfga734g47d3180582f7" version="1"/>
+                    <attribute id="UUID" type="guid" value="3541c8b9-688f-459d-842f-5d7760b89424"/>
+                </node>
+                <!-- Strict rules -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity takes an action, takes damage, or moves. -->
+                    <attribute id="Text" type="TranslatedString" handle="h2c3aecbagfe1fg40c3gbc45g5e7621d9b98d" version="1"/>
+                    <attribute id="UUID" type="guid" value="e8a02313-10cb-41b1-904d-0818f5eb1979"/>
+                </node>
+                <!-- Obscurity rules -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity attacks, casts a spell, or is no longer obscured. -->
+                    <attribute id="Text" type="TranslatedString" handle="hb01b0fc6gff49g4183gb294g8594157ea640" version="1"/>
+                    <attribute id="UUID" type="guid" value="4a842ac9-b6c5-4241-8923-d526265b89fe"/>
+                </node>
+                <!-- Strict + Obscurity rules -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition ends early if the entity takes an action, takes damage, moves, or is no longer obscured. -->
+                    <attribute id="Text" type="TranslatedString" handle="he4f45f54ge8cdg4758gb6b3ga5236d0a476c" version="1"/>
+                    <attribute id="UUID" type="guid" value="16a8ec13-3d5d-454f-92f0-5d9f3c348d07"/>
+                </node>
+                <!-- Magical reveal rules -->
+                <node id="TooltipExtraTexts">
+                    <!-- &lt;LSTag Type="Image" Info="SoftWarning"/&gt; Condition can only be removed through magical means. -->
+                    <attribute id="Text" type="TranslatedString" handle="hffa917efgb8d3g420dga65eg2db7957ada9d" version="1"/>
+                    <attribute id="UUID" type="guid" value="f7728ebc-eb2d-427e-afbf-8d55c9676965"/>
+                </node>
             </children>
         </node>
     </region>

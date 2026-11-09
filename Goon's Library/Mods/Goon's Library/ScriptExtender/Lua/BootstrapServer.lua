@@ -1,4 +1,3 @@
---- @type RegisterVariableOptions
 local opts = {
     Server = true,
     Client = false,
@@ -6,7 +5,7 @@ local opts = {
     WriteableOnClient = false,
     Persistent = true,
     SyncToClient = false,
-    SyncToServer = true,
+    SyncToServer = false,       -- Wasn't doing anything.
     SyncOnWrite = false,
     DontCache = false
 }

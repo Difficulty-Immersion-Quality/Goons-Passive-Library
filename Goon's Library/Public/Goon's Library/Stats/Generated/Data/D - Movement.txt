@@ -1,3 +1,6 @@
+// ==================================== Movement ====================================
+// TODO: Comments.
+
 new entry "Goon_Impeded_Movement_1"
 type "PassiveData"
 data "Properties" "Highlighted"
@@ -88,7 +91,7 @@ data "DescriptionParams" "Distance(1000000)"
 data "Icon" "statIcons_Hamstring"
 data "Boosts" "ActionResource(Movement,-1000000,0)"
 
-// Buffs
+// ==================================== Movement - Buffs
 
 new entry "Goon_Increased_Movement_1"
 type "PassiveData"

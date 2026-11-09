@@ -33,7 +33,7 @@ function HasEnemyWithinRange(exclusionStatus, distance, tag, NumberOfEnemy, targ
     source = source or context.Source
     NumberOfEnemy = NumberOfEnemy or 1
     -- distance = distance or 1.5
-    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, nil, nil, source, target))
+    distance = distance or (1.5 + Goon_GetSourceHitBox(false, false, nil, nil, false, source, target))
 
     -- local errorTrue = {ConditionError("HasAllyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
     local errorTrue = {ConditionError("Goon_HasEnemyWithinRange", {ConditionErrorData.MakeFromNumber(distance, EErrorDataType.Distance)})}
@@ -127,7 +127,7 @@ function Goon_IsMeleeMainhandWeaponAttack()
     if IsSpellChildOrVariantFromContext('Target_MAG_WeaponAction_GrandSlam').Result                    then return ConditionResult(true) end  -- Actions
     if IsSpellChildOrVariantFromContext('Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave').Result then return ConditionResult(true) end
     if IsSpellChildOrVariantFromContext('Zone_ConjureBarrage_Melee').Result                            then return ConditionResult(true) end  -- Spells
-    if Goon_IsFlameBladeSpellAttack_Mainhand().Result                                                  then return ConditionResult(true) end
+    if Goon_IsFlameBladeSpellAttack(false).Result                                                      then return ConditionResult(true) end
     return ConditionResult(false)
 end
 
@@ -136,7 +136,7 @@ function Goon_IsMeleeOffhandWeaponAttack()
     if IsSpellChildOrVariantFromContext('Goon_Target_MAG_WeaponAction_GrandSlam_Offhand').Result                    then return ConditionResult(true) end  -- Actions
     if IsSpellChildOrVariantFromContext('Goon_Zone_MAG_Automaton_Human_Steelwatcher_HellfireCleave_Offhand').Result then return ConditionResult(true) end
     if IsSpellChildOrVariantFromContext('Goon_Zone_ConjureBarrage_Melee_Offhand').Result                            then return ConditionResult(true) end  -- Spells
-    if Goon_IsFlameBladeSpellAttack_Offhand().Result                                                                then return ConditionResult(true) end
+    if Goon_IsFlameBladeSpellAttack(true).Result                                                                    then return ConditionResult(true) end
     return ConditionResult(false)
 end
 
@@ -464,31 +464,63 @@ end
 -- ==================================== Interrupt conditions - "EnableCondition"
 -- data "EnableContext" "OnStatusApplied;OnStatusRemoved"
 
-function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
+-- isPlayerCharacter: true for player, false for NPC. Dominated, mad, etc. characters still count as player characters.
+function Goon_InterruptEnableConditions(allowWildshapes, requiresSight, isPlayerCharacter, isPlayerControlled, source)
     source = source or context.Source
 
-    local polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsUnrestrictedPolymorphStatus(source))
-    local blindnessConditions = (~HasStatus('SG_Blinded', source)   | Goon_CanIgnoreBlindness(false, false, true, source))
-
-    if allowWildshapes then
-        polymorphConditions = (~HasStatus('SG_Polymorph', source) | Goon_IsNonHostilePolymorphStatus(source))
+    if isPlayerCharacter ~= nil and Player(source).Result ~= isPlayerCharacter then
+        return ConditionResult(false)
     end
 
-    if requiresSight then
-        return polymorphConditions & blindnessConditions
+    if isPlayerControlled == true and not Goon_IsPlayerInControl(source).Result then
+        return ConditionResult(false)
+    elseif isPlayerControlled == false and not Goon_IsAIInControl(source).Result then
+        return ConditionResult(false)
     end
 
-    return polymorphConditions
+    if HasStatus('SG_Polymorph', source).Result then
+        if allowWildshapes then
+            if not Goon_IsNonHostilePolymorphStatus(source).Result then
+                return ConditionResult(false)
+            end
+        elseif not Goon_IsUnrestrictedPolymorphStatus(source).Result then
+            return ConditionResult(false)
+        end
+    end
+
+    if requiresSight and HasStatus('SG_Blinded', source).Result then
+        if not Goon_CanIgnoreBlindness(false, false, true, source).Result then
+            return ConditionResult(false)
+        end
+    end
+
+    return ConditionResult(true)
 end
 
-function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, requiresSight, source)
+-- checkEquippedWeapons: donut forgetti the OnEquip EnableContext, in addition to OnStatusApplied;OnStatusRemoved. The function isn't checking the active weapon, so no issues with F weapon set swapping not triggering the OnEquip event.
+-- checkPlayerControlledWeaponsOnly: true for player controlled and false for AI controlled.
+function Goon_BasicHarmfulInterruptEnableConditions(allowWildshapes, requiresSight, isPlayerCharacter, isPlayerControlled, checkEquippedWeapons, isMeleeWeapon, isOffhand, isMartialWeapon, isShield, checkPlayerControlledWeaponsOnly, source)
     source = source or context.Source
 
     if requiresSight == nil then
         requiresSight = true
     end
 
-    return Goon_InterruptEnableConditions(allowWildshapes, requiresSight, source)
+    if not Goon_InterruptEnableConditions(allowWildshapes, requiresSight, isPlayerCharacter, isPlayerControlled, source).Result then
+        return ConditionResult(false)
+    end
+
+    if checkEquippedWeapons ~= nil then
+        if checkPlayerControlledWeaponsOnly ~= nil and Goon_IsPlayerInControl(source).Result ~= checkPlayerControlledWeaponsOnly then
+            return ConditionResult(true)
+        end
+
+        if Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShield, source).Result ~= checkEquippedWeapons then
+            return ConditionResult(false)
+        end
+    end
+
+    return ConditionResult(true)
 end
 
 -- ==================================== Interrupt conditions - Attack of Opportunity
@@ -563,8 +595,14 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
         return ConditionResult(false)
     end
 
-    if not Goon_IsAction().Result then return ConditionResult(true) end
-    return Goon_IsJumpSpellCategory() -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
+    -- OnCastHit cuckening for OnLeaveAttackRange maxxing.
+    if HasDamageEffectFlag(DamageFlags.Hit).Result         then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.Miss).Result        then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.SavingThrow).Result then return ConditionResult(false) end
+
+    -- if not Goon_IsAction().Result then return ConditionResult(true) end
+    -- return Goon_IsJumpSpellCategory() -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
+    return ConditionResult(true)
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
@@ -733,6 +771,35 @@ function Goon_IsEntityDominated(source)
     return HasAnyStatus({ 'SG_Dominated', 'SG_Possessed' }, {}, {}, source)
 end
 
+-- ==================================== NPC autocasting ====================================
+
+function Goon_CanAutoCast(onWeapon, concentration, statusA, statusB, statusC, target)
+    target = target or context.Target
+
+    local wielder = target
+    if onWeapon then
+        wielder = GetActiveWeapon(target, true)
+    end
+
+    if HasAnyStatus({ statusA, statusB, statusC }, {}, {}, wielder).Result then return ConditionResult(false) end
+    if concentration and IsConcentrating(target).Result                    then return ConditionResult(false) end
+
+    local statuses = { 'SG_Incapacitated', 'SG_Sleeping', 'SG_Stunned', 'SG_Paralyzed', 'SG_Polymorph', 'SG_Polymorph_BeastShape' }
+
+    if HasAnyStatus(statuses, {}, {}, target).Result then return ConditionResult(false) end
+    if HasSpellCastBlocked(target).Result            then return ConditionResult(false) end
+    return ConditionResult(true)
+end
+
+-- Could probably check for more things.
+function Goon_CanAutoCast_MageArmour(target)
+    target = target or context.Target
+
+    if HasPassive('DraconicResilience', target).Result then return ConditionResult(false) end
+    if WearingArmor(target).Result                     then return ConditionResult(false) end
+    return Goon_CanAutoCast(false, false, 'MAGE_ARMOR', 'LOW_ROLAN_MAGE_ARMOR', nil, target)
+end
+
 -- ==================================== Range/Distance checks ====================================
 -- 🚨📏⚠️ CHAT DO NOT SELL DistanceToEntityHitBounds ⚠️📏🚨
 -- 🗣️ "yo can i hit this mf?"
@@ -748,9 +815,8 @@ end
 
 -- DistanceToEntityHitBounds = 🐐📏✨
 
--- TODO: Elevation offset can kinda fuck with the tight values, but I don't know where to begin with that shit...
 -- Note: Can be made less expensive by handing down values from outer functions instead of redoing math.
-function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCentre, precomputedTargetCentreToSourceEdge, source, target, observer, sourcePosition, targetPosition, observerPosition)
+function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCentre, precomputedTargetCentreToSourceEdge, check3DDistance, source, target, observer, sourcePosition, targetPosition, observerPosition)
     source = source or context.Source
     target = target or context.Target
     observer = observer or context.Observer
@@ -793,7 +859,20 @@ function Goon_GetSourceHitBox(swapContext, swapThirdParty, precomputedCentreToCe
     local centreToCentre = precomputedCentreToCentre or Distance(sourcePosition_, targetPosition_)
     local targetCentreToSourceEdge = precomputedTargetCentreToSourceEdge or DistanceToEntityHitBounds(targetPosition_, source_)
 
-    return centreToCentre - targetCentreToSourceEdge
+    if check3DDistance then
+        return centreToCentre - targetCentreToSourceEdge
+    end
+
+    -- DistanceToEntityHitBounds is 3d but Distance should be 2d, like spells.
+    local distanceX = targetPosition_.X - sourcePosition_.X
+    local distanceZ = targetPosition_.Z - sourcePosition_.Z
+    local elevationPadding = centreToCentre - ((distanceX * distanceX + distanceZ * distanceZ) ^ 0.5)
+
+    if elevationPadding < 0 then
+        elevationPadding = 0
+    end
+
+    return (centreToCentre - targetCentreToSourceEdge) + elevationPadding
 end
 
 function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContext, swapThirdParty, source, target, observer, sourcePosition, targetPosition, observerPosition)
@@ -837,7 +916,7 @@ function Goon_DistanceCheck(value, greaterThan, disableHitBoxPadding, swapContex
     local paddedValue = value
 
     if disableHitBoxPadding ~= true then
-        paddedValue = value + Goon_GetSourceHitBox(false, false, centreToCentre, nil, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
+        paddedValue = value + Goon_GetSourceHitBox(false, false, centreToCentre, nil, false, source_, target_, observer, sourcePosition_, targetPosition_, observerPosition)
     end
 
     local result = result
@@ -1038,6 +1117,19 @@ function Goon_IsAbleToBeKnockedOut(target, source)
     return ConditionResult(true)
 end
 
+-- ==================================== Obscured
+-- By default it just checks LightlyObscured and HeavilyObscured, ez.
+
+function Goon_HasObscuredState(clear, lightly, heavily, target)
+    target = target or context.Target
+
+    if clear == true    and HasObscuredState(ObscuredState.Clear, target).Result            then return ConditionResult(true) end
+    if lightly ~= false and HasObscuredState(ObscuredState.LightlyObscured, target).Result  then return ConditionResult(true) end
+    if heavily ~= false and HasObscuredState(ObscuredState.HeavilyObscured, target).Result  then return ConditionResult(true) end
+
+    return ConditionResult(false)
+end
+
 -- ==================================== Crowd Control
 -- SG_Restrained blocking loads of interrupts with IsAbleToReact is a bit silly.
 
@@ -1103,7 +1195,7 @@ end
 
 function Goon_HasProneCondition_Unconscious(target)
     target = target or context.Target
-    return HasStatus('SG_Prone', target) & HasStatus('SG_Unconscious', target) & ~Goon_HasProneCondition_Conscious(target)
+    return HasAnyStatus({}, { 'SG_Prone', 'SG_Unconscious' }, { 'PRONE','PRONE_GREASE','PRONE_ICE','PRONE_FALLEN','PRONE_THUNDEROUS_SMITE' }, target)
 end
 
 -- ==================================== Surfaces
@@ -1401,6 +1493,7 @@ end
 function Goon_HasUniqueSneakAttack(source)
     source = source or context.Source
     if HasPassive('RakishAudacity', source).Result        then return ConditionResult(true) end
+    if HasPassive('SneakAttackSwitch', source).Result     then return ConditionResult(true) end
     if HasPassive('SneakAttack_LLRuffian', source).Result then return ConditionResult(true) end
     return ConditionResult(false)
 end
@@ -2271,34 +2364,10 @@ function Goon_IsShadowBladeWeapon(source, weapon)
 end
 
 -- ==================================== Weapon enchant checks - Cahoot's revision
--- TODO: HasAnyStatus.
 
 function Goon_AttackingWithSpellcastingModifierWeapon(source)
     source = source or context.Source
-
-    if HasStatus('SHILLELAGH', GetAttackWeapon(source)).Result                                  then return ConditionResult(true) end
-    if HasStatus('MAG_MELEE_CASTER_BOON', GetAttackWeapon(source)).Result                       then return ConditionResult(true) end
-    if HasStatus('LHB_SEL_TASHASOTHERWORLDLYGUISE_MAGICWEAPON', GetAttackWeapon(source)).Result then return ConditionResult(true) end
-    if HasStatus('MAG_MELEE_CASTER_BOON_SORROW', GetAttackWeapon(source)).Result                then return ConditionResult(true) end
-    if HasStatus('MAG_MELEE_CASTER_BOON_LATHANDER', GetAttackWeapon(source)).Result             then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_2', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_3', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_4', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_5', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_6', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_7', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_8', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_BLADE_9', GetAttackWeapon(source)).Result                         then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_MEPHISTOPHELES', GetAttackWeapon(source)).Result             then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_2', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_3', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_4', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_5', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_6', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_7', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_8', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_FLAME_BLADE_9', GetAttackWeapon(source)).Result                          then return ConditionResult(true) end
-    return ConditionResult(false)
+    return Goon_IsSpellcastingModifierWeapon(source, GetAttackWeapon(source))
 end
 
 -- function Goon_AttackingWithIntelligenceModifierWeapon()
@@ -2312,11 +2381,7 @@ end
 
 function Goon_AttackingWithCharismaModifierWeapon(source)
     source = source or context.Source
-
-    if HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)).Result        then return ConditionResult(true) end
-    if HasStatus('PACT_BLADE', GetAttackWeapon(source)).Result           then return ConditionResult(true) end
-    if HasStatus('CAT_SCHOLAR_ARMAMENT', GetAttackWeapon(source)).Result then return ConditionResult(true) end
-    return ConditionResult(false)
+    return HasAnyStatus({ 'PACT_BLADE', 'HEXBLADE_BIND', 'CAT_SCHOLAR_ARMAMENT' }, {}, {}, GetAttackWeapon(source))
 end
 
 -- ==================================== Weapon enchant checks - Trying something different
@@ -2333,7 +2398,7 @@ end
 
 function Goon_HasPactWeapon(target)
     target = target or context.Target
-    return HasStatus('PACT_BLADE', target) | HasStatus('HEXBLADE_BIND', target) | Tagged('PACT_OF_THE_BLADE', target)
+    return HasAnyStatus({ 'PACT_BLADE', 'HEXBLADE_BIND' }, {}, {}, target) | Tagged('PACT_OF_THE_BLADE', target)
 end
 
 -- ==================================== Weapon enchant checks - Bound weapons only
@@ -2346,65 +2411,30 @@ end
 
 function Goon_HasBoundWeaponStatus(target)
     target = target or context.Target
-    return (HasStatus('WEAPON_BOND', target) | HasStatus('PACT_BLADE', target) | HasStatus('HEXBLADE_BIND', target))
+    return HasAnyStatus({ 'WEAPON_BOND', 'PACT_BLADE', 'HEXBLADE_BIND' }, {}, {}, target)
 end
 
 function Goon_AttackingWithBoundWeapon(source)
     source = source or context.Source
-
-    if HasStatus('WEAPON_BOND', GetAttackWeapon(source)).Result   then return ConditionResult(true) end
-    if HasStatus('PACT_BLADE', GetAttackWeapon(source)).Result    then return ConditionResult(true) end
-    if HasStatus('HEXBLADE_BIND', GetAttackWeapon(source)).Result then return ConditionResult(true) end
-    return ConditionResult(false)
+    return HasAnyStatus({ 'WEAPON_BOND', 'PACT_BLADE', 'HEXBLADE_BIND' }, {}, {}, GetAttackWeapon(source))
 end
 
 -- ==================================== Weapon enchant checks - Vanilla Flame Blade
 -- Don't need to add my custom conditions here, it's already doing an attack roll in Goon's Spell Overhaul.
 -- TODO: Condense, arg for hand check.
 
-function Goon_IsFlameBladeSpellAttack(source)
-    source = source or context.Source
+-- ==================================== Weapon enchant checks - Vanilla Flame Blade
+-- Don't need to add my custom conditions here, it's already doing an attack roll in Goon's Spell Overhaul.
 
-    if Goon_IsFlameBladeSpellAttack_Mainhand(source).Result then return ConditionResult(true) end
-    if Goon_IsFlameBladeSpellAttack_Offhand(source).Result  then return ConditionResult(true) end
-    return ConditionResult(false)
-end
-
-function Goon_IsFlameBladeSpellAttack_Mainhand(source)
+function Goon_IsFlameBladeSpellAttack(isOffhand, source)
     source = source or context.Source
 
     if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
 
-    local weapon = GetActiveWeapon(source, true)
+    local statuses = { 'FLAME_BLADE', 'FLAME_BLADE_3', 'FLAME_BLADE_4', 'FLAME_BLADE_5', 'FLAME_BLADE_6', 'FLAME_BLADE_7', 'FLAME_BLADE_8', 'FLAME_BLADE_9', 'FLAME_BLADE_MEPHISTOPHELES' }
 
-    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
-    return ConditionResult(false)
-end
-
-function Goon_IsFlameBladeSpellAttack_Offhand(source)
-    source = source or context.Source
-
-    if not IsMeleeSpellAttack().Result then return ConditionResult(false) end
-
-    local weapon = GetActiveWeapon(source, false)
-
-    if HasStatus('FLAME_BLADE', weapon).Result                then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_3', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_4', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_5', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_6', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_7', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_8', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_9', weapon).Result              then return ConditionResult(true) end
-    if HasStatus('FLAME_BLADE_MEPHISTOPHELES', weapon).Result then return ConditionResult(true) end
+    if isOffhand ~= true  and HasAnyStatus(statuses, {}, {}, GetActiveWeapon(source, true)).Result  then return ConditionResult(true) end
+    if isOffhand ~= false and HasAnyStatus(statuses, {}, {}, GetActiveWeapon(source, false)).Result then return ConditionResult(true) end
     return ConditionResult(false)
 end
 
@@ -2457,8 +2487,10 @@ end
 -- ==================================== Tag piles ====================================
 -- Mod support: FIREARM_MOD = Artificer
 -- NOTE: These will not work for boosts using context.HitDescription.ThrownObject. But maybe declaring that context in the functions themselves will work.
--- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game.
+-- HasAnyTags only works in stats and not khn, but unlike Tagged it works with context.HitDescription.ThrownObject, despite only having one use case in the whole fucking game. -- TODO: Confirm old comment regarding Tagged.
 
+-- For checking if a character has no weapons equipped, but allowing shields: ~Goon_HasWeaponEquipped(nil, nil, nil, false, source)
+-- However, ~Goon_WieldingWeapon(target) is more performant.
 -- isMeleeWeapon:   true = melee,   false = ranged,     nil = either (True/False filters out shields, unless isShield == true)
 -- isOffhand:       true = offhand, false = main hand,  nil = either
 -- isMartialWeapon: true = martial, false = simple,     nil = either (True/False filters out shields, unless isShield == true)
@@ -2543,13 +2575,19 @@ function Goon_HasWeaponEquipped(isMeleeWeapon, isOffhand, isMartialWeapon, isShi
 end
 
 -- TODO: Disarm shields?
-function Goon_WieldingWeapon(target)
+function Goon_WieldingWeapon(isMeleeWeapon, target)
     target = target or context.Target
 
-    if WieldingWeapon('Melee', true, false, target).Result       then return ConditionResult(true) end
-    if WieldingWeapon('Melee', false, false, target).Result      then return ConditionResult(true) end
-    if WieldingWeapon('Ammunition', true, false, target).Result  then return ConditionResult(true) end
-    if WieldingWeapon('Ammunition', false, false, target).Result then return ConditionResult(true) end
+    if isMeleeWeapon ~= false then
+        if WieldingWeapon('Melee', true, false, target).Result       then return ConditionResult(true) end
+        if WieldingWeapon('Melee', false, false, target).Result      then return ConditionResult(true) end
+    end
+
+    if isMeleeWeapon ~= true then
+        if WieldingWeapon('Ammunition', true, false, target).Result  then return ConditionResult(true) end
+        if WieldingWeapon('Ammunition', false, false, target).Result then return ConditionResult(true) end
+    end
+
     return ConditionResult(false)
 end
 
@@ -3069,7 +3107,7 @@ function Goon_CanSeeInvisible(swapContext, swapThirdParty, ignoreDistance, sourc
     end
 
     if HasPassive('FeralSenses', source_).Result and not
-       (HasStatus('SG_Deafened', source_).Result or Goon_HasDeafenedCondition(source_).Result or HasStatus('SG_Blinded', source_).Result) then
+       (HasAnyStatus({ 'SG_Deafened', 'SG_Blinded' }, {}, {}, source_).Result or Goon_HasDeafenedCondition(source_).Result) then
         if ignoreDistance then
             return ConditionResult(true)
         end
@@ -3096,34 +3134,151 @@ function Goon_CanSeeSneaking(source, target)
     return ConditionResult(false)
 end
 
--- ==================================== 
+-- ==================================== Invisibility conditions
 -- TODO: Check Expansion and stuff for more reveal/seen shit.
 -- Add found shit to Condition and Surface Overhaul as needed.
 
-function Goon_IsInvisibleSeen(target)
+function Goon_IsInvisibleSeen(checkReveal, target)
     target = target or context.Target
 
-    if HasStatus('GOON_INVISIBLE_SEEN', target).Result                          then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBLE_MAGEHAND_SEEN', target).Result                 then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBILITY_SEEN', target).Result                       then return ConditionResult(true) end
-    if HasStatus('GOON_ONE_WITH_SHADOWS_SEEN', target).Result                   then return ConditionResult(true) end
-    if HasStatus('GOON_POTION_OF_INVISIBILITY_SEEN', target).Result             then return ConditionResult(true) end
-    if HasStatus('GOON_CLOAK_OF_SHADOWS_SEEN', target).Result                   then return ConditionResult(true) end
-    if HasStatus('GOON_CLOAK_OF_SHADOWS_MONK_SEEN', target).Result              then return ConditionResult(true) end
-    if HasStatus('GOON_UMBRAL_CLOAK_SEEN', target).Result                       then return ConditionResult(true) end
-    if HasStatus('GOON_GREATER_INVISIBILITY_SEEN', target).Result               then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOWBLEND_SEEN', target).Result                        then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN', target).Result then return ConditionResult(true) end
-    if HasStatus('GOON_HIDE_IN_PLAIN_SIGHT_SEEN', target).Result                then return ConditionResult(true) end
-    if HasStatus('GOON_MISTY_ESCAPE_INVISIBLE_SEEN', target).Result             then return ConditionResult(true) end
-    if HasStatus('GOON_INVISIBILITY_PANTHER_SEEN', target).Result               then return ConditionResult(true) end
-    if HasStatus('GOON_SHROUD_SELF_SEEN', target).Result                        then return ConditionResult(true) end
-    if HasStatus('GOON_SUPREME_SNEAK_SEEN', target).Result                      then return ConditionResult(true) end
-    if HasStatus('GOON_MAG_INVISIBLE_WEAPON_SEEN', target).Result               then return ConditionResult(true) end
-    if HasStatus('GOON_LOW_POLTERGEIST_INVISIBLE_SEEN', target).Result          then return ConditionResult(true) end
-    if HasStatus('GOON_SHADOW_WALKER_SEEN', target).Result                      then return ConditionResult(true) end
-    if HasStatus('GOON_EMPTY_BODY_SEEN', target).Result                         then return ConditionResult(true) end
+    if checkReveal and HasStatus('SEE_INVISIBILITY_REVEAL', target).Result then
+        return ConditionResult(false)
+    end
+
+    local statuses = { 'INVISIBLE_SEEN',
+                       'GOON_INVISIBLE_SEEN',
+                       'INVISIBLE_MAGEHAND_SEEN',
+                       'GOON_INVISIBLE_MAGEHAND_SEEN',
+                       'INVISIBILITY_SEEN',
+                       'GOON_INVISIBILITY_SEEN',
+                       'ONE_WITH_SHADOWS_SEEN',
+                       'GOON_ONE_WITH_SHADOWS_SEEN',
+                       'POTION_OF_INVISIBILITY_SEEN',
+                       'GOON_POTION_OF_INVISIBILITY_SEEN',
+                       'CLOAK_OF_SHADOWS_SEEN',
+                       'GOON_CLOAK_OF_SHADOWS_SEEN',
+                       'CLOAK_OF_SHADOWS_MONK_SEEN',
+                       'GOON_CLOAK_OF_SHADOWS_MONK_SEEN',
+                       'UMBRAL_CLOAK_SEEN',
+                       'GOON_UMBRAL_CLOAK_SEEN',
+                       'GREATER_INVISIBILITY_SEEN',
+                       'GOON_GREATER_INVISIBILITY_SEEN',
+                       'SHADOWBLEND_SEEN',
+                       'GOON_SHADOWBLEND_SEEN',
+                       'INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN',
+                       'GOON_INVISIBILITY_SHADARKAI_GLOOMWEAVER_SEEN',
+                       'HIDE_IN_PLAIN_SIGHT_SEEN',
+                       'GOON_HIDE_IN_PLAIN_SIGHT_SEEN',
+                       'MISTY_ESCAPE_INVISIBLE_SEEN',
+                       'GOON_MISTY_ESCAPE_INVISIBLE_SEEN',
+                       'INVISIBILITY_PANTHER_SEEN',
+                       'GOON_INVISIBILITY_PANTHER_SEEN',
+                       'SHROUD_SELF_SEEN',
+                       'GOON_SHROUD_SELF_SEEN',
+                       'SUPREME_SNEAK_SEEN',
+                       'GOON_SUPREME_SNEAK_SEEN',
+                       'MAG_INVISIBLE_WEAPON_SEEN',
+                       'GOON_MAG_INVISIBLE_WEAPON_SEEN',
+                       'LOW_POLTERGEIST_INVISIBLE_SEEN',
+                       'GOON_LOW_POLTERGEIST_INVISIBLE_SEEN',
+                       'EMPTY_BODY_SEEN',
+                       'GOON_EMPTY_BODY_SEEN' }
+
+    return HasAnyStatus(statuses, {}, {}, target)
+end
+
+-- ==================================== Removal/reveal functions
+
+function Goon_CanObserverRevealTarget(revealPolymorphs, requiresFacing, source, target, targetPosition)
+    source = source or context.Source
+    target = target or context.Target
+    targetPosition = targetPosition or context.TargetPosition
+
+    if Ally(target, source).Result                                                                 then return ConditionResult(false) end
+    if HasAnyStatus({ 'SG_Unconscious', 'SG_Incapacitated', 'SG_Blinded' }, {}, {}, source).Result then return ConditionResult(false) end
+    if not IsInSightPyramid(source, targetPosition).Result                                         then return ConditionResult(false) end
+
+    if requiresFacing and not FacingMe(source, target).Result                                      then return ConditionResult(false) end
+
+    if revealPolymorphs then
+        return HasStatus('SG_Polymorph', target)
+    end
+
+    return HasStatus('SG_Invisible', target)
+end
+
+-- TODO: Probably shouldn't be treating Invisible and Stealth as being equal, but there's so much overlap that it won't be complained about for now.
+function Goon_InvisibilityRemoveConditions(strictRules, obscurityRules, source)
+    source = source or context.Source
+
+    if IsStatusEvent(StatusEvent.OnSpellCast).Result then
+        if strictRules then
+            return ConditionResult(true)
+        end
+        if HasSpellFlag(SpellFlags.Invisible).Result or HasSpellFlag(SpellFlags.Stealth).Result then
+            return ConditionResult(false)
+        end
+        return ConditionResult(true)
+    end
+
+    -- Shadowblend safeguard so it doesn't flicker like crazy while a dude be moving while obscured.
+    if IsStatusEvent(StatusEvent.OnMove).Result
+        and HasPassive('ShadowyRetreat', source).Result
+        and HasAnyStatus({ 'SHADOWBLEND', 'GOON_SHADOWBLEND_SEEN' }, {}, {}, source).Result then
+        return Goon_HasObscuredState(true, false, false, source)
+    end
+
+    if strictRules and (IsStatusEvent(StatusEvent.OnEntityPickUp).Result
+                     or IsStatusEvent(StatusEvent.OnEntityDrop).Result
+                     or IsStatusEvent(StatusEvent.OnEntityDrag).Result
+                     or IsStatusEvent(StatusEvent.OnMove).Result) then
+        return ConditionResult(true)
+    end
+
+    if obscurityRules and IsStatusEvent(StatusEvent.OnObscurityChanged).Result then
+        return Goon_HasObscuredState(true, false, false, source)
+    end
+
     return ConditionResult(false)
+end
+
+function Goon_InvisibilityOnRemoveFunctors(checkReveal, requiresConcentration, source, target)
+    source = source or context.Source
+    target = target or context.Target
+
+    if not RemoveCause(StatusRemoveCause.External).Result then
+        return ConditionResult(false)
+    end
+
+    if requiresConcentration and not IsConcentrating(source).Result then
+        return ConditionResult(false)
+    end
+
+    local revealStatuses = { 'SEE_INVISIBILITY_REVEAL', 'GOON_GREATER_INVISIBILITY_REVEAL' }
+
+    if checkReveal then
+        return HasAnyStatus(revealStatuses, {}, {}, target)
+    end
+
+    return ~HasAnyStatus(revealStatuses, {}, {}, target)
+end
+
+-- More Shadowblend junk but for the passive itself.
+function Goon_ShadowblendPassiveCanApply(source)
+    source = source or context.Source
+
+    if not Combat(source).Result                                    then return ConditionResult(false) end
+    if not Goon_HasObscuredState(nil, nil, nil, source).Result      then return ConditionResult(false) end
+
+    if HasAnyStatus({ 'SHADOWBLEND', 'GOON_SHADOWBLEND_SEEN' }, {}, {}, source).Result then
+        return ConditionResult(false)
+    end
+
+    if IsImmuneToStatus('SG_Invisible', source).Result then
+        return ConditionResult(false)
+    end
+
+    return ConditionResult(true)
 end
 
 -- ==================================== Draconic Bloodline Ancestries ====================================

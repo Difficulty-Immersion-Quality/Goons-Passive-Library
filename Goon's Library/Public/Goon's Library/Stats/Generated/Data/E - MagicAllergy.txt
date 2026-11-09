@@ -2,14 +2,14 @@
 
 new entry "Goon_Magic_Allergy_Unlock"
 type "PassiveData"
-// Magic Allergy
-data "DisplayName" "hb3a26f07g52dfg4d55g9620gfa00fdd39a99"
-// An omnipotent force has given this creature a <LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA">Magic Allergy</LSTag>.
-data "Description" "hf677acbfgb2e1g401agb55dg5accaf8f69d5"
+// // Magic Allergy
+data "DisplayName" "hb3a26f07g52dfg4d55g9620gfa00fdd39a99;1"
+// // This entity has a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.
+data "Description" "hf677acbfgb2e1g401agb55dg5accaf8f69d5;1"
 data "Properties" "IsHidden"
 data "Icon" "GenericIcon_Intent_Damage"
-data "StatsFunctorContext" "OnCreate;OnStatusRemove;OnStatusApplied;OnCast;OnTurn;OnCombatStarted"
-data "StatsFunctors" "ApplyStatus(GOON_MAGICALLERGY_AURA,100,-1)"
+data "StatsFunctorContext" "OnCreate;OnTurn;OnCombatStarted"
+data "StatsFunctors" "IF(not HasStatus('GOON_MAGICALLERGY_AURA')):ApplyStatus(GOON_MAGICALLERGY_AURA,100,-1)"
 
 // Retired entry
 new entry "GOON_MAGICALLERGY_UNLOCK"
@@ -19,10 +19,10 @@ using "Goon_Magic_Allergy_Unlock"
 new entry "GOON_MAGICALLERGY_INAURARANGE"
 type "StatusData"
 data "StatusType" "BOOST"
-// Magic Allergy Range
-data "DisplayName" "hfba73be3g0036g42f3g986fgde2bd5e15afc"
-// Close to a creature with a <LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA">Magic Allergy</LSTag>.
-data "Description" "h1606d37ag2c99g4925g9c56gde699a8a6b9f"
+// // Magic Allergy Range
+data "DisplayName" "hfba73be3g0036g42f3g986fgde2bd5e15afc;1"
+// // Close to a creature with a &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.
+data "Description" "h1606d37ag2c99g4925g9c56gde699a8a6b9f;1"
 data "Icon" "PassiveFeature_Generic_Threat"
 data "StackId" "GOON_MAGICALLERGY_INAURARANGE"
 data "Passives" "Goon_MagicAllergy_InRange"
@@ -32,10 +32,10 @@ data "IsUnique" "0"
 new entry "GOON_MAGICALLERGY_AURA"
 type "StatusData"
 data "StatusType" "BOOST"
-// Magic Allergy
-data "DisplayName" "he3ff7e25gd139g4d13g9cb9gb21f0850697e"
-// Allergic to magic. If a spell or <LSTag Tooltip="Cantrip">cantrip</LSTag> is cast close to the creature, it might react to the magic and trigger a random effect.
-data "Description" "h0bd9ac32g0b3fg4e30gb4ceg1c7377f29761"
+// // Magic Allergy
+data "DisplayName" "hcbd0a4a3g5b20g46f8g9c35g5733c101d779;1"
+// // Allergic to magic. If a spell is cast close to the creature, it might react to the magic and trigger a random effect.
+data "Description" "h0bd9ac32g0b3fg4e30gb4ceg1c7377f29761;1"
 data "Icon" "GenericIcon_Intent_Damage"
 data "AuraRadius" "9"
 data "AuraStatuses" "TARGET:IF(Character() and not Dead()):ApplyStatus(GOON_MAGICALLERGY_INAURARANGE)"
@@ -49,10 +49,10 @@ data "RemoveConditions" "not HasPassive('Goon_Magic_Allergy_Unlock') and not Has
 new entry "GOON_UNSTABLE"
 type "StatusData"
 data "StatusType" "BOOST"
-// Unstable
-data "DisplayName" "h50d7d89dg8e08g4fbag9efbgdcd0baaaef51"
-// The creature is reacting to nearby magic and has become unstable. At the start of its next turn, it will trigger a random effect.
-data "Description" "h63f6f5c7g7d96g4383g98f3g30609492a1e4"
+// // Unstable
+data "DisplayName" "h50d7d89dg8e08g4fbag9efbgdcd0baaaef51;1"
+// // The creature is reacting to nearby magic and has become unstable. At the start of its next turn, it will trigger a random effect.
+data "Description" "h63f6f5c7g7d96g4383g98f3g30609492a1e4;1"
 data "Icon" "GenericIcon_Intent_Damage"
 data "StillAnimationType" "Laughing"
 data "SoundLoop" "Misc_Status_Gremishka_Unstable_MO"
@@ -65,10 +65,10 @@ data "StatusPropertyFlags" "IgnoreResting"
 
 new entry "Goon_MagicAllergy_InRange"
 type "PassiveData"
-// Magic Allergy
-data "DisplayName" "hcbd0a4a3g5b20g46f8g9c35g5733c101d779"
-// Within the range of a creature's <LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA">Magic Allergy</LSTag>.
-data "Description" "he3bf11f1g2496g4777g934egc010fac6266a"
+// // Magic Allergy
+data "DisplayName" "hcbd0a4a3g5b20g46f8g9c35g5733c101d779;1"
+// // Within the range of a creature's &lt;LSTag Type="Status" Tooltip="GOON_MAGICALLERGY_AURA"&gt;Magic Allergy&lt;/LSTag&gt;.
+data "Description" "he3bf11f1g2496g4777g934egc010fac6266a;1"
 data "Icon" "PassiveFeature_Generic_Threat"
 data "Properties" "IsHidden"
 data "StatsFunctorContext" "OnCast"
@@ -88,8 +88,8 @@ data "SpellFail" ""
 data "TargetConditions" "not Self() and Character() and HasStatus('GOON_MAGICALLERGY_AURA')"
 data "Trajectories" "b3d955f2-33d7-4146-98e8-8b953cbc060d,48c3ebe8-ac38-da5b-ede4-ed0bb706ab2d"
 data "Icon" ""
-// Unstable
-data "DisplayName" "h50d7d89dg8e08g4fbag9efbgdcd0baaaef51"
+// // Unstable
+data "DisplayName" "h50d7d89dg8e08g4fbag9efbgdcd0baaaef51;1"
 data "PreviewCursor" "Cast"
 data "CastTextEvent" "Cast"
 data "CycleConditions" ""
