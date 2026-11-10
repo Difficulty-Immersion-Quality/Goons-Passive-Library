@@ -109,6 +109,13 @@
                     <attribute id="Identifier" type="FixedString" value="Goon_HasAttackedOrCast"/>
                     <attribute id="UUID" type="guid" value="ccc7ac34-90e5-4450-886f-faf81f95f26b"/>
                 </node>
+                <node id="ConditionErrors">
+                    <!-- Requires [1] or more monk levels to spend this much ki on an elemental discipline upcast. -->
+                    <attribute id="DisplayName" type="TranslatedString" handle="h9c74aa9cgebe3g43acg8674g28986bba66a5" version="1"/>
+                    <attribute id="ErrorDescriptionType" type="uint8" value="0"/>
+                    <attribute id="Identifier" type="FixedString" value="Goon_CanNotSpendKiOnElementalDiscipline"/>
+                    <attribute id="UUID" type="guid" value="46740313-5f4a-4661-b584-c28123c922df"/>
+                </node>
             <!-- ==================================== MaxConditionErrorWizard ==================================== -->
                 <node id="ConditionErrors">
                     <!-- Must be &lt;LSTag Type="Status" Tooltip="GOON_BLOODIED"&gt;Bloodied&lt;/LSTag&gt;. -->
