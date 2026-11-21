@@ -595,14 +595,18 @@ function Goon_AttackOfOpportunityConditions(swapContext, swapThirdParty, interru
         return ConditionResult(false)
     end
 
-    -- OnCastHit cuckening for OnLeaveAttackRange maxxing.
-    if HasDamageEffectFlag(DamageFlags.Hit).Result         then return ConditionResult(false) end
-    if HasDamageEffectFlag(DamageFlags.Miss).Result        then return ConditionResult(false) end
-    if HasDamageEffectFlag(DamageFlags.SavingThrow).Result then return ConditionResult(false) end
+    -- TODO: Figure something out eventually that allows me to just nullify OnCastHit while allowing OnLeaveAttackRange to just do its thing.
+    -- IsLastConditionRollSuccess might hold some hints to blocking shove fails, but that's not really the be all end all is it?
 
-    -- if not Goon_IsAction().Result then return ConditionResult(true) end
-    -- return Goon_IsJumpSpellCategory() -- TODO: Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
-    return ConditionResult(true)
+    -- OnCastHit cuckening for OnLeaveAttackRange maxxing.
+    if IsHit().Result                                       then return ConditionResult(false) end
+    if IsMiss().Result                                      then return ConditionResult(false) end
+    if HasDamageEffectFlag(DamageFlags.SavingThrow).Result  then return ConditionResult(false) end
+
+    if not Goon_IsAction().Result then 
+        return ConditionResult(true) 
+    end
+    return Goon_IsJumpSpellCategory() -- Not as robust as the OnLeaveAttackRange event just handling it, but I need to safeguard when OnCastHit is being used...
 end
 
 -- ==================================== Interrupt conditions - Sneak Attack
